@@ -1,0 +1,91 @@
+﻿<Window x:Class="Dynamic.Tureng.Translator.GrowlNotifiactions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:translator="clr-namespace:Dynamic.Tureng.Translator"
+        mc:Ignorable="d"
+        Title="GrowlNotifiactions" Height="530" Width="500" ShowActivated="False" AllowsTransparency="True"
+        WindowStyle="None" ShowInTaskbar="False" Background="Transparent" Topmost="True" UseLayoutRounding="True">
+    <Window.Resources>
+        <Storyboard x:Key="CollapseStoryboard">
+            <DoubleAnimation From="100" To="0" Storyboard.TargetProperty="Height" Duration="0:0:1" />
+        </Storyboard>
+        <DataTemplate x:Key="MessageTemplate" DataType="translator:Notification">
+            <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
+                  SizeChanged="NotificationWindowSizeChanged">
+                <Border Name="border" Background="#2a3345" BorderThickness="0" CornerRadius="10" Margin="10">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
+                    </Border.Effect>
+                    <Grid Height="100" Width="Auto" Margin="40,6,10,6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="22" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="33*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="2" Source="{Binding Path=ImageUrl}" Margin="-20,10,10,10" Width="Auto"
+                               Grid.ColumnSpan="2" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Title}"
+                                   TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display"
+                                   Foreground="White"
+                                   FontFamily="Arial" FontSize="14" FontWeight="UltraBold" VerticalAlignment="Center"
+                                   Margin="2,4,4,2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Height="16" />
+                        <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="2" Width="16" Height="Auto"
+                                HorizontalAlignment="Right"
+                                Margin="0,3,12,3" Style="{StaticResource CloseButton}" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=Message}"
+                                   TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display"
+                                   Foreground="White"
+                                   FontFamily="Arial" FontWeight="DemiBold" FontSize="13" VerticalAlignment="Center"
+                                   Margin="2,16,4,18" TextWrapping="Wrap"
+                                   TextTrimming="CharacterEllipsis" Height="44" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <DataTemplate.Triggers>
+                <EventTrigger RoutedEvent="Window.Loaded" SourceName="NotificationWindow">
+                    <BeginStoryboard x:Name="FadeInStoryBoard">
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="NotificationWindow" From="0.01" To="1"
+                                             Storyboard.TargetProperty="Opacity" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="NotificationWindow" From="1" To="0"
+                                             Storyboard.TargetProperty="Opacity" Duration="0:0:2" BeginTime="0:0:3" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <SeekStoryboard Offset="0:0:3" BeginStoryboardName="FadeInStoryBoard" />
+                        <PauseStoryboard BeginStoryboardName="FadeInStoryBoard" />
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <SeekStoryboard Offset="0:0:3" BeginStoryboardName="FadeInStoryBoard" />
+                        <ResumeStoryboard BeginStoryboardName="FadeInStoryBoard" />
+                    </Trigger.ExitActions>
+                </Trigger>
+                <EventTrigger RoutedEvent="Button.Click" SourceName="CloseButton">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="NotificationWindow" From="1" To="0"
+                                             Storyboard.TargetProperty="(Grid.Opacity)" Duration="0:0:0" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <Trigger SourceName="NotificationWindow" Property="Opacity" Value="0">
+                    <Setter TargetName="NotificationWindow" Property="Visibility" Value="Hidden" />
+                    <Trigger.EnterActions>
+                        <BeginStoryboard Storyboard="{StaticResource CollapseStoryboard}" />
+                    </Trigger.EnterActions>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    <ItemsControl x:Name="NotificationsControl" FocusVisualStyle="{x:Null}"
+                  d:DataContext="{d:DesignData Source=DesignTimeNotificationData.xaml}" ItemsSource="{Binding .}"
+                  ItemTemplate="{StaticResource MessageTemplate}" />
+</Window>
