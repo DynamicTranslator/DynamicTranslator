@@ -8,6 +8,9 @@ If you contribute, I'm glad.
 
 C# , WPF
 
+This is a view while translating, the translating is showing via toast notification for translated words.
+![alt-tag](http://i57.tinypic.com/r9mrdg.png)
+
 ### Using
 The solution have a app.config like below. I don't any UI implementation yet, but you can then let's contribute !
 
