@@ -1,15 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Notification.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   Defines the Notification type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Dynamic.Tureng.Translator
+﻿namespace Dynamic.Tureng.Translator.Model
 {
-    #region Using
+    #region using
 
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -18,71 +9,71 @@ namespace Dynamic.Tureng.Translator
 
     public class Notification : INotifyPropertyChanged
     {
-        private int _id;
-        private string _imageUrl;
-        private string _message;
-        private string _title;
+        private int id;
+        private string imageUrl;
+        private string message;
+        private string title;
 
         public int Id
         {
-            get { return _id; }
+            get { return id; }
 
             set
             {
-                if (_id == value)
+                if (id == value)
                 {
                     return;
                 }
 
-                _id = value;
+                id = value;
                 OnPropertyChanged("Id");
             }
         }
 
         public string ImageUrl
         {
-            get { return _imageUrl; }
+            get { return imageUrl; }
 
             set
             {
-                if (_imageUrl == value)
+                if (imageUrl == value)
                 {
                     return;
                 }
 
-                _imageUrl = value;
+                imageUrl = value;
                 OnPropertyChanged("ImageUrl");
             }
         }
 
         public string Message
         {
-            get { return _message; }
+            get { return message; }
 
             set
             {
-                if (_message == value)
+                if (message == value)
                 {
                     return;
                 }
 
-                _message = value;
+                message = value;
                 OnPropertyChanged("Message");
             }
         }
 
         public string Title
         {
-            get { return _title; }
+            get { return title; }
 
             set
             {
-                if (_title == value)
+                if (title == value)
                 {
                     return;
                 }
 
-                _title = value;
+                title = value;
                 OnPropertyChanged("Title");
             }
         }

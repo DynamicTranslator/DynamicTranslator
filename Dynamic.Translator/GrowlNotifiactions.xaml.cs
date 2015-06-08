@@ -15,14 +15,15 @@ namespace Dynamic.Tureng.Translator
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using Dynamic.Tureng.Translator.Model;
 
     #endregion
 
     public partial class GrowlNotifiactions
     {
-        private static readonly byte MaxNotifications = byte.Parse(ConfigurationManager.AppSettings["MaxNotifications"]);
-        private readonly Notifications _buffer = new Notifications();
-        private int _count;
+        private static readonly byte maxNotifications = byte.Parse(ConfigurationManager.AppSettings["MaxNotifications"]);
+        private readonly Notifications buffer = new Notifications();
+        private int count;
         public Notifications Notifications = new Notifications();
 
         public GrowlNotifiactions()
@@ -33,10 +34,10 @@ namespace Dynamic.Tureng.Translator
 
         public void AddNotification(Notification notification)
         {
-            notification.Id = _count++;
-            if (Notifications.Count + 1 > MaxNotifications)
+            notification.Id = count++;
+            if (Notifications.Count + 1 > maxNotifications)
             {
-                _buffer.Add(notification);
+                buffer.Add(notification);
             }
             else
             {
@@ -57,10 +58,10 @@ namespace Dynamic.Tureng.Translator
                 Notifications.Remove(notification);
             }
 
-            if (_buffer.Count > 0)
+            if (buffer.Count > 0)
             {
-                Notifications.Add(_buffer[0]);
-                _buffer.RemoveAt(0);
+                Notifications.Add(buffer[0]);
+                buffer.RemoveAt(0);
             }
 
             // Close window if there's nothing to show

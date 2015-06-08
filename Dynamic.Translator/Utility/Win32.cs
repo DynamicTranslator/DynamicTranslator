@@ -1,16 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Win32.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   This static class holds the Win32 function declarations and constants needed by
-//   this sample application.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Dynamic.Tureng.Translator
+﻿namespace Dynamic.Tureng.Translator.Utility
 {
-    #region Using
+    #region using
 
     using System;
     using System.Runtime.InteropServices;
@@ -27,13 +17,13 @@ namespace Dynamic.Tureng.Translator
         ///     The WM_DRAWCLIPBOARD message notifies a clipboard viewer window that
         ///     the content of the clipboard has changed.
         /// </summary>
-        internal const int WM_DRAWCLIPBOARD = 0x0308;
+        internal const int WmDrawclipboard = 0x0308;
 
         /// <summary>
         ///     A clipboard viewer window receives the WM_CHANGECBCHAIN message when
         ///     another window is removing itself from the clipboard viewer chain.
         /// </summary>
-        internal const int WM_CHANGECBCHAIN = 0x030D;
+        internal const int WmChangecbchain = 0x030D;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
@@ -42,6 +32,6 @@ namespace Dynamic.Tureng.Translator
         internal static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
     }
 }
