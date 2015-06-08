@@ -50,10 +50,7 @@
             Application.Current.DispatcherUnhandledException += HandleUnhandledException;
         }
 
-        private static GrowlNotifiactions GrowlNotifications
-        {
-            get { return pGrowNotifications.Value; }
-        }
+        private static GrowlNotifiactions GrowlNotifications => pGrowNotifications.Value;
 
         private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
@@ -148,13 +145,17 @@
             }
             catch (Exception e)
             {
-                GrowlNotifications.AddNotification(
-                    new Notification
-                    {
-                        Title = Titles.Exception,
-                        ImageUrl = ImageUrls.NotificationUrl,
-                        Message = e.Message + " InnerEx: " + e.InnerException
-                    });
+                var exNotification = new GrowlNotifiactions
+                {
+                    Top = SystemParameters.WorkArea.Top + topOffset,
+                    Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset
+                };
+                exNotification.AddNotification(new Notification
+                {
+                    Title = Titles.Message,
+                    ImageUrl = ImageUrls.NotificationUrl,
+                    Message = ex.InnerException.Message
+                });
             }
         }
 
@@ -221,13 +222,17 @@
             }
             catch (Exception ex)
             {
-                GrowlNotifications.AddNotification(
-                    new Notification
-                    {
-                        Title = Titles.Message,
-                        ImageUrl = ImageUrls.NotificationUrl,
-                        Message = ex.InnerException.Message
-                    });
+                var exNotification = new GrowlNotifiactions
+                {
+                    Top = SystemParameters.WorkArea.Top + topOffset,
+                    Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset
+                };
+                exNotification.AddNotification(new Notification
+                {
+                    Title = Titles.Message,
+                    ImageUrl = ImageUrls.NotificationUrl,
+                    Message = ex.InnerException.Message
+                });
             }
         }
 
