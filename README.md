@@ -1,6 +1,9 @@
 # DynamicTranslator
 Dynamically catch your copy (Control + C) instruction and it translate including words.
 
+###In Turkish
+Bilindiği gibi Tureng sözlük bize bir api sağlamamakta, yeni yapılan geliştirmeyle, sözcük ilk başta Tureng'e gidip sitede sözcüğü aratıp çıkan sonuçları Toast notification'da göstermektedir. Orda bulamazsa Yandex'e gidip arama yapıyor.
+
 ### Project Information and The Goal
 This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while PDF Ebook reading mostly.Project is small but very useful (at least me :)) I hope this useful for you.
 
