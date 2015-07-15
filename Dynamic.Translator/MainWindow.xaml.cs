@@ -18,12 +18,11 @@
     using System.Windows.Interop;
     using System.Windows.Threading;
     using System.Xml;
-    using Dynamic.Tureng.Translator.Model;
-    using Dynamic.Tureng.Translator.Utility;
     using HtmlAgilityPack;
+    using Model;
+    using Utility;
 
     #endregion
-
 
     public partial class MainWindow
     {
@@ -50,7 +49,10 @@
             Application.Current.DispatcherUnhandledException += HandleUnhandledException;
         }
 
-        private static GrowlNotifiactions GrowlNotifications => pGrowNotifications.Value;
+        private static GrowlNotifiactions GrowlNotifications
+        {
+            get { return pGrowNotifications.Value; }
+        }
 
         private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
@@ -69,11 +71,11 @@
             Application.Current.Shutdown();
         }
 
-        private void btnSwitch_Click(object sender, RoutedEventArgs e)
+        private async void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
             if (!isViewing)
             {
-                GrowlNotifications.AddNotification(
+                await GrowlNotifications.AddNotification(
                     new Notification
                     {
                         Title = Titles.StartingMessage,
@@ -90,9 +92,9 @@
             }
         }
 
-        private void ButtonClick1(object sender, RoutedEventArgs e)
+        private async void ButtonClick1(object sender, RoutedEventArgs e)
         {
-            GrowlNotifications.AddNotification(
+            await GrowlNotifications.AddNotification(
                 new Notification
                 {
                     Title = Titles.Message,
@@ -115,7 +117,7 @@
                         previousString = currentString;
                         if (currentString.Length > searchableCharacterLimit)
                         {
-                            GrowlNotifications.AddNotification(
+                            await GrowlNotifications.AddNotification(
                                 new Notification
                                 {
                                     Title = Titles.MaximumLimit,
@@ -131,7 +133,7 @@
                             }
                             else
                             {
-                                GrowlNotifications.AddNotification(
+                                await GrowlNotifications.AddNotification(
                                     new Notification
                                     {
                                         Title = Titles.Warning,
@@ -143,7 +145,7 @@
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 var exNotification = new GrowlNotifiactions
                 {
@@ -177,15 +179,14 @@
             {
                 Headers =
                 {
-                    [HttpRequestHeader.UserAgent] =
-                        "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+                    {HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"}
                 },
                 Encoding = Encoding.UTF8
             };
 
             turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
             turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
-            turenClient.DownloadStringAsync(new Uri(address1 + $"{currentString}"));
+            turenClient.DownloadStringAsync(new Uri(address1 + currentString));
             turenClient.DownloadStringCompleted += wcTureng_DownloadStringCompleted;
         }
 
@@ -195,7 +196,7 @@
                 new Uri(
                     string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
                                   GetPostData(languageMap[fromLanguage], languageMap[toLanguage], currentString)));
-            var yandexClient = new WebClient { Encoding = Encoding.UTF8 };
+            var yandexClient = new WebClient {Encoding = Encoding.UTF8};
             yandexClient.DownloadStringAsync(address2);
             yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
             yandexClient.DownloadStringCompleted += wcYandex_DownloadStringCompleted;
@@ -211,7 +212,7 @@
                     doc.LoadXml(e.Result);
                     var node = doc.SelectSingleNode("//Translation/text");
                     var output = node != null ? node.InnerText : e.Error.Message;
-                    GrowlNotifications.AddNotification(
+                    await GrowlNotifications.AddNotification(
                         new Notification
                         {
                             Title = currentString,
@@ -242,50 +243,45 @@
             Contract.Requires(e != null);
             try
             {
-                if (e.Result != null)
-                {
-                    var result = e.Result;
-                    var output = new StringBuilder();
-                    var doc = new HtmlDocument();
-                    var decoded = WebUtility.HtmlDecode(result);
-                    doc.LoadHtml(decoded);
-                    if (result.Contains("table") && doc.DocumentNode.SelectSingleNode("//table") != null)
-                    {
-                        foreach (var table in doc.DocumentNode.SelectNodes("//table"))
-                        {
-                            foreach (var row in table.SelectNodes("tr").AsParallel())
-                            {
-                                var space = false;
-                                var i = 0;
-                                foreach (var cell in row.SelectNodes("th|td").Descendants("a").AsParallel())
-                                {
-                                    space = true;
-                                    i++;
-                                    if (i > 1)
-                                    {
-                                        output.Append(cell.Id + " " + cell.InnerHtml.ToString(CultureInfo.CurrentCulture));
-                                    }
-                                }
-                                if (space)
-                                {
-                                    output.AppendLine();
-                                }
-                            }
-                            break;
-                        }
+                if (e.Result == null) return;
 
-                        GrowlNotifications.AddNotification(
-                            new Notification
-                            {
-                                Title = currentString,
-                                ImageUrl = ImageUrls.NotificationUrl,
-                                Message = output.ToString().ToLower()
-                            });
-                    }
-                    else
+                var result = e.Result;
+                var output = new StringBuilder();
+                var doc = new HtmlDocument();
+                var decoded = WebUtility.HtmlDecode(result);
+                doc.LoadHtml(decoded);
+                if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
+                {
+                    await GetMeanFromYandex();
+                }
+                else
+                {
+                    foreach (var table in doc.DocumentNode.SelectNodes("//table"))
                     {
-                        await GetMeanFromYandex();
+                        foreach (var row in table.SelectNodes("tr").AsParallel())
+                        {
+                            var space = false;
+                            var i = 0;
+                            foreach (var cell in row.SelectNodes("th|td").Descendants("a").AsParallel())
+                            {
+                                space = true;
+                                i++;
+                                if (i <= 1) continue;
+                                output.Append(cell.Id + " " + cell.InnerHtml.ToString(CultureInfo.CurrentCulture));
+                            }
+                            if (!space) continue;
+                            output.AppendLine();
+                        }
+                        break;
                     }
+
+                    await GrowlNotifications.AddNotification(
+                        new Notification
+                        {
+                            Title = currentString,
+                            ImageUrl = ImageUrls.NotificationUrl,
+                            Message = output.ToString().ToLower()
+                        });
                 }
             }
             catch (Exception ex)

@@ -13,6 +13,7 @@ namespace Dynamic.Tureng.Translator
 
     using System.Configuration;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using Dynamic.Tureng.Translator.Model;
@@ -21,7 +22,7 @@ namespace Dynamic.Tureng.Translator
 
     public partial class GrowlNotifiactions
     {
-        private static readonly byte maxNotifications = byte.Parse(ConfigurationManager.AppSettings["MaxNotifications"]);
+        private static readonly byte MaxNotifications = byte.Parse(ConfigurationManager.AppSettings["MaxNotifications"]);
         private readonly Notifications buffer = new Notifications();
         private int count;
         public Notifications Notifications = new Notifications();
@@ -32,10 +33,10 @@ namespace Dynamic.Tureng.Translator
             NotificationsControl.DataContext = Notifications;
         }
 
-        public void AddNotification(Notification notification)
+        public async Task AddNotification(Notification notification)
         {
             notification.Id = count++;
-            if (Notifications.Count + 1 > maxNotifications)
+            if (Notifications.Count + 1 > MaxNotifications)
             {
                 buffer.Add(notification);
             }

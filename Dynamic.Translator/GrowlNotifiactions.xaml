@@ -6,7 +6,7 @@
         xmlns:translator="clr-namespace:Dynamic.Tureng.Translator"
         xmlns:model="clr-namespace:Dynamic.Tureng.Translator.Model"
         mc:Ignorable="d"
-        Title="GrowlNotifiactions" Height="926.075" Width="500" ShowActivated="False" AllowsTransparency="True"
+        Title="GrowlNotifiactions" Height="1000" Width="500" ShowActivated="False" AllowsTransparency="True"
         WindowStyle="None" ShowInTaskbar="False" Background="Transparent" Topmost="True" UseLayoutRounding="True">
     <Window.Resources>
         <Storyboard x:Key="CollapseStoryboard">
@@ -19,7 +19,7 @@
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
                     </Border.Effect>
-                    <Grid Height="200" Width="Auto" Margin="0,6,10,6">
+                    <Grid Height="220" Width="Auto" Margin="0,6,10,6">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="22" />
                             <RowDefinition />
