@@ -1,42 +1,44 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GrowlNotifiactions.xaml.cs" company="">
-//   
-// </copyright>
-// <summary>
-//   Defines the GrowlNotifiactions type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Dynamic.Tureng.Translator
+﻿namespace Dynamic.Tureng.Translator
 {
-    #region Using
+    #region using
 
-    using System.Configuration;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using Dynamic.Tureng.Translator.Model;
+    using Dynamic.Translator.Core.Config;
+    using Dynamic.Translator.Core.Extensions;
+    using Dynamic.Translator.Core.ViewModel;
+    using Dynamic.Translator.Core.ViewModel.Interfaces;
 
     #endregion
 
-    public partial class GrowlNotifiactions
+    public partial class GrowlNotifiactions : IGrowlNotifications
     {
-        private static readonly byte MaxNotifications = byte.Parse(ConfigurationManager.AppSettings["MaxNotifications"]);
         private readonly Notifications buffer = new Notifications();
+        public readonly Notifications Notifications;
+        private readonly IStartupConfiguration startupConfiguration;
         private int count;
-        public Notifications Notifications = new Notifications();
+        public bool IsDisposed;
 
-        public GrowlNotifiactions()
+        public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
             InitializeComponent();
+            this.startupConfiguration = startupConfiguration;
+            Notifications = notifications;
             NotificationsControl.DataContext = Notifications;
         }
 
-        public async Task AddNotification(Notification notification)
+        public async Task AddNotificationAsync(Notification notification)
+        {
+            AddNotificationSync(notification);
+        }
+
+        public void AddNotificationSync(Notification notification)
         {
             notification.Id = count++;
-            if (Notifications.Count + 1 > MaxNotifications)
+            if (Notifications.Count + 1 > startupConfiguration.MaxNotifications)
             {
                 buffer.Add(notification);
             }
@@ -45,7 +47,6 @@ namespace Dynamic.Tureng.Translator
                 Notifications.Add(notification);
             }
 
-            // Show window if there're notifications
             if (Notifications.Count > 0 && !IsActive)
             {
                 Show();
@@ -65,22 +66,36 @@ namespace Dynamic.Tureng.Translator
                 buffer.RemoveAt(0);
             }
 
-            // Close window if there's nothing to show
             if (Notifications.Count < 1)
             {
                 Hide();
+                OnDispose.InvokeSafely(this, new EventArgs());
             }
+        }
+
+        public event EventHandler OnDispose;
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+            {
+                return;
+            }
+
+            OnDispose.InvokeSafely(this, new EventArgs());
+
+            IsDisposed = true;
         }
 
         private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Height != 0.0)
+            if (Math.Abs(e.NewSize.Height) > 0.0)
             {
                 return;
             }
 
             var element = sender as Grid;
-            RemoveNotification(Notifications.First(n => n.Id == int.Parse(element.Tag.ToString())));
+            RemoveNotification(Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
         }
     }
 }

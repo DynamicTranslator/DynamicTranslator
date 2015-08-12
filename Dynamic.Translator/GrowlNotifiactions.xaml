@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:translator="clr-namespace:Dynamic.Tureng.Translator"
-        xmlns:model="clr-namespace:Dynamic.Tureng.Translator.Model"
         mc:Ignorable="d"
         Title="GrowlNotifiactions" Height="1000" Width="500" ShowActivated="False" AllowsTransparency="True"
         WindowStyle="None" ShowInTaskbar="False" Background="Transparent" Topmost="True" UseLayoutRounding="True">
@@ -43,8 +42,8 @@
                                    TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display"
                                    Foreground="White"
                                    FontFamily="Arial" FontWeight="DemiBold" FontSize="15" VerticalAlignment="Center"
-                                   Margin="2,2,4,50" TextWrapping="Wrap"
-                                   TextTrimming="CharacterEllipsis" Height="100" />
+                                   Margin="2,23,4,10" TextWrapping="Wrap"
+                                   TextTrimming="CharacterEllipsis" Height="161" />
                     </Grid>
                 </Border>
             </Grid>

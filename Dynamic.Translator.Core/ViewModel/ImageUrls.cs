@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator.Model
+﻿namespace Dynamic.Translator.Core.ViewModel
 {
     public static class ImageUrls
     {

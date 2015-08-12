@@ -1,18 +1,25 @@
-﻿namespace Dynamic.Tureng.Translator.Model
+﻿namespace Dynamic.Translator.Core.ViewModel
 {
     #region using
 
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using Dependency;
+    using Extensions;
+    using Interfaces;
 
     #endregion
 
-    public class Notification : INotifyPropertyChanged
+    public class Notification : INotifyPropertyChanged, INotification, ITransientDependency
     {
         private int id;
         private string imageUrl;
         private string message;
         private string title;
+
+        public Notification()
+        {
+            PropertyChanged += (sender, args) => OnPropertyChanged(sender, args.PropertyName);
+        }
 
         public int Id
         {
@@ -26,7 +33,7 @@
                 }
 
                 id = value;
-                OnPropertyChanged("Id");
+                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Id)));
             }
         }
 
@@ -42,7 +49,7 @@
                 }
 
                 imageUrl = value;
-                OnPropertyChanged("ImageUrl");
+                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(ImageUrl)));
             }
         }
 
@@ -58,7 +65,7 @@
                 }
 
                 message = value;
-                OnPropertyChanged("Message");
+                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Message)));
             }
         }
 
@@ -74,23 +81,15 @@
                 }
 
                 title = value;
-                OnPropertyChanged("Title");
+
+                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Title)));
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(object sender, string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
-    }
-
-    public class Notifications : ObservableCollection<Notification>
-    {
     }
 }

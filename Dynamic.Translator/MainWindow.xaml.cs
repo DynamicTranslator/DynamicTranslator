@@ -4,13 +4,10 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
-    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
     using System.Net;
     using System.Net.Cache;
-    using System.Runtime.InteropServices;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
@@ -18,22 +15,19 @@
     using System.Windows.Interop;
     using System.Windows.Threading;
     using System.Xml;
+    using Dynamic.Translator.Core.Config;
+    using Dynamic.Translator.Core.Dependency;
+    using Dynamic.Translator.Core.ViewModel;
     using HtmlAgilityPack;
-    using Model;
     using Utility;
 
     #endregion
 
     public partial class MainWindow
     {
-        private static readonly string apiKey = ConfigurationManager.AppSettings["ApiKey"];
-        private static readonly double leftOffset = double.Parse(ConfigurationManager.AppSettings["LeftOffset"]);
-        private static readonly double topOffset = double.Parse(ConfigurationManager.AppSettings["TopOffset"]);
-        private static readonly int searchableCharacterLimit = int.Parse(ConfigurationManager.AppSettings["SearchableCharacterLimit"]);
-        private static readonly string fromLanguage = ConfigurationManager.AppSettings["FromLanguage"];
-        private static readonly string toLanguage = ConfigurationManager.AppSettings["ToLanguage"];
-        private static readonly Dictionary<string, string> languageMap = new Dictionary<string, string>();
-        private static readonly Lazy<GrowlNotifiactions> pGrowNotifications = new Lazy<GrowlNotifiactions>(() => new GrowlNotifiactions());
+        private readonly IStartupConfiguration _configurations;
+        private readonly GrowlNotifiactions _growNotifications;
+        private readonly Dictionary<string, string> _languageMap;
         private string currentString;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
@@ -43,23 +37,32 @@
         public MainWindow()
         {
             InitializeComponent();
-            InitLanguageMap(languageMap);
-            GrowlNotifications.Top = SystemParameters.WorkArea.Top + topOffset;
-            GrowlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset;
+
+            _configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
+            _growNotifications = IocManager.Instance.Resolve<GrowlNotifiactions>();
+
+            _languageMap = _configurations.LanguageMap;
+            _growNotifications.Top = SystemParameters.WorkArea.Top + _configurations.TopOffset;
+            _growNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - _configurations.LeftOffset;
+            _growNotifications.OnDispose += ClearAllNotifications;
             Application.Current.DispatcherUnhandledException += HandleUnhandledException;
         }
 
-        private static GrowlNotifiactions GrowlNotifications
+        private static void ClearAllNotifications(object sender, EventArgs args)
         {
-            get { return pGrowNotifications.Value; }
+            var growl = sender as GrowlNotifiactions;
+            if (growl == null) return;
+            if (growl.IsDisposed) return;
+
+            growl.Notifications.Clear();
+            GC.SuppressFinalize(growl);
+            growl.IsDisposed = true;
         }
 
         private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            var comException = e.Exception as COMException;
-
-            if (comException != null && comException.ErrorCode == -2147221040)
-                e.Handled = true;
+            e.Handled = true;
+            //e.Dispatcher.Invoke(() => Application.Current.Run());
         }
 
         protected override void OnClosed(EventArgs e)
@@ -75,7 +78,7 @@
         {
             if (!isViewing)
             {
-                await GrowlNotifications.AddNotification(
+                await _growNotifications.AddNotificationAsync(
                     new Notification
                     {
                         Title = Titles.StartingMessage,
@@ -94,7 +97,7 @@
 
         private async void ButtonClick1(object sender, RoutedEventArgs e)
         {
-            await GrowlNotifications.AddNotification(
+            await _growNotifications.AddNotificationAsync(
                 new Notification
                 {
                     Title = Titles.Message,
@@ -108,71 +111,54 @@
             RichCurrentText.Document.Blocks.Clear();
             try
             {
-                if (Clipboard.ContainsText())
+                if (!Clipboard.ContainsText()) return;
+
+                RichCurrentText.Document.Blocks.Add(new Paragraph(new Run(Clipboard.GetText())));
+                currentString = Clipboard.GetText();
+                if (previousString != currentString /*&& Regex.IsMatch(currentString, @"^[a-zA-Z0-9]+$")*/)
                 {
-                    RichCurrentText.Document.Blocks.Add(new Paragraph(new Run(Clipboard.GetText())));
-                    currentString = Clipboard.GetText();
-                    if (previousString != currentString /*&& Regex.IsMatch(currentString, @"^[a-zA-Z0-9]+$")*/)
+                    previousString = currentString;
+                    if (currentString.Length > _configurations.SearchableCharacterLimit)
                     {
-                        previousString = currentString;
-                        if (currentString.Length > searchableCharacterLimit)
+                        await _growNotifications.AddNotificationAsync(new Notification
                         {
-                            await GrowlNotifications.AddNotification(
-                                new Notification
-                                {
-                                    Title = Titles.MaximumLimit,
-                                    ImageUrl = ImageUrls.NotificationUrl,
-                                    Message = "You have exceed maximum character limit"
-                                });
+                            Title = Titles.MaximumLimit,
+                            ImageUrl = ImageUrls.NotificationUrl,
+                            Message = "You have exceed maximum character limit"
+                        });
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(_configurations.ApiKey))
+                        {
+                            await GetMeanFromTureng();
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(apiKey))
-                            {
-                                await GetMeanFromTureng();
-                            }
-                            else
-                            {
-                                await GrowlNotifications.AddNotification(
-                                    new Notification
-                                    {
-                                        Title = Titles.Warning,
-                                        ImageUrl = ImageUrls.NotificationUrl,
-                                        Message = "The Api Key cannot be NULL !"
-                                    });
-                            }
+                            await _growNotifications.AddNotificationAsync(
+                                new Notification
+                                {
+                                    Title = Titles.Warning,
+                                    ImageUrl = ImageUrls.NotificationUrl,
+                                    Message = "The Api Key cannot be NULL !"
+                                });
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                var exNotification = new GrowlNotifiactions
-                {
-                    Top = SystemParameters.WorkArea.Top + topOffset,
-                    Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset
-                };
-                exNotification.AddNotification(new Notification
-                {
-                    Title = Titles.Message,
-                    ImageUrl = ImageUrls.NotificationUrl,
-                    Message = ex.InnerException.Message
-                });
+                //ingore
             }
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            CloseCbViewer();
         }
 
         private void WindowLoaded1(object sender, RoutedEventArgs e)
         {
             // this will make minimize restore of notifications too
-            // growlNotifications.Owner = GetWindow(this);
+            //_growNotifications.Owner = GetWindow(this);
         }
 
-        public async Task GetMeanFromTureng()
+        private async Task GetMeanFromTureng()
         {
             var address1 = "http://tureng.com/search/";
             var turenClient = new WebClient
@@ -190,12 +176,13 @@
             turenClient.DownloadStringCompleted += wcTureng_DownloadStringCompleted;
         }
 
-        public async Task GetMeanFromYandex()
+        private async Task GetMeanFromYandex()
         {
-            var address2 =
-                new Uri(
-                    string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
-                                  GetPostData(languageMap[fromLanguage], languageMap[toLanguage], currentString)));
+            var address2 = new Uri(
+                string.Format(
+                    "https://translate.yandex.net/api/v1.5/tr/translate?" +
+                    GetPostData(_languageMap[_configurations.FromLanguage], _languageMap[_configurations.ToLanguage], currentString)));
+
             var yandexClient = new WebClient {Encoding = Encoding.UTF8};
             yandexClient.DownloadStringAsync(address2);
             yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
@@ -206,41 +193,29 @@
         {
             try
             {
-                if (e.Result != null)
-                {
-                    var doc = new XmlDocument();
-                    doc.LoadXml(e.Result);
-                    var node = doc.SelectSingleNode("//Translation/text");
-                    var output = node != null ? node.InnerText : e.Error.Message;
-                    await GrowlNotifications.AddNotification(
-                        new Notification
-                        {
-                            Title = currentString,
-                            ImageUrl = ImageUrls.NotificationUrl,
-                            Message = output.ToLower()
-                        });
-                }
+                if (e.Result == null) return;
+
+                var doc = new XmlDocument();
+                doc.LoadXml(e.Result);
+                var node = doc.SelectSingleNode("//Translation/text");
+                var output = node?.InnerText ?? e.Error.Message;
+
+                await _growNotifications.AddNotificationAsync(
+                    new Notification
+                    {
+                        Title = currentString,
+                        ImageUrl = ImageUrls.NotificationUrl,
+                        Message = output.ToLower()
+                    });
             }
             catch (Exception ex)
             {
-                var exNotification = new GrowlNotifiactions
-                {
-                    Top = SystemParameters.WorkArea.Top + topOffset,
-                    Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset
-                };
-                exNotification.AddNotification(new Notification
-                {
-                    Title = Titles.Message,
-                    ImageUrl = ImageUrls.NotificationUrl,
-                    Message = ex.InnerException.Message
-                });
+                //ingore
             }
         }
 
         private async void wcTureng_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            Contract.Requires(sender != null);
-            Contract.Requires(e != null);
             try
             {
                 if (e.Result == null) return;
@@ -275,7 +250,7 @@
                         break;
                     }
 
-                    await GrowlNotifications.AddNotification(
+                    await _growNotifications.AddNotificationAsync(
                         new Notification
                         {
                             Title = currentString,
@@ -286,21 +261,13 @@
             }
             catch (Exception ex)
             {
-                var exNotification = new GrowlNotifiactions();
-                exNotification.Top = SystemParameters.WorkArea.Top + topOffset;
-                exNotification.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - leftOffset;
-                exNotification.AddNotification(new Notification
-                {
-                    Title = Titles.Message,
-                    ImageUrl = ImageUrls.NotificationUrl,
-                    Message = ex.InnerException.Message
-                });
+                //ingore
             }
         }
 
-        private static string GetPostData(string fromLanguage, string toLanguage, string content)
+        private string GetPostData(string fromLanguage, string toLanguage, string content)
         {
-            var strPostData = string.Format("key={0}&lang={1}-{2}&text={3}", apiKey, fromLanguage, toLanguage, content);
+            var strPostData = $"key={_configurations.ApiKey}&lang={fromLanguage}-{toLanguage}&text={content}";
             return strPostData;
         }
 
@@ -308,7 +275,6 @@
 
         private void CloseCbViewer()
         {
-            // remove this window from the clipboard viewer chain
             Win32.ChangeClipboardChain(hWndSource.Handle, hWndNextViewer);
             hWndNextViewer = IntPtr.Zero;
             hWndSource.RemoveHook(WinProc);
@@ -319,14 +285,14 @@
         private void InitCbViewer()
         {
             var wih = new WindowInteropHelper(this);
-            this.hWndSource = HwndSource.FromHwnd(wih.Handle);
+            hWndSource = HwndSource.FromHwnd(wih.Handle);
 
-            var hWndSource = this.hWndSource;
+            var source = hWndSource;
 
-            if (hWndSource != null)
+            if (source != null)
             {
-                hWndSource.AddHook(WinProc); // start processing window messages
-                hWndNextViewer = Win32.SetClipboardViewer(hWndSource.Handle); // set this window as a viewer
+                source.AddHook(WinProc); // start processing window messages
+                hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
 
             isViewing = true;
@@ -349,13 +315,10 @@
                     }
 
                     break;
-
                 case Win32.WmDrawclipboard:
 
                     // clipboard content changed
-
                     DrawContent();
-
 
                     // pass the message to the next viewer.
                     Win32.SendMessage(hWndNextViewer, msg, wParam, lParam);
@@ -363,73 +326,6 @@
             }
 
             return IntPtr.Zero;
-        }
-
-        private static void InitLanguageMap(Dictionary<string, string> languageMap)
-        {
-            languageMap.Add("Afrikaans", "af");
-            languageMap.Add("Albanian", "sq");
-            languageMap.Add("Arabic", "ar");
-            languageMap.Add("Armenian", "hy");
-            languageMap.Add("Azerbaijani", "az");
-            languageMap.Add("Basque", "eu");
-            languageMap.Add("Belarusian", "be");
-            languageMap.Add("Bengali", "bn");
-            languageMap.Add("Bulgarian", "bg");
-            languageMap.Add("Catalan", "ca");
-            languageMap.Add("Chinese", "zh-CN");
-            languageMap.Add("Croatian", "hr");
-            languageMap.Add("Czech", "cs");
-            languageMap.Add("Danish", "da");
-            languageMap.Add("Dutch", "nl");
-            languageMap.Add("English", "en");
-            languageMap.Add("Esperanto", "eo");
-            languageMap.Add("Estonian", "et");
-            languageMap.Add("Filipino", "tl");
-            languageMap.Add("Finnish", "fi");
-            languageMap.Add("French", "fr");
-            languageMap.Add("Galician", "gl");
-            languageMap.Add("German", "de");
-            languageMap.Add("Georgian", "ka");
-            languageMap.Add("Greek", "el");
-            languageMap.Add("Haitian Creole", "ht");
-            languageMap.Add("Hebrew", "iw");
-            languageMap.Add("Hindi", "hi");
-            languageMap.Add("Hungarian", "hu");
-            languageMap.Add("Icelandic", "is");
-            languageMap.Add("Indonesian", "id");
-            languageMap.Add("Irish", "ga");
-            languageMap.Add("Italian", "it");
-            languageMap.Add("Japanese", "ja");
-            languageMap.Add("Korean", "ko");
-            languageMap.Add("Lao", "lo");
-            languageMap.Add("Latin", "la");
-            languageMap.Add("Latvian", "lv");
-            languageMap.Add("Lithuanian", "lt");
-            languageMap.Add("Macedonian", "mk");
-            languageMap.Add("Malay", "ms");
-            languageMap.Add("Maltese", "mt");
-            languageMap.Add("Norwegian", "no");
-            languageMap.Add("Persian", "fa");
-            languageMap.Add("Polish", "pl");
-            languageMap.Add("Portuguese", "pt");
-            languageMap.Add("Romanian", "ro");
-            languageMap.Add("Russian", "ru");
-            languageMap.Add("Serbian", "sr");
-            languageMap.Add("Slovak", "sk");
-            languageMap.Add("Slovenian", "sl");
-            languageMap.Add("Spanish", "es");
-            languageMap.Add("Swahili", "sw");
-            languageMap.Add("Swedish", "sv");
-            languageMap.Add("Tamil", "ta");
-            languageMap.Add("Telugu", "te");
-            languageMap.Add("Thai", "th");
-            languageMap.Add("Turkish", "tr");
-            languageMap.Add("Ukrainian", "uk");
-            languageMap.Add("Urdu", "ur");
-            languageMap.Add("Vietnamese", "vi");
-            languageMap.Add("Welsh", "cy");
-            languageMap.Add("Yiddish", "yi");
         }
 
         #endregion
