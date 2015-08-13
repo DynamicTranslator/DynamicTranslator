@@ -3,22 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:translator="clr-namespace:Dynamic.Tureng.Translator"
+        xmlns:viewModel="clr-namespace:Dynamic.Translator.Core.ViewModel;assembly=Dynamic.Translator.Core"
         mc:Ignorable="d"
-        Title="GrowlNotifiactions" Height="1000" Width="500" ShowActivated="False" AllowsTransparency="True"
+        Title="GrowlNotifiactions" Height="Auto" Width="500" ShowActivated="False" AllowsTransparency="True"
+        SizeToContent="Height"
         WindowStyle="None" ShowInTaskbar="False" Background="Transparent" Topmost="True" UseLayoutRounding="True">
     <Window.Resources>
         <Storyboard x:Key="CollapseStoryboard">
             <DoubleAnimation From="100" To="0" Storyboard.TargetProperty="Height" Duration="0:0:1" />
         </Storyboard>
-        <DataTemplate x:Key="MessageTemplate" DataType="model:Notification">
+        <DataTemplate x:Key="MessageTemplate" DataType="viewModel:Notification">
             <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
                   SizeChanged="NotificationWindowSizeChanged">
-                <Border Name="border" Background="#2a3345" BorderThickness="0" CornerRadius="10" Margin="10">
+                <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10" MaxHeight="Infinity" Margin="10">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
                     </Border.Effect>
-                    <Grid Height="220" Width="Auto" Margin="0,6,10,6">
+                    <Grid Height="Auto" Width="Auto" Margin="0,6,10,6">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="22" />
                             <RowDefinition />
@@ -43,7 +44,7 @@
                                    Foreground="White"
                                    FontFamily="Arial" FontWeight="DemiBold" FontSize="15" VerticalAlignment="Center"
                                    Margin="2,23,4,10" TextWrapping="Wrap"
-                                   TextTrimming="CharacterEllipsis" Height="161" />
+                                   TextTrimming="CharacterEllipsis" Height="Auto" />
                     </Grid>
                 </Border>
             </Grid>

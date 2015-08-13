@@ -21,6 +21,7 @@
         private readonly IStartupConfiguration startupConfiguration;
         private int count;
         public bool IsDisposed;
+        private int _dynamicHeight;
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
@@ -96,6 +97,12 @@
 
             var element = sender as Grid;
             RemoveNotification(Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
+        }
+
+        public int DynamicHeight
+        {
+            get { return 1; }
+            set { _dynamicHeight = value; }
         }
     }
 }

@@ -183,7 +183,7 @@
                     "https://translate.yandex.net/api/v1.5/tr/translate?" +
                     GetPostData(_languageMap[_configurations.FromLanguage], _languageMap[_configurations.ToLanguage], currentString)));
 
-            var yandexClient = new WebClient {Encoding = Encoding.UTF8};
+            var yandexClient = new WebClient { Encoding = Encoding.UTF8 };
             yandexClient.DownloadStringAsync(address2);
             yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
             yandexClient.DownloadStringCompleted += wcYandex_DownloadStringCompleted;
@@ -231,6 +231,7 @@
                 }
                 else
                 {
+                    var itemCount = 0;
                     foreach (var table in doc.DocumentNode.SelectNodes("//table"))
                     {
                         foreach (var row in table.SelectNodes("tr").AsParallel())
@@ -241,6 +242,7 @@
                             {
                                 space = true;
                                 i++;
+                                itemCount++;
                                 if (i <= 1) continue;
                                 output.Append(cell.Id + " " + cell.InnerHtml.ToString(CultureInfo.CurrentCulture));
                             }
@@ -250,13 +252,13 @@
                         break;
                     }
 
-                    await _growNotifications.AddNotificationAsync(
-                        new Notification
-                        {
-                            Title = currentString,
-                            ImageUrl = ImageUrls.NotificationUrl,
-                            Message = output.ToString().ToLower()
-                        });
+                 
+                    await _growNotifications.AddNotificationAsync(new Notification
+                    {
+                        Title = currentString,
+                        ImageUrl = ImageUrls.NotificationUrl,
+                        Message = output.ToString().ToLower()
+                    });
                 }
             }
             catch (Exception ex)
