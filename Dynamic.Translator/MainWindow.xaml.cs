@@ -9,17 +9,21 @@
     using System.Net;
     using System.Net.Cache;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Documents;
+    using System.Windows.Forms;
     using System.Windows.Interop;
     using System.Windows.Threading;
     using System.Xml;
     using Dynamic.Translator.Core.Config;
     using Dynamic.Translator.Core.Dependency;
     using Dynamic.Translator.Core.ViewModel;
-    using HtmlAgilityPack;
     using Utility;
+    using Application = System.Windows.Application;
+    using Clipboard = System.Windows.Clipboard;
+    using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
     #endregion
 
@@ -28,6 +32,8 @@
         private readonly IStartupConfiguration _configurations;
         private readonly GrowlNotifiactions _growNotifications;
         private readonly Dictionary<string, string> _languageMap;
+        private CancellationToken cancellationToken;
+        private CancellationTokenSource cancellationTokenSource;
         private string currentString;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
@@ -68,16 +74,40 @@
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            if (cancellationToken.CanBeCanceled)
+            {
+                cancellationTokenSource.Cancel();
+            }
             Close();
             GC.Collect();
             GC.SuppressFinalize(this);
             Application.Current.Shutdown();
         }
 
+        private void InitializeCopyPasteListenerAsync()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(740);
+                    SendKeys.SendWait("^c");
+                }
+            }, cancellationToken);
+        }
+
         private async void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
             if (!isViewing)
             {
+                InitializeCopyPasteListenerAsync();
                 await _growNotifications.AddNotificationAsync(
                     new Notification
                     {
@@ -90,6 +120,10 @@
             }
             else
             {
+                if (cancellationToken.CanBeCanceled)
+                {
+                    cancellationTokenSource.Cancel();
+                }
                 CloseCbViewer();
                 BtnSwitch.Content = "Start Translator";
             }
@@ -183,13 +217,50 @@
                     "https://translate.yandex.net/api/v1.5/tr/translate?" +
                     GetPostData(_languageMap[_configurations.FromLanguage], _languageMap[_configurations.ToLanguage], currentString)));
 
-            var yandexClient = new WebClient { Encoding = Encoding.UTF8 };
+            var yandexClient = new WebClient {Encoding = Encoding.UTF8};
             yandexClient.DownloadStringAsync(address2);
             yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
             yandexClient.DownloadStringCompleted += wcYandex_DownloadStringCompleted;
         }
 
+
+        private async Task GetMeanFromSesliSozluk()
+        {
+            var address =
+                new Uri(string.Format("http://api.seslisozluk.com/?key=1234567890abcdef&lang_from={0}&query={1}&callback=?", _languageMap[_configurations.FromLanguage], currentString));
+
+            var sesliSozlukClient = new WebClient {Encoding = Encoding.UTF8};
+            sesliSozlukClient.DownloadStringAsync(address);
+            sesliSozlukClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
+            sesliSozlukClient.DownloadStringCompleted += wcSesliSozluk_DownloadStringCompleted;
+        }
+
         private async void wcYandex_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                if (e.Result == null) return;
+
+                var doc = new XmlDocument();
+                doc.LoadXml(e.Result);
+                var node = doc.SelectSingleNode("//Translation/text");
+                var output = node?.InnerText ?? e.Error.Message;
+
+                await _growNotifications.AddNotificationAsync(
+                    new Notification
+                    {
+                        Title = currentString,
+                        ImageUrl = ImageUrls.NotificationUrl,
+                        Message = output.ToLower()
+                    });
+            }
+            catch (Exception ex)
+            {
+                //ingore
+            }
+        }
+
+        private async void wcSesliSozluk_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
@@ -228,10 +299,10 @@
                 if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
                 {
                     await GetMeanFromYandex();
+                    //await GetMeanFromSesliSozluk();
                 }
                 else
                 {
-                    var itemCount = 0;
                     foreach (var table in doc.DocumentNode.SelectNodes("//table"))
                     {
                         foreach (var row in table.SelectNodes("tr").AsParallel())
@@ -240,11 +311,16 @@
                             var i = 0;
                             foreach (var cell in row.SelectNodes("th|td").Descendants("a").AsParallel())
                             {
+                                var word = cell.InnerHtml.ToString(CultureInfo.CurrentCulture);
                                 space = true;
                                 i++;
-                                itemCount++;
                                 if (i <= 1) continue;
-                                output.Append(cell.Id + " " + cell.InnerHtml.ToString(CultureInfo.CurrentCulture));
+                                if (output.ToString().Contains(word))
+                                {
+                                    space = false;
+                                    continue;
+                                }
+                                output.Append(cell.Id + " " + word);
                             }
                             if (!space) continue;
                             output.AppendLine();
@@ -252,7 +328,6 @@
                         break;
                     }
 
-                 
                     await _growNotifications.AddNotificationAsync(new Notification
                     {
                         Title = currentString,

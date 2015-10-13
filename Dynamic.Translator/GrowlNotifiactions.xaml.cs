@@ -21,7 +21,7 @@
         private readonly IStartupConfiguration startupConfiguration;
         private int count;
         public bool IsDisposed;
-        private int _dynamicHeight;
+        private int dynamicHeight;
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
@@ -102,7 +102,7 @@
         public int DynamicHeight
         {
             get { return 1; }
-            set { _dynamicHeight = value; }
+            set { dynamicHeight = value; }
         }
     }
 }
