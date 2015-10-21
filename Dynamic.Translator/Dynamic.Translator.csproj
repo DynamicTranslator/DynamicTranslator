@@ -109,6 +109,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Orchestrator\Finders\IMeanFinder.cs" />
+    <Compile Include="Orchestrator\Finders\SesliSozlukFinder.cs" />
+    <Compile Include="Orchestrator\Finders\TurengFinder.cs" />
+    <Compile Include="Orchestrator\Finders\YandexFinder.cs" />
+    <Compile Include="Orchestrator\IMeanOrganizer.cs" />
+    <Compile Include="Orchestrator\INotificationManager.cs" />
+    <Compile Include="Orchestrator\ITranslator.cs" />
+    <Compile Include="Orchestrator\MeanOrganizer.cs" />
+    <Compile Include="Orchestrator\NotificationManager.cs" />
+    <Compile Include="Orchestrator\Observable\Finder.cs" />
+    <Compile Include="Orchestrator\Observable\ITranslator.cs" />
+    <Compile Include="Orchestrator\Observable\Notifier.cs" />
+    <Compile Include="Orchestrator\Observable\Translator.cs" />
+    <Compile Include="Orchestrator\Observable\WhenNotificationAddEventArgs.cs" />
+    <Compile Include="Orchestrator\Translator.cs" />
     <Compile Include="Utility\Win32.cs" />
     <DesignData Include="DesignTimeNotificationData.xaml">
       <SubType>Designer</SubType>
