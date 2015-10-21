@@ -18,71 +18,71 @@
 
         public Notification()
         {
-            PropertyChanged += (sender, args) => OnPropertyChanged(sender, args.PropertyName);
+            this.PropertyChanged += (sender, args) => this.OnPropertyChanged(sender, args.PropertyName);
         }
 
         public int Id
         {
-            get { return id; }
+            get { return this.id; }
 
             set
             {
-                if (id == value)
+                if (this.id == value)
                 {
                     return;
                 }
 
-                id = value;
-                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Id)));
+                this.id = value;
+                this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Id)));
             }
         }
 
         public string ImageUrl
         {
-            get { return imageUrl; }
+            get { return this.imageUrl; }
 
             set
             {
-                if (imageUrl == value)
+                if (this.imageUrl == value)
                 {
                     return;
                 }
 
-                imageUrl = value;
-                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(ImageUrl)));
+                this.imageUrl = value;
+                this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.ImageUrl)));
             }
         }
 
         public string Message
         {
-            get { return message; }
+            get { return this.message; }
 
             set
             {
-                if (message == value)
+                if (this.message == value)
                 {
                     return;
                 }
 
-                message = value;
-                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Message)));
+                this.message = value;
+                this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Message)));
             }
         }
 
         public string Title
         {
-            get { return title; }
+            get { return this.title; }
 
             set
             {
-                if (title == value)
+                if (this.title == value)
                 {
                     return;
                 }
 
-                title = value;
+                this.title = value;
 
-                PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Title)));
+                this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Title)));
             }
         }
 

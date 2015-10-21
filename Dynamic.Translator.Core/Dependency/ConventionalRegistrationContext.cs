@@ -10,9 +10,9 @@
     {
         internal ConventionalRegistrationContext(Assembly assembly, IIocManager iocManager, ConventionalRegistrationConfig config)
         {
-            Assembly = assembly;
-            IocManager = iocManager;
-            Config = config;
+            this.Assembly = assembly;
+            this.IocManager = iocManager;
+            this.Config = config;
         }
 
         public Assembly Assembly { get; }

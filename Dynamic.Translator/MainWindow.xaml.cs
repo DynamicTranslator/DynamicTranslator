@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Net;
     using System.Net.Cache;
+    using System.Reactive.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -20,6 +21,8 @@
     using Dynamic.Translator.Core.Config;
     using Dynamic.Translator.Core.Dependency;
     using Dynamic.Translator.Core.ViewModel;
+    using Orchestrator;
+    using Orchestrator.Observable;
     using Utility;
     using Application = System.Windows.Application;
     using Clipboard = System.Windows.Clipboard;
@@ -105,6 +108,21 @@
 
         private async void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
+            var translator = new Translator(this);
+            var translatorEvents = Observable
+                .FromEventPattern(
+                    h => translator.WhenClipboardContainsTextEventHandler += h,
+                    h => translator.WhenClipboardContainsTextEventHandler -= h);
+
+            var notifierEvents = Observable
+                .FromEventPattern<WhenNotificationAddEventArgs>(
+                    h => translator.WhenNotificationAddEventHandler += h,
+                    h => translator.WhenNotificationAddEventHandler -= h);
+
+            translatorEvents.Subscribe(new Finder(translator));
+            notifierEvents.Subscribe(new Notifier(translator, this._growNotifications));
+
+
             if (!this.isViewing)
             {
                 this.InitializeCopyPasteListenerAsync();
@@ -214,7 +232,8 @@
         {
             var address2 = new Uri(
                 string.Format(
-                    "https://translate.yandex.net/api/v1.5/tr/translate?" + this.GetPostData(this._languageMap[this._configurations.FromLanguage], this._languageMap[this._configurations.ToLanguage], this.currentString)));
+                    "https://translate.yandex.net/api/v1.5/tr/translate?" +
+                    this.GetPostData(this._languageMap[this._configurations.FromLanguage], this._languageMap[this._configurations.ToLanguage], this.currentString)));
 
             var yandexClient = new WebClient {Encoding = Encoding.UTF8};
             yandexClient.DownloadStringAsync(address2);
@@ -226,7 +245,8 @@
         private async Task GetMeanFromSesliSozluk()
         {
             var address =
-                new Uri(string.Format("http://api.seslisozluk.com/?key=1234567890abcdef&lang_from={0}&query={1}&callback=?", this._languageMap[this._configurations.FromLanguage], this.currentString));
+                new Uri(string.Format("http://api.seslisozluk.com/?key=1234567890abcdef&lang_from={0}&query={1}&callback=?", this._languageMap[this._configurations.FromLanguage],
+                    this.currentString));
 
             var sesliSozlukClient = new WebClient {Encoding = Encoding.UTF8};
             sesliSozlukClient.DownloadStringAsync(address);

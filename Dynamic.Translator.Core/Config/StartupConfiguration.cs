@@ -12,29 +12,29 @@
     {
         public StartupConfiguration(IIocManager iocManager)
         {
-            IocManager = iocManager;
+            this.IocManager = iocManager;
         }
 
         public IIocManager IocManager { get; }
-        public string ApiKey => Get<string>(nameof(ApiKey));
-        public int LeftOffset => Get<int>(nameof(LeftOffset));
-        public int TopOffset => Get<int>(nameof(TopOffset));
-        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
-        public string FromLanguage => Get<string>(nameof(FromLanguage));
-        public string ToLanguage => Get<string>(nameof(ToLanguage));
-        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
-        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
+        public string ApiKey => this.Get<string>(nameof(this.ApiKey));
+        public int LeftOffset => this.Get<int>(nameof(this.LeftOffset));
+        public int TopOffset => this.Get<int>(nameof(this.TopOffset));
+        public int SearchableCharacterLimit => this.Get<int>(nameof(this.SearchableCharacterLimit));
+        public string FromLanguage => this.Get<string>(nameof(this.FromLanguage));
+        public string ToLanguage => this.Get<string>(nameof(this.ToLanguage));
+        public Dictionary<string, string> LanguageMap => this.Get<Dictionary<string, string>>(nameof(this.LanguageMap));
+        public byte MaxNotifications => this.Get<byte>(nameof(this.MaxNotifications));
 
         public void Initialize()
         {
-            Set(nameof(ApiKey), ConfigurationManager.AppSettings["ApiKey"]);
-            Set(nameof(LeftOffset), ConfigurationManager.AppSettings["LeftOffset"]);
-            Set(nameof(TopOffset), ConfigurationManager.AppSettings["TopOffset"]);
-            Set(nameof(SearchableCharacterLimit), ConfigurationManager.AppSettings["SearchableCharacterLimit"]);
-            Set(nameof(FromLanguage), ConfigurationManager.AppSettings["FromLanguage"]);
-            Set(nameof(ToLanguage), ConfigurationManager.AppSettings["ToLanguage"]);
-            Set(nameof(MaxNotifications), ConfigurationManager.AppSettings["MaxNotifications"]);
-            InitLanguageMap();
+            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings["ApiKey"]);
+            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings["LeftOffset"]);
+            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings["TopOffset"]);
+            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings["SearchableCharacterLimit"]);
+            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings["FromLanguage"]);
+            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings["ToLanguage"]);
+            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings["MaxNotifications"]);
+            this.InitLanguageMap();
         }
 
         private void InitLanguageMap()
@@ -107,7 +107,7 @@
             };
 
 
-            Set(nameof(LanguageMap), languageMap);
+            this.Set(nameof(this.LanguageMap), languageMap);
         }
     }
 }

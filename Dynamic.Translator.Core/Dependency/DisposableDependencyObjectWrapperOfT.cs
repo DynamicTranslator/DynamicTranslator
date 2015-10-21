@@ -14,15 +14,15 @@
 
         public DisposableDependencyObjectWrapper(IIocResolver iocResolver, T obj)
         {
-            _iocResolver = iocResolver;
-            Object = obj;
+            this._iocResolver = iocResolver;
+            this.Object = obj;
         }
 
         public T Object { get; }
 
         public void Dispose()
         {
-            _iocResolver.Release(Object);
+            this._iocResolver.Release(this.Object);
         }
     }
 }

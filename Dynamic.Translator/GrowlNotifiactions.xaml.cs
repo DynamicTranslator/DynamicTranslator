@@ -25,52 +25,52 @@
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.startupConfiguration = startupConfiguration;
-            Notifications = notifications;
-            NotificationsControl.DataContext = Notifications;
+            this.Notifications = notifications;
+            this.NotificationsControl.DataContext = this.Notifications;
         }
 
         public async Task AddNotificationAsync(Notification notification)
         {
-            AddNotificationSync(notification);
+            this.AddNotificationSync(notification);
         }
 
         public void AddNotificationSync(Notification notification)
         {
-            notification.Id = count++;
-            if (Notifications.Count + 1 > startupConfiguration.MaxNotifications)
+            notification.Id = this.count++;
+            if (this.Notifications.Count + 1 > this.startupConfiguration.MaxNotifications)
             {
-                buffer.Add(notification);
+                this.buffer.Add(notification);
             }
             else
             {
-                Notifications.Add(notification);
+                this.Notifications.Add(notification);
             }
 
-            if (Notifications.Count > 0 && !IsActive)
+            if (this.Notifications.Count > 0 && !this.IsActive)
             {
-                Show();
+                this.Show();
             }
         }
 
         public void RemoveNotification(Notification notification)
         {
-            if (Notifications.Contains(notification))
+            if (this.Notifications.Contains(notification))
             {
-                Notifications.Remove(notification);
+                this.Notifications.Remove(notification);
             }
 
-            if (buffer.Count > 0)
+            if (this.buffer.Count > 0)
             {
-                Notifications.Add(buffer[0]);
-                buffer.RemoveAt(0);
+                this.Notifications.Add(this.buffer[0]);
+                this.buffer.RemoveAt(0);
             }
 
-            if (Notifications.Count < 1)
+            if (this.Notifications.Count < 1)
             {
-                Hide();
-                OnDispose.InvokeSafely(this, new EventArgs());
+                this.Hide();
+                this.OnDispose.InvokeSafely(this, new EventArgs());
             }
         }
 
@@ -78,14 +78,14 @@
 
         public void Dispose()
         {
-            if (IsDisposed)
+            if (this.IsDisposed)
             {
                 return;
             }
 
-            OnDispose.InvokeSafely(this, new EventArgs());
+            this.OnDispose.InvokeSafely(this, new EventArgs());
 
-            IsDisposed = true;
+            this.IsDisposed = true;
         }
 
         private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
@@ -96,13 +96,13 @@
             }
 
             var element = sender as Grid;
-            RemoveNotification(Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
+            this.RemoveNotification(this.Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
         }
 
         public int DynamicHeight
         {
             get { return 1; }
-            set { dynamicHeight = value; }
+            set { this.dynamicHeight = value; }
         }
     }
 }

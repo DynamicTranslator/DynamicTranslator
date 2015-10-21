@@ -12,11 +12,11 @@
     {
         protected DictionayBasedConfig()
         {
-            CustomSettings = new Dictionary<string, object>();
+            this.CustomSettings = new Dictionary<string, object>();
         }
 
         protected Dictionary<string, object> CustomSettings { get; }
-        public object this[string name] { get { return CustomSettings.GetOrDefault(name); } set { CustomSettings[name] = value; } }
+        public object this[string name] { get { return this.CustomSettings.GetOrDefault(name); } set { this.CustomSettings[name] = value; } }
 
         public T Get<T>(string name)
         {
@@ -33,7 +33,7 @@
 
         public object Get(string name)
         {
-            return Get(name, null);
+            return this.Get(name, null);
         }
 
         public object Get(string name, object defaultValue)
@@ -49,16 +49,16 @@
 
         public T Get<T>(string name, T defaultValue)
         {
-            return (T) Get(name, (object) defaultValue);
+            return (T) this.Get(name, (object) defaultValue);
         }
 
         public T GetOrCreate<T>(string name, Func<T> creator)
         {
-            var value = Get(name);
+            var value = this.Get(name);
             if (value == null)
             {
                 value = creator();
-                Set(name, value);
+                this.Set(name, value);
             }
             return (T) value;
         }

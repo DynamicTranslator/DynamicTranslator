@@ -10,7 +10,7 @@
     {
         public ConventionalRegistrationConfig()
         {
-            InstallInstallers = true;
+            this.InstallInstallers = true;
         }
 
         public bool InstallInstallers { get; set; }
