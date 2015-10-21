@@ -1,7 +1,9 @@
 ﻿namespace Dynamic.Tureng.Translator.Orchestrator.Finders
 {
+    using System.Threading.Tasks;
+
     public interface IMeanFinder
     {
-        string Find(string text);
+        Task<Maybe<string>> Find(string text);
     }
 }
