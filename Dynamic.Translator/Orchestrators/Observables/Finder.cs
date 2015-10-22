@@ -1,14 +1,14 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Observables
+﻿namespace Dynamic.Translator.Orchestrators.Observables
 {
     using System;
     using System.Linq;
     using System.Reactive;
     using System.Text;
     using System.Windows;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Dependency.Manager;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel.Constants;
+    using Core.Config;
+    using Core.Dependency.Manager;
+    using Core.Orchestrators;
+    using Core.ViewModel.Constants;
 
     public class Finder : IObserver<EventPattern<object>>
     {
@@ -46,11 +46,20 @@
 
                         foreach (var finder in this.meanFinderFactory.GetFinders())
                         {
-                            mean.Append((await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First().Trim());
+                            mean.AppendLine((await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First().Trim());
                         }
 
                         if (!string.IsNullOrEmpty(mean.ToString()))
                         {
+                            var means = mean.ToString().Split('\r')
+                                 .Select(x => x.Trim())
+                                 .Where(s => s != string.Empty && s != this.currentString.Trim())
+                                 .Distinct()
+                                 .ToList();
+
+                            mean.Clear();
+                            means.ForEach(m => mean.AppendLine(m));
+
                             this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
                         }
                     }

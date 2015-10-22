@@ -1,4 +1,4 @@
-﻿<Window x:Class="Dynamic.Tureng.Translator.GrowlNotifiactions"
+﻿<Window x:Class="Dynamic.Translator.GrowlNotifiactions"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,7 +15,8 @@
         <DataTemplate x:Key="MessageTemplate" DataType="viewModel:Notification">
             <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
                   SizeChanged="NotificationWindowSizeChanged">
-                <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10" MaxHeight="Infinity" Margin="10">
+                <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10"
+                        MaxHeight="Infinity" Margin="10">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
                     </Border.Effect>

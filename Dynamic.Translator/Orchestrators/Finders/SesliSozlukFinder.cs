@@ -1,13 +1,13 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Finders
+﻿namespace Dynamic.Translator.Orchestrators.Finders
 {
-    using System;
     using System.Threading.Tasks;
-    using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Orchestrators;
+    using Core;
+    using Core.Orchestrators;
 
     public class SesliSozlukFinder : IMeanFinder
     {
         private IMeanOrganizerFactory meanOrganizerFactory;
+
         public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory)
         {
             this.meanOrganizerFactory = meanOrganizerFactory;

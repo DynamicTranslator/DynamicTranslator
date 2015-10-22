@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Finders
+﻿namespace Dynamic.Translator.Orchestrators.Finders
 {
     using System;
     using System.Linq;
@@ -6,10 +6,10 @@
     using System.Net.Cache;
     using System.Text;
     using System.Threading.Tasks;
-    using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel.Constants;
+    using Core;
+    using Core.Config;
+    using Core.Orchestrators;
+    using Core.ViewModel.Constants;
 
     public class YandexFinder : IMeanFinder
     {

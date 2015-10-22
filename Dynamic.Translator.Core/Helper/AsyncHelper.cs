@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using Nito.AsyncEx;
 
-
     public static class AsyncHelper
     {
         /// <summary>

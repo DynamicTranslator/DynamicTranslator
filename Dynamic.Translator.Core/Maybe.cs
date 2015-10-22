@@ -14,7 +14,7 @@
 
         public Maybe(T value)
         {
-            this.values = new[] { value };
+            this.values = new[] {value};
         }
 
         public IEnumerator<T> GetEnumerator()

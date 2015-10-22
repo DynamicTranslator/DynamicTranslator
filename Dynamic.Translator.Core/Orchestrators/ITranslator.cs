@@ -11,7 +11,7 @@
 
         void Dispose();
 
-        void AddNotification(string title,string imageUrl,string message);
+        void AddNotification(string title, string imageUrl, string message);
 
         event EventHandler WhenClipboardContainsTextEventHandler;
 

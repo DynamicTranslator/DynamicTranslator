@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator.Utility
+﻿namespace Dynamic.Translator.Utility
 {
     #region using
 

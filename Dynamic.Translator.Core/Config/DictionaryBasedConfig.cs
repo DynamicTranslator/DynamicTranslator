@@ -16,7 +16,12 @@
         }
 
         protected Dictionary<string, object> CustomSettings { get; }
-        public object this[string name] { get { return this.CustomSettings.GetOrDefault(name); } set { this.CustomSettings[name] = value; } }
+
+        public object this[string name]
+        {
+            get { return this.CustomSettings.GetOrDefault(name); }
+            set { this.CustomSettings[name] = value; }
+        }
 
         public T Get<T>(string name)
         {

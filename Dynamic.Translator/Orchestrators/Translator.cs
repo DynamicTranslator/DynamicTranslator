@@ -1,21 +1,21 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators
+﻿namespace Dynamic.Translator.Orchestrators
 {
     using System;
     using System.Windows;
     using System.Windows.Interop;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Extensions;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel;
+    using Core.Config;
+    using Core.Extensions;
+    using Core.Orchestrators;
+    using Core.ViewModel;
     using Utility;
 
     public class Translator : ITranslator
     {
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
+        private readonly IStartupConfiguration startupConfiguration;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
-        private readonly IStartupConfiguration startupConfiguration;
 
         public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {

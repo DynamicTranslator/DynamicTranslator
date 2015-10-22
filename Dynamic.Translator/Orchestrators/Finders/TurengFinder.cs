@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Finders
+﻿namespace Dynamic.Translator.Orchestrators.Finders
 {
     #region
 
@@ -8,9 +8,9 @@
     using System.Net.Cache;
     using System.Text;
     using System.Threading.Tasks;
-    using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel.Constants;
+    using Core;
+    using Core.Orchestrators;
+    using Core.ViewModel.Constants;
 
     #endregion
 

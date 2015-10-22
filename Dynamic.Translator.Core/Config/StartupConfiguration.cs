@@ -4,7 +4,6 @@
 
     using System.Collections.Generic;
     using System.Configuration;
-    using Dependency;
     using Dependency.Manager;
 
     #endregion
@@ -17,13 +16,21 @@
         }
 
         public IIocManager IocManager { get; }
+
         public string ApiKey => this.Get<string>(nameof(this.ApiKey));
+
         public int LeftOffset => this.Get<int>(nameof(this.LeftOffset));
+
         public int TopOffset => this.Get<int>(nameof(this.TopOffset));
+
         public int SearchableCharacterLimit => this.Get<int>(nameof(this.SearchableCharacterLimit));
+
         public string FromLanguage => this.Get<string>(nameof(this.FromLanguage));
+
         public string ToLanguage => this.Get<string>(nameof(this.ToLanguage));
+
         public Dictionary<string, string> LanguageMap => this.Get<Dictionary<string, string>>(nameof(this.LanguageMap));
+
         public byte MaxNotifications => this.Get<byte>(nameof(this.MaxNotifications));
 
         public void Initialize()

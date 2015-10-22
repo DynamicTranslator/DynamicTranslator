@@ -1,8 +1,8 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Observables
+﻿namespace Dynamic.Translator.Orchestrators.Observables
 {
     using System;
     using System.Reactive;
-    using Dynamic.Translator.Core.Orchestrators;
+    using Core.Orchestrators;
 
     public class Notifier : IObserver<EventPattern<WhenNotificationAddEventArgs>>
     {

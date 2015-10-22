@@ -1,11 +1,11 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrators.Organizers
+﻿namespace Dynamic.Translator.Orchestrators.Organizers
 {
     using System;
     using System.Threading.Tasks;
-    using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Dependency.Markers;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel.Constants;
+    using Core;
+    using Core.Dependency.Markers;
+    using Core.Orchestrators;
+    using Core.ViewModel.Constants;
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer, ITransientDependency
     {

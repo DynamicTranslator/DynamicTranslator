@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator
+﻿namespace Dynamic.Translator
 {
     #region using
 
@@ -8,9 +8,9 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Dependency.Manager;
-    using Dynamic.Translator.Core.Orchestrators;
+    using Core.Config;
+    using Core.Dependency.Manager;
+    using Core.Orchestrators;
     using Orchestrators;
     using Orchestrators.Observables;
     using Application = System.Windows.Application;

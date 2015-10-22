@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator
+﻿namespace Dynamic.Translator
 {
     #region using
 
@@ -7,10 +7,10 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Extensions;
-    using Dynamic.Translator.Core.ViewModel;
-    using Dynamic.Translator.Core.ViewModel.Interfaces;
+    using Core.Config;
+    using Core.Extensions;
+    using Core.ViewModel;
+    using Core.ViewModel.Interfaces;
 
     #endregion
 
@@ -20,8 +20,8 @@
         public readonly Notifications Notifications;
         private readonly IStartupConfiguration startupConfiguration;
         private int count;
-        public bool IsDisposed;
         private int dynamicHeight;
+        public bool IsDisposed;
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
@@ -29,6 +29,12 @@
             this.startupConfiguration = startupConfiguration;
             this.Notifications = notifications;
             this.NotificationsControl.DataContext = this.Notifications;
+        }
+
+        public int DynamicHeight
+        {
+            get { return 1; }
+            set { this.dynamicHeight = value; }
         }
 
         public async Task AddNotificationAsync(Notification notification)
@@ -97,12 +103,6 @@
 
             var element = sender as Grid;
             this.RemoveNotification(this.Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
-        }
-
-        public int DynamicHeight
-        {
-            get { return 1; }
-            set { this.dynamicHeight = value; }
         }
     }
 }
