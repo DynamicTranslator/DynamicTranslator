@@ -19,8 +19,6 @@
 
     public partial class MainWindow
     {
-        private readonly IStartupConfiguration _configurations;
-        private readonly GrowlNotifiactions _growNotifications;
         private CancellationToken cancellationToken;
         private CancellationTokenSource cancellationTokenSource;
         private bool isRunning;
@@ -29,24 +27,6 @@
         public MainWindow()
         {
             this.InitializeComponent();
-
-            this._configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
-            this._growNotifications = IocManager.Instance.Resolve<GrowlNotifiactions>();
-
-            this._growNotifications.Top = SystemParameters.WorkArea.Top + this._configurations.TopOffset;
-            this._growNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this._configurations.LeftOffset;
-            this._growNotifications.OnDispose += ClearAllNotifications;
-        }
-
-        private static void ClearAllNotifications(object sender, EventArgs args)
-        {
-            var growl = sender as GrowlNotifiactions;
-            if (growl == null) return;
-            if (growl.IsDisposed) return;
-
-            growl.Notifications.Clear();
-            GC.SuppressFinalize(growl);
-            growl.IsDisposed = true;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -111,7 +91,10 @@
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.translator = new Translator(this);
+            this.translator = new Translator(this,
+                IocManager.Instance.Resolve<GrowlNotifiactions>(),
+                IocManager.Instance.Resolve<IStartupConfiguration>());
+
             this.translator.Initialize();
             var translatorEvents = Observable
                 .FromEventPattern(
@@ -125,7 +108,7 @@
 
 
             translatorEvents.Subscribe(new Finder(this.translator));
-            notifierEvents.Subscribe(new Notifier(this.translator, this._growNotifications));
+            notifierEvents.Subscribe(new Notifier(this.translator));
         }
     }
 }

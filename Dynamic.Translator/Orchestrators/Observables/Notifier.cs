@@ -3,28 +3,19 @@
     using System;
     using System.Reactive;
     using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel.Interfaces;
-    using Notification = Dynamic.Translator.Core.ViewModel.Notification;
 
     public class Notifier : IObserver<EventPattern<WhenNotificationAddEventArgs>>
     {
-        private readonly IGrowlNotifications growlNotifications;
-        private ITranslator translator;
+        private readonly ITranslator translator;
 
-        public Notifier(ITranslator translator, IGrowlNotifications growlNotifications)
+        public Notifier(ITranslator translator)
         {
             this.translator = translator;
-            this.growlNotifications = growlNotifications;
         }
 
         public void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
         {
-            this.growlNotifications.AddNotificationSync(new Notification
-            {
-                Title = value.EventArgs.Title,
-                ImageUrl = value.EventArgs.ImageUrl,
-                Message = value.EventArgs.Message
-            });
+            this.translator.AddNotification(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }
 
         public void OnError(Exception error)

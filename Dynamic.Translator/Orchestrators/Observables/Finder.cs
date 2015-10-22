@@ -36,12 +36,7 @@
                 this.previousString = this.currentString;
                 if (this.currentString.Length > this._configurations.SearchableCharacterLimit)
                 {
-                    this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
-                    {
-                        Message = "You have exceed maximum character limit",
-                        ImageUrl = ImageUrls.NotificationUrl,
-                        Title = Titles.MaximumLimit
-                    });
+                    this.translator.AddNotification(Titles.MaximumLimit, ImageUrls.NotificationUrl, "You have exceed maximum character limit");
                 }
                 else
                 {
@@ -56,22 +51,12 @@
 
                         if (!string.IsNullOrEmpty(mean.ToString()))
                         {
-                            this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
-                            {
-                                Title = this.currentString,
-                                ImageUrl = ImageUrls.NotificationUrl,
-                                Message = mean.ToString()
-                            });
+                            this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
                         }
                     }
                     else
                     {
-                        this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
-                        {
-                            Title = Titles.Warning,
-                            ImageUrl = ImageUrls.NotificationUrl,
-                            Message = "The Api Key cannot be NULL !"
-                        });
+                        this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, "The Api Key cannot be NULL !");
                     }
                 }
             }
