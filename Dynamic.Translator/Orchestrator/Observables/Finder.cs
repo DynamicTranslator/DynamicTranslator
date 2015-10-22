@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Tureng.Translator.Orchestrator.Observable
+﻿namespace Dynamic.Tureng.Translator.Orchestrator.Observables
 {
     using System;
     using System.Reactive;

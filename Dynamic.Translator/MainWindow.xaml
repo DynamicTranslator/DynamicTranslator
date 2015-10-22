@@ -18,7 +18,6 @@
         <StackPanel.OpacityMask>
             <ImageBrush TileMode="Tile" ImageSource="Resources/background.png" />
         </StackPanel.OpacityMask>
-        <Button Width="200" Height="30" Margin="134,4,133,4" Click="ButtonClick1" Content="Show Notification Sample" />
         <RichTextBox x:Name="RichCurrentText" Height="142" Margin="0,10,0,0" IsReadOnly="True" Background="White"
                      SelectionBrush="{x:Null}" FontSize="14" Foreground="#FF8F5151" RenderTransformOrigin="0.503,0.52">
             <FlowDocument>

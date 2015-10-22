@@ -3,7 +3,7 @@
     using System;
     using System.Windows.Interop;
     using Dynamic.Translator.Core.Extensions;
-    using Observable;
+    using Observables;
     using Utility;
 
     public class Translator : ITranslator

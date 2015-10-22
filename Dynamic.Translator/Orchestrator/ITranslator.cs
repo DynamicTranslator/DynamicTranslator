@@ -1,7 +1,7 @@
 ﻿namespace Dynamic.Tureng.Translator.Orchestrator
 {
     using System;
-    using Observable;
+    using Observables;
 
     public interface ITranslator
     {
@@ -11,6 +11,5 @@
 
         event EventHandler WhenClipboardContainsTextEventHandler;
 
-        event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
     }
 }
