@@ -1,5 +1,7 @@
 ﻿namespace Dynamic.Translator.Core.Dependency
 {
+    using Manager;
+
     internal class DisposableDependencyObjectWrapperOfT : DisposableDependencyObjectWrapper<object>, IDisposableDependencyObjectWrapper
     {
         public DisposableDependencyObjectWrapperOfT(IIocResolver iocResolver, object obj)

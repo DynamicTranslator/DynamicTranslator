@@ -62,9 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationKernel\ApplicationBase.cs" />
-    <Compile Include="ApplicationKernel\IFinder.cs" />
-    <Compile Include="ApplicationKernel\Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Config\DictionaryBasedConfig.cs" />
     <Compile Include="Config\IDictionaryBasedConfig.cs" />
     <Compile Include="Config\IStartupConfiguration.cs" />
@@ -72,31 +69,36 @@
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
-    <Compile Include="Dependency\DependencyLifeStyle.cs" />
+    <Compile Include="Dependency\Markers\DependencyLifeStyle.cs" />
     <Compile Include="Dependency\DisposableDependencyObjectWrapperOfT.cs" />
     <Compile Include="Dependency\IConventionalDependencyRegistrar.cs" />
     <Compile Include="Dependency\IConventionalRegistrationContext.cs" />
     <Compile Include="Dependency\IDisposableDependencyObjectWrapper.cs" />
     <Compile Include="Dependency\IDisposableDependencyObjectWrapperOfT.cs" />
-    <Compile Include="Dependency\IIocManager.cs" />
-    <Compile Include="Dependency\IIocRegistrar.cs" />
-    <Compile Include="Dependency\IIocResolver.cs" />
+    <Compile Include="Dependency\Manager\IIocManager.cs" />
+    <Compile Include="Dependency\Manager\IIocRegistrar.cs" />
+    <Compile Include="Dependency\Manager\IIocResolver.cs" />
     <Compile Include="Dependency\Installer\CoreInstaller.cs" />
-    <Compile Include="Dependency\IocManager.cs" />
-    <Compile Include="Dependency\IocRegistrarExtensions.cs" />
-    <Compile Include="Dependency\IocResolverExtensions.cs" />
-    <Compile Include="Dependency\ISingletonDependency.cs" />
-    <Compile Include="Dependency\ITransientDependency.cs" />
+    <Compile Include="Dependency\Manager\IocManager.cs" />
+    <Compile Include="Dependency\Extensions\IocRegistrarExtensions.cs" />
+    <Compile Include="Dependency\Extensions\IocResolverExtensions.cs" />
+    <Compile Include="Dependency\Markers\ISingletonDependency.cs" />
+    <Compile Include="Dependency\Markers\ITransientDependency.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
-    <Compile Include="ViewModel\GrowlNotificationsEventArgs.cs" />
+    <Compile Include="Maybe.cs" />
+    <Compile Include="Orchestrators\IMeanFinder.cs" />
+    <Compile Include="Orchestrators\IMeanFinderFactory.cs" />
+    <Compile Include="Orchestrators\IMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\ITranslator.cs" />
+    <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
-    <Compile Include="ViewModel\Titles.cs" />
+    <Compile Include="ViewModel\Constants\Titles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\ImageUrls.cs" />
+    <Compile Include="ViewModel\Constants\ImageUrls.cs" />
     <Compile Include="ViewModel\Notification.cs" />
   </ItemGroup>
   <ItemGroup>

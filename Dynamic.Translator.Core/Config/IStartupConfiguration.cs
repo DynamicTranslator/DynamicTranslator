@@ -4,6 +4,7 @@
 
     using System.Collections.Generic;
     using Dependency;
+    using Dependency.Manager;
 
     #endregion
 

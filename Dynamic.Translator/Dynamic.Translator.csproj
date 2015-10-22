@@ -121,23 +121,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Maybe.cs" />
-    <Compile Include="Orchestrator\Finders\IMeanFinder.cs" />
-    <Compile Include="Orchestrator\Finders\SesliSozlukFinder.cs" />
-    <Compile Include="Orchestrator\Finders\TurengFinder.cs" />
-    <Compile Include="Orchestrator\Finders\YandexFinder.cs" />
-    <Compile Include="Orchestrator\ITranslator.cs" />
-    <Compile Include="Orchestrator\MeanQueue.cs" />
-    <Compile Include="Orchestrator\Observables\Finder.cs" />
-    <Compile Include="Orchestrator\Observables\Notifier.cs" />
-    <Compile Include="Orchestrator\Observables\WhenNotificationAddEventArgs.cs" />
-    <Compile Include="Orchestrator\Organizers\IMeanOrganizer.cs" />
-    <Compile Include="Orchestrator\Organizers\SesliSozlukMeanOrganizer.cs" />
-    <Compile Include="Orchestrator\Organizers\TurengMeanOrganizer.cs" />
-    <Compile Include="Orchestrator\Organizers\YandexMeanOrganizer.cs" />
-    <Compile Include="Orchestrator\Queue\IQueue.cs" />
-    <Compile Include="Orchestrator\Queue\MeanQueue.cs" />
-    <Compile Include="Orchestrator\Translator.cs" />
+    <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
+    <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
+    <Compile Include="Orchestrators\Finders\YandexFinder.cs" />
+    <Compile Include="Orchestrators\Observables\Finder.cs" />
+    <Compile Include="Orchestrators\Observables\Notifier.cs" />
+    <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Translator.cs" />
     <Compile Include="Utility\Win32.cs" />
     <DesignData Include="DesignTimeNotificationData.xaml">
       <SubType>Designer</SubType>

@@ -11,8 +11,10 @@
     using System.Windows.Threading;
     using Dynamic.Translator.Core.Config;
     using Dynamic.Translator.Core.Dependency;
-    using Orchestrator;
-    using Orchestrator.Observables;
+    using Dynamic.Translator.Core.Dependency.Manager;
+    using Dynamic.Translator.Core.Orchestrators;
+    using Orchestrators;
+    using Orchestrators.Observables;
     using Application = System.Windows.Application;
 
     #endregion

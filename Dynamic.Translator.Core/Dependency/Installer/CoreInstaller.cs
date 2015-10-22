@@ -2,10 +2,12 @@
 {
     #region using
 
+    using Castle.Facilities.TypedFactory;
     using Castle.MicroKernel.Registration;
     using Castle.MicroKernel.SubSystems.Configuration;
     using Castle.Windsor;
     using Config;
+    using Orchestrators;
 
     #endregion
 
@@ -13,9 +15,11 @@
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            container.AddFacility<TypedFactoryFacility>();
+
             container.Register(
-                Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton
-                //Component.For<IDictionaryBasedConfig>().ImplementedBy<DictionayBasedConfig>().LifeStyle.Singleton
+                Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
+                Component.For<IMeanFinderFactory>().AsFactory()
                 );
         }
     }

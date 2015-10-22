@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Dependency;
+    using Dependency.Manager;
 
     #endregion
 

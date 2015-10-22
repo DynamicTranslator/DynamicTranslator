@@ -58,6 +58,5 @@
         {
             eventHandler?.Invoke(sender, e);
         }
-
     }
 }

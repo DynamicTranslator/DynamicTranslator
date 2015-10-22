@@ -4,6 +4,7 @@
 
     using Castle.DynamicProxy;
     using Castle.MicroKernel.Registration;
+    using Markers;
 
     #endregion
 
