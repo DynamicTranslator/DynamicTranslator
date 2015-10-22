@@ -4,10 +4,8 @@
     using System.Threading.Tasks;
     using Dependency.Markers;
 
-    public interface IMeanFinder : ITransientDependency
+    public interface IMeanFinder
     {
         Task<Maybe<string>> Find(string text);
-
-        event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
     }
 }

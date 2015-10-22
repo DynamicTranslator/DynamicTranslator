@@ -1,6 +1,7 @@
 ﻿namespace Dynamic.Tureng.Translator.Orchestrators.Observables
 {
     using System;
+    using System.Linq;
     using System.Reactive;
     using System.Windows;
     using Dynamic.Translator.Core.Config;
@@ -24,7 +25,7 @@
             this.meanFinderFactory = IocManager.Instance.Resolve<IMeanFinderFactory>();
         }
 
-        public void OnNext(EventPattern<object> value)
+        public async void OnNext(EventPattern<object> value)
         {
             if (!Clipboard.ContainsText()) return;
 
@@ -45,7 +46,19 @@
                 {
                     if (!string.IsNullOrEmpty(this._configurations.ApiKey))
                     {
-                        var item = this.meanFinderFactory.GetFinders();
+                        string mean = null;
+
+                        foreach (var finder in this.meanFinderFactory.GetFinders())
+                        {
+                            mean += (await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First();
+                        }
+
+                        this.translator.WhenNotificationAddEventInvoker(this, new WhenNotificationAddEventArgs
+                        {
+                            Title = this.currentString,
+                            ImageUrl = ImageUrls.NotificationUrl,
+                            Message = mean
+                        });
                     }
                     else
                     {

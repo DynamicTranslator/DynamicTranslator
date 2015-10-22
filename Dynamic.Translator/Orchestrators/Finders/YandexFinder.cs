@@ -1,25 +1,25 @@
 ﻿namespace Dynamic.Tureng.Translator.Orchestrators.Finders
 {
     using System;
+    using System.Linq;
     using System.Net;
     using System.Net.Cache;
     using System.Text;
     using System.Threading.Tasks;
     using Dynamic.Translator.Core;
     using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Dependency.Markers;
     using Dynamic.Translator.Core.Orchestrators;
-    using Observables;
+    using Dynamic.Translator.Core.ViewModel.Constants;
 
-    public class YandexFinder : IMeanFinder 
+    public class YandexFinder : IMeanFinder
     {
-        private readonly IMeanOrganizer meanOrganizer;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
         private readonly IStartupConfiguration startupConfiguration;
 
-        public YandexFinder(IStartupConfiguration startupConfiguration, IMeanOrganizer meanFinder)
+        public YandexFinder(IStartupConfiguration startupConfiguration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             this.startupConfiguration = startupConfiguration;
-            this.meanOrganizer = meanFinder;
+            this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
         public async Task<Maybe<string>> Find(string text)
@@ -35,12 +35,11 @@
             };
 
             var compositeMean = await yandexClient.DownloadStringTaskAsync(address);
-            var mean = await this.meanOrganizer.OrganizeMean(compositeMean);
+            var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
+            var mean = await organizer.OrganizeMean(compositeMean);
 
             return mean;
         }
-
-        public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
 
         private string GetPostData(string fromLanguage, string toLanguage, string content)
         {

@@ -7,11 +7,14 @@
     using System.Text;
     using System.Threading.Tasks;
     using Dynamic.Translator.Core;
+    using Dynamic.Translator.Core.Dependency.Markers;
     using Dynamic.Translator.Core.Orchestrators;
+    using Dynamic.Translator.Core.ViewModel.Constants;
     using HtmlAgilityPack;
 
-    public class TurengMeanOrganizer : IMeanOrganizer
+    public class TurengMeanOrganizer : IMeanOrganizer, ITransientDependency
     {
+        public TranslatorType TranslatorType => TranslatorType.TURENG;
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
             try

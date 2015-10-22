@@ -3,24 +3,24 @@
     #region
 
     using System;
+    using System.Linq;
     using System.Net;
     using System.Net.Cache;
     using System.Text;
     using System.Threading.Tasks;
     using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Dependency.Markers;
     using Dynamic.Translator.Core.Orchestrators;
-    using Observables;
+    using Dynamic.Translator.Core.ViewModel.Constants;
 
     #endregion
 
     public class TurengFinder : IMeanFinder
     {
-        private readonly IMeanOrganizer meanOrganizer;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public TurengFinder(IMeanOrganizer meanOrganizer)
+        public TurengFinder(IMeanOrganizerFactory meanOrganizerFactory)
         {
-            this.meanOrganizer = meanOrganizer;
+            this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
         public async Task<Maybe<string>> Find(string text)
@@ -41,7 +41,8 @@
             turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
             turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
             var compositeMean = await turenClient.DownloadStringTaskAsync(new Uri(address1 + text));
-            return await this.meanOrganizer.OrganizeMean(compositeMean);
+            var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
+            return await organizer.OrganizeMean(compositeMean);
         }
 
         public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;

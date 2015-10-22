@@ -4,10 +4,14 @@
     using System.Threading.Tasks;
     using System.Xml;
     using Dynamic.Translator.Core;
+    using Dynamic.Translator.Core.Dependency.Markers;
     using Dynamic.Translator.Core.Orchestrators;
+    using Dynamic.Translator.Core.ViewModel.Constants;
 
-    public class YandexMeanOrganizer : IMeanOrganizer
+    public class YandexMeanOrganizer : IMeanOrganizer, ITransientDependency
     {
+        public TranslatorType TranslatorType => TranslatorType.YANDEX;
+
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
             try

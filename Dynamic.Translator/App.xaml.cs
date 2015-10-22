@@ -28,7 +28,16 @@
             IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>(DependencyLifeStyle.Transient);
             IocManager.Instance.Register<Notifications>(DependencyLifeStyle.Transient);
 
-            IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Tureng.Translator"));
+            IocManager.Instance.Register<IMeanFinder, SesliSozlukFinder>();
+            IocManager.Instance.Register<IMeanFinder, TurengFinder>();
+            IocManager.Instance.Register<IMeanFinder, YandexFinder>();
+ 
+
+            IocManager.Instance.Register<IMeanOrganizer, SesliSozlukMeanOrganizer>();
+            IocManager.Instance.Register<IMeanOrganizer, TurengMeanOrganizer>();
+            IocManager.Instance.Register<IMeanOrganizer, YandexMeanOrganizer>();
+
+            
             IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Translator.Core"));
 
             var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();

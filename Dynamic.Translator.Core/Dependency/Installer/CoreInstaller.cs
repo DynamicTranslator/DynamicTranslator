@@ -19,7 +19,8 @@
 
             container.Register(
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
-                Component.For<IMeanFinderFactory>().AsFactory()
+                Component.For<IMeanFinderFactory>().AsFactory(),
+                Component.For<IMeanOrganizerFactory>().AsFactory()
                 );
         }
     }

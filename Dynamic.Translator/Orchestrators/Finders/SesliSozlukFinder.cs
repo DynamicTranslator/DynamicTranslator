@@ -3,17 +3,19 @@
     using System;
     using System.Threading.Tasks;
     using Dynamic.Translator.Core;
-    using Dynamic.Translator.Core.Dependency.Markers;
     using Dynamic.Translator.Core.Orchestrators;
-    using Observables;
 
-    public class SesliSozlukFinder :IMeanFinder 
+    public class SesliSozlukFinder : IMeanFinder
     {
-        public Task<Maybe<string>> Find(string text)
+        private IMeanOrganizerFactory meanOrganizerFactory;
+        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory)
         {
-            throw new System.NotImplementedException();
+            this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
+        public async Task<Maybe<string>> Find(string text)
+        {
+            return new Maybe<string>();
+        }
     }
 }
