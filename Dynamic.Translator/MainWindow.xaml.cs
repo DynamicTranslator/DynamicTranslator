@@ -8,9 +8,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
-    using System.Windows.Threading;
     using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Dependency;
     using Dynamic.Translator.Core.Dependency.Manager;
     using Dynamic.Translator.Core.Orchestrators;
     using Orchestrators;
@@ -25,7 +23,8 @@
         private readonly GrowlNotifiactions _growNotifications;
         private CancellationToken cancellationToken;
         private CancellationTokenSource cancellationTokenSource;
-        private bool isViewing;
+        private bool isRunning;
+        private ITranslator translator;
 
         public MainWindow()
         {
@@ -37,7 +36,6 @@
             this._growNotifications.Top = SystemParameters.WorkArea.Top + this._configurations.TopOffset;
             this._growNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this._configurations.LeftOffset;
             this._growNotifications.OnDispose += ClearAllNotifications;
-            Application.Current.DispatcherUnhandledException += this.HandleUnhandledException;
         }
 
         private static void ClearAllNotifications(object sender, EventArgs args)
@@ -49,12 +47,6 @@
             growl.Notifications.Clear();
             GC.SuppressFinalize(growl);
             growl.IsDisposed = true;
-        }
-
-        private void HandleUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
-            //e.Dispatcher.Invoke(() => Application.Current.Run());
         }
 
         protected override void OnClosed(EventArgs e)
@@ -89,53 +81,51 @@
             }, this.cancellationToken);
         }
 
-        private async void btnSwitch_Click(object sender, RoutedEventArgs e)
+        private void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
-            var translator = new Translator(this);
-            var translatorEvents = Observable
-                .FromEventPattern(
-                    h => translator.WhenClipboardContainsTextEventHandler += h,
-                    h => translator.WhenClipboardContainsTextEventHandler -= h);
-
-            var notifierEvents = Observable
-                .FromEventPattern<WhenNotificationAddEventArgs>(
-                    h => translator.WhenNotificationAddEventHandler += h,
-                    h => translator.WhenNotificationAddEventHandler -= h);
-
-            translatorEvents.Subscribe(new Finder(translator));
-            notifierEvents.Subscribe(new Notifier(translator, this._growNotifications));
-
-
-            if (!this.isViewing)
+            if (this.isRunning)
             {
-                this.BtnSwitch.Content = "Stop Translator";
-            }
-            else
-            {
+                this.BtnSwitch.Content = "Start Translator";
                 if (this.cancellationToken.CanBeCanceled)
                 {
                     this.cancellationTokenSource.Cancel();
                 }
+                this.isRunning = false;
+                if (this.translator.IsInitialized)
+                {
+                    this.translator.Dispose();
+                }
+                this.RichCurrentText.Document.Blocks.Clear();
+            }
+            else
+            {
+                if (!this.translator.IsInitialized)
+                {
+                    this.translator.Initialize();
+                }
 
-                this.BtnSwitch.Content = "Start Translator";
+                this.isRunning = true;
+                this.BtnSwitch.Content = "Stop Translator";
             }
         }
 
-
-        private void WindowLoaded1(object sender, RoutedEventArgs e)
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            // this will make minimize restore of notifications too
-            //_growNotifications.Owner = GetWindow(this);
-        }
+            this.translator = new Translator(this);
+            this.translator.Initialize();
+            var translatorEvents = Observable
+                .FromEventPattern(
+                    h => this.translator.WhenClipboardContainsTextEventHandler += h,
+                    h => this.translator.WhenClipboardContainsTextEventHandler -= h);
+
+            var notifierEvents = Observable
+                .FromEventPattern<WhenNotificationAddEventArgs>(
+                    h => this.translator.WhenNotificationAddEventHandler += h,
+                    h => this.translator.WhenNotificationAddEventHandler -= h);
 
 
-        private void CloseCbViewer()
-        {
-            //Win32.ChangeClipboardChain(this.hWndSource.Handle, this.hWndNextViewer);
-            //this.hWndNextViewer = IntPtr.Zero;
-            //this.hWndSource.RemoveHook(this.WinProc);
-            //this.RichCurrentText.Document.Blocks.Clear();
-            //this.isViewing = false;
+            translatorEvents.Subscribe(new Finder(this.translator));
+            notifierEvents.Subscribe(new Notifier(this.translator, this._growNotifications));
         }
     }
 }

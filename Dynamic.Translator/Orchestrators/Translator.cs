@@ -4,36 +4,47 @@
     using System.Windows.Interop;
     using Dynamic.Translator.Core.Extensions;
     using Dynamic.Translator.Core.Orchestrators;
-    using Observables;
     using Utility;
 
     public class Translator : ITranslator
     {
+        private readonly MainWindow mainWindow;
         private IntPtr hWndNextViewer;
+        private HwndSource hWndSource;
 
         public Translator(MainWindow mainWindow)
         {
             if (mainWindow == null)
                 throw new ArgumentNullException(nameof(mainWindow));
 
-            var wih = new WindowInteropHelper(mainWindow);
-            this.HWndSource = HwndSource.FromHwnd(wih.Handle);
+            this.mainWindow = mainWindow;
+        }
 
-            var source = this.HWndSource;
+
+        public bool IsInitialized { get; set; }
+
+        public void Initialize()
+        {
+            var wih = new WindowInteropHelper(this.mainWindow);
+            this.hWndSource = HwndSource.FromHwnd(wih.Handle);
+            var source = this.hWndSource;
             if (source != null)
             {
                 source.AddHook(this.WinProc); // start processing window messages
                 this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
+            this.IsInitialized = true;
         }
 
-        public HwndSource HWndSource { get; }
-
-        public void Initialize()
+        public void Dispose()
         {
+            Win32.ChangeClipboardChain(this.hWndSource.Handle, this.hWndNextViewer);
+            this.hWndNextViewer = IntPtr.Zero;
+            this.hWndSource.RemoveHook(this.WinProc);
+            this.IsInitialized = false;
         }
 
-        public void WhenNotificationAddEventInvoker(object sender, WhenNotificationAddEventArgs eventArgs)
+        public void AddNotificationEvent(object sender, WhenNotificationAddEventArgs eventArgs)
         {
             this.WhenNotificationAddEventHandler.InvokeSafely(this, eventArgs);
         }
@@ -41,6 +52,7 @@
         public event EventHandler WhenClipboardContainsTextEventHandler;
 
         public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
+
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

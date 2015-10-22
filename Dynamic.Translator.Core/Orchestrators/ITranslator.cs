@@ -5,10 +5,16 @@
 
     public interface ITranslator : ISingletonDependency
     {
+        bool IsInitialized { get; set; }
+
         void Initialize();
 
-        void WhenNotificationAddEventInvoker(object sender, WhenNotificationAddEventArgs eventArgs);
+        void Dispose();
+
+        void AddNotificationEvent(object sender, WhenNotificationAddEventArgs eventArgs);
 
         event EventHandler WhenClipboardContainsTextEventHandler;
+
+        event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
     }
 }

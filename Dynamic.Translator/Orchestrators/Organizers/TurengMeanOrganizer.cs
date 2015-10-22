@@ -56,7 +56,7 @@
                     break;
                 }
 
-                return new Maybe<string>(output.ToString().ToLower());
+                return new Maybe<string>(output.ToString().ToLower().Trim());
             }
             catch (Exception)
             {

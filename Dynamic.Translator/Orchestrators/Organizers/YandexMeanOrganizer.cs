@@ -23,7 +23,7 @@
                 var node = doc.SelectSingleNode("//Translation/text");
                 var output = node?.InnerText ?? "!!! An error occured";
 
-                return new Maybe<string>(output.ToLower());
+                return new Maybe<string>(output.ToLower().Trim());
             }
             catch (Exception)
             {

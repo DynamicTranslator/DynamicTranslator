@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Reactive;
+    using System.Text;
     using System.Windows;
     using Dynamic.Translator.Core.Config;
     using Dynamic.Translator.Core.Dependency.Manager;
@@ -35,7 +36,7 @@
                 this.previousString = this.currentString;
                 if (this.currentString.Length > this._configurations.SearchableCharacterLimit)
                 {
-                    this.translator.WhenNotificationAddEventInvoker(this, new WhenNotificationAddEventArgs
+                    this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
                     {
                         Message = "You have exceed maximum character limit",
                         ImageUrl = ImageUrls.NotificationUrl,
@@ -46,23 +47,26 @@
                 {
                     if (!string.IsNullOrEmpty(this._configurations.ApiKey))
                     {
-                        string mean = null;
+                        var mean = new StringBuilder();
 
                         foreach (var finder in this.meanFinderFactory.GetFinders())
                         {
-                            mean += (await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First();
+                            mean.Append((await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First().Trim());
                         }
 
-                        this.translator.WhenNotificationAddEventInvoker(this, new WhenNotificationAddEventArgs
+                        if (!string.IsNullOrEmpty(mean.ToString()))
                         {
-                            Title = this.currentString,
-                            ImageUrl = ImageUrls.NotificationUrl,
-                            Message = mean
-                        });
+                            this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
+                            {
+                                Title = this.currentString,
+                                ImageUrl = ImageUrls.NotificationUrl,
+                                Message = mean.ToString()
+                            });
+                        }
                     }
                     else
                     {
-                        this.translator.WhenNotificationAddEventInvoker(this, new WhenNotificationAddEventArgs
+                        this.translator.AddNotificationEvent(this, new WhenNotificationAddEventArgs
                         {
                             Title = Titles.Warning,
                             ImageUrl = ImageUrls.NotificationUrl,
