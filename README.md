@@ -1,6 +1,14 @@
 # DynamicTranslator
 While you are reading a pdf or something, when you press the "Control + C",  "Dynamic Translator" immediately detect the your word and translates it.
 
+###Latest News
+You are not using Control + C (it's optional) and DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
+
+####Instantly detect text
+
+
+
+
 ###In Turkish
 Bilindiği gibi Tureng sözlük bize bir api sağlamamakta, yeni yapılan geliştirmeyle, sözcük ilk başta Tureng'e gidip sitede sözcüğü aratıp çıkan sonuçları Toast notification'da göstermektedir. Orda bulamazsa Yandex'e gidip arama yapıyor.
 
