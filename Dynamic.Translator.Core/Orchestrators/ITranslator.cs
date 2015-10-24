@@ -3,13 +3,11 @@
     using System;
     using Dependency.Markers;
 
-    public interface ITranslator : ISingletonDependency
+    public interface ITranslator : ISingletonDependency , IDisposable
     {
         bool IsInitialized { get; set; }
 
         void Initialize();
-
-        void Dispose();
 
         void AddNotification(string title, string imageUrl, string message);
 

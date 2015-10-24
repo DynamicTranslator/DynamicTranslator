@@ -1,12 +1,15 @@
 ﻿namespace Dynamic.Translator.Orchestrators
 {
     using System;
+    using System.Runtime.Remoting.Channels;
     using System.Windows;
+    using System.Windows.Forms;
     using System.Windows.Interop;
     using Core.Config;
     using Core.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel;
+    using Gma.System.MouseKeyHook;
     using Utility;
 
     public class Translator : ITranslator
@@ -14,8 +17,10 @@
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IStartupConfiguration startupConfiguration;
+        private readonly IKeyboardMouseEvents globalMouseHook;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
+        private bool isMouseDown;
 
         public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
@@ -31,6 +36,7 @@
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
+            this.globalMouseHook = Hook.GlobalEvents();
         }
 
         public bool IsInitialized { get; set; }
@@ -46,9 +52,32 @@
                 this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
             this.IsInitialized = true;
+            this.globalMouseHook.MouseDoubleClick += this.MouseDoubleClicked;
+            this.globalMouseHook.MouseDown += this.MouseDown;
+            this.globalMouseHook.MouseUp += this.MouseUp;
             this.growlNotifications.OnDispose += ClearAllNotifications;
             this.growlNotifications.Top = SystemParameters.WorkArea.Top + this.startupConfiguration.TopOffset;
             this.growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this.startupConfiguration.LeftOffset;
+        }
+
+        private void MouseUp(object sender, MouseEventArgs e)
+        {
+            if (this.isMouseDown)
+            {
+                SendKeys.SendWait("^c");
+                this.isMouseDown = false;
+            }
+            this.isMouseDown = false;
+        }
+
+        private void MouseDown(object sender, MouseEventArgs e)
+        {
+            this.isMouseDown = true;
+        }
+
+        private void MouseDoubleClicked(object sender, MouseEventArgs e)
+        {
+            SendKeys.SendWait("^c");
         }
 
         public void Dispose()
@@ -84,6 +113,8 @@
             GC.SuppressFinalize(growl);
             growl.IsDisposed = true;
         }
+
+
 
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
