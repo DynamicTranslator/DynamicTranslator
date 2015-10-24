@@ -13,9 +13,9 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<Maybe<string>> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
-            return new Maybe<string>();
+            return new TranslateResult();
         }
     }
 }

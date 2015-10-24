@@ -13,7 +13,7 @@
             this.translator = translator;
         }
 
-        public void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
+        public async void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
         {
             this.translator.AddNotification(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }

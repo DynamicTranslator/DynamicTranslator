@@ -2,6 +2,7 @@
 {
     #region using
 
+    using System;
     using System.Reflection;
     using System.Windows;
     using Core.Config;
@@ -12,6 +13,7 @@
     using Core.ViewModel;
     using Core.ViewModel.Interfaces;
     using Orchestrators.Finders;
+    using Orchestrators.Observables;
     using Orchestrators.Organizers;
 
     #endregion
@@ -24,7 +26,11 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
             IocManager.Instance.AddConventionalRegistrar(new BasicConventionalRegistrar());
+
+            IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Translator.Core"));
+
             IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>(DependencyLifeStyle.Transient);
             IocManager.Instance.Register<Notifications>(DependencyLifeStyle.Transient);
 
@@ -37,8 +43,9 @@
             IocManager.Instance.Register<IMeanOrganizer, TurengMeanOrganizer>();
             IocManager.Instance.Register<IMeanOrganizer, YandexMeanOrganizer>();
 
-
-            IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Translator.Core"));
+          
+            IocManager.Instance.Register(typeof(IObserver<>), typeof(Finder));
+            IocManager.Instance.Register(typeof(IObserver<>), typeof(Notifier));
 
             var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
             configurations.Initialize();

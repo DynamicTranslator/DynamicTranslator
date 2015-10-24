@@ -7,6 +7,7 @@
     using Castle.MicroKernel.SubSystems.Configuration;
     using Castle.Windsor;
     using Config;
+    using Interceptors;
     using Orchestrators;
 
     #endregion
@@ -16,6 +17,7 @@
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.AddFacility<TypedFactoryFacility>();
+            container.AddFacility<TextGuardConvention>();
 
             container.Register(
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,

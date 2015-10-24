@@ -73,6 +73,9 @@
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
+    <Compile Include="Dependency\Installer\TextGuardConvention.cs" />
+    <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
     <Compile Include="Dependency\Markers\DependencyLifeStyle.cs" />
     <Compile Include="Dependency\DisposableDependencyObjectWrapperOfT.cs" />
     <Compile Include="Dependency\IConventionalDependencyRegistrar.cs" />
@@ -88,8 +91,11 @@
     <Compile Include="Dependency\Extensions\IocResolverExtensions.cs" />
     <Compile Include="Dependency\Markers\ISingletonDependency.cs" />
     <Compile Include="Dependency\Markers\ITransientDependency.cs" />
+    <Compile Include="Exception\ApiKeyNullException.cs" />
+    <Compile Include="Exception\MaximumCharacterLimitException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Maybe.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
@@ -97,7 +103,9 @@
     <Compile Include="Orchestrators\IMeanOrganizer.cs" />
     <Compile Include="Orchestrators\IMeanOrganizerFactory.cs" />
     <Compile Include="Orchestrators\ITranslator.cs" />
+    <Compile Include="Orchestrators\ObserverBase.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
+    <Compile Include="Orchestrators\TranslateResult.cs" />
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />

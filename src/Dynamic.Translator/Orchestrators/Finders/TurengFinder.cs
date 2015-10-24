@@ -8,7 +8,6 @@
     using System.Net.Cache;
     using System.Text;
     using System.Threading.Tasks;
-    using Core;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
@@ -23,7 +22,7 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<Maybe<string>> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
             var address1 = "http://tureng.com/search/";
             var turenClient = new WebClient
@@ -42,9 +41,10 @@
             turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
             var compositeMean = await turenClient.DownloadStringTaskAsync(new Uri(address1 + text));
             var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
-            return await organizer.OrganizeMean(compositeMean);
+            var mean = await organizer.OrganizeMean(compositeMean);
+
+            return new TranslateResult(true, mean);
         }
 
-        public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
     }
 }

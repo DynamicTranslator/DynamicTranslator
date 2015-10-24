@@ -5,24 +5,24 @@
     using System.Reactive;
     using System.Text;
     using System.Windows;
-    using Core.Config;
     using Core.Dependency.Manager;
+    using Core.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
     public class Finder : IObserver<EventPattern<object>>
     {
-        private readonly IStartupConfiguration _configurations;
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly ITranslator translator;
-
         private string currentString;
-        private string previousString;
+
 
         public Finder(ITranslator translator)
         {
+            if (translator == null)
+                throw new ArgumentNullException(nameof(translator));
+
             this.translator = translator;
-            this._configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
             this.meanFinderFactory = IocManager.Instance.Resolve<IMeanFinderFactory>();
         }
 
@@ -30,44 +30,36 @@
         {
             if (!Clipboard.ContainsText()) return;
 
-            this.currentString = Clipboard.GetText();
-            if (this.previousString != this.currentString)
+            this.currentString = Clipboard.GetText().RemoveSpecialCharacters();
+
+            var mean = new StringBuilder();
+
+            foreach (var finder in this.meanFinderFactory.GetFinders())
             {
-                this.previousString = this.currentString;
-                if (this.currentString.Length > this._configurations.SearchableCharacterLimit)
+                var result = await finder.Find(this.currentString);
+                if (result.IsSucess)
                 {
-                    this.translator.AddNotification(Titles.MaximumLimit, ImageUrls.NotificationUrl, "You have exceed maximum character limit");
+                    mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(this._configurations.ApiKey))
-                    {
-                        var mean = new StringBuilder();
-
-                        foreach (var finder in this.meanFinderFactory.GetFinders())
-                        {
-                            mean.AppendLine((await finder.Find(this.currentString)).DefaultIfEmpty(string.Empty).First().Trim());
-                        }
-
-                        if (!string.IsNullOrEmpty(mean.ToString()))
-                        {
-                            var means = mean.ToString().Split('\r')
-                                 .Select(x => x.Trim())
-                                 .Where(s => s != string.Empty && s != this.currentString.Trim())
-                                 .Distinct()
-                                 .ToList();
-
-                            mean.Clear();
-                            means.ForEach(m => mean.AppendLine(m));
-
-                            this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
-                        }
-                    }
-                    else
-                    {
-                        this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, "The Api Key cannot be NULL !");
-                    }
+                    this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                    break;
                 }
+            }
+
+            if (!string.IsNullOrEmpty(mean.ToString()))
+            {
+                var means = mean.ToString().Split('\r')
+                    .Select(x => x.Trim())
+                    .Where(s => s != string.Empty && s != this.currentString.Trim())
+                    .Distinct()
+                    .ToList();
+
+                mean.Clear();
+                means.ForEach(m => mean.AppendLine(m));
+
+                this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
             }
         }
 

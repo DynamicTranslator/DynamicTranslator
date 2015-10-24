@@ -106,7 +106,7 @@
             });
         }
 
-        private static void ClearAllNotifications(object sender, EventArgs args)
+        private void ClearAllNotifications(object sender, EventArgs args)
         {
             var growl = sender as GrowlNotifiactions;
             if (growl == null) return;
@@ -116,9 +116,6 @@
             GC.SuppressFinalize(growl);
             growl.IsDisposed = true;
         }
-
-
-
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {

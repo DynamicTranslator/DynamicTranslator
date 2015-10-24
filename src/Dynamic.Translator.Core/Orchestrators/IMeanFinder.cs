@@ -4,6 +4,6 @@
 
     public interface IMeanFinder
     {
-        Task<Maybe<string>> Find(string text);
+        Task<TranslateResult> Find(string text);
     }
 }

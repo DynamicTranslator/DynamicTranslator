@@ -22,7 +22,7 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<Maybe<string>> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
             var address = new Uri(string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
                                                 this.GetPostData(this.startupConfiguration.LanguageMap[this.startupConfiguration.FromLanguage],
@@ -38,7 +38,7 @@
             var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
             var mean = await organizer.OrganizeMean(compositeMean);
 
-            return mean;
+            return new TranslateResult(true, mean);
         }
 
         private string GetPostData(string fromLanguage, string toLanguage, string content)
