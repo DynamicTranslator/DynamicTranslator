@@ -87,6 +87,9 @@
             this.hWndSource.RemoveHook(this.WinProc);
             this.IsInitialized = false;
             this.growlNotifications.OnDispose -= ClearAllNotifications;
+            this.globalMouseHook.MouseDoubleClick -= this.MouseDoubleClicked;
+            this.globalMouseHook.MouseDown -= this.MouseDown;
+            this.globalMouseHook.MouseUp -= this.MouseUp;
         }
 
         public event EventHandler WhenClipboardContainsTextEventHandler;
