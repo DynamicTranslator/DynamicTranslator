@@ -10,11 +10,12 @@ You are not using Control + C (it's optional) no longer and DynamicTranslator de
 
 ###In Turkish
 Bilindiği gibi Tureng sözlük bize bir api sağlamamakta, yeni yapılan geliştirmeyle, sözcük ilk başta Tureng'e gidip sitede sözcüğü aratıp çıkan sonuçları Toast notification'da göstermektedir. Orda bulamazsa Yandex'e gidip arama yapıyor.
-        Başvurulan sözlükler;
+
+###Başvurulan sözlükler
         
-        ##### Tureng
-        ##### Yandex
-        ##### Sesli Sozluk (yapım aşamasında)
+#### Tureng
+#### Yandex
+#### Sesli Sozluk (yapım aşamasında)
         
 
 ### Project Information and The Goal
