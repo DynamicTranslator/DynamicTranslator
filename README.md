@@ -10,6 +10,12 @@ You are not using Control + C (it's optional) no longer and DynamicTranslator de
 
 ###In Turkish
 Bilindiği gibi Tureng sözlük bize bir api sağlamamakta, yeni yapılan geliştirmeyle, sözcük ilk başta Tureng'e gidip sitede sözcüğü aratıp çıkan sonuçları Toast notification'da göstermektedir. Orda bulamazsa Yandex'e gidip arama yapıyor.
+        Başvurulan sözlükler;
+        
+        ##### Tureng
+        ##### Yandex
+        ##### Sesli Sozluk (yapım aşamasında)
+        
 
 ### Project Information and The Goal
 This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while PDF Ebook reading mostly.Project is small but very useful (at least me :)) I hope this useful for you.
