@@ -104,6 +104,7 @@
     <Compile Include="Orchestrators\IMeanOrganizerFactory.cs" />
     <Compile Include="Orchestrators\ITranslator.cs" />
     <Compile Include="Orchestrators\ObserverBase.cs" />
+    <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
     <Compile Include="Orchestrators\TranslateResult.cs" />
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />

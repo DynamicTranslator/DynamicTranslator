@@ -4,13 +4,13 @@
     using System.Linq;
     using System.Reactive;
     using System.Text;
-    using System.Windows;
+    using System.Threading.Tasks;
     using Core.Dependency.Manager;
     using Core.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
-    public class Finder : IObserver<EventPattern<object>>
+    public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>
     {
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly ITranslator translator;
@@ -26,17 +26,17 @@
             this.meanFinderFactory = IocManager.Instance.Resolve<IMeanFinderFactory>();
         }
 
-        public async void OnNext(EventPattern<object> value)
+        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            if (!Clipboard.ContainsText()) return;
-
-            this.currentString = Clipboard.GetText().RemoveSpecialCharacters();
+            this.currentString = value.EventArgs.CurrentString.RemoveSpecialCharacters();
 
             var mean = new StringBuilder();
 
-            foreach (var finder in this.meanFinderFactory.GetFinders())
+            var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(this.currentString));
+            var results = await Task.WhenAll(tasks);
+
+            foreach (var result in results)
             {
-                var result = await finder.Find(this.currentString);
                 if (result.IsSucess)
                 {
                     mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());

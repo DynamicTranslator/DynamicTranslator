@@ -9,7 +9,6 @@
     {
         private readonly IStartupConfiguration configuration;
         private string currentString;
-        private string previousString;
 
         public TextGuardInterceptor(IStartupConfiguration configuration)
         {
@@ -22,23 +21,18 @@
             {
                 this.currentString = invocation.Arguments[0].ToString();
 
-                if (this.previousString != this.currentString)
+                if (this.currentString.Length > this.configuration.SearchableCharacterLimit)
                 {
-                    this.previousString = this.currentString;
+                    throw new MaximumCharacterLimitException("You have exceed maximum character limit");
+                }
 
-                    if (this.currentString.Length > this.configuration.SearchableCharacterLimit)
-                    {
-                        throw new MaximumCharacterLimitException("You have exceed maximum character limit");
-                    }
-
-                    if (!string.IsNullOrEmpty(this.configuration.ApiKey))
-                    {
-                        invocation.Proceed();
-                    }
-                    else
-                    {
-                        throw new ApiKeyNullException("The Api Key cannot be NULL !");
-                    }
+                if (!string.IsNullOrEmpty(this.configuration.ApiKey))
+                {
+                    invocation.Proceed();
+                }
+                else
+                {
+                    throw new ApiKeyNullException("The Api Key cannot be NULL !");
                 }
             }
         }

@@ -63,7 +63,7 @@
                 IocManager.Instance.Resolve<IStartupConfiguration>());
 
             var translatorEvents = Observable
-                .FromEventPattern(
+                .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => this.translator.WhenClipboardContainsTextEventHandler += h,
                     h => this.translator.WhenClipboardContainsTextEventHandler -= h);
 

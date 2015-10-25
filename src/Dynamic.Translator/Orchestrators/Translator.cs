@@ -1,7 +1,6 @@
 ﻿namespace Dynamic.Translator.Orchestrators
 {
     using System;
-    using System.Runtime.Remoting.Channels;
     using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Interop;
@@ -11,16 +10,20 @@
     using Core.ViewModel;
     using Gma.System.MouseKeyHook;
     using Utility;
+    using Clipboard = System.Windows.Clipboard;
+    using Point = System.Drawing.Point;
 
     public class Translator : ITranslator
     {
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IStartupConfiguration startupConfiguration;
-        private readonly IKeyboardMouseEvents globalMouseHook;
+        private IKeyboardMouseEvents globalMouseHook;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
         private bool isMouseDown;
+        private Point mouseFirstPoint;
+        private Point mouseSecondPoint;
 
         public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
@@ -36,7 +39,6 @@
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
-            this.globalMouseHook = Hook.GlobalEvents();
         }
 
         public bool IsInitialized { get; set; }
@@ -45,39 +47,20 @@
         {
             var wih = new WindowInteropHelper(this.mainWindow);
             this.hWndSource = HwndSource.FromHwnd(wih.Handle);
+            this.globalMouseHook = Hook.GlobalEvents();
             var source = this.hWndSource;
             if (source != null)
             {
                 source.AddHook(this.WinProc); // start processing window messages
                 this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
-            this.IsInitialized = true;
             this.globalMouseHook.MouseDoubleClick += this.MouseDoubleClicked;
             this.globalMouseHook.MouseDown += this.MouseDown;
             this.globalMouseHook.MouseUp += this.MouseUp;
-            this.growlNotifications.OnDispose += ClearAllNotifications;
+            this.growlNotifications.OnDispose += this.ClearAllNotifications;
             this.growlNotifications.Top = SystemParameters.WorkArea.Top + this.startupConfiguration.TopOffset;
             this.growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this.startupConfiguration.LeftOffset;
-        }
-
-        private void MouseUp(object sender, MouseEventArgs e)
-        {
-            if (this.isMouseDown)
-            {
-                SendKeys.SendWait("^c");
-                this.isMouseDown = false;
-            }
-            this.isMouseDown = false;
-        }
-
-        private void MouseDown(object sender, MouseEventArgs e)
-        {
-            this.isMouseDown = true;
-        }
-
-        private void MouseDoubleClicked(object sender, MouseEventArgs e)
-        {
-            SendKeys.SendWait("^c");
+            this.IsInitialized = true;
         }
 
         public void Dispose()
@@ -86,13 +69,13 @@
             this.hWndNextViewer = IntPtr.Zero;
             this.hWndSource.RemoveHook(this.WinProc);
             this.IsInitialized = false;
-            this.growlNotifications.OnDispose -= ClearAllNotifications;
+            this.growlNotifications.OnDispose -= this.ClearAllNotifications;
             this.globalMouseHook.MouseDoubleClick -= this.MouseDoubleClicked;
-            this.globalMouseHook.MouseDown -= this.MouseDown;
+            this.globalMouseHook.MouseDownExt -= this.MouseDown;
             this.globalMouseHook.MouseUp -= this.MouseUp;
         }
 
-        public event EventHandler WhenClipboardContainsTextEventHandler;
+        public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
         public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
 
@@ -104,6 +87,38 @@
                 Title = title,
                 Message = message
             });
+        }
+
+        private void MouseUp(object sender, MouseEventArgs e)
+        {
+            this.mouseSecondPoint = e.Location;
+            if (this.IsInitialized)
+            {
+                if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
+                {
+                    SendKeys.SendWait("^c");
+                    this.isMouseDown = false;
+                }
+                this.isMouseDown = false;
+            }
+        }
+
+        private void MouseDown(object sender, MouseEventArgs e)
+        {
+            this.mouseFirstPoint = e.Location;
+            if (this.IsInitialized)
+            {
+                this.isMouseDown = true;
+            }
+        }
+
+        private void MouseDoubleClicked(object sender, MouseEventArgs e)
+        {
+            if (this.IsInitialized)
+            {
+                this.isMouseDown = false;
+                SendKeys.SendWait("^c");
+            }
         }
 
         private void ClearAllNotifications(object sender, EventArgs args)
@@ -133,7 +148,12 @@
 
                     break;
                 case Win32.WmDrawclipboard:
-                    this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, EventArgs.Empty); //clipboard content changed
+                    if (Clipboard.ContainsText())
+                    {
+                        //clipboard content changed
+                        this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = Clipboard.GetText()});
+                          
+                    }
                     Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer
                     break;
             }

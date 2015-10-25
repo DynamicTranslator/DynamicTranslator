@@ -28,6 +28,10 @@
                     invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
                 }
             }
+            catch (Exception ex)
+            {
+                invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+            }
         }
 
         private dynamic HandleReturnAsync(IInvocation invocation, Exception ex)
