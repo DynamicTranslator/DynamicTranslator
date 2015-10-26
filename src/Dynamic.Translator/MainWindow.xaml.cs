@@ -42,7 +42,6 @@
                 {
                     this.translator.Dispose();
                 }
-                this.RichCurrentText.Document.Blocks.Clear();
             }
             else
             {

@@ -1,15 +1,15 @@
 ﻿<Window x:Class="Dynamic.Translator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dynamic.Translator" Height="271" Width="473" Loaded="MainWindow_OnLoaded" ResizeMode="CanMinimize"
+        Title="DynamicTranslator || Oğuzhan Soykan" Height="179" Width="476.999" Loaded="MainWindow_OnLoaded" ResizeMode="CanMinimize"
         Icon="Resources/dynamic-link-library 16.png">
-    <StackPanel Height="246" VerticalAlignment="Top" HorizontalAlignment="Left" Width="467"
-                RenderTransformOrigin="0.5,0.5">
+    <StackPanel
+                RenderTransformOrigin="0.5,0.5" Height="148" VerticalAlignment="Top">
         <StackPanel.RenderTransform>
             <TransformGroup>
                 <ScaleTransform />
                 <SkewTransform AngleX="-0.311" />
-                <RotateTransform />
+                <RotateTransform Angle="-0.041" />
                 <TranslateTransform X="-0.995" />
             </TransformGroup>
         </StackPanel.RenderTransform>
@@ -19,16 +19,16 @@
         <StackPanel.OpacityMask>
             <ImageBrush TileMode="Tile" ImageSource="Resources/background.png" />
         </StackPanel.OpacityMask>
-        <RichTextBox x:Name="RichCurrentText" Height="142" Margin="0,10,0,0" IsReadOnly="True" Background="White"
-                     SelectionBrush="{x:Null}" FontSize="14" Foreground="#FF8F5151" RenderTransformOrigin="0.503,0.52">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="Word" />
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <Button x:Name="BtnSwitch" Height="25" Content="Start Translator" Padding="2" Margin="0,15,134,0"
-                Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04" HorizontalAlignment="Right" Width="200" />
-        <Label x:Name="lbl_apiKey" />
+        <Button x:Name="BtnSwitch" Height="59"  Content="Start Translator" Padding="2" Margin="0,45,0,0"
+    		Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.021"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
     </StackPanel>
 </Window>
