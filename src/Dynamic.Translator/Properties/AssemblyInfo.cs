@@ -1,4 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿using System.Resources;
+// --------------------------------------------------------------------------------------------------------------------
 
 #region Using // <copyright file="AssemblyInfo.cs" company="">
 
@@ -21,12 +22,12 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Dynamic.Tureng.Translator")]
+[assembly: AssemblyTitle("Dynamic.Translator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Dynamic.Tureng.Translator")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCompany("MIT")]
+[assembly: AssemblyProduct("Dynamic.Translator")]
+[assembly: AssemblyCopyright("Copyright ©  2012 Oğuzhan Soykan")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -64,5 +65,7 @@ using System.Windows;
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("en-150")]
 
 #endregion
+
