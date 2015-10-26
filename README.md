@@ -17,7 +17,7 @@ Proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çe
         
 ##### Tureng
 ##### Yandex
-##### Sesli Sozluk (yapım aşamasında)
+##### Sesli Sozluk
         
 
 ### Project Information and The Goal
