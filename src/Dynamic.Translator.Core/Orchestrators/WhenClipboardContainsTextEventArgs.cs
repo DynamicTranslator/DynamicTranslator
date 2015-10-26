@@ -5,5 +5,6 @@
     public class WhenClipboardContainsTextEventArgs : EventArgs
     {
         public string CurrentString;
+        public bool Handled;
     }
 }

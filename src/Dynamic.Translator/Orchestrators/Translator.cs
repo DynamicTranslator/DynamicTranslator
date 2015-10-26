@@ -17,6 +17,7 @@
     {
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
+        private readonly object mouseLockObject = new object();
         private readonly IStartupConfiguration startupConfiguration;
         private IKeyboardMouseEvents globalMouseHook;
         private IntPtr hWndNextViewer;
@@ -96,8 +97,11 @@
             {
                 if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
                 {
-                    SendKeys.SendWait("^c");
-                    this.isMouseDown = false;
+                    lock (this.mouseLockObject)
+                    {
+                        SendKeys.SendWait("^c");
+                        this.isMouseDown = false;
+                    }
                 }
                 this.isMouseDown = false;
             }
@@ -108,7 +112,10 @@
             this.mouseFirstPoint = e.Location;
             if (this.IsInitialized)
             {
-                this.isMouseDown = true;
+                lock (this.mouseLockObject)
+                {
+                    this.isMouseDown = true;
+                }
             }
         }
 
@@ -116,8 +123,11 @@
         {
             if (this.IsInitialized)
             {
-                this.isMouseDown = false;
-                SendKeys.SendWait("^c");
+                lock (this.mouseLockObject)
+                {
+                    this.isMouseDown = false;
+                    SendKeys.SendWait("^c");
+                }
             }
         }
 
@@ -128,7 +138,7 @@
             if (growl.IsDisposed) return;
 
             growl.Notifications.Clear();
-            GC.SuppressFinalize(growl);
+            //GC.SuppressFinalize(growl);
             growl.IsDisposed = true;
         }
 
@@ -148,13 +158,12 @@
 
                     break;
                 case Win32.WmDrawclipboard:
+                    Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer
                     if (Clipboard.ContainsText())
                     {
                         //clipboard content changed
                         this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = Clipboard.GetText()});
-                          
                     }
-                    Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer
                     break;
             }
 

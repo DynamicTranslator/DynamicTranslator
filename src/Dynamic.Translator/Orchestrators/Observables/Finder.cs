@@ -15,7 +15,7 @@
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly ITranslator translator;
         private string currentString;
-
+        private string previousString;
 
         public Finder(ITranslator translator)
         {
@@ -30,36 +30,41 @@
         {
             this.currentString = value.EventArgs.CurrentString.RemoveSpecialCharacters();
 
-            var mean = new StringBuilder();
-
-            var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(this.currentString));
-            var results = await Task.WhenAll(tasks);
-
-            foreach (var result in results)
+            if (this.currentString != this.previousString)
             {
-                if (result.IsSucess)
+                this.previousString = this.currentString;
+
+                var mean = new StringBuilder();
+
+                var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(this.currentString));
+                var results = await Task.WhenAll(tasks);
+
+                foreach (var result in results)
                 {
-                    mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                    if (result.IsSucess)
+                    {
+                        mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                    }
+                    else
+                    {
+                        this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                        break;
+                    }
                 }
-                else
+
+                if (!string.IsNullOrEmpty(mean.ToString()))
                 {
-                    this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
-                    break;
+                    var means = mean.ToString().Split('\r')
+                        .Select(x => x.Trim())
+                        .Where(s => s != string.Empty && s != this.currentString.Trim() && s != "Translation")
+                        .Distinct()
+                        .ToList();
+
+                    mean.Clear();
+                    means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
+
+                    this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
                 }
-            }
-
-            if (!string.IsNullOrEmpty(mean.ToString()))
-            {
-                var means = mean.ToString().Split('\r')
-                    .Select(x => x.Trim())
-                    .Where(s => s != string.Empty && s != this.currentString.Trim())
-                    .Distinct()
-                    .ToList();
-
-                mean.Clear();
-                means.ForEach(m => mean.AppendLine(m));
-
-                this.translator.AddNotification(this.currentString, ImageUrls.NotificationUrl, mean.ToString());
             }
         }
 
