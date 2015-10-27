@@ -6,7 +6,7 @@
 
     #endregion
 
-    public class Notifications : ObservableCollection<Notification>
+    public class Notifications : MultiThreadObservableCollection<Notification>
     {
     }
 }

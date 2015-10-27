@@ -64,6 +64,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\DictionaryBasedConfig.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />
+    <Compile Include="ViewModel\MultiThreadObservableCollection.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
     <Compile Include="ViewModel\Constants\Titles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

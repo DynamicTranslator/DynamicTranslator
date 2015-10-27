@@ -1,14 +1,18 @@
-﻿namespace Dynamic.Translator.Orchestrators.Observables
+﻿namespace Dynamic.Translator.Orchestrators.Observers
 {
+    #region
+
     using System;
     using System.Linq;
     using System.Reactive;
     using System.Text;
     using System.Threading.Tasks;
-    using Core.Dependency.Manager;
-    using Core.Extensions;
-    using Core.Orchestrators;
-    using Core.ViewModel.Constants;
+    using Dynamic.Translator.Core.Dependency.Manager;
+    using Dynamic.Translator.Core.Extensions;
+    using Dynamic.Translator.Core.Orchestrators;
+    using Dynamic.Translator.Core.ViewModel.Constants;
+
+    #endregion
 
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>
     {
@@ -19,7 +23,9 @@
         public Finder(ITranslator translator)
         {
             if (translator == null)
+            {
                 throw new ArgumentNullException(nameof(translator));
+            }
 
             this.translator = translator;
             this.meanFinderFactory = IocManager.Instance.Resolve<IMeanFinderFactory>();
@@ -46,7 +52,8 @@
                     }
                     else
                     {
-                        this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                        await this.translator.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl,
+                            result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                         break;
                     }
                 }
@@ -62,7 +69,7 @@
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
 
-                    this.translator.AddNotification(currentString, ImageUrls.NotificationUrl, mean.ToString());
+                    await this.translator.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
                 }
             }
         }

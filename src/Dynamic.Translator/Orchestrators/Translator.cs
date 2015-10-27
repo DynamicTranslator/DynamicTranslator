@@ -1,17 +1,24 @@
 ﻿namespace Dynamic.Translator.Orchestrators
 {
+    #region
+
     using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Interop;
-    using Core.Config;
-    using Core.Extensions;
-    using Core.Orchestrators;
-    using Core.ViewModel;
+    using System.Windows.Threading;
+    using Dynamic.Translator.Core.Config;
+    using Dynamic.Translator.Core.Extensions;
+    using Dynamic.Translator.Core.Orchestrators;
+    using Dynamic.Translator.Core.ViewModel;
+    using Dynamic.Translator.Utility;
     using Gma.System.MouseKeyHook;
-    using Utility;
+    using Application = System.Windows.Application;
     using Clipboard = System.Windows.Clipboard;
     using Point = System.Drawing.Point;
+
+    #endregion
 
     public class Translator : ITranslator
     {
@@ -29,13 +36,19 @@
         public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
             if (mainWindow == null)
+            {
                 throw new ArgumentNullException(nameof(mainWindow));
+            }
 
             if (growlNotifications == null)
+            {
                 throw new ArgumentNullException(nameof(growlNotifications));
+            }
 
             if (startupConfiguration == null)
+            {
                 throw new ArgumentNullException(nameof(startupConfiguration));
+            }
 
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
@@ -99,7 +112,7 @@
                 {
                     lock (this.mouseLockObject)
                     {
-                        SendKeys.SendWait("^c");
+                        Task.Run(() => { SendKeys.SendWait("^c"); });
                         this.isMouseDown = false;
                     }
                 }
@@ -126,7 +139,7 @@
                 lock (this.mouseLockObject)
                 {
                     this.isMouseDown = false;
-                    SendKeys.SendWait("^c");
+                    Task.Run(() => { SendKeys.SendWait("^c"); });
                 }
             }
         }
@@ -134,8 +147,14 @@
         private void ClearAllNotifications(object sender, EventArgs args)
         {
             var growl = sender as GrowlNotifiactions;
-            if (growl == null) return;
-            if (growl.IsDisposed) return;
+            if (growl == null)
+            {
+                return;
+            }
+            if (growl.IsDisposed)
+            {
+                return;
+            }
 
             growl.Notifications.Clear();
             //GC.SuppressFinalize(growl);
@@ -159,10 +178,19 @@
                     break;
                 case Win32.WmDrawclipboard:
                     Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer
+                                                                                 //clipboard content changed
                     if (Clipboard.ContainsText())
                     {
-                        //clipboard content changed
-                        this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = Clipboard.GetText()});
+                        Application.Current.Dispatcher.Invoke(
+                            DispatcherPriority.Background,
+                            (Action) delegate
+                            {
+                                this.WhenClipboardContainsTextEventHandler.InvokeSafely(this,
+                                    new WhenClipboardContainsTextEventArgs { CurrentString = Clipboard.GetText() });
+
+                            });
+
+                      
                     }
                     break;
             }
