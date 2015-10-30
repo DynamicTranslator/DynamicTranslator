@@ -116,6 +116,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Topshelf, Version=3.2.150.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.3.2.0\lib\net40-full\Topshelf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="UIAComWrapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=78cbcf77433a85e5, processorArchitecture=MSIL">
       <HintPath>..\packages\UIAComWrapper.1.1.0.13\lib\net40\UIAComWrapper.dll</HintPath>
       <Private>True</Private>
