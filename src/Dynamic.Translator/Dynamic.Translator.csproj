@@ -83,10 +83,6 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Interop.UIAutomationClient, Version=12.0.20617.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\UIAComWrapper.1.1.0.13\lib\net40\Interop.UIAutomationClient.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
@@ -115,10 +111,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Topshelf, Version=3.2.150.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Topshelf.3.2.0\lib\net40-full\Topshelf.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="UIAComWrapper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=78cbcf77433a85e5, processorArchitecture=MSIL">
       <HintPath>..\packages\UIAComWrapper.1.1.0.13\lib\net40\UIAComWrapper.dll</HintPath>
