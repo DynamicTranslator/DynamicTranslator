@@ -8,12 +8,12 @@
     using System.Windows.Forms;
     using System.Windows.Interop;
     using System.Windows.Threading;
-    using Dynamic.Translator.Core.Config;
-    using Dynamic.Translator.Core.Extensions;
-    using Dynamic.Translator.Core.Orchestrators;
-    using Dynamic.Translator.Core.ViewModel;
-    using Dynamic.Translator.Utility;
+    using Core.Config;
+    using Core.Extensions;
+    using Core.Orchestrators;
+    using Core.ViewModel;
     using Gma.System.MouseKeyHook;
+    using Utility;
     using Application = System.Windows.Application;
     using Clipboard = System.Windows.Clipboard;
     using Point = System.Drawing.Point;
@@ -106,42 +106,27 @@
         private void MouseUp(object sender, MouseEventArgs e)
         {
             this.mouseSecondPoint = e.Location;
-            if (this.IsInitialized)
+
+            if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
             {
-                if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
-                {
-                    lock (this.mouseLockObject)
-                    {
-                        Task.Run(() => { SendKeys.SendWait("^c"); });
-                        this.isMouseDown = false;
-                    }
-                }
+                Task.Run(() => { SendKeys.SendWait("^c"); });
                 this.isMouseDown = false;
             }
+            this.isMouseDown = false;
         }
 
         private void MouseDown(object sender, MouseEventArgs e)
         {
             this.mouseFirstPoint = e.Location;
-            if (this.IsInitialized)
-            {
-                lock (this.mouseLockObject)
-                {
-                    this.isMouseDown = true;
-                }
-            }
+
+
+            this.isMouseDown = true;
         }
 
         private void MouseDoubleClicked(object sender, MouseEventArgs e)
         {
-            if (this.IsInitialized)
-            {
-                lock (this.mouseLockObject)
-                {
-                    this.isMouseDown = false;
-                    Task.Run(() => { SendKeys.SendWait("^c"); });
-                }
-            }
+            this.isMouseDown = false;
+            Task.Run(() => { SendKeys.SendWait("^c"); });
         }
 
         private void ClearAllNotifications(object sender, EventArgs args)
@@ -157,7 +142,6 @@
             }
 
             growl.Notifications.Clear();
-            //GC.SuppressFinalize(growl);
             growl.IsDisposed = true;
         }
 
@@ -177,20 +161,13 @@
 
                     break;
                 case Win32.WmDrawclipboard:
-                    Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer
-                                                                                 //clipboard content changed
-                    if (Clipboard.ContainsText())
+                    Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
+                    if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
                     {
                         Application.Current.Dispatcher.Invoke(
                             DispatcherPriority.Background,
-                            (Action) delegate
-                            {
-                                this.WhenClipboardContainsTextEventHandler.InvokeSafely(this,
-                                    new WhenClipboardContainsTextEventArgs { CurrentString = Clipboard.GetText() });
-
-                            });
-
-                      
+                            (Action)
+                                delegate { this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = Clipboard.GetText()}); });
                     }
                     break;
             }
