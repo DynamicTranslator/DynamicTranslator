@@ -9,7 +9,7 @@
     using Core.Dependency.Manager;
     using Core.Orchestrators;
     using Orchestrators;
-    using Orchestrators.Observables;
+    using Orchestrators.Observers;
 
     #endregion
 

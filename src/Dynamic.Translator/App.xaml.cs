@@ -13,7 +13,7 @@
     using Core.ViewModel;
     using Core.ViewModel.Interfaces;
     using Orchestrators.Finders;
-    using Orchestrators.Observables;
+    using Orchestrators.Observers;
     using Orchestrators.Organizers;
 
     #endregion

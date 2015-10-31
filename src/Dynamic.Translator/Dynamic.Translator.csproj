@@ -128,8 +128,8 @@
     <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
     <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
     <Compile Include="Orchestrators\Finders\YandexFinder.cs" />
-    <Compile Include="Orchestrators\Observables\Finder.cs" />
-    <Compile Include="Orchestrators\Observables\Notifier.cs" />
+    <Compile Include="Orchestrators\Observers\Finder.cs" />
+    <Compile Include="Orchestrators\Observers\Notifier.cs" />
     <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />

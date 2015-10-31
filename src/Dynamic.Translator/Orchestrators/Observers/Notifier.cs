@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reactive;
-    using Dynamic.Translator.Core.Orchestrators;
+    using Core.Orchestrators;
 
     public class Notifier : IObserver<EventPattern<WhenNotificationAddEventArgs>>
     {
@@ -15,7 +15,7 @@
 
         public async void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
         {
-            await this.translator.AddNotificationAsync(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
+            this.translator.AddNotification(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }
 
         public void OnError(Exception error)
