@@ -25,9 +25,7 @@
             var decoded = WebUtility.HtmlDecode(result);
             doc.LoadHtml(decoded);
             if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
-            {
                 return new Maybe<string>();
-            }
 
             foreach (var table in doc.DocumentNode.SelectNodes("//table"))
             {

@@ -45,6 +45,5 @@
 
             return new TranslateResult(true, mean);
         }
-
     }
 }

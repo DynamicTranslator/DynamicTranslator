@@ -43,9 +43,9 @@
             IocManager.Instance.Register<IMeanOrganizer, TurengMeanOrganizer>();
             IocManager.Instance.Register<IMeanOrganizer, YandexMeanOrganizer>();
 
-          
-            IocManager.Instance.Register(typeof(IObserver<>), typeof(Finder));
-            IocManager.Instance.Register(typeof(IObserver<>), typeof(Notifier));
+
+            IocManager.Instance.Register(typeof (IObserver<>), typeof (Finder));
+            IocManager.Instance.Register(typeof (IObserver<>), typeof (Notifier));
 
             var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
             configurations.Initialize();

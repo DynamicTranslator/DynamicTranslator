@@ -1,8 +1,5 @@
 ﻿namespace Dynamic.Translator.Core.Orchestrators
 {
-    using ViewModel;
-    using ViewModel.Constants;
-
     public class TranslateResult
     {
         public TranslateResult() : this(true, new Maybe<string>())

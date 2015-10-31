@@ -28,9 +28,7 @@
             set
             {
                 if (this.id == value)
-                {
                     return;
-                }
 
                 this.id = value;
                 this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Id)));
@@ -44,9 +42,7 @@
             set
             {
                 if (this.imageUrl == value)
-                {
                     return;
-                }
 
                 this.imageUrl = value;
                 this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.ImageUrl)));
@@ -60,9 +56,7 @@
             set
             {
                 if (this.message == value)
-                {
                     return;
-                }
 
                 this.message = value;
                 this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Message)));
@@ -76,9 +70,7 @@
             set
             {
                 if (this.title == value)
-                {
                     return;
-                }
 
                 this.title = value;
 

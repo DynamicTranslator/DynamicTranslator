@@ -36,19 +36,13 @@
         public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
             if (mainWindow == null)
-            {
                 throw new ArgumentNullException(nameof(mainWindow));
-            }
 
             if (growlNotifications == null)
-            {
                 throw new ArgumentNullException(nameof(growlNotifications));
-            }
 
             if (startupConfiguration == null)
-            {
                 throw new ArgumentNullException(nameof(startupConfiguration));
-            }
 
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
@@ -118,8 +112,6 @@
         private void MouseDown(object sender, MouseEventArgs e)
         {
             this.mouseFirstPoint = e.Location;
-
-
             this.isMouseDown = true;
         }
 
@@ -133,13 +125,9 @@
         {
             var growl = sender as GrowlNotifiactions;
             if (growl == null)
-            {
                 return;
-            }
             if (growl.IsDisposed)
-            {
                 return;
-            }
 
             growl.Notifications.Clear();
             growl.IsDisposed = true;
@@ -151,13 +139,9 @@
             {
                 case Win32.WmChangecbchain:
                     if (wParam == this.hWndNextViewer)
-                    {
                         this.hWndNextViewer = lParam; //clipboard viewer chain changed, need to fix it.
-                    }
                     else if (this.hWndNextViewer != IntPtr.Zero)
-                    {
                         Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
-                    }
 
                     break;
                 case Win32.WmDrawclipboard:

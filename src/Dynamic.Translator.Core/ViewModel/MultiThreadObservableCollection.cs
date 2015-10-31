@@ -15,14 +15,14 @@
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            NotifyCollectionChangedEventHandler CollectionChanged = this.CollectionChanged;
+            var CollectionChanged = this.CollectionChanged;
             if (CollectionChanged != null)
             {
                 foreach (var @delegate in CollectionChanged.GetInvocationList())
                 {
                     var nh = (NotifyCollectionChangedEventHandler) @delegate;
-                    DispatcherObject dispObj = nh.Target as DispatcherObject;
-                    Dispatcher dispatcher = dispObj?.Dispatcher;
+                    var dispObj = nh.Target as DispatcherObject;
+                    var dispatcher = dispObj?.Dispatcher;
                     if (dispatcher != null && !dispatcher.CheckAccess())
                     {
                         dispatcher.BeginInvoke(

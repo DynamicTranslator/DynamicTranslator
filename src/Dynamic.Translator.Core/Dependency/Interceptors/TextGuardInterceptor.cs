@@ -22,18 +22,12 @@
                 this.currentString = invocation.Arguments[0].ToString();
 
                 if (this.currentString.Length > this.configuration.SearchableCharacterLimit)
-                {
                     throw new MaximumCharacterLimitException("You have exceed maximum character limit");
-                }
 
                 if (!string.IsNullOrEmpty(this.configuration.ApiKey))
-                {
                     invocation.Proceed();
-                }
                 else
-                {
                     throw new ApiKeyNullException("The Api Key cannot be NULL !");
-                }
             }
         }
     }

@@ -21,7 +21,7 @@
 
             if (isDefined)
             {
-                handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
+                handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof (ExceptionInterceptor)));
                 handler.ComponentModel.Interceptors.Add(new InterceptorReference(typeof (TextGuardInterceptor)));
             }
         }

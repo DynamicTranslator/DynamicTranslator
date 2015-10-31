@@ -7,7 +7,6 @@
     using Castle.MicroKernel.SubSystems.Configuration;
     using Castle.Windsor;
     using Config;
-    using Interceptors;
     using Orchestrators;
 
     #endregion

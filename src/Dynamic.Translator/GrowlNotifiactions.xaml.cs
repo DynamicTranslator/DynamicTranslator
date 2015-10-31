@@ -46,26 +46,18 @@
         {
             notification.Id = this.count++;
             if (this.Notifications.Count + 1 > this.startupConfiguration.MaxNotifications)
-            {
                 this.buffer.Add(notification);
-            }
             else
-            {
                 this.Notifications.Add(notification);
-            }
 
             if (this.Notifications.Count > 0 && !this.IsActive)
-            {
                 this.Show();
-            }
         }
 
         public void RemoveNotification(Notification notification)
         {
             if (this.Notifications.Contains(notification))
-            {
                 this.Notifications.Remove(notification);
-            }
 
             if (this.buffer.Count > 0)
             {
@@ -85,9 +77,7 @@
         public void Dispose()
         {
             if (this.IsDisposed)
-            {
                 return;
-            }
 
             this.OnDispose.InvokeSafely(this, new EventArgs());
 
@@ -97,9 +87,7 @@
         private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (Math.Abs(e.NewSize.Height) > 0.0)
-            {
                 return;
-            }
 
             var element = sender as Grid;
             this.RemoveNotification(this.Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));

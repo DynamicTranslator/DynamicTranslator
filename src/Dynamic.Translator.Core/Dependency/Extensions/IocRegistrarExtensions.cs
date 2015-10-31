@@ -22,9 +22,7 @@
             where T : class
         {
             if (iocRegistrar.IsRegistered<T>())
-            {
                 return;
-            }
 
             iocRegistrar.Register<T>(lifeStyle);
         }
@@ -38,9 +36,7 @@
         public static void RegisterIfNot(this IIocRegistrar iocRegistrar, Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
             if (iocRegistrar.IsRegistered(type))
-            {
                 return;
-            }
 
             iocRegistrar.Register(type, lifeStyle);
         }
@@ -57,9 +53,7 @@
             where TImpl : class, TType
         {
             if (iocRegistrar.IsRegistered<TType>())
-            {
                 return;
-            }
 
             iocRegistrar.Register<TType, TImpl>(lifeStyle);
         }
@@ -75,9 +69,7 @@
         public static void RegisterIfNot(this IIocRegistrar iocRegistrar, Type type, Type impl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
             if (iocRegistrar.IsRegistered(type))
-            {
                 return;
-            }
 
             iocRegistrar.Register(type, impl, lifeStyle);
         }

@@ -4,7 +4,6 @@
 
     using System;
     using System.ComponentModel;
-    using System.Threading.Tasks;
 
     #endregion
 
@@ -59,6 +58,5 @@
         {
             eventHandler?.Invoke(sender, e);
         }
-
     }
 }

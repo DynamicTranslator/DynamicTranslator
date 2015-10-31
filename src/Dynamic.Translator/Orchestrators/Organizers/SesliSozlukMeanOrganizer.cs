@@ -23,20 +23,20 @@
                 document.LoadHtml(text);
 
                 (from x in document.DocumentNode.Descendants()
-                 where x.Name == "pre"
-                 from y in x.Descendants()
-                 where y.Name == "ol"
-                 from z in y.Descendants()
-                 where z.Name == "li"
-                 select z.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
+                    where x.Name == "pre"
+                    from y in x.Descendants()
+                    where y.Name == "ol"
+                    from z in y.Descendants()
+                    where z.Name == "li"
+                    select z.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
 
                 if (string.IsNullOrEmpty(output.ToString()))
                 {
                     (from x in document.DocumentNode.Descendants()
-                     where x.Name == "pre"
-                     from y in x.Descendants()
-                     where y.Name == "span"
-                     select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
+                        where x.Name == "pre"
+                        from y in x.Descendants()
+                        where y.Name == "span"
+                        select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
                 }
 
                 return output;

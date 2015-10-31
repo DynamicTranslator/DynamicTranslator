@@ -39,16 +39,12 @@
                 this.BtnSwitch.Content = "Start Translator";
                 this.isRunning = false;
                 if (this.translator.IsInitialized)
-                {
                     this.translator.Dispose();
-                }
             }
             else
             {
                 if (!this.translator.IsInitialized)
-                {
                     this.translator.Initialize();
-                }
 
                 this.isRunning = true;
                 this.BtnSwitch.Content = "Stop Translator";

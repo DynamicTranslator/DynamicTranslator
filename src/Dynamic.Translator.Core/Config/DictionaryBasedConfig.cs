@@ -45,9 +45,7 @@
         {
             var value = this[name];
             if (value == null)
-            {
                 return defaultValue;
-            }
 
             return this[name];
         }

@@ -41,9 +41,7 @@
                 foreach (var result in results)
                 {
                     if (result.IsSucess)
-                    {
                         mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
-                    }
                     else
                     {
                         this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
