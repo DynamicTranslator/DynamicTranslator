@@ -1,5 +1,5 @@
 # DynamicTranslator
-While you are reading a pdf or something, when you press the "Control + C",  "Dynamic Translator" immediately detect the your word and translates it.
+While you are reading a pdf or something, when you press the "Control + C"(it is not necessary anymore, DynamicTranslator detects selected texts instantly, but still working),  "Dynamic Translator" immediately detect the your word and translates it.
 
 ###Latest News
 You are not using Control + C (it's optional) no longer and DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
