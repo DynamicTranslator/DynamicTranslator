@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator
+﻿namespace Dynamic.Translator.ViewModel
 {
     #region using
 
@@ -22,12 +22,16 @@
         public MainWindow()
         {
             this.InitializeComponent();
+            this.CancellationTokenSource = new CancellationTokenSource();
         }
+
+        public CancellationTokenSource CancellationTokenSource { get; }
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
             this.Close();
+            this.CancellationTokenSource.Cancel(false);
             GC.Collect();
             GC.SuppressFinalize(this);
             Application.Current.Shutdown();
@@ -64,9 +68,9 @@
                     h => this.translator.WhenClipboardContainsTextEventHandler -= h);
 
             translatorEvents.Subscribe(new Finder(
-                    IocManager.Instance.Resolve<INotifier>(),
-                    IocManager.Instance.Resolve<IMeanFinderFactory>()
-                    ));
+                IocManager.Instance.Resolve<INotifier>(),
+                IocManager.Instance.Resolve<IMeanFinderFactory>()
+                ), this.CancellationTokenSource.Token);
         }
     }
 }

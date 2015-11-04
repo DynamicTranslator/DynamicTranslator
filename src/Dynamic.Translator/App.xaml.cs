@@ -32,7 +32,7 @@
 
             IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Translator.Core"));
 
-            IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>();
+            IocManager.Instance.Register<IGrowlNotifications, ViewModel.GrowlNotifiactions>();
             IocManager.Instance.Register<INotifier, Notifier>(DependencyLifeStyle.Transient);
             IocManager.Instance.Register<Notifications>(DependencyLifeStyle.Transient);
 

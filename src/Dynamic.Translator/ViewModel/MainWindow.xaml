@@ -1,9 +1,9 @@
-﻿<Window x:Class="Dynamic.Translator.MainWindow"
+﻿<Window x:Class="Dynamic.Translator.ViewModel.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="DynamicTranslator || Oğuzhan Soykan" Height="179" Width="476.999" Loaded="MainWindow_OnLoaded"
         ResizeMode="CanMinimize"
-        Icon="Resources/dynamic-link-library 16.png">
+        Icon="/Resources/dynamic-link-library 16.png">
     <StackPanel
         RenderTransformOrigin="0.5,0.5" Height="148" VerticalAlignment="Top">
         <StackPanel.RenderTransform>
@@ -15,10 +15,10 @@
             </TransformGroup>
         </StackPanel.RenderTransform>
         <StackPanel.Background>
-            <ImageBrush ImageSource="Resources/background.png" />
+            <ImageBrush ImageSource="/Resources/background.png" />
         </StackPanel.Background>
         <StackPanel.OpacityMask>
-            <ImageBrush TileMode="Tile" ImageSource="Resources/background.png" />
+            <ImageBrush TileMode="Tile" ImageSource="/Resources/background.png" />
         </StackPanel.OpacityMask>
         <Button x:Name="BtnSwitch" Height="59" Content="Start Translator" Padding="2" Margin="0,45,0,0"
                 Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04">
