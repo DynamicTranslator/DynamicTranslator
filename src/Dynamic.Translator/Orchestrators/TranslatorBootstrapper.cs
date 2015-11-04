@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
@@ -21,6 +22,7 @@
 
     public class TranslatorBootstrapper : ITranslatorBootstrapper
     {
+        private readonly CancellationTokenSource cancellationTokenSource;
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IStartupConfiguration startupConfiguration;
@@ -45,6 +47,7 @@
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
+            this.cancellationTokenSource = new CancellationTokenSource();
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
@@ -75,6 +78,7 @@
             this.hWndNextViewer = IntPtr.Zero;
             this.hWndSource.RemoveHook(this.WinProc);
             this.IsInitialized = false;
+            this.cancellationTokenSource.Cancel(false);
             this.growlNotifications.OnDispose -= this.ClearAllNotifications;
             this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
             this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
@@ -89,7 +93,8 @@
 
             if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
             {
-                await Task.Run(() => { SendKeys.SendWait("^c"); });
+                await Task.Run(() => { SendKeys.SendWait("^c"); },
+                    this.cancellationTokenSource.Token);
                 this.isMouseDown = false;
             }
             this.isMouseDown = false;
@@ -101,13 +106,18 @@
             {
                 this.mouseFirstPoint = e.Location;
                 this.isMouseDown = true;
-            });
+            },
+            this.cancellationTokenSource.Token);
         }
 
         private async Task MouseDoubleClicked(object sender, MouseEventArgs e)
         {
             this.isMouseDown = false;
-            await Task.Run(() => { SendKeys.SendWait("^c"); });
+            await Task.Run(() =>
+            {
+                SendKeys.SendWait("^c");
+            },
+             this.cancellationTokenSource.Token);
         }
 
         private void ClearAllNotifications(object sender, EventArgs args)
@@ -150,7 +160,8 @@
                                             async () =>
                                                 await
                                                     this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                                        new WhenClipboardContainsTextEventArgs {CurrentString = currentText}));
+                                                        new WhenClipboardContainsTextEventArgs { CurrentString = currentText }),
+                                            this.cancellationTokenSource.Token);
                                     }
                                 });
                     }

@@ -66,8 +66,7 @@
             translatorEvents.Subscribe(new Finder(
                     IocManager.Instance.Resolve<INotifier>(),
                     IocManager.Instance.Resolve<IMeanFinderFactory>()
-                    ),
-                CancellationToken.None);
+                    ));
         }
     }
 }
