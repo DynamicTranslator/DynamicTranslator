@@ -113,26 +113,14 @@
 
         private async Task MouseDoubleClicked(object sender, MouseEventArgs e)
         {
-            this.isMouseDown = false;
             await Task.Run(() =>
             {
+                this.isMouseDown = false;
                 if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                     return;
 
                 SendKeys.SendWait("^c");
             });
-        }
-
-        private void ClearAllNotifications(object sender, EventArgs args)
-        {
-            var growl = sender as GrowlNotifiactions;
-            if (growl == null)
-                return;
-            if (growl.IsDisposed)
-                return;
-
-            growl.Notifications.Clear();
-            growl.IsDisposed = true;
         }
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -183,11 +171,9 @@
             this.globalMouseHook.MouseDoubleClick += async (o, args) => await this.MouseDoubleClicked(o, args);
             this.globalMouseHook.MouseDown += async (o, args) => await this.MouseDown(o, args);
             this.globalMouseHook.MouseUp += async (o, args) => await this.MouseUp(o, args);
-            this.growlNotifications.OnDispose += this.ClearAllNotifications;
         }
         private void UnsubscribeLocalEvents()
         {
-            this.growlNotifications.OnDispose -= this.ClearAllNotifications;
             this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
             this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
             this.globalMouseHook.MouseUp -= (async (o, args) => await this.MouseUp(o, args));
