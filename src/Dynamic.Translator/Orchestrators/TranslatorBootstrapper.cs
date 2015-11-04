@@ -56,6 +56,7 @@
             var wih = new WindowInteropHelper(this.mainWindow);
             this.hWndSource = HwndSource.FromHwnd(wih.Handle);
             this.globalMouseHook = Hook.GlobalEvents();
+            this.mainWindow.CancellationTokenSource = new CancellationTokenSource();
             var source = this.hWndSource;
             if (source != null)
             {
@@ -79,7 +80,7 @@
             this.IsInitialized = false;
             this.mainWindow.CancellationTokenSource.Cancel(false);
             this.growlNotifications.OnDispose -= this.ClearAllNotifications;
-            this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
+            this.globalMouseHook.MouseDoubleClick -=(async (o, args) => await this.MouseDoubleClicked(o, args));
             this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
             this.globalMouseHook.MouseUp -= (async (o, args) => await this.MouseUp(o, args));
         }
@@ -92,8 +93,13 @@
 
             if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
             {
-                await Task.Run(() => { SendKeys.SendWait("^c"); },
-                    this.mainWindow.CancellationTokenSource.Token);
+                await Task.Run(() =>
+                {
+                    if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                        return;
+
+                    SendKeys.SendWait("^c");
+                });
                 this.isMouseDown = false;
             }
             this.isMouseDown = false;
@@ -103,17 +109,24 @@
         {
             await Task.Run(() =>
             {
+                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
                 this.mouseFirstPoint = e.Location;
                 this.isMouseDown = true;
-            },
-                this.mainWindow.CancellationTokenSource.Token);
+            });
         }
 
         private async Task MouseDoubleClicked(object sender, MouseEventArgs e)
         {
             this.isMouseDown = false;
-            await Task.Run(() => { SendKeys.SendWait("^c"); },
-                this.mainWindow.CancellationTokenSource.Token);
+            await Task.Run(() =>
+            {
+                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
+                SendKeys.SendWait("^c");
+            });
         }
 
         private void ClearAllNotifications(object sender, EventArgs args)
@@ -154,10 +167,14 @@
                                     {
                                         Task.Run(
                                             async () =>
+                                            {
+                                                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                                                    return;
+
                                                 await
                                                     this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                                        new WhenClipboardContainsTextEventArgs {CurrentString = currentText}),
-                                            this.mainWindow.CancellationTokenSource.Token);
+                                                        new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+                                            });
                                     }
                                 });
                     }

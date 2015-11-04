@@ -22,19 +22,22 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            this.CancellationTokenSource = new CancellationTokenSource();
         }
 
-        public CancellationTokenSource CancellationTokenSource { get; }
+        public CancellationTokenSource CancellationTokenSource { get; set; }
 
         protected override void OnClosed(EventArgs e)
         {
+            this.CancellationTokenSource?.Cancel(false);
             base.OnClosed(e);
             this.Close();
-            this.CancellationTokenSource.Cancel(false);
-            GC.Collect();
-            GC.SuppressFinalize(this);
             Application.Current.Shutdown();
+
+            if (this.CancellationTokenSource != null && !this.CancellationTokenSource.Token.CanBeCanceled)
+            {
+                GC.SuppressFinalize(this);
+                GC.Collect();
+            }
         }
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
@@ -70,7 +73,7 @@
             translatorEvents.Subscribe(new Finder(
                 IocManager.Instance.Resolve<INotifier>(),
                 IocManager.Instance.Resolve<IMeanFinderFactory>()
-                ), this.CancellationTokenSource.Token);
+                ));
         }
     }
 }

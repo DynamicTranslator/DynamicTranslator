@@ -28,42 +28,46 @@
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            var currentString = value.EventArgs.CurrentString;
-
-            if (currentString != this.previousString)
+           await Task.Run(async () =>
             {
-                this.previousString = currentString;
+                var currentString = value.EventArgs.CurrentString;
 
-                var mean = new StringBuilder();
-
-                var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(currentString));
-                var results = await Task.WhenAll(tasks);
-
-                foreach (var result in results)
+                if (currentString != this.previousString)
                 {
-                    if (result.IsSucess)
-                        mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
-                    else
+                    this.previousString = currentString;
+
+                    var mean = new StringBuilder();
+
+                    var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(currentString));
+                    var results = await Task.WhenAll(tasks);
+
+                    foreach (var result in results)
                     {
-                        await this.notifier.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
-                        break;
+                        if (result.IsSucess)
+                            mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                        else
+                        {
+                            await this.notifier.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                            break;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(mean.ToString()))
+                    {
+                        var means = mean.ToString().Split('\r')
+                            .Select(x => x.Trim())
+                            .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
+                            .Distinct()
+                            .ToList();
+
+                        mean.Clear();
+                        means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
+
+                        await this.notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
                     }
                 }
-
-                if (!string.IsNullOrEmpty(mean.ToString()))
-                {
-                    var means = mean.ToString().Split('\r')
-                        .Select(x => x.Trim())
-                        .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
-                        .Distinct()
-                        .ToList();
-
-                    mean.Clear();
-                    means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-
-                    await this.notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
-                }
-            }
+            });
+          
         }
 
         public void OnError(Exception error)
