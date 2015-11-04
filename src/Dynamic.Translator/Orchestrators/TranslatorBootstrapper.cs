@@ -3,7 +3,6 @@
     #region
 
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
@@ -61,9 +60,9 @@
                 source.AddHook(this.WinProc); // start processing window messages
                 this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
-            this.globalMouseHook.MouseDoubleClick += this.MouseDoubleClicked;
-            this.globalMouseHook.MouseDown += this.MouseDown;
-            this.globalMouseHook.MouseUp += this.MouseUp;
+            this.globalMouseHook.MouseDoubleClick += async (o, args) => await this.MouseDoubleClicked(o, args);
+            this.globalMouseHook.MouseDown += async (o, args) => await this.MouseDown(o, args);
+            this.globalMouseHook.MouseUp += async (o, args) => await this.MouseUp(o, args);
             this.growlNotifications.OnDispose += this.ClearAllNotifications;
             this.growlNotifications.Top = SystemParameters.WorkArea.Top + this.startupConfiguration.TopOffset;
             this.growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this.startupConfiguration.LeftOffset;
@@ -77,35 +76,38 @@
             this.hWndSource.RemoveHook(this.WinProc);
             this.IsInitialized = false;
             this.growlNotifications.OnDispose -= this.ClearAllNotifications;
-            this.globalMouseHook.MouseDoubleClick -= this.MouseDoubleClicked;
-            this.globalMouseHook.MouseDownExt -= this.MouseDown;
-            this.globalMouseHook.MouseUp -= this.MouseUp;
+            this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
+            this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
+            this.globalMouseHook.MouseUp -= (async (o, args) => await this.MouseUp(o, args));
         }
 
         public bool IsInitialized { get; private set; }
 
-        private void MouseUp(object sender, MouseEventArgs e)
+        private async Task MouseUp(object sender, MouseEventArgs e)
         {
             this.mouseSecondPoint = e.Location;
 
             if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
             {
-                Task.Run(() => { SendKeys.SendWait("^c"); });
+                await Task.Run(() => { SendKeys.SendWait("^c"); });
                 this.isMouseDown = false;
             }
             this.isMouseDown = false;
         }
 
-        private void MouseDown(object sender, MouseEventArgs e)
+        private async Task MouseDown(object sender, MouseEventArgs e)
         {
-            this.mouseFirstPoint = e.Location;
-            this.isMouseDown = true;
+            await Task.Run(() =>
+            {
+                this.mouseFirstPoint = e.Location;
+                this.isMouseDown = true;
+            });
         }
 
-        private void MouseDoubleClicked(object sender, MouseEventArgs e)
+        private async Task MouseDoubleClicked(object sender, MouseEventArgs e)
         {
             this.isMouseDown = false;
-            Task.Run(() => { SendKeys.SendWait("^c"); });
+            await Task.Run(() => { SendKeys.SendWait("^c"); });
         }
 
         private void ClearAllNotifications(object sender, EventArgs args)
@@ -141,9 +143,15 @@
                                 delegate
                                 {
                                     var currentText = Clipboard.GetText().RemoveSpecialCharacters();
-                                    
+
                                     if (!string.IsNullOrEmpty(currentText))
-                                        this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
+                                    {
+                                        Task.Run(
+                                            async () =>
+                                                await
+                                                    this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
+                                                        new WhenClipboardContainsTextEventArgs {CurrentString = currentText}));
+                                    }
                                 });
                     }
                     break;

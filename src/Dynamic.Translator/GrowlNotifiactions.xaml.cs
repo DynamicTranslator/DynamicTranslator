@@ -20,7 +20,6 @@
         public readonly Notifications Notifications;
         private readonly IStartupConfiguration startupConfiguration;
         private int count;
-        private int dynamicHeight;
         public bool IsDisposed;
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
@@ -29,12 +28,6 @@
             this.startupConfiguration = startupConfiguration;
             this.Notifications = notifications;
             this.NotificationsControl.DataContext = this.Notifications;
-        }
-
-        public int DynamicHeight
-        {
-            get { return 1; }
-            set { this.dynamicHeight = value; }
         }
 
         public event EventHandler OnDispose;
