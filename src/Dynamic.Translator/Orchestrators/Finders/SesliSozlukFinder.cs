@@ -28,7 +28,7 @@
 
         public async Task<TranslateResult> Find(string text)
         {
-            var parameter = $"sl={this.configuration.LanguageMap[this.configuration.FromLanguage]}&text={text}&tl={this.configuration.LanguageMap[this.configuration.ToLanguage]}";
+            var parameter = $"sl={this.configuration.LanguageMap[this.configuration.FromLanguage]}&text={Uri.EscapeUriString(text)}&tl={this.configuration.LanguageMap[this.configuration.ToLanguage]}";
             var client = new RestClient("http://www.seslisozluk.net/c%C3%BCmle-%C3%A7eviri/");
             var request = new RestRequest(Method.POST);
             request.AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6");

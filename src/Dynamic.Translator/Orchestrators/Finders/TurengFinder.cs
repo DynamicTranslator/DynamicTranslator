@@ -39,7 +39,7 @@
 
             turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
             turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
-            var compositeMean = await turenClient.DownloadStringTaskAsync(new Uri(address1 + text));
+            var compositeMean = await turenClient.DownloadStringTaskAsync(new Uri(address1 + Uri.EscapeUriString(text)));
             var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
             var mean = await organizer.OrganizeMean(compositeMean);
 

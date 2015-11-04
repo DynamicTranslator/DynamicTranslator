@@ -10,7 +10,7 @@
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
-    public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>
+    public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, IObserver<EventPattern<WhenNotificationAddEventArgs>>
     {
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly ITranslator translator;
@@ -63,6 +63,11 @@
                     this.translator.AddNotification(currentString, ImageUrls.NotificationUrl, mean.ToString());
                 }
             }
+        }
+
+        public async void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
+        {
+            this.translator.AddNotification(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }
 
         public void OnError(Exception error)

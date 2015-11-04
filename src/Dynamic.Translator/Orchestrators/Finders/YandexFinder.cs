@@ -25,7 +25,7 @@
         {
             var address = new Uri(string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
                                                 this.GetPostData(this.startupConfiguration.LanguageMap[this.startupConfiguration.FromLanguage],
-                                                    this.startupConfiguration.LanguageMap[this.startupConfiguration.ToLanguage], text)));
+                                                    this.startupConfiguration.LanguageMap[this.startupConfiguration.ToLanguage], Uri.EscapeUriString(text))));
 
             var yandexClient = new WebClient
             {

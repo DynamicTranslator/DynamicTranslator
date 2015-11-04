@@ -69,7 +69,6 @@
 
 
             translatorEvents.Subscribe(new Finder(this.translator));
-            notifierEvents.Subscribe(new Notifier(this.translator));
         }
     }
 }

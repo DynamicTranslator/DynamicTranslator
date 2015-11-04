@@ -45,7 +45,6 @@
 
 
             IocManager.Instance.Register(typeof (IObserver<>), typeof (Finder));
-            IocManager.Instance.Register(typeof (IObserver<>), typeof (Notifier));
 
             var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
             configurations.Initialize();
