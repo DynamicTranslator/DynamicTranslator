@@ -12,6 +12,7 @@
     using Core.Orchestrators;
     using Core.ViewModel;
     using Core.ViewModel.Interfaces;
+    using Orchestrators;
     using Orchestrators.Finders;
     using Orchestrators.Observers;
     using Orchestrators.Organizers;
@@ -31,7 +32,8 @@
 
             IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("Dynamic.Translator.Core"));
 
-            IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>(DependencyLifeStyle.Transient);
+            IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>();
+            IocManager.Instance.Register<INotifier, Notifier>(DependencyLifeStyle.Transient);
             IocManager.Instance.Register<Notifications>(DependencyLifeStyle.Transient);
 
             IocManager.Instance.Register<IMeanFinder, SesliSozlukFinder>();

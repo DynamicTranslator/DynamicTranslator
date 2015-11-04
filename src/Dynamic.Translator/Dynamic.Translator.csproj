@@ -128,11 +128,12 @@
     <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
     <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
     <Compile Include="Orchestrators\Finders\YandexFinder.cs" />
+    <Compile Include="Orchestrators\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
     <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Translator.cs" />
+    <Compile Include="Orchestrators\TranslatorBootstrapper.cs" />
     <Compile Include="Utility\Win32.cs" />
     <DesignData Include="DesignTimeNotificationData.xaml">
       <SubType>Designer</SubType>

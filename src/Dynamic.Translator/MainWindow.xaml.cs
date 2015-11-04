@@ -4,6 +4,7 @@
 
     using System;
     using System.Reactive.Linq;
+    using System.Threading;
     using System.Windows;
     using Core.Config;
     using Core.Dependency.Manager;
@@ -16,7 +17,7 @@
     public partial class MainWindow
     {
         private bool isRunning;
-        private ITranslator translator;
+        private ITranslatorBootstrapper translator;
 
         public MainWindow()
         {
@@ -53,7 +54,7 @@
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.translator = new Translator(this,
+            this.translator = new TranslatorBootstrapper(this,
                 IocManager.Instance.Resolve<GrowlNotifiactions>(),
                 IocManager.Instance.Resolve<IStartupConfiguration>());
 
@@ -62,13 +63,11 @@
                     h => this.translator.WhenClipboardContainsTextEventHandler += h,
                     h => this.translator.WhenClipboardContainsTextEventHandler -= h);
 
-            var notifierEvents = Observable
-                .FromEventPattern<WhenNotificationAddEventArgs>(
-                    h => this.translator.WhenNotificationAddEventHandler += h,
-                    h => this.translator.WhenNotificationAddEventHandler -= h);
-
-
-            translatorEvents.Subscribe(new Finder(this.translator));
+            translatorEvents.Subscribe(new Finder(
+                    IocManager.Instance.Resolve<INotifier>(),
+                    IocManager.Instance.Resolve<IMeanFinderFactory>()
+                    ),
+                CancellationToken.None);
         }
     }
 }

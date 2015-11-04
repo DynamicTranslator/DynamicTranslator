@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
+    using RestSharp.Extensions.MonoHttp;
 
     #endregion
 
@@ -36,10 +37,14 @@
                 },
                 Encoding = Encoding.UTF8
             };
+            var uri = new Uri(address1 + Uri.EscapeUriString(text));
+            Uri.TryCreate(uri.AbsoluteUri, UriKind.Absolute, out uri);
+            if (!Uri.IsWellFormedUriString(uri.AbsoluteUri ,UriKind.Absolute))
+                return new TranslateResult();
 
             turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
             turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
-            var compositeMean = await turenClient.DownloadStringTaskAsync(new Uri(address1 + Uri.EscapeUriString(text)));
+            var compositeMean = await turenClient.DownloadStringTaskAsync(uri);
             var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
             var mean = await organizer.OrganizeMean(compositeMean);
 

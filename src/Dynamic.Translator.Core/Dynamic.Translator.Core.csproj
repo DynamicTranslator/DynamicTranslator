@@ -95,11 +95,13 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Maybe.cs" />
+    <Compile Include="Orchestrators\IEvents.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
     <Compile Include="Orchestrators\IMeanFinderFactory.cs" />
     <Compile Include="Orchestrators\IMeanOrganizer.cs" />
     <Compile Include="Orchestrators\IMeanOrganizerFactory.cs" />
-    <Compile Include="Orchestrators\ITranslator.cs" />
+    <Compile Include="Orchestrators\INotifier.cs" />
+    <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
     <Compile Include="Orchestrators\ObserverBase.cs" />
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />

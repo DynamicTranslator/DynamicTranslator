@@ -5,29 +5,30 @@
     using System.Reactive;
     using System.Text;
     using System.Threading.Tasks;
-    using Core.Dependency.Manager;
-    using Core.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, IObserver<EventPattern<WhenNotificationAddEventArgs>>
     {
         private readonly IMeanFinderFactory meanFinderFactory;
-        private readonly ITranslator translator;
+        private readonly INotifier notifier;
         private string previousString;
 
-        public Finder(ITranslator translator)
+        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory)
         {
-            if (translator == null)
-                throw new ArgumentNullException(nameof(translator));
+            if (notifier == null)
+                throw new ArgumentNullException(nameof(notifier));
 
-            this.translator = translator;
-            this.meanFinderFactory = IocManager.Instance.Resolve<IMeanFinderFactory>();
+            if (meanFinderFactory == null)
+                throw new ArgumentNullException(nameof(meanFinderFactory));
+
+            this.notifier = notifier;
+            this.meanFinderFactory = meanFinderFactory;
         }
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            var currentString = value.EventArgs.CurrentString.RemoveSpecialCharacters();
+            var currentString = value.EventArgs.CurrentString;
 
             if (currentString != this.previousString)
             {
@@ -44,7 +45,7 @@
                         mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                     else
                     {
-                        this.translator.AddNotification(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                        await this.notifier.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                         break;
                     }
                 }
@@ -60,14 +61,9 @@
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
 
-                    this.translator.AddNotification(currentString, ImageUrls.NotificationUrl, mean.ToString());
+                    await this.notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
                 }
             }
-        }
-
-        public async void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
-        {
-            this.translator.AddNotification(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }
 
         public void OnError(Exception error)
@@ -76,6 +72,11 @@
 
         public void OnCompleted()
         {
+        }
+
+        public async void OnNext(EventPattern<WhenNotificationAddEventArgs> value)
+        {
+            await this.notifier.AddNotificationAsync(value.EventArgs.Title, value.EventArgs.ImageUrl, value.EventArgs.ImageUrl);
         }
     }
 }

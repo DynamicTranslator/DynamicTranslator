@@ -37,21 +37,26 @@
             set { this.dynamicHeight = value; }
         }
 
+        public event EventHandler OnDispose;
+
         public async Task AddNotificationAsync(Notification notification)
         {
-            this.AddNotificationSync(notification);
+            await Task.Run(() => { this.AddNotification(notification); });
         }
 
-        public void AddNotificationSync(Notification notification)
+        public void AddNotification(Notification notification)
         {
-            notification.Id = this.count++;
-            if (this.Notifications.Count + 1 > this.startupConfiguration.MaxNotifications)
-                this.buffer.Add(notification);
-            else
-                this.Notifications.Add(notification);
+            this.Dispatcher.Invoke(() =>
+            {
+                notification.Id = this.count++;
+                if (this.Notifications.Count + 1 > this.startupConfiguration.MaxNotifications)
+                    this.buffer.Add(notification);
+                else
+                    this.Notifications.Add(notification);
 
-            if (this.Notifications.Count > 0 && !this.IsActive)
-                this.Show();
+                if (this.Notifications.Count > 0 && !this.IsActive)
+                    this.Show();
+            });
         }
 
         public void RemoveNotification(Notification notification)
@@ -71,8 +76,6 @@
                 this.OnDispose.InvokeSafely(this, new EventArgs());
             }
         }
-
-        public event EventHandler OnDispose;
 
         public void Dispose()
         {

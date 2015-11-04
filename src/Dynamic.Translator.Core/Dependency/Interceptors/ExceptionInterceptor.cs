@@ -1,6 +1,8 @@
 ﻿namespace Dynamic.Translator.Core.Dependency.Interceptors
 {
     using System;
+    using System.Net;
+    using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
     using Castle.DynamicProxy;
@@ -30,6 +32,11 @@
             catch (MaximumCharacterLimitException ex)
             {
                 if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
+                    invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+            }
+            catch (WebException ex)
+            {
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                     invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
             }
             catch (Exception ex)

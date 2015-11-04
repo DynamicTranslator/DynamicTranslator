@@ -10,7 +10,7 @@
     public interface IGrowlNotifications : IDisposable
     {
         Task AddNotificationAsync(Notification notification);
-        void AddNotificationSync(Notification notification);
+        void AddNotification(Notification notification);
         void RemoveNotification(Notification notification);
 
         event EventHandler OnDispose;

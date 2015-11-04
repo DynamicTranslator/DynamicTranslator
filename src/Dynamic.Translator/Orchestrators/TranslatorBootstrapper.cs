@@ -3,6 +3,7 @@
     #region
 
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
@@ -11,7 +12,6 @@
     using Core.Config;
     using Core.Extensions;
     using Core.Orchestrators;
-    using Core.ViewModel;
     using Gma.System.MouseKeyHook;
     using Utility;
     using Application = System.Windows.Application;
@@ -20,11 +20,10 @@
 
     #endregion
 
-    public class Translator : ITranslator
+    public class TranslatorBootstrapper : ITranslatorBootstrapper
     {
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
-        private readonly object mouseLockObject = new object();
         private readonly IStartupConfiguration startupConfiguration;
         private IKeyboardMouseEvents globalMouseHook;
         private IntPtr hWndNextViewer;
@@ -33,7 +32,7 @@
         private Point mouseFirstPoint;
         private Point mouseSecondPoint;
 
-        public Translator(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
+        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
             if (mainWindow == null)
                 throw new ArgumentNullException(nameof(mainWindow));
@@ -49,7 +48,7 @@
             this.startupConfiguration = startupConfiguration;
         }
 
-        public bool IsInitialized { get; set; }
+        public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
         public void Initialize()
         {
@@ -83,19 +82,7 @@
             this.globalMouseHook.MouseUp -= this.MouseUp;
         }
 
-        public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
-
-        public event EventHandler<WhenNotificationAddEventArgs> WhenNotificationAddEventHandler;
-
-        public void AddNotification(string title, string imageUrl, string message)
-        {
-            this.growlNotifications.AddNotificationSync(new Notification
-            {
-                ImageUrl = imageUrl,
-                Title = title,
-                Message = message
-            });
-        }
+        public bool IsInitialized { get; private set; }
 
         private void MouseUp(object sender, MouseEventArgs e)
         {
@@ -151,7 +138,13 @@
                         Application.Current.Dispatcher.Invoke(
                             DispatcherPriority.Background,
                             (Action)
-                                delegate { this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = Clipboard.GetText()}); });
+                                delegate
+                                {
+                                    var currentText = Clipboard.GetText().RemoveSpecialCharacters();
+                                    
+                                    if (!string.IsNullOrEmpty(currentText))
+                                        this.WhenClipboardContainsTextEventHandler.InvokeSafely(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
+                                });
                     }
                     break;
             }
