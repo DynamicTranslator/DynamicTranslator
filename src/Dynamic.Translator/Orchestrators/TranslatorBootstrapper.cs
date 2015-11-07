@@ -64,6 +64,7 @@
                 this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
             this.SubscribeLocalevents();
+            this.FlushCopyCommand();
             this.growlNotifications.Top = SystemParameters.WorkArea.Top + this.startupConfiguration.TopOffset;
             this.growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this.startupConfiguration.LeftOffset;
             this.IsInitialized = true;
@@ -75,6 +76,7 @@
             this.hWndNextViewer = IntPtr.Zero;
             this.hWndSource.RemoveHook(this.WinProc);
             this.IsInitialized = false;
+            this.FlushCopyCommand();
             this.mainWindow.CancellationTokenSource.Cancel(false);
             this.UnsubscribeLocalEvents();
         }
@@ -92,7 +94,7 @@
                     if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                         return;
 
-                    SendKeys.SendWait("^c");
+                    SendCopyCommand();
                 });
                 this.isMouseDown = false;
             }
@@ -119,7 +121,7 @@
                 if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                     return;
 
-                SendKeys.SendWait("^c");
+                SendCopyCommand();
             });
         }
 
@@ -156,6 +158,8 @@
                                                 await
                                                     this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
                                                         new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+
+                                                FlushCopyCommand();
                                             });
                                     }
                                 });
@@ -177,6 +181,16 @@
             this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
             this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
             this.globalMouseHook.MouseUp -= (async (o, args) => await this.MouseUp(o, args));
+        }
+
+        private void SendCopyCommand()
+        {
+            SendKeys.SendWait("^c");
+            SendKeys.Flush();
+        }
+        private void FlushCopyCommand()
+        {
+            SendKeys.Flush();
         }
     }
 }
