@@ -35,13 +35,13 @@
 
         public void Initialize()
         {
-            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings["ApiKey"]);
-            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings["LeftOffset"]);
-            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings["TopOffset"]);
-            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings["SearchableCharacterLimit"]);
-            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings["FromLanguage"]);
-            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings["ToLanguage"]);
-            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings["MaxNotifications"]);
+            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings[nameof(this.ApiKey)]);
+            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings[nameof(this.LeftOffset)]);
+            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings[nameof(this.TopOffset)]);
+            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings[nameof(this.SearchableCharacterLimit)]);
+            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings[nameof(this.FromLanguage)]);
+            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings[nameof(this.ToLanguage)]);
+            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings[nameof(this.MaxNotifications)]);
             this.InitLanguageMap();
         }
 
