@@ -9,13 +9,14 @@ You are not using Control + C (it's optional) no longer and DynamicTranslator de
 
 
 ###In Turkish
-Bilindiği gibi bazı sözlükler bize api sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır. Bulunduğunuz pencere/pdf veya herhangi birşeyde gezinirken mouse ile seçtiğiniz text'i algılayıp sonrasında, sırasıyla Tureng, Yandex, SesliSozluk'e gidip bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
+Bilindiği gibi bazı sözlükler bize api sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır. Bulunduğunuz pencere/pdf veya herhangi birşeyde gezinirken mouse ile seçtiğiniz text'i algılayıp sonrasında, sırasıyla Google Translate, Tureng, Yandex, SesliSozluk'e gidip bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
 
 ###Başvurulan sözlükler
         
 ##### Tureng
 ##### Yandex
 ##### Sesli Sozluk
+##### Google Translate
         
 
 ### Project Information and The Goal
