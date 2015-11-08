@@ -20,11 +20,11 @@
             this.Object = obj;
         }
 
-        public T Object { get; }
-
         public void Dispose()
         {
             this._iocResolver.Release(this.Object);
         }
+
+        public T Object { get; }
     }
 }

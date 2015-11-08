@@ -13,46 +13,49 @@
 
     public class TurengMeanOrganizer : IMeanOrganizer, ITransientDependency
     {
-        public TranslatorType TranslatorType => TranslatorType.TURENG;
-
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
-            if (text == null) return new Maybe<string>();
-
-            var result = text;
-            var output = new StringBuilder();
-            var doc = new HtmlDocument();
-            var decoded = WebUtility.HtmlDecode(result);
-            doc.LoadHtml(decoded);
-            if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
-                return new Maybe<string>();
-
-            foreach (var table in doc.DocumentNode.SelectNodes("//table"))
+            return await Task.Run(() =>
             {
-                foreach (var row in table.SelectNodes("tr").AsParallel())
-                {
-                    var space = false;
-                    var i = 0;
-                    foreach (var cell in row.SelectNodes("th|td").Descendants("a").AsParallel())
-                    {
-                        var word = cell.InnerHtml.ToString(CultureInfo.CurrentCulture);
-                        space = true;
-                        i++;
-                        if (i <= 1) continue;
-                        if (output.ToString().Contains(word))
-                        {
-                            space = false;
-                            continue;
-                        }
-                        output.Append(cell.Id + " " + word);
-                    }
-                    if (!space) continue;
-                    output.AppendLine();
-                }
-                break;
-            }
+                if (text == null) return new Maybe<string>();
 
-            return new Maybe<string>(output.ToString().ToLower().Trim());
+                var result = text;
+                var output = new StringBuilder();
+                var doc = new HtmlDocument();
+                var decoded = WebUtility.HtmlDecode(result);
+                doc.LoadHtml(decoded);
+                if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
+                    return new Maybe<string>();
+
+                foreach (var table in doc.DocumentNode.SelectNodes("//table"))
+                {
+                    foreach (var row in table.SelectNodes("tr").AsParallel())
+                    {
+                        var space = false;
+                        var i = 0;
+                        foreach (var cell in row.SelectNodes("th|td").Descendants("a").AsParallel())
+                        {
+                            var word = cell.InnerHtml.ToString(CultureInfo.CurrentCulture);
+                            space = true;
+                            i++;
+                            if (i <= 1) continue;
+                            if (output.ToString().Contains(word))
+                            {
+                                space = false;
+                                continue;
+                            }
+                            output.Append(cell.Id + " " + word);
+                        }
+                        if (!space) continue;
+                        output.AppendLine();
+                    }
+                    break;
+                }
+
+                return new Maybe<string>(output.ToString().ToLower().Trim());
+            });
         }
+
+        public TranslatorType TranslatorType => TranslatorType.TURENG;
     }
 }

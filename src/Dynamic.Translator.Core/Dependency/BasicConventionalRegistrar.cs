@@ -20,6 +20,7 @@
                     .WithService.Self()
                     .WithService.DefaultInterfaces()
                     .LifestyleTransient()
+                    .WithServiceAllInterfaces()
                 );
 
             //Singleton
@@ -30,6 +31,7 @@
                     .WithService.Self()
                     .WithService.DefaultInterfaces()
                     .LifestyleSingleton()
+                    .WithServiceAllInterfaces()
                 );
 
             //Windsor Interceptors

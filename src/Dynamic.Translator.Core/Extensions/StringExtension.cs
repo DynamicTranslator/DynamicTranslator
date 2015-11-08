@@ -8,7 +8,10 @@
     {
         public static string RemoveSpecialCharacters(this string str)
         {
-            return Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(), @"\t|\n|\r", "");
+            return Regex.Replace(
+                Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(),
+                    @"\t|\n|\r", ""),
+                "[^ -~]", "");//REmove non-AsCII characters
         }
 
         public static string GenerateSlug(this string phrase)

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Net;
-    using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
     using Castle.DynamicProxy;
@@ -36,7 +35,7 @@
             }
             catch (WebException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
                     invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
             }
             catch (Exception ex)
@@ -50,14 +49,13 @@
             if (invocation.Method.ReturnType == typeof (void))
                 return null;
 
-            var retVal = (
-                new Task<TranslateResult>(() =>
-                    new TranslateResult(false,
-                        new Maybe<string>(new StringBuilder()
-                            .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
-                            .AppendLine(ex.Message)
-                            .AppendLine(ex.InnerException?.Message ?? string.Empty).ToString())
-                        )));
+            var retVal = new Task<TranslateResult>(() =>
+                new TranslateResult(false,
+                    new Maybe<string>(new StringBuilder()
+                        .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
+                        .AppendLine(ex.Message)
+                        .AppendLine(ex.InnerException?.Message ?? string.Empty).ToString())
+                    ));
 
             retVal.Start();
 

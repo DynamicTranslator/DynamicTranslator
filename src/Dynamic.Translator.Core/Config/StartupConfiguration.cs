@@ -15,6 +15,18 @@
             this.IocManager = iocManager;
         }
 
+        public void Initialize()
+        {
+            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings[nameof(this.ApiKey)]);
+            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings[nameof(this.LeftOffset)]);
+            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings[nameof(this.TopOffset)]);
+            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings[nameof(this.SearchableCharacterLimit)]);
+            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings[nameof(this.FromLanguage)]);
+            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings[nameof(this.ToLanguage)]);
+            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings[nameof(this.MaxNotifications)]);
+            this.InitLanguageMap();
+        }
+
         public IIocManager IocManager { get; }
 
         public string ApiKey => this.Get<string>(nameof(this.ApiKey));
@@ -32,18 +44,6 @@
         public Dictionary<string, string> LanguageMap => this.Get<Dictionary<string, string>>(nameof(this.LanguageMap));
 
         public byte MaxNotifications => this.Get<byte>(nameof(this.MaxNotifications));
-
-        public void Initialize()
-        {
-            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings[nameof(this.ApiKey)]);
-            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings[nameof(this.LeftOffset)]);
-            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings[nameof(this.TopOffset)]);
-            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings[nameof(this.SearchableCharacterLimit)]);
-            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings[nameof(this.FromLanguage)]);
-            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings[nameof(this.ToLanguage)]);
-            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings[nameof(this.MaxNotifications)]);
-            this.InitLanguageMap();
-        }
 
         private void InitLanguageMap()
         {

@@ -72,6 +72,7 @@
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
     <Compile Include="Dependency\Installer\TextGuardConvention.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Dependency\Interceptors\ObserverExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
     <Compile Include="Dependency\Markers\DependencyLifeStyle.cs" />
     <Compile Include="Dependency\DisposableDependencyObjectWrapperOfT.cs" />

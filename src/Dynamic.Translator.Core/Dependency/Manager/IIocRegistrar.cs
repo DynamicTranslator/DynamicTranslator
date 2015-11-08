@@ -64,6 +64,15 @@
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
         void Register(Type type, Type impl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton);
 
+
+        /// <summary>
+        ///     Registers a type with it's implementation instance.
+        /// </summary>
+        /// <param name="type">Type of the class</param>
+        /// <param name="typeImpl">Implementation of the class</param>
+        /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
+        void Register(Type type, object typeImpl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton);
+
         /// <summary>
         ///     Checks whether given type is registered before.
         /// </summary>

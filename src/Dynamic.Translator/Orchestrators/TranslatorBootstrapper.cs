@@ -10,6 +10,8 @@
     using System.Windows.Interop;
     using System.Windows.Threading;
     using Core.Config;
+    using Core.Dependency.Manager;
+    using Core.Dependency.Markers;
     using Core.Extensions;
     using Core.Orchestrators;
     using Gma.System.MouseKeyHook;
@@ -21,7 +23,7 @@
 
     #endregion
 
-    public class TranslatorBootstrapper : ITranslatorBootstrapper
+    public class TranslatorBootstrapper : ITranslatorBootstrapper, ISingletonDependency
     {
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
@@ -79,6 +81,7 @@
             this.FlushCopyCommand();
             this.mainWindow.CancellationTokenSource.Cancel(false);
             this.UnsubscribeLocalEvents();
+            IocManager.Instance.Dispose();
         }
 
         public bool IsInitialized { get; private set; }
@@ -137,32 +140,29 @@
 
                     break;
                 case Win32.WmDrawclipboard:
-                    Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
+                   // Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
                     if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
                     {
                         Application.Current.Dispatcher.Invoke(
                             DispatcherPriority.Background,
-                            (Action)
-                                delegate
-                                {
-                                    var currentText = Clipboard.GetText().RemoveSpecialCharacters();
+                            (Action)delegate
+                               {
+                                   var currentText = Clipboard.GetText().RemoveSpecialCharacters();
 
-                                    if (!string.IsNullOrEmpty(currentText))
-                                    {
-                                        Task.Run(
-                                            async () =>
-                                            {
-                                                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
-                                                    return;
+                                   if (!string.IsNullOrEmpty(currentText))
+                                   {
+                                       Task.Run(
+                                           async () =>
+                                           {
+                                               if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                                                   return;
 
-                                                await
-                                                    this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                                        new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+                                               await this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
 
-                                                FlushCopyCommand();
-                                            });
-                                    }
-                                });
+                                               FlushCopyCommand();
+                                           });
+                                   }
+                               });
                     }
                     break;
             }
@@ -176,6 +176,7 @@
             this.globalMouseHook.MouseDown += async (o, args) => await this.MouseDown(o, args);
             this.globalMouseHook.MouseUp += async (o, args) => await this.MouseUp(o, args);
         }
+
         private void UnsubscribeLocalEvents()
         {
             this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
@@ -188,6 +189,7 @@
             SendKeys.SendWait("^c");
             SendKeys.Flush();
         }
+
         private void FlushCopyCommand()
         {
             SendKeys.Flush();

@@ -1,12 +1,11 @@
 ﻿namespace Dynamic.Translator.Core.Orchestrators
 {
     using System;
-    using System.Threading;
-    using Dependency.Markers;
 
-    public interface ITranslatorBootstrapper : ISingletonDependency, IDisposable, IEvents
+    public interface ITranslatorBootstrapper : IDisposable, IEvents
     {
         bool IsInitialized { get; }
+
         void Initialize();
     }
 }

@@ -6,10 +6,8 @@
     using System.Reactive.Linq;
     using System.Threading;
     using System.Windows;
-    using Core.Config;
     using Core.Dependency.Manager;
     using Core.Orchestrators;
-    using Orchestrators;
     using Orchestrators.Observers;
 
     #endregion
@@ -22,6 +20,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
+            IocManager.Instance.Register(typeof (MainWindow), this);
         }
 
         public CancellationTokenSource CancellationTokenSource { get; set; }
@@ -29,15 +28,14 @@
         protected override void OnClosed(EventArgs e)
         {
             this.CancellationTokenSource?.Cancel(false);
-            base.OnClosed(e);
             this.Close();
             Application.Current.Shutdown();
-
             if (this.CancellationTokenSource != null && !this.CancellationTokenSource.Token.CanBeCanceled)
             {
                 GC.SuppressFinalize(this);
                 GC.Collect();
             }
+            base.OnClosed(e);
         }
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
@@ -61,19 +59,14 @@
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.translator = new TranslatorBootstrapper(this,
-                IocManager.Instance.Resolve<GrowlNotifiactions>(),
-                IocManager.Instance.Resolve<IStartupConfiguration>());
+            this.translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
 
             var translatorEvents = Observable
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => this.translator.WhenClipboardContainsTextEventHandler += h,
                     h => this.translator.WhenClipboardContainsTextEventHandler -= h);
 
-            translatorEvents.Subscribe(new Finder(
-                IocManager.Instance.Resolve<INotifier>(),
-                IocManager.Instance.Resolve<IMeanFinderFactory>()
-                ));
+            translatorEvents.Subscribe(IocManager.Instance.Resolve<Finder>());
         }
     }
 }

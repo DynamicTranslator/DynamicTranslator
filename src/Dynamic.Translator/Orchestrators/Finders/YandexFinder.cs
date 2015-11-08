@@ -7,10 +7,11 @@
     using System.Text;
     using System.Threading.Tasks;
     using Core.Config;
+    using Core.Dependency.Markers;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
-    public class YandexFinder : IMeanFinder
+    public class YandexFinder : IMeanFinder, ITransientDependency
     {
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
         private readonly IStartupConfiguration startupConfiguration;
@@ -23,21 +24,24 @@
 
         public async Task<TranslateResult> Find(string text)
         {
-            var address = new Uri(string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
-                                                this.GetPostData(this.startupConfiguration.LanguageMap[this.startupConfiguration.FromLanguage],
-                                                    this.startupConfiguration.LanguageMap[this.startupConfiguration.ToLanguage], Uri.EscapeUriString(text))));
-
-            var yandexClient = new WebClient
+            return await Task.Run(async () =>
             {
-                Encoding = Encoding.UTF8,
-                CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
-            };
+                var address = new Uri(string.Format("https://translate.yandex.net/api/v1.5/tr/translate?" +
+                                                    this.GetPostData(this.startupConfiguration.LanguageMap[this.startupConfiguration.FromLanguage],
+                                                        this.startupConfiguration.LanguageMap[this.startupConfiguration.ToLanguage], Uri.EscapeUriString(text))));
 
-            var compositeMean = await yandexClient.DownloadStringTaskAsync(address);
-            var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
-            var mean = await organizer.OrganizeMean(compositeMean);
+                var yandexClient = new WebClient
+                {
+                    Encoding = Encoding.UTF8,
+                    CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
+                };
 
-            return new TranslateResult(true, mean);
+                var compositeMean = await yandexClient.DownloadStringTaskAsync(address);
+                var organizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
+                var mean = await organizer.OrganizeMean(compositeMean);
+
+                return new TranslateResult(true, mean);
+            });
         }
 
         private string GetPostData(string fromLanguage, string toLanguage, string content)

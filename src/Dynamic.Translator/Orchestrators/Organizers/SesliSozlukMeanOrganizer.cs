@@ -11,11 +11,9 @@
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer, ITransientDependency
     {
-        public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
-
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
-            var means = await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var output = new StringBuilder();
 
@@ -39,10 +37,10 @@
                         select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
                 }
 
-                return output;
+                return new Maybe<string>(output.ToString());
             });
-
-            return new Maybe<string>(means.ToString());
         }
+
+        public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
     }
 }

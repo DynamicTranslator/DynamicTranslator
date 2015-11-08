@@ -15,13 +15,13 @@
             this.CustomSettings = new Dictionary<string, object>();
         }
 
-        protected Dictionary<string, object> CustomSettings { get; }
-
         public object this[string name]
         {
             get { return this.CustomSettings.GetOrDefault(name); }
             set { this.CustomSettings[name] = value; }
         }
+
+        protected Dictionary<string, object> CustomSettings { get; }
 
         public T Get<T>(string name)
         {

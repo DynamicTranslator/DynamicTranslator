@@ -46,11 +46,6 @@
         public static IocManager Instance { get; private set; }
 
         /// <summary>
-        ///     Reference to the Castle Windsor Container.
-        /// </summary>
-        public IWindsorContainer IocContainer { get; }
-
-        /// <summary>
         ///     Adds a dependency registrar for conventional registration.
         /// </summary>
         /// <param name="registrar">dependency registrar</param>
@@ -178,6 +173,17 @@
         }
 
         /// <summary>
+        ///     Registers a type with it's implementation instance.
+        /// </summary>
+        /// <param name="type">Type of the class</param>
+        /// <param name="typeImpl">Implementation of the class</param>
+        /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
+        public void Register(Type type, object typeImpl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        {
+            this.IocContainer.Register(ApplyLifestyle(Component.For(type).Instance(typeImpl), lifeStyle));
+        }
+
+        /// <summary>
         ///     Checks whether given type is registered before.
         /// </summary>
         /// <param name="type">Type to check</param>
@@ -208,6 +214,11 @@
         {
             return this.IocContainer.Resolve(type, argumentsAsAnonymousType);
         }
+
+        /// <summary>
+        ///     Reference to the Castle Windsor Container.
+        /// </summary>
+        public IWindsorContainer IocContainer { get; }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)
             where T : class

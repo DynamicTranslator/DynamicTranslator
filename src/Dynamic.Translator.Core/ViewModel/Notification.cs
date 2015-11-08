@@ -21,6 +21,8 @@
             this.PropertyChanged += (sender, args) => this.OnPropertyChanged(sender, args.PropertyName);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int Id
         {
             get { return this.id; }
@@ -77,8 +79,6 @@
                 this.PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(this.Title)));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(object sender, string propertyName)
         {
