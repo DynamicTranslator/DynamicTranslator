@@ -3,11 +3,10 @@
     using System.Threading.Tasks;
     using System.Xml;
     using Core;
-    using Core.Dependency.Markers;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
-    public class YandexMeanOrganizer : IMeanOrganizer, ITransientDependency
+    public class YandexMeanOrganizer : IMeanOrganizer
     {
         public async Task<Maybe<string>> OrganizeMean(string text)
         {

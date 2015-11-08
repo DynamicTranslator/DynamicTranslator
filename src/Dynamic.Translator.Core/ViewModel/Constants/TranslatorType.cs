@@ -4,6 +4,7 @@
     {
         TURENG,
         YANDEX,
-        SESLISOZLUK
+        SESLISOZLUK,
+        GOOGLE
     }
 }

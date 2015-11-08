@@ -57,7 +57,7 @@
                 if (!string.IsNullOrEmpty(mean.ToString()))
                 {
                     var means = mean.ToString().Split('\r')
-                        .Select(x => x.Trim())
+                        .Select(x => x.Trim().ToLower())
                         .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
                         .Distinct()
                         .ToList();

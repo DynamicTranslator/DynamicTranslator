@@ -9,7 +9,7 @@
     using Core.ViewModel.Constants;
     using HtmlAgilityPack;
 
-    public class SesliSozlukMeanOrganizer : IMeanOrganizer, ITransientDependency
+    public class SesliSozlukMeanOrganizer : IMeanOrganizer
     {
         public async Task<Maybe<string>> OrganizeMean(string text)
         {

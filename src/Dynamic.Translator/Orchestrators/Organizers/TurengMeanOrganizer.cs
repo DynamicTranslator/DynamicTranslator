@@ -11,7 +11,7 @@
     using Core.ViewModel.Constants;
     using HtmlAgilityPack;
 
-    public class TurengMeanOrganizer : IMeanOrganizer, ITransientDependency
+    public class TurengMeanOrganizer : IMeanOrganizer
     {
         public async Task<Maybe<string>> OrganizeMean(string text)
         {

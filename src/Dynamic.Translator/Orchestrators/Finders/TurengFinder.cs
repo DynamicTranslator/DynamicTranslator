@@ -14,7 +14,7 @@
 
     #endregion
 
-    public class TurengFinder : IMeanFinder, ITransientDependency
+    public class TurengFinder : IMeanFinder
     {
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 

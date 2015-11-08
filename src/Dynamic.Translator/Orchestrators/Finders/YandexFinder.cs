@@ -11,7 +11,7 @@
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
-    public class YandexFinder : IMeanFinder, ITransientDependency
+    public class YandexFinder : IMeanFinder
     {
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
         private readonly IStartupConfiguration startupConfiguration;

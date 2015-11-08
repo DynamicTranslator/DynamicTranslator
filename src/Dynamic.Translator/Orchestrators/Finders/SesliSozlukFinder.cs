@@ -9,7 +9,7 @@
     using Core.ViewModel.Constants;
     using RestSharp;
 
-    public class SesliSozlukFinder : IMeanFinder, ITransientDependency
+    public class SesliSozlukFinder : IMeanFinder
     {
         private readonly IStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
