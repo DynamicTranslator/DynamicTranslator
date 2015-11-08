@@ -14,12 +14,29 @@
             return await Task.Run(() =>
             {
                 var obj = JsonConvert.DeserializeObject(text) as JArray;
-                var output = obj?.First.First.First.Value<string>();
+                var output = GetFirstElementSafely(obj);
 
                 return new Maybe<string>(output);
             });
         }
 
         public TranslatorType TranslatorType => TranslatorType.GOOGLE;
+
+        private string GetFirstElementSafely(JArray obj)
+        {
+            if (obj.HasValues)
+            {
+                if (obj.First.HasValues)
+                {
+                    if (obj.First.First.HasValues)
+                    {
+                        if (obj.First.First.HasValues)
+                            return obj.First.First.First.Value<string>();
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
     }
 }
