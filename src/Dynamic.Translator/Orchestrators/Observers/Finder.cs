@@ -13,6 +13,7 @@
     {
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly INotifier notifier;
+        private string previousString;
 
         public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory)
         {
@@ -31,6 +32,12 @@
             await Task.Run(async () =>
             {
                 var currentString = value.EventArgs.CurrentString;
+
+                if (this.previousString == currentString)
+                    return;
+
+                this.previousString = currentString;
+
                 var mean = new StringBuilder();
 
                 var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(currentString));
