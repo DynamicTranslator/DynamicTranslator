@@ -30,7 +30,7 @@
                 {
                     if (obj.First.First.HasValues)
                     {
-                        if (obj.First.First.HasValues)
+                        if (obj.First.First.First.HasValues)
                             return obj.First.First.First.Value<string>();
                     }
                 }
