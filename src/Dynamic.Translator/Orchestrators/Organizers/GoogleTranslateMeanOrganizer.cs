@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Core;
+    using Core.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
     using Newtonsoft.Json;
@@ -13,8 +14,8 @@
         {
             return await Task.Run(() =>
             {
-                var obj = JsonConvert.DeserializeObject(text) as JArray;
-                var output = GetFirstElementSafely(obj);
+                var arrayTree = JsonConvert.DeserializeObject(text) as JArray;
+                var output = arrayTree.GetFirstValueInArrayGraph<string>();
 
                 return new Maybe<string>(output);
             });

@@ -1,14 +1,14 @@
-﻿namespace Dynamic.Translator.Orchestrators.Observers
-{
-    using System;
-    using System.Linq;
-    using System.Reactive;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Core.Dependency.Markers;
-    using Core.Orchestrators;
-    using Core.ViewModel.Constants;
+﻿using System;
+using System.Linq;
+using System.Reactive;
+using System.Text;
+using System.Threading.Tasks;
+using Dynamic.Translator.Core.Dependency.Markers;
+using Dynamic.Translator.Core.Orchestrators;
+using Dynamic.Translator.Core.ViewModel.Constants;
 
+namespace Dynamic.Translator.Orchestrators.Observers
+{
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, ISingletonDependency
     {
         private readonly IMeanFinderFactory meanFinderFactory;
@@ -27,20 +27,20 @@
             this.meanFinderFactory = meanFinderFactory;
         }
 
-        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
+        public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
                 var currentString = value.EventArgs.CurrentString;
 
-                if (this.previousString == currentString)
+                if (previousString == currentString)
                     return;
 
-                this.previousString = currentString;
+                previousString = currentString;
 
                 var mean = new StringBuilder();
 
-                var tasks = this.meanFinderFactory.GetFinders().Select(t => t.Find(currentString));
+                var tasks = meanFinderFactory.GetFinders().Select(t => t.Find(currentString));
                 var results = await Task.WhenAll(tasks);
 
                 foreach (var result in results)
@@ -49,7 +49,9 @@
                         mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                     else
                     {
-                        await this.notifier.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl, result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+                        await
+                            notifier.AddNotificationAsync(Titles.Warning, ImageUrls.NotificationUrl,
+                                result.ResultMessage.DefaultIfEmpty(string.Empty).First());
                         break;
                     }
                 }
@@ -65,7 +67,7 @@
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
 
-                    await this.notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
+                    await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, mean.ToString());
                 }
             });
         }
