@@ -1,5 +1,7 @@
 ﻿namespace Dynamic.Translator.Orchestrators.Finders
 {
+    #region using
+
     using System;
     using System.Linq;
     using System.Net;
@@ -9,6 +11,8 @@
     using Core.Config;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
+
+    #endregion
 
     public class YandexFinder : IMeanFinder
     {
@@ -25,11 +29,11 @@
         {
             return await Task.Run(async () =>
             {
-                var address = new Uri(string.Format(configuration.YandexUrl +
-                                                    GetPostData(
-                                                        configuration.FromLanguageExtension,
-                                                        configuration.ToLanguageExtension,
-                                                        Uri.EscapeUriString(text))));
+                var address = new Uri(
+                    string.Format(configuration.YandexUrl + GetPostData(
+                        configuration.FromLanguageExtension,
+                        configuration.ToLanguageExtension,
+                        Uri.EscapeUriString(text))));
 
                 var yandexClient = new WebClient();
                 yandexClient.Encoding = Encoding.UTF8;

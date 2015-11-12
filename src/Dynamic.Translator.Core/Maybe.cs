@@ -1,7 +1,11 @@
 ﻿namespace Dynamic.Translator.Core
 {
+    #region using
+
     using System.Collections;
     using System.Collections.Generic;
+
+    #endregion
 
     public class Maybe<T> : IEnumerable<T>
     {
@@ -9,22 +13,22 @@
 
         public Maybe()
         {
-            this.values = new T[0];
+            values = new T[0];
         }
 
         public Maybe(T value)
         {
-            this.values = new[] {value};
+            values = new[] {value};
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return this.values.GetEnumerator();
+            return values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

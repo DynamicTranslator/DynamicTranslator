@@ -136,6 +136,7 @@
     <Compile Include="Orchestrators\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
     <Compile Include="Orchestrators\Organizers\GoogleTranslateMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />

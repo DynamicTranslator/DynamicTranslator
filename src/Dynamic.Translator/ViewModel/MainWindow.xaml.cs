@@ -19,7 +19,7 @@
 
         public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             IocManager.Instance.Register(typeof (MainWindow), this);
         }
 
@@ -27,10 +27,10 @@
 
         protected override void OnClosed(EventArgs e)
         {
-            this.CancellationTokenSource?.Cancel(false);
-            this.Close();
+            CancellationTokenSource?.Cancel(false);
+            Close();
             Application.Current.Shutdown();
-            if (this.CancellationTokenSource != null && !this.CancellationTokenSource.Token.CanBeCanceled)
+            if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
             {
                 GC.SuppressFinalize(this);
                 GC.Collect();
@@ -40,31 +40,31 @@
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
-            if (this.isRunning)
+            if (isRunning)
             {
-                this.BtnSwitch.Content = "Start Translator";
-                this.isRunning = false;
-                if (this.translator.IsInitialized)
-                    this.translator.Dispose();
+                BtnSwitch.Content = "Start Translator";
+                isRunning = false;
+                if (translator.IsInitialized)
+                    translator.Dispose();
             }
             else
             {
-                if (!this.translator.IsInitialized)
-                    this.translator.Initialize();
+                if (!translator.IsInitialized)
+                    translator.Initialize();
 
-                this.isRunning = true;
-                this.BtnSwitch.Content = "Stop Translator";
+                isRunning = true;
+                BtnSwitch.Content = "Stop Translator";
             }
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
+            translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
 
             var translatorEvents = Observable
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
-                    h => this.translator.WhenClipboardContainsTextEventHandler += h,
-                    h => this.translator.WhenClipboardContainsTextEventHandler -= h);
+                    h => translator.WhenClipboardContainsTextEventHandler += h,
+                    h => translator.WhenClipboardContainsTextEventHandler -= h);
 
             translatorEvents.Subscribe(IocManager.Instance.Resolve<Finder>());
         }

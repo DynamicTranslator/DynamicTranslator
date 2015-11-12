@@ -1,6 +1,6 @@
 ﻿namespace Dynamic.Translator.Orchestrators
 {
-    #region
+    #region using
 
     using System;
     using System.Threading;
@@ -151,12 +151,12 @@
 
                                 if (!string.IsNullOrEmpty(currentText))
                                 {
-                                    Task.Run(async () =>
+                                    Task.Run(() =>
                                     {
                                         if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                                             return;
 
-                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
+                                        WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
 
                                         FlushCopyCommand();
                                     });

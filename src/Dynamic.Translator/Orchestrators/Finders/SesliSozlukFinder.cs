@@ -1,13 +1,16 @@
 ﻿namespace Dynamic.Translator.Orchestrators.Finders
 {
+    #region using
+
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Core.Config;
-    using Core.Dependency.Markers;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
     using RestSharp;
+
+    #endregion
 
     public class SesliSozlukFinder : IMeanFinder
     {
@@ -33,16 +36,17 @@
             {
                 var parameter = $"sl={configuration.FromLanguageExtension}&text={Uri.EscapeUriString(text)}&tl={configuration.ToLanguageExtension}";
                 var client = new RestClient(configuration.SesliSozlukUrl);
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6");
-                request.AddHeader("accept-encoding", "gzip, deflate");
-                request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                request.AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
-                request.AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-                request.AddParameter("application/x-www-form-urlencoded", parameter, ParameterType.RequestBody);
-                this.response = await client.ExecuteTaskAsync(request);
-                var meanOrganizer = this.meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.SESLISOZLUK);
-                var mean = await meanOrganizer.OrganizeMean(this.response.Content);
+                var request = new RestRequest(Method.POST)
+                    .AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6")
+                    .AddHeader("accept-encoding", "gzip, deflate")
+                    .AddHeader("content-type", "application/x-www-form-urlencoded")
+                    .AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
+                    .AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+                    .AddParameter("application/x-www-form-urlencoded", parameter, ParameterType.RequestBody);
+
+                response = await client.ExecuteTaskAsync(request);
+                var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.SESLISOZLUK);
+                var mean = await meanOrganizer.OrganizeMean(response.Content);
 
                 return new TranslateResult(true, mean);
             });

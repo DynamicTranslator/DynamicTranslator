@@ -1,5 +1,7 @@
 ﻿namespace Dynamic.Translator.Core.Dependency.Interceptors
 {
+    #region using
+
     using System;
     using System.Net;
     using System.Text;
@@ -7,6 +9,8 @@
     using Castle.DynamicProxy;
     using Exception;
     using Orchestrators;
+
+    #endregion
 
     public class ExceptionInterceptor : IInterceptor
     {
@@ -20,27 +24,27 @@
                 {
                     var task = invocation.ReturnValue as Task;
                     if (task != null && task.IsFaulted)
-                        invocation.ReturnValue = this.HandleReturnAsync(invocation, task.Exception);
+                        invocation.ReturnValue = HandleReturnAsync(invocation, task.Exception);
                 }
             }
             catch (ApiKeyNullException ex)
             {
                 if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (MaximumCharacterLimitException ex)
             {
                 if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (WebException ex)
             {
                 if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (Exception ex)
             {
-                invocation.ReturnValue = this.HandleReturnAsync(invocation, ex);
+                invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
         }
 

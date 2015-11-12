@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
-using Dynamic.Translator.Core.Dependency.Manager;
-
-namespace Dynamic.Translator.Core.Config
+﻿namespace Dynamic.Translator.Core.Config
 {
+    #region using
+
+    using System.Collections.Generic;
+    using Dependency.Manager;
+
+    #endregion
 
     #region using
 

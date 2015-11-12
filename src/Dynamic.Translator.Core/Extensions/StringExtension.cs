@@ -1,8 +1,12 @@
 ﻿namespace Dynamic.Translator.Core.Extensions
 {
+    #region using
+
     using System;
     using System.Text;
     using System.Text.RegularExpressions;
+
+    #endregion
 
     public static class StringExtension
     {
@@ -11,7 +15,7 @@
             return Regex.Replace(
                 Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(),
                     @"\t|\n|\r", ""),
-                "[^ -~]", "");//REmove non-AsCII characters
+                "[^ -~]", ""); //REmove non-AsCII characters
         }
 
         public static string GenerateSlug(this string phrase)

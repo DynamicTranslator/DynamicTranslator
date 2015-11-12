@@ -1,7 +1,11 @@
-﻿using System.Collections.Concurrent;
-
-namespace Dynamic.Translator.Core.Optimizers
+﻿namespace Dynamic.Translator.Core.Optimizers
 {
+    #region using
+
+    using System.Collections.Concurrent;
+
+    #endregion
+
     public class Pool<T> : IPool<T>
     {
         private readonly ConcurrentDictionary<T, T> _pool = new ConcurrentDictionary<T, T>();

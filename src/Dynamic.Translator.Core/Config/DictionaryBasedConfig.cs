@@ -1,11 +1,10 @@
-﻿using System.Configuration;
-
-namespace Dynamic.Translator.Core.Config
+﻿namespace Dynamic.Translator.Core.Config
 {
     #region using
 
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using Extensions;
 
     #endregion
@@ -14,13 +13,13 @@ namespace Dynamic.Translator.Core.Config
     {
         protected DictionayBasedConfig()
         {
-            this.CustomSettings = new Dictionary<string, object>();
+            CustomSettings = new Dictionary<string, object>();
         }
 
         public object this[string name]
         {
-            get { return this.CustomSettings.GetOrDefault(name); }
-            set { this.CustomSettings[name] = value; }
+            get { return CustomSettings.GetOrDefault(name); }
+            set { CustomSettings[name] = value; }
         }
 
         protected Dictionary<string, object> CustomSettings { get; }
@@ -45,7 +44,7 @@ namespace Dynamic.Translator.Core.Config
 
         public object Get(string name)
         {
-            return this.Get(name, null);
+            return Get(name, null);
         }
 
         public object Get(string name, object defaultValue)
@@ -59,16 +58,16 @@ namespace Dynamic.Translator.Core.Config
 
         public T Get<T>(string name, T defaultValue)
         {
-            return (T) this.Get(name, (object) defaultValue);
+            return (T) Get(name, (object) defaultValue);
         }
 
         public T GetOrCreate<T>(string name, Func<T> creator)
         {
-            var value = this.Get(name);
+            var value = Get(name);
             if (value == null)
             {
                 value = creator();
-                this.Set(name, value);
+                Set(name, value);
             }
             return (T) value;
         }

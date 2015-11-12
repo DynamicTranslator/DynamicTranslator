@@ -108,6 +108,7 @@
     <Compile Include="Orchestrators\IMeanOrganizer.cs" />
     <Compile Include="Orchestrators\IMeanOrganizerFactory.cs" />
     <Compile Include="Orchestrators\INotifier.cs" />
+    <Compile Include="Orchestrators\IResultOrganizer.cs" />
     <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
     <Compile Include="Orchestrators\ObserverBase.cs" />
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />

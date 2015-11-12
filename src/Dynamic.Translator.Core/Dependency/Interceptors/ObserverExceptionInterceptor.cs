@@ -1,9 +1,13 @@
 ﻿namespace Dynamic.Translator.Core.Dependency.Interceptors
 {
+    #region using
+
     using System;
     using Castle.DynamicProxy;
     using Orchestrators;
     using ViewModel.Constants;
+
+    #endregion
 
     public class ObserverExceptionInterceptor : IInterceptor
     {
@@ -22,7 +26,7 @@
             }
             catch (Exception ex)
             {
-                this.notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, ex.Message);
+                notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, ex.Message);
             }
         }
     }

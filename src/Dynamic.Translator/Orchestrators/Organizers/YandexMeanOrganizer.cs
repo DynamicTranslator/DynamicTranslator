@@ -1,10 +1,14 @@
 ﻿namespace Dynamic.Translator.Orchestrators.Organizers
 {
+    #region using
+
     using System.Threading.Tasks;
     using System.Xml;
     using Core;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
+
+    #endregion
 
     public class YandexMeanOrganizer : IMeanOrganizer
     {

@@ -1,5 +1,7 @@
 ﻿namespace Dynamic.Translator.Orchestrators.Organizers
 {
+    #region using
+
     using System.Threading.Tasks;
     using Core;
     using Core.Extensions;
@@ -7,6 +9,8 @@
     using Core.ViewModel.Constants;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+
+    #endregion
 
     public class GoogleTranslateMeanOrganizer : IMeanOrganizer
     {
@@ -22,22 +26,5 @@
         }
 
         public TranslatorType TranslatorType => TranslatorType.GOOGLE;
-
-        private string GetFirstElementSafely(JArray obj)
-        {
-            if (obj.HasValues)
-            {
-                if (obj.First.HasValues)
-                {
-                    if (obj.First.First.HasValues)
-                    {
-                        if (obj.First.First.First.HasValues)
-                            return obj.First.First.First.Value<string>();
-                    }
-                }
-            }
-
-            return string.Empty;
-        }
     }
 }

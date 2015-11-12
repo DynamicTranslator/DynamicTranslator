@@ -1,6 +1,10 @@
 ﻿namespace Dynamic.Translator.Core.Dependency
 {
+    #region using
+
     using Manager;
+
+    #endregion
 
     internal class DisposableDependencyObjectWrapperOfT : DisposableDependencyObjectWrapper<object>, IDisposableDependencyObjectWrapper
     {
@@ -16,13 +20,13 @@
 
         public DisposableDependencyObjectWrapper(IIocResolver iocResolver, T obj)
         {
-            this._iocResolver = iocResolver;
-            this.Object = obj;
+            _iocResolver = iocResolver;
+            Object = obj;
         }
 
         public void Dispose()
         {
-            this._iocResolver.Release(this.Object);
+            _iocResolver.Release(Object);
         }
 
         public T Object { get; }

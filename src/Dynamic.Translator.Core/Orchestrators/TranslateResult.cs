@@ -8,12 +8,11 @@
 
         public TranslateResult(bool isSucess, Maybe<string> resultMessage)
         {
-            this.IsSucess = isSucess;
-            this.ResultMessage = resultMessage;
+            IsSucess = isSucess;
+            ResultMessage = resultMessage;
         }
 
         public bool IsSucess { get; set; }
-
 
         public Maybe<string> ResultMessage { get; set; }
     }

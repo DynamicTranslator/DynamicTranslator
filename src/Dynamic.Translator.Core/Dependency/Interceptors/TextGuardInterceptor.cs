@@ -1,9 +1,13 @@
 ﻿namespace Dynamic.Translator.Core.Dependency.Interceptors
 {
+    #region using
+
     using System.Linq;
     using Castle.DynamicProxy;
     using Config;
     using Exception;
+
+    #endregion
 
     public class TextGuardInterceptor : IInterceptor
     {
@@ -19,12 +23,12 @@
         {
             if (invocation.Arguments.Any())
             {
-                this.currentString = invocation.Arguments[0].ToString();
+                currentString = invocation.Arguments[0].ToString();
 
-                if (this.currentString.Length > this.configuration.SearchableCharacterLimit)
+                if (currentString.Length > configuration.SearchableCharacterLimit)
                     throw new MaximumCharacterLimitException("You have exceed maximum character limit");
 
-                if (string.IsNullOrEmpty(this.configuration.ApiKey))
+                if (string.IsNullOrEmpty(configuration.ApiKey))
                     throw new ApiKeyNullException("The Api Key cannot be NULL !");
 
                 invocation.Proceed();

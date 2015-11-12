@@ -60,10 +60,10 @@
             eventHandler?.Invoke(sender, e);
         }
 
-        public static async Task InvokeSafelyAsync<TEventArgs>(this EventHandler<TEventArgs> eventHandler, object sender, TEventArgs e)
+        public static void InvokeSafelyAsync<TEventArgs>(this EventHandler<TEventArgs> eventHandler, object sender, TEventArgs e)
             where TEventArgs : EventArgs
         {
-            await Task.Run(() => eventHandler?.Invoke(sender, e));
+            Task.Run(() => eventHandler?.Invoke(sender, e));
         }
     }
 }

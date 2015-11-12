@@ -1,6 +1,10 @@
 ﻿namespace Dynamic.Translator.Core.Orchestrators
 {
+    #region using
+
     using System;
+
+    #endregion
 
     public class ObserverBase<T> : IObserver<T>
     {

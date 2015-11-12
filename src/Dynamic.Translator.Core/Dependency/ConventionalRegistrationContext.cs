@@ -11,9 +11,9 @@
     {
         internal ConventionalRegistrationContext(Assembly assembly, IIocManager iocManager, ConventionalRegistrationConfig config)
         {
-            this.Assembly = assembly;
-            this.IocManager = iocManager;
-            this.Config = config;
+            Assembly = assembly;
+            IocManager = iocManager;
+            Config = config;
         }
 
         public Assembly Assembly { get; }

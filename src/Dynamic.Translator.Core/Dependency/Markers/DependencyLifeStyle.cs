@@ -4,7 +4,6 @@
     {
         Singleton,
 
-
         Transient
     }
 }

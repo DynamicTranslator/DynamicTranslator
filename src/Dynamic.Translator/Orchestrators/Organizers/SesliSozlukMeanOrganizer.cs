@@ -1,13 +1,16 @@
 ﻿namespace Dynamic.Translator.Orchestrators.Organizers
 {
+    #region using
+
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using Core;
-    using Core.Dependency.Markers;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
     using HtmlAgilityPack;
+
+    #endregion
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer
     {

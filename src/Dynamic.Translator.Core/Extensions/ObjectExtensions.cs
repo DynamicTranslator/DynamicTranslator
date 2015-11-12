@@ -1,6 +1,10 @@
 ﻿namespace Dynamic.Translator.Core.Extensions
 {
+    #region using
+
     using Newtonsoft.Json.Linq;
+
+    #endregion
 
     public static class ObjectExtensions
     {

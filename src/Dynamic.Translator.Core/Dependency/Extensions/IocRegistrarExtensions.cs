@@ -58,7 +58,6 @@
             iocRegistrar.Register<TType, TImpl>(lifeStyle);
         }
 
-
         /// <summary>
         ///     Registers a type with it's implementation if it's not registered before.
         /// </summary>

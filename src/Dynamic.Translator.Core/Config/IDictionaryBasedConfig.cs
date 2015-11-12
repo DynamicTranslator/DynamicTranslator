@@ -1,10 +1,12 @@
-﻿using System;
-
-namespace Dynamic.Translator.Core.Config
+﻿namespace Dynamic.Translator.Core.Config
 {
     #region using
 
-    
+    using System;
+
+    #endregion
+
+    #region using
 
     #endregion
 

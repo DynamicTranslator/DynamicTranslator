@@ -1,12 +1,16 @@
 ﻿namespace Dynamic.Translator.Core.Exception
 {
+    #region using
+
     using System;
+
+    #endregion
 
     public class ApiKeyNullException : Exception
     {
         public ApiKeyNullException(string message, Exception ex, object[] messageParameters) : base(message, ex)
         {
-            this.MessageParameters = messageParameters;
+            MessageParameters = messageParameters;
         }
 
         public ApiKeyNullException(string message, Exception ex) : base(message, ex)

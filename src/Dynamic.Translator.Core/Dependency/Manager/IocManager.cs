@@ -31,11 +31,11 @@
         /// </summary>
         public IocManager()
         {
-            this.IocContainer = new WindsorContainer();
-            this._conventionalRegistrars = new List<IConventionalDependencyRegistrar>();
+            IocContainer = new WindsorContainer();
+            _conventionalRegistrars = new List<IConventionalDependencyRegistrar>();
 
             //Register self!
-            this.IocContainer.Register(
+            IocContainer.Register(
                 Component.For<IocManager, IIocManager, IIocRegistrar, IIocResolver>().UsingFactoryMethod(() => this)
                 );
         }
@@ -51,7 +51,7 @@
         /// <param name="registrar">dependency registrar</param>
         public void AddConventionalRegistrar(IConventionalDependencyRegistrar registrar)
         {
-            this._conventionalRegistrars.Add(registrar);
+            _conventionalRegistrars.Add(registrar);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
         public void Register<TType>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
         {
-            this.IocContainer.Register(ApplyLifestyle(Component.For<TType>(), lifeStyle));
+            IocContainer.Register(ApplyLifestyle(Component.For<TType>(), lifeStyle));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@
             where TType : class
             where TImpl : class, TType
         {
-            this.IocContainer.Register(ApplyLifestyle(Component.For<TType, TImpl>().ImplementedBy<TImpl>(), lifeStyle));
+            IocContainer.Register(ApplyLifestyle(Component.For<TType, TImpl>().ImplementedBy<TImpl>(), lifeStyle));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@
         /// <typeparam name="TType">Type to check</typeparam>
         public bool IsRegistered<TType>()
         {
-            return this.IocContainer.Kernel.HasComponent(typeof (TType));
+            return IocContainer.Kernel.HasComponent(typeof (TType));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@
         /// <returns>The instance object</returns>
         public T Resolve<T>()
         {
-            return this.IocContainer.Resolve<T>();
+            return IocContainer.Resolve<T>();
         }
 
         /// <summary>
@@ -106,7 +106,7 @@
         /// <returns>The instance object</returns>
         public T Resolve<T>(object argumentsAsAnonymousType)
         {
-            return this.IocContainer.Resolve<T>(argumentsAsAnonymousType);
+            return IocContainer.Resolve<T>(argumentsAsAnonymousType);
         }
 
         /// <summary>
@@ -115,13 +115,13 @@
         /// <param name="obj">Object to be released</param>
         public void Release(object obj)
         {
-            this.IocContainer.Release(obj);
+            IocContainer.Release(obj);
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
-            this.IocContainer.Dispose();
+            IocContainer.Dispose();
         }
 
         /// <summary>
@@ -131,7 +131,7 @@
         /// <param name="assembly">Assembly to register</param>
         public void RegisterAssemblyByConvention(Assembly assembly)
         {
-            this.RegisterAssemblyByConvention(assembly, new ConventionalRegistrationConfig());
+            RegisterAssemblyByConvention(assembly, new ConventionalRegistrationConfig());
         }
 
         /// <summary>
@@ -144,11 +144,11 @@
         {
             var context = new ConventionalRegistrationContext(assembly, this, config);
 
-            foreach (var registerer in this._conventionalRegistrars)
+            foreach (var registerer in _conventionalRegistrars)
                 registerer.RegisterAssembly(context);
 
             if (config.InstallInstallers)
-                this.IocContainer.Install(FromAssembly.Instance(assembly));
+                IocContainer.Install(FromAssembly.Instance(assembly));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
         public void Register(Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
-            this.IocContainer.Register(ApplyLifestyle(Component.For(type), lifeStyle));
+            IocContainer.Register(ApplyLifestyle(Component.For(type), lifeStyle));
         }
 
         /// <summary>
@@ -169,7 +169,7 @@
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
         public void Register(Type type, Type impl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
-            this.IocContainer.Register(ApplyLifestyle(Component.For(type, impl).ImplementedBy(impl), lifeStyle));
+            IocContainer.Register(ApplyLifestyle(Component.For(type, impl).ImplementedBy(impl), lifeStyle));
         }
 
         /// <summary>
@@ -180,7 +180,7 @@
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
         public void Register(Type type, object typeImpl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
-            this.IocContainer.Register(ApplyLifestyle(Component.For(type).Instance(typeImpl), lifeStyle));
+            IocContainer.Register(ApplyLifestyle(Component.For(type).Instance(typeImpl), lifeStyle));
         }
 
         /// <summary>
@@ -189,7 +189,7 @@
         /// <param name="type">Type to check</param>
         public bool IsRegistered(Type type)
         {
-            return this.IocContainer.Kernel.HasComponent(type);
+            return IocContainer.Kernel.HasComponent(type);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@
         /// <returns>The instance object</returns>
         public object Resolve(Type type)
         {
-            return this.IocContainer.Resolve(type);
+            return IocContainer.Resolve(type);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@
         /// <returns>The instance object</returns>
         public object Resolve(Type type, object argumentsAsAnonymousType)
         {
-            return this.IocContainer.Resolve(type, argumentsAsAnonymousType);
+            return IocContainer.Resolve(type, argumentsAsAnonymousType);
         }
 
         /// <summary>

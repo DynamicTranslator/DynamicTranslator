@@ -1,6 +1,6 @@
 ﻿namespace Dynamic.Translator.Core.ViewModel
 {
-    #region
+    #region using
 
     using System;
     using System.Collections.ObjectModel;
