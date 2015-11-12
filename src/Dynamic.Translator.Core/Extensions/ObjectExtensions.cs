@@ -13,7 +13,7 @@
             return jarray.ForwardToken().Value<T>();
         }
 
-        private static JToken ForwardToken(this JToken token)
+        internal static JToken ForwardToken(this JToken token)
         {
             return token.HasValues ? token.First.ForwardToken() : token;
         }
