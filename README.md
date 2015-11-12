@@ -55,4 +55,4 @@ It has an app.config like below. I didn't do any UI implementation yet, i think 
     <add key="ToLanguage" value="Turkish" />
   ```
   
-  
+  # İmplemented C# 6.0, .NET 4.6
