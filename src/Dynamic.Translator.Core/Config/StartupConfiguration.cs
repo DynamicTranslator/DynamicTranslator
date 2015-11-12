@@ -1,10 +1,10 @@
-﻿namespace Dynamic.Translator.Core.Config
-{
-    #region using
+﻿using System.Collections.Generic;
+using Dynamic.Translator.Core.Dependency.Manager;
 
-    using System.Collections.Generic;
-    using System.Configuration;
-    using Dependency.Manager;
+namespace Dynamic.Translator.Core.Config
+{
+
+    #region using
 
     #endregion
 
@@ -12,38 +12,54 @@
     {
         public StartupConfiguration(IIocManager iocManager)
         {
-            this.IocManager = iocManager;
+            IocManager = iocManager;
         }
 
         public void Initialize()
         {
-            this.Set(nameof(this.ApiKey), ConfigurationManager.AppSettings[nameof(this.ApiKey)]);
-            this.Set(nameof(this.LeftOffset), ConfigurationManager.AppSettings[nameof(this.LeftOffset)]);
-            this.Set(nameof(this.TopOffset), ConfigurationManager.AppSettings[nameof(this.TopOffset)]);
-            this.Set(nameof(this.SearchableCharacterLimit), ConfigurationManager.AppSettings[nameof(this.SearchableCharacterLimit)]);
-            this.Set(nameof(this.FromLanguage), ConfigurationManager.AppSettings[nameof(this.FromLanguage)]);
-            this.Set(nameof(this.ToLanguage), ConfigurationManager.AppSettings[nameof(this.ToLanguage)]);
-            this.Set(nameof(this.MaxNotifications), ConfigurationManager.AppSettings[nameof(this.MaxNotifications)]);
-            this.InitLanguageMap();
+            SetViaConfigurationManager(nameof(ApiKey));
+            SetViaConfigurationManager(nameof(LeftOffset));
+            SetViaConfigurationManager(nameof(TopOffset));
+            SetViaConfigurationManager(nameof(SearchableCharacterLimit));
+            SetViaConfigurationManager(nameof(FromLanguage));
+            SetViaConfigurationManager(nameof(ToLanguage));
+            SetViaConfigurationManager(nameof(MaxNotifications));
+            SetViaConfigurationManager(nameof(GoogleTranslateUrl));
+            SetViaConfigurationManager(nameof(YandexUrl));
+            SetViaConfigurationManager(nameof(SesliSozlukUrl));
+            SetViaConfigurationManager(nameof(TurengUrl));
+            InitLanguageMap();
         }
 
         public IIocManager IocManager { get; }
 
-        public string ApiKey => this.Get<string>(nameof(this.ApiKey));
+        public string ApiKey => Get<string>(nameof(ApiKey));
 
-        public int LeftOffset => this.Get<int>(nameof(this.LeftOffset));
+        public int LeftOffset => Get<int>(nameof(LeftOffset));
 
-        public int TopOffset => this.Get<int>(nameof(this.TopOffset));
+        public int TopOffset => Get<int>(nameof(TopOffset));
 
-        public int SearchableCharacterLimit => this.Get<int>(nameof(this.SearchableCharacterLimit));
+        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
 
-        public string FromLanguage => this.Get<string>(nameof(this.FromLanguage));
+        public string FromLanguage => Get<string>(nameof(FromLanguage));
 
-        public string ToLanguage => this.Get<string>(nameof(this.ToLanguage));
+        public string FromLanguageExtension => LanguageMap[FromLanguage];
 
-        public Dictionary<string, string> LanguageMap => this.Get<Dictionary<string, string>>(nameof(this.LanguageMap));
+        public string ToLanguage => Get<string>(nameof(ToLanguage));
 
-        public byte MaxNotifications => this.Get<byte>(nameof(this.MaxNotifications));
+        public string ToLanguageExtension => LanguageMap[ToLanguage];
+
+        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
+
+        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
+
+        public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
+
+        public string YandexUrl => Get<string>(nameof(YandexUrl));
+
+        public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
+
+        public string TurengUrl => Get<string>(nameof(TurengUrl));
 
         private void InitLanguageMap()
         {
@@ -114,8 +130,7 @@
                 {"Yiddish", "yi"}
             };
 
-
-            this.Set(nameof(this.LanguageMap), languageMap);
+            Set(nameof(LanguageMap), languageMap);
         }
     }
 }

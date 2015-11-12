@@ -1,4 +1,7 @@
-﻿namespace Dynamic.Translator.Core.Dependency.Installer
+﻿using Castle.MicroKernel.Lifestyle.Pool;
+using Dynamic.Translator.Core.Optimizers;
+
+namespace Dynamic.Translator.Core.Dependency.Installer
 {
     #region using
 
@@ -21,7 +24,8 @@
             container.Register(
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
-                Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient
+                Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
+                Component.For(typeof(IPool<>)).ImplementedBy(typeof(Pool<>)).LifeStyle.Transient
                 );
         }
     }

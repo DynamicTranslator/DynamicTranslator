@@ -1,4 +1,6 @@
-﻿namespace Dynamic.Translator.Core.Config
+﻿using System.Configuration;
+
+namespace Dynamic.Translator.Core.Config
 {
     #region using
 
@@ -34,6 +36,11 @@
         public void Set<T>(string name, T value)
         {
             this[name] = value;
+        }
+
+        public void SetViaConfigurationManager(string name)
+        {
+            this[name] = ConfigurationManager.AppSettings[name];
         }
 
         public object Get(string name)

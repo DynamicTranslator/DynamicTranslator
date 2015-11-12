@@ -1,9 +1,10 @@
-﻿namespace Dynamic.Translator.Core.Config
-{
-    #region using
+﻿using System.Collections.Generic;
+using Dynamic.Translator.Core.Dependency.Manager;
 
-    using System.Collections.Generic;
-    using Dependency.Manager;
+namespace Dynamic.Translator.Core.Config
+{
+
+    #region using
 
     #endregion
 
@@ -21,11 +22,23 @@
 
         string FromLanguage { get; }
 
+        string FromLanguageExtension { get; }
+
         string ToLanguage { get; }
+
+        string ToLanguageExtension { get; }
 
         Dictionary<string, string> LanguageMap { get; }
 
         byte MaxNotifications { get; }
+
+        string GoogleTranslateUrl { get; }
+
+        string YandexUrl { get; }
+
+        string SesliSozlukUrl { get; }
+
+        string TurengUrl { get; }
 
         void Initialize();
     }

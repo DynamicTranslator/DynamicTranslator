@@ -100,6 +100,8 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Maybe.cs" />
+    <Compile Include="Optimizers\IPool.cs" />
+    <Compile Include="Optimizers\Pool.cs" />
     <Compile Include="Orchestrators\IEvents.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
     <Compile Include="Orchestrators\IMeanFinderFactory.cs" />

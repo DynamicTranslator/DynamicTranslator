@@ -35,7 +35,8 @@
         private Point mouseFirstPoint;
         private Point mouseSecondPoint;
 
-        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
+        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications,
+            IStartupConfiguration startupConfiguration)
         {
             if (mainWindow == null)
                 throw new ArgumentNullException(nameof(mainWindow));
@@ -55,73 +56,72 @@
 
         public void Initialize()
         {
-            var wih = new WindowInteropHelper(this.mainWindow);
-            this.hWndSource = HwndSource.FromHwnd(wih.Handle);
-            this.globalMouseHook = Hook.GlobalEvents();
-            this.mainWindow.CancellationTokenSource = new CancellationTokenSource();
-            var source = this.hWndSource;
+            var wih = new WindowInteropHelper(mainWindow);
+            hWndSource = HwndSource.FromHwnd(wih.Handle);
+            globalMouseHook = Hook.GlobalEvents();
+            mainWindow.CancellationTokenSource = new CancellationTokenSource();
+            var source = hWndSource;
             if (source != null)
             {
-                source.AddHook(this.WinProc); // start processing window messages
-                this.hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
+                source.AddHook(WinProc); // start processing window messages
+                hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
             }
-            this.SubscribeLocalevents();
-            this.FlushCopyCommand();
-            this.growlNotifications.Top = SystemParameters.WorkArea.Top + this.startupConfiguration.TopOffset;
-            this.growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - this.startupConfiguration.LeftOffset;
-            this.IsInitialized = true;
+            SubscribeLocalevents();
+            FlushCopyCommand();
+            growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
+            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width -
+                                      startupConfiguration.LeftOffset;
+            IsInitialized = true;
         }
 
         public void Dispose()
         {
-            Win32.ChangeClipboardChain(this.hWndSource.Handle, this.hWndNextViewer);
-            this.hWndNextViewer = IntPtr.Zero;
-            this.hWndSource.RemoveHook(this.WinProc);
-            this.IsInitialized = false;
-            this.FlushCopyCommand();
-            this.mainWindow.CancellationTokenSource.Cancel(false);
-            this.UnsubscribeLocalEvents();
+            Win32.ChangeClipboardChain(hWndSource.Handle, hWndNextViewer);
+            hWndNextViewer = IntPtr.Zero;
+            hWndSource.RemoveHook(WinProc);
+            IsInitialized = false;
+            FlushCopyCommand();
+            mainWindow.CancellationTokenSource.Cancel(false);
+            UnsubscribeLocalEvents();
             IocManager.Instance.Dispose();
         }
 
         public bool IsInitialized { get; private set; }
 
-        private async Task MouseUp(object sender, MouseEventArgs e)
+        private void MouseUp(object sender, MouseEventArgs e)
         {
-            this.mouseSecondPoint = e.Location;
-
-            if (this.isMouseDown && !this.mouseSecondPoint.Equals(this.mouseFirstPoint))
+            Task.Run(() =>
             {
-                await Task.Run(() =>
+                if (isMouseDown && !mouseSecondPoint.Equals(mouseFirstPoint))
                 {
-                    if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                    mouseSecondPoint = e.Location;
+                    if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                         return;
 
                     SendCopyCommand();
-                });
-                this.isMouseDown = false;
-            }
-            this.isMouseDown = false;
-        }
-
-        private async Task MouseDown(object sender, MouseEventArgs e)
-        {
-            await Task.Run(() =>
-            {
-                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
-                    return;
-
-                this.mouseFirstPoint = e.Location;
-                this.isMouseDown = true;
+                    isMouseDown = false;
+                }
             });
         }
 
-        private async Task MouseDoubleClicked(object sender, MouseEventArgs e)
+        private void MouseDown(object sender, MouseEventArgs e)
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
-                this.isMouseDown = false;
-                if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
+                mouseFirstPoint = e.Location;
+                isMouseDown = true;
+            });
+        }
+
+        private void MouseDoubleClicked(object sender, MouseEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                isMouseDown = false;
+                if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                     return;
 
                 SendCopyCommand();
@@ -133,36 +133,35 @@
             switch (msg)
             {
                 case Win32.WmChangecbchain:
-                    if (wParam == this.hWndNextViewer)
-                        this.hWndNextViewer = lParam; //clipboard viewer chain changed, need to fix it.
-                    else if (this.hWndNextViewer != IntPtr.Zero)
-                        Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
+                    if (wParam == hWndNextViewer)
+                        hWndNextViewer = lParam; //clipboard viewer chain changed, need to fix it.
+                    else if (hWndNextViewer != IntPtr.Zero)
+                        Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
 
                     break;
                 case Win32.WmDrawclipboard:
-                   // Win32.SendMessage(this.hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
+                    Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
                     if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
                     {
                         Application.Current.Dispatcher.Invoke(
                             DispatcherPriority.Background,
-                            (Action)delegate
-                               {
-                                   var currentText = Clipboard.GetText().RemoveSpecialCharacters();
+                            (Action) delegate
+                            {
+                                var currentText = Clipboard.GetText().RemoveSpecialCharacters();
 
-                                   if (!string.IsNullOrEmpty(currentText))
-                                   {
-                                       Task.Run(
-                                           async () =>
-                                           {
-                                               if (this.mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
-                                                   return;
+                                if (!string.IsNullOrEmpty(currentText))
+                                {
+                                    Task.Run(async () =>
+                                    {
+                                        if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                                            return;
 
-                                               await this.WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
 
-                                               FlushCopyCommand();
-                                           });
-                                   }
-                               });
+                                        FlushCopyCommand();
+                                    });
+                                }
+                            });
                     }
                     break;
             }
@@ -172,16 +171,16 @@
 
         private void SubscribeLocalevents()
         {
-            this.globalMouseHook.MouseDoubleClick += async (o, args) => await this.MouseDoubleClicked(o, args);
-            this.globalMouseHook.MouseDown += async (o, args) => await this.MouseDown(o, args);
-            this.globalMouseHook.MouseUp += async (o, args) => await this.MouseUp(o, args);
+            globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
+            globalMouseHook.MouseDown += MouseDown;
+            globalMouseHook.MouseUp += MouseUp;
         }
 
         private void UnsubscribeLocalEvents()
         {
-            this.globalMouseHook.MouseDoubleClick -= (async (o, args) => await this.MouseDoubleClicked(o, args));
-            this.globalMouseHook.MouseDownExt -= (async (o, args) => await this.MouseDown(o, args));
-            this.globalMouseHook.MouseUp -= (async (o, args) => await this.MouseUp(o, args));
+            globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
+            globalMouseHook.MouseDownExt -= MouseDown;
+            globalMouseHook.MouseUp -= MouseUp;
         }
 
         private void SendCopyCommand()

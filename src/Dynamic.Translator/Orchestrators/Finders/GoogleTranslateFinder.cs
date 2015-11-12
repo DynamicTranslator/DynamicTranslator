@@ -13,43 +13,33 @@
     public class GoogleTranslateFinder : IMeanFinder
     {
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
-        private readonly IStartupConfiguration startupConfiguration;
+        private readonly IStartupConfiguration configuration;
 
-        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration startupConfiguration)
+        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
         {
             this.meanOrganizerFactory = meanOrganizerFactory;
-            this.startupConfiguration = startupConfiguration;
+            this.configuration = configuration;
         }
 
         public async Task<TranslateResult> Find(string text)
         {
             return await Task.Run(async () =>
             {
-                var address =
-                    "https://translate.google.com/translate_a/single?client=t&sl={0}&tl={1}&hl=tr&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&source=btn&srcrom=1&ssel=0&tsel=0&kc=0&tk=307860|168064&q={2}";
+                var address = configuration.GoogleTranslateUrl;
 
                 address = string.Format(address,
-                    this.startupConfiguration.LanguageMap[this.startupConfiguration.FromLanguage],
-                    this.startupConfiguration.LanguageMap[this.startupConfiguration.ToLanguage],
+                    configuration.FromLanguageExtension,
+                    configuration.ToLanguageExtension,
                     text);
 
-                var googleClient = new WebClient
-                {
-                    Headers =
-                    {
-                        {
-                            HttpRequestHeader.UserAgent,
-                            "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
-                        }
-                    },
-                    Encoding = Encoding.UTF8
-                };
-
+                var googleClient = new WebClient();
                 var uri = new Uri(address);
                 Uri.TryCreate(uri.AbsoluteUri, UriKind.Absolute, out uri);
                 if (!Uri.IsWellFormedUriString(uri.AbsoluteUri, UriKind.Absolute))
                     return new TranslateResult();
 
+                googleClient.Encoding = Encoding.UTF8;
+                googleClient.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
                 googleClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
                 googleClient.Headers.Add("X-DevTools-Emulate-Network-Conditions-Client-Id", "en-US,en;q=0.8,tr;q=0.6");
                 googleClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));

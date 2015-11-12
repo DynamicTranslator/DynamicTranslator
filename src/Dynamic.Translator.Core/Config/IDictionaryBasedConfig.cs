@@ -1,14 +1,17 @@
-﻿namespace Dynamic.Translator.Core.Config
+﻿using System;
+
+namespace Dynamic.Translator.Core.Config
 {
     #region using
 
-    using System;
+    
 
     #endregion
 
     public interface IDictionaryBasedConfig
     {
         void Set<T>(string name, T value);
+        void SetViaConfigurationManager(string name);
         object Get(string name);
         T Get<T>(string name);
         object Get(string name, object defaultValue);
