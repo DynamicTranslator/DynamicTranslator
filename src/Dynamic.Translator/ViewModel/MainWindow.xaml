@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Dynamic.Translator.ViewModel.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DynamicTranslator || Oğuzhan Soykan" Height="179" Width="476.999" Loaded="MainWindow_OnLoaded"
+        Title="DynamicTranslator || Oğuzhan Soykan" Height="179" Width="476.999"
         ResizeMode="CanMinimize"
         Icon="/Resources/dynamic-link-library 16.png">
     <StackPanel

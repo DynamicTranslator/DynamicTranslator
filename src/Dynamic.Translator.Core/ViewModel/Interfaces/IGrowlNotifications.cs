@@ -12,7 +12,9 @@
         event EventHandler OnDispose;
 
         Task AddNotificationAsync(Notification notification);
+
         void AddNotification(Notification notification);
+
         void RemoveNotification(Notification notification);
     }
 }
