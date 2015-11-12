@@ -88,9 +88,9 @@
 
         public bool IsInitialized { get; private set; }
 
-        private void MouseUp(object sender, MouseEventArgs e)
+        private async void MouseUp(object sender, MouseEventArgs e)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (isMouseDown && !mouseSecondPoint.Equals(mouseFirstPoint))
                 {
@@ -104,9 +104,9 @@
             });
         }
 
-        private void MouseDown(object sender, MouseEventArgs e)
+        private async void MouseDown(object sender, MouseEventArgs e)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                     return;
@@ -116,9 +116,9 @@
             });
         }
 
-        private void MouseDoubleClicked(object sender, MouseEventArgs e)
+        private async void MouseDoubleClicked(object sender, MouseEventArgs e)
         {
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 isMouseDown = false;
                 if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
