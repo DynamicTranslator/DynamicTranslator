@@ -170,28 +170,28 @@
                     break;
                 case Win32.WmDrawclipboard:
                     Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
-                    if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
-                    {
-                        Application.Current.Dispatcher.Invoke(
-                            DispatcherPriority.Background,
-                            (Action)delegate
-                           {
-                               var currentText = Clipboard.GetText().RemoveSpecialCharacters();
+                    Application.Current.Dispatcher.InvokeAsync(
+                        delegate
+                        {
+                            if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
+                            {
+                                var currentText = Clipboard.GetText().RemoveSpecialCharacters();
 
-                               if (!string.IsNullOrEmpty(currentText))
-                               {
-                                   Task.Run(async () =>
-                                   {
-                                       if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
-                                           return;
+                                if (!string.IsNullOrEmpty(currentText))
+                                {
+                                    Task.Run(async () =>
+                                    {
+                                        if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
+                                            return;
 
-                                       WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+                                        WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
 
-                                       await FlushCopyCommandAsync();
-                                   });
-                               }
-                           });
-                    }
+                                        await FlushCopyCommandAsync();
+                                    });
+                                }
+                            }
+                        }, DispatcherPriority.Background);
+
                     break;
             }
 
