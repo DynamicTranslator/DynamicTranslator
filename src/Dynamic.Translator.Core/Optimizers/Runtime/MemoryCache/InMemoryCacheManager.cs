@@ -11,11 +11,7 @@
 
     public class InMemoryCacheManager : CacheManagerBase, ISingletonDependency
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        public InMemoryCacheManager(IIocManager iocManager, ICachingConfiguration configuration)
-            : base(iocManager, configuration)
+        public InMemoryCacheManager(IIocManager iocManager, ICachingConfiguration configuration) : base(iocManager, configuration)
         {
             IocManager.RegisterIfNot<InMemoryCache>(DependencyLifeStyle.Transient);
         }

@@ -7,6 +7,7 @@
     using System.Reactive;
     using System.Threading.Tasks;
     using Core.Dependency.Markers;
+    using Core.Optimizers.Runtime;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 
@@ -17,9 +18,11 @@
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly INotifier notifier;
         private readonly IResultOrganizer resultOrganizer;
+        private readonly ICacheManager cacheManager;
+        private readonly ITypedCache<string, TranslateResult[]> cache;
         private string previousString;
 
-        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer)
+        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager)
         {
             if (notifier == null)
                 throw new ArgumentNullException(nameof(notifier));
@@ -30,9 +33,14 @@
             if (resultOrganizer == null)
                 throw new ArgumentNullException(nameof(resultOrganizer));
 
+            if (cacheManager == null)
+                throw new ArgumentNullException(nameof(cacheManager));
+
             this.notifier = notifier;
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
+            this.cacheManager = cacheManager;
+            this.cache = cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
@@ -46,7 +54,7 @@
 
                 previousString = currentString;
 
-                var results = await Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)));
+                var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString))));
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString);
                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First());
             });

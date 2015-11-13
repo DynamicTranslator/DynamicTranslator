@@ -1,20 +1,23 @@
 ﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
 {
+    #region using
+
     using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using Dependency.Markers;
 
-    internal class CachingConfiguration : ICachingConfiguration, ISingletonDependency
+    #endregion
+
+    internal class CachingConfiguration : ICachingConfiguration
     {
-        public IReadOnlyList<ICacheConfigurator> Configurators => _configurators.ToImmutableList();
-
         private readonly List<ICacheConfigurator> _configurators;
 
         public CachingConfiguration()
         {
             _configurators = new List<ICacheConfigurator>();
         }
+
+        public IReadOnlyList<ICacheConfigurator> Configurators => _configurators.ToImmutableList();
 
         public void ConfigureAll(Action<ICache> initAction)
         {

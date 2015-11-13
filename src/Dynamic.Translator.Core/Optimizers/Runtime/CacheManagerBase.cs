@@ -8,7 +8,6 @@
     using System.Linq;
     using Caching;
     using Dependency.Manager;
-    using Dependency.Markers;
 
     #endregion
 
@@ -20,11 +19,6 @@
 
         protected readonly ConcurrentDictionary<string, ICache> Caches;
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="iocManager"></param>
-        /// <param name="configuration"></param>
         protected CacheManagerBase(IIocManager iocManager, ICachingConfiguration configuration)
         {
             IocManager = iocManager;
