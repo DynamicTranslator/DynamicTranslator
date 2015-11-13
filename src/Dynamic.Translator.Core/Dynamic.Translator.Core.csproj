@@ -55,8 +55,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,6 +98,7 @@
     <Compile Include="Dependency\Markers\ISingletonDependency.cs" />
     <Compile Include="Dependency\Markers\ITransientDependency.cs" />
     <Compile Include="Exception\ApiKeyNullException.cs" />
+    <Compile Include="Exception\BusinessException.cs" />
     <Compile Include="Exception\MaximumCharacterLimitException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
@@ -102,6 +108,22 @@
     <Compile Include="Maybe.cs" />
     <Compile Include="Optimizers\IPool.cs" />
     <Compile Include="Optimizers\Pool.cs" />
+    <Compile Include="Optimizers\Runtime\CacheBase.cs" />
+    <Compile Include="Optimizers\Runtime\CacheExtensions.cs" />
+    <Compile Include="Optimizers\Runtime\CacheManagerExtensions.cs" />
+    <Compile Include="Optimizers\Runtime\CacheNames.cs" />
+    <Compile Include="Optimizers\Runtime\Caching\CacheConfigurator.cs" />
+    <Compile Include="Optimizers\Runtime\CacheManagerBase.cs" />
+    <Compile Include="Optimizers\Runtime\Caching\CachingConfiguration.cs" />
+    <Compile Include="Optimizers\Runtime\ICache.cs" />
+    <Compile Include="Optimizers\Runtime\Caching\ICacheConfiguration.cs" />
+    <Compile Include="Optimizers\Runtime\ICacheManager.cs" />
+    <Compile Include="Optimizers\Runtime\Caching\ICachingConfiguration.cs" />
+    <Compile Include="Optimizers\Runtime\ITypedCache.cs" />
+    <Compile Include="Optimizers\Runtime\MemoryCache\InMemoryCache.cs" />
+    <Compile Include="Optimizers\Runtime\MemoryCache\InMemoryCacheManager.cs" />
+    <Compile Include="Optimizers\Runtime\TypedCacheExtensions.cs" />
+    <Compile Include="Optimizers\Runtime\TypedCacheWrapper.cs" />
     <Compile Include="Orchestrators\IEvents.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
     <Compile Include="Orchestrators\IMeanFinderFactory.cs" />
