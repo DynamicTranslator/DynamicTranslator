@@ -40,7 +40,7 @@
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
             this.cacheManager = cacheManager;
-            this.cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
+            this.cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)

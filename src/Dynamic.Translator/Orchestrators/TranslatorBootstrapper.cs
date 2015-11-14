@@ -169,10 +169,10 @@
 
                     break;
                 case Win32.WmDrawclipboard:
-                    Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
                     Application.Current.Dispatcher.InvokeAsync(
                         delegate
                         {
+                            Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
                             if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
                             {
                                 var currentText = Clipboard.GetText().RemoveSpecialCharacters();

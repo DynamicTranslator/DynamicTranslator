@@ -29,12 +29,13 @@
         {
             CancellationTokenSource?.Cancel(false);
             Close();
-            Application.Current.Shutdown();
             if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
             {
+                translator.Dispose();
                 GC.SuppressFinalize(this);
                 GC.Collect();
             }
+            Application.Current.Shutdown();
             base.OnClosed(e);
         }
 
@@ -45,17 +46,20 @@
                 if (isRunning)
                 {
                     BtnSwitch.Content = "Start Translator";
+
                     isRunning = false;
+
                     if (translator.IsInitialized)
                         translator.Dispose();
                 }
                 else
                 {
+                    BtnSwitch.Content = "Stop Translator";
+
                     if (!translator.IsInitialized)
                         translator.Initialize();
 
                     isRunning = true;
-                    BtnSwitch.Content = "Stop Translator";
                 }
             },
                 DispatcherPriority.Background);

@@ -26,12 +26,12 @@
             Caches = new ConcurrentDictionary<string, ICache>();
         }
 
-        public IReadOnlyList<ICache> GetAllCaches()
+        public IReadOnlyList<ICache> GetAllCacheEnvironments()
         {
             return Caches.Values.ToImmutableList();
         }
 
-        public virtual ICache GetCache(string name)
+        public virtual ICache GetCacheEnvironment(string name)
         {
             return Caches.GetOrAdd(name, cacheName =>
             {

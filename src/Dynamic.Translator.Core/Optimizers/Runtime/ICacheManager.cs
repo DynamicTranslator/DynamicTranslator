@@ -13,13 +13,13 @@
         ///     Gets all caches.
         /// </summary>
         /// <returns>List of caches</returns>
-        IReadOnlyList<ICache> GetAllCaches();
+        IReadOnlyList<ICache> GetAllCacheEnvironments();
 
         /// <summary>
         ///     Gets (or creates) a cache.
         /// </summary>
         /// <param name="name">Unique name of the cache</param>
         /// <returns>The cache reference</returns>
-        ICache GetCache(string name);
+        ICache GetCacheEnvironment(string name);
     }
 }
