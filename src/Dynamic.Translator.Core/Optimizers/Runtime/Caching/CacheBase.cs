@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime
+﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
@@ -14,10 +14,6 @@
 
         private readonly AsyncLock _asyncLock = new AsyncLock();
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="name"></param>
         protected CacheBase(string name)
         {
             Name = name;

@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime
+﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching.Extensions
 {
     using System;
     using System.Threading.Tasks;

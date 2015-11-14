@@ -4,6 +4,7 @@
 
     using System;
     using System.Runtime.Caching;
+    using Caching;
     using Exception;
 
     #endregion

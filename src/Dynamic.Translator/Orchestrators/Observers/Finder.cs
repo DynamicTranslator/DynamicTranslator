@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using Core.Dependency.Markers;
     using Core.Optimizers.Runtime;
+    using Core.Optimizers.Runtime.Caching;
+    using Core.Optimizers.Runtime.Caching.Extensions;
     using Core.Orchestrators;
     using Core.ViewModel.Constants;
 

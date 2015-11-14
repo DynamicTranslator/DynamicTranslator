@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime
+﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
@@ -7,14 +7,7 @@
 
     #endregion
 
-    /// <summary>
-    ///     An interface to work with cache in a typed manner.
-    ///     Use <see cref="CacheExtensions.AsTyped{TKey,TValue}" /> method
-    ///     to convert a <see cref="ICache" /> to this interface.
-    /// </summary>
-    /// <typeparam name="TKey">Key type for cache items</typeparam>
-    /// <typeparam name="TValue">Value type for cache items</typeparam>
-    public interface ITypedCache<TKey, TValue> : IDisposable
+    public interface ICache : IDisposable
     {
         /// <summary>
         ///     Unique name of the cache.
@@ -23,13 +16,17 @@
 
         /// <summary>
         ///     Default sliding expire time of cache items.
+        ///     Default value: 60 minutes. Can be changed by configuration.
         /// </summary>
         TimeSpan DefaultSlidingExpireTime { get; set; }
 
         /// <summary>
-        ///     Gets the internal cache.
+        ///     Gets an item from the cache.
         /// </summary>
-        ICache InternalCache { get; }
+        /// <param name="key">Key</param>
+        /// <param name="factory">Factory method to create cache item if not exists</param>
+        /// <returns>Cached item</returns>
+        object Get(string key, Func<string, object> factory);
 
         /// <summary>
         ///     Gets an item from the cache.
@@ -37,29 +34,21 @@
         /// <param name="key">Key</param>
         /// <param name="factory">Factory method to create cache item if not exists</param>
         /// <returns>Cached item</returns>
-        TValue Get(TKey key, Func<TKey, TValue> factory);
-
-        /// <summary>
-        ///     Gets an item from the cache.
-        /// </summary>
-        /// <param name="key">Key</param>
-        /// <param name="factory">Factory method to create cache item if not exists</param>
-        /// <returns>Cached item</returns>
-        Task<TValue> GetAsync(TKey key, Func<TKey, Task<TValue>> factory);
+        Task<object> GetAsync(string key, Func<string, Task<object>> factory);
 
         /// <summary>
         ///     Gets an item from the cache or null if not found.
         /// </summary>
         /// <param name="key">Key</param>
         /// <returns>Cached item or null if not found</returns>
-        TValue GetOrDefault(TKey key);
+        object GetOrDefault(string key);
 
         /// <summary>
         ///     Gets an item from the cache or null if not found.
         /// </summary>
         /// <param name="key">Key</param>
         /// <returns>Cached item or null if not found</returns>
-        Task<TValue> GetOrDefaultAsync(TKey key);
+        Task<object> GetOrDefaultAsync(string key);
 
         /// <summary>
         ///     Saves/Overrides an item in the cache by a key.
@@ -67,7 +56,7 @@
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
         /// <param name="slidingExpireTime">Sliding expire time</param>
-        void Set(TKey key, TValue value, TimeSpan? slidingExpireTime = null);
+        void Set(string key, object value, TimeSpan? slidingExpireTime = null);
 
         /// <summary>
         ///     Saves/Overrides an item in the cache by a key.
@@ -75,19 +64,19 @@
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
         /// <param name="slidingExpireTime">Sliding expire time</param>
-        Task SetAsync(TKey key, TValue value, TimeSpan? slidingExpireTime = null);
-
-        /// <summary>
-        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
-        /// </summary>
-        /// <param name="key">Key</param>
-        void Remove(TKey key);
+        Task SetAsync(string key, object value, TimeSpan? slidingExpireTime = null);
 
         /// <summary>
         ///     Removes a cache item by it's key.
         /// </summary>
         /// <param name="key">Key</param>
-        Task RemoveAsync(TKey key);
+        void Remove(string key);
+
+        /// <summary>
+        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
+        /// </summary>
+        /// <param name="key">Key</param>
+        Task RemoveAsync(string key);
 
         /// <summary>
         ///     Clears all items in this cache.
