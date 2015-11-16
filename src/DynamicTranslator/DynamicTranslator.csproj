@@ -241,7 +241,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dynamic.Translator.Core\DynamicTranslator.Core.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Core\DynamicTranslator.Core.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>
       <Name>DynamicTranslator.Core</Name>
     </ProjectReference>
