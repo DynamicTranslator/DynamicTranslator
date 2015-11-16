@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Orchestrators.Observers
+﻿namespace DynamicTranslator.Orchestrators.Observers
 {
     #region using
 
@@ -7,7 +7,6 @@
     using System.Reactive;
     using System.Threading.Tasks;
     using Core.Dependency.Markers;
-    using Core.Optimizers.Runtime;
     using Core.Optimizers.Runtime.Caching;
     using Core.Optimizers.Runtime.Caching.Extensions;
     using Core.Orchestrators;
@@ -42,7 +41,7 @@
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
             this.cacheManager = cacheManager;
-            this.cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
+            cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)

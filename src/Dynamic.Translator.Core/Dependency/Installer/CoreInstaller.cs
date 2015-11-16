@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Dependency.Installer
+﻿namespace DynamicTranslator.Core.Dependency.Installer
 {
     #region using
 

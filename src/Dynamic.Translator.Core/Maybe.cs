@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core
+﻿namespace DynamicTranslator.Core
 {
     #region using
 

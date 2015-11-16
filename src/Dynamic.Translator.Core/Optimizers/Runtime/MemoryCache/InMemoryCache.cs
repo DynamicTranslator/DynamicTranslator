@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.MemoryCache
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
 {
     #region using
 
@@ -13,10 +13,6 @@
     {
         private MemoryCache _memoryCache;
 
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        /// <param name="name">Unique name of the cache</param>
         public InMemoryCache(string name)
             : base(name)
         {

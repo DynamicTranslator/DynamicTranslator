@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.ViewModel.Interfaces
+﻿namespace DynamicTranslator.Core.ViewModel.Interfaces
 {
     public interface INotification
     {

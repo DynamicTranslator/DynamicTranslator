@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.ViewModel
+﻿namespace DynamicTranslator.Core.ViewModel
 {
     #region using
 

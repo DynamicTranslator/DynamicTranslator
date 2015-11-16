@@ -1,13 +1,13 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
+    #region using
+
     using System;
+
+    #endregion
 
     internal class CacheConfigurator : ICacheConfigurator
     {
-        public string CacheName { get; }
-
-        public Action<ICache> InitAction { get; }
-
         public CacheConfigurator(Action<ICache> initAction)
         {
             InitAction = initAction;
@@ -18,5 +18,9 @@
             CacheName = cacheName;
             InitAction = initAction;
         }
+
+        public string CacheName { get; }
+
+        public Action<ICache> InitAction { get; }
     }
 }

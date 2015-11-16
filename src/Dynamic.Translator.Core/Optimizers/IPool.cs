@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers
+﻿namespace DynamicTranslator.Core.Optimizers
 {
     public interface IPool<T>
     {

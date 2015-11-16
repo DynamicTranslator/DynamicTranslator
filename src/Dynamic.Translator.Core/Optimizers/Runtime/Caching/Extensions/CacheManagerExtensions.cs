@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching.Extensions
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions
 {
     public static class CacheManagerExtensions
     {

@@ -1,7 +1,11 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching.Extensions
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions
 {
+    #region using
+
     using System;
     using System.Threading.Tasks;
+
+    #endregion
 
     public static class TypedCacheExtensions
     {

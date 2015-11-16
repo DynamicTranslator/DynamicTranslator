@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 

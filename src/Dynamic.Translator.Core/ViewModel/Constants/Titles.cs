@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.ViewModel.Constants
+﻿namespace DynamicTranslator.Core.ViewModel.Constants
 {
     public static class Titles
     {

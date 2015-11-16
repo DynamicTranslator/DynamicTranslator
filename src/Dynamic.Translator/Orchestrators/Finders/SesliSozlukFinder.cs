@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Orchestrators.Finders
+﻿namespace DynamicTranslator.Orchestrators.Finders
 {
     #region using
 

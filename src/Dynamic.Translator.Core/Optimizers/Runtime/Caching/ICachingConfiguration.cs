@@ -1,35 +1,39 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.Caching
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
+    #region using
+
     using System;
     using System.Collections.Generic;
     using Dependency.Markers;
 
+    #endregion
+
     /// <summary>
-    /// Used to configure caching system.
+    ///     Used to configure caching system.
     /// </summary>
     public interface ICachingConfiguration : ISingletonDependency
     {
         /// <summary>
-        /// List of all registered configurators.
+        ///     List of all registered configurators.
         /// </summary>
         IReadOnlyList<ICacheConfigurator> Configurators { get; }
 
         /// <summary>
-        /// Used to configure all caches.
+        ///     Used to configure all caches.
         /// </summary>
         /// <param name="initAction">
-        /// An action to configure caches
-        /// This action is called for each cache just after created.
+        ///     An action to configure caches
+        ///     This action is called for each cache just after created.
         /// </param>
         void ConfigureAll(Action<ICache> initAction);
 
         /// <summary>
-        /// Used to configure a specific cache. 
+        ///     Used to configure a specific cache.
         /// </summary>
         /// <param name="cacheName">Cache name</param>
         /// <param name="initAction">
-        /// An action to configure the cache.
-        /// This action is called just after the cache is created.
+        ///     An action to configure the cache.
+        ///     This action is called just after the cache is created.
         /// </param>
         void Configure(string cacheName, Action<ICache> initAction);
     }

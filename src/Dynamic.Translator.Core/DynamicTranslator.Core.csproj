@@ -7,8 +7,8 @@
     <ProjectGuid>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dynamic.Translator.Core</RootNamespace>
-    <AssemblyName>Dynamic.Translator.Core</AssemblyName>
+    <RootNamespace>DynamicTranslator.Core</RootNamespace>
+    <AssemblyName>DynamicTranslator.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

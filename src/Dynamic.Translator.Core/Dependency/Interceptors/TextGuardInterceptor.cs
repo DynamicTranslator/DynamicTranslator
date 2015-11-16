@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Dependency.Interceptors
+﻿namespace DynamicTranslator.Core.Dependency.Interceptors
 {
     #region using
 

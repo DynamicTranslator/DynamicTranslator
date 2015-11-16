@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Optimizers.Runtime.MemoryCache
+﻿namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
 {
     #region using
 

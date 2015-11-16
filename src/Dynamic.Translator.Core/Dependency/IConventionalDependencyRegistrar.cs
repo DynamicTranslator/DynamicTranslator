@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Dependency
+﻿namespace DynamicTranslator.Core.Dependency
 {
     public interface IConventionalDependencyRegistrar
     {

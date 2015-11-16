@@ -21,11 +21,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Dynamic.Translator")]
+[assembly: AssemblyTitle("DynamicTranslator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MIT")]
-[assembly: AssemblyProduct("Dynamic.Translator")]
+[assembly: AssemblyProduct("DynamicTranslator")]
 [assembly: AssemblyCopyright("Copyright ©  2012 Oğuzhan Soykan")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

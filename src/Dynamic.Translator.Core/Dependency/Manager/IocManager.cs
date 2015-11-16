@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Dependency.Manager
+﻿namespace DynamicTranslator.Core.Dependency.Manager
 {
     #region using
 

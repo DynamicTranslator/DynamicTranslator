@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Orchestrators.Organizers
+﻿namespace DynamicTranslator.Orchestrators.Organizers
 {
     #region using
 

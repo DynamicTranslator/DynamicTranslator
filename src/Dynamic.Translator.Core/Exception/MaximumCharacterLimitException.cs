@@ -1,4 +1,4 @@
-﻿namespace Dynamic.Translator.Core.Exception
+﻿namespace DynamicTranslator.Core.Exception
 {
     #region using
 

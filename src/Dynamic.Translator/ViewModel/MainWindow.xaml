@@ -1,4 +1,4 @@
-﻿<Window x:Class="Dynamic.Translator.ViewModel.MainWindow"
+﻿<Window x:Class="DynamicTranslator.ViewModel.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="DynamicTranslator || Oğuzhan Soykan" Height="179" Width="476.999"

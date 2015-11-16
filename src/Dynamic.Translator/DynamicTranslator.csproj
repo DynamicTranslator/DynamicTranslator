@@ -7,8 +7,8 @@
     <ProjectGuid>{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dynamic.Translator</RootNamespace>
-    <AssemblyName>Dynamic.Translator</AssemblyName>
+    <RootNamespace>DynamicTranslator</RootNamespace>
+    <AssemblyName>DynamicTranslator</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -241,9 +241,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dynamic.Translator.Core\Dynamic.Translator.Core.csproj">
+    <ProjectReference Include="..\Dynamic.Translator.Core\DynamicTranslator.Core.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>
-      <Name>Dynamic.Translator.Core</Name>
+      <Name>DynamicTranslator.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
