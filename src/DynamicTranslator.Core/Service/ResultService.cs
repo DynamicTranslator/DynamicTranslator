@@ -2,7 +2,6 @@
 {
     #region using
 
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using DBReezeNoSQL.Repository;
     using Dependency.Markers;
@@ -24,9 +23,19 @@
             return resultRepository.SetTranslateResult(key, translateResult);
         }
 
+        public CompositeTranslateResult SaveAndUpdateFrequency(string key, CompositeTranslateResult translateResult)
+        {
+            return resultRepository.SetTranslateResultAndUpdateFrequency(key, translateResult);
+        }
+
         public async Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult)
         {
             return await resultRepository.SetTranslateResultAsync(key, translateResult);
+        }
+
+        public async Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(string key, CompositeTranslateResult translateResult)
+        {
+            return await resultRepository.SetTranslateResultAndUpdateFrequencyAsync(key, translateResult);
         }
 
         public CompositeTranslateResult Get(string key)

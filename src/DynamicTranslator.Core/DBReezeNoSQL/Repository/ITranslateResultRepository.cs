@@ -15,6 +15,10 @@
 
         CompositeTranslateResult SetTranslateResult(string key, CompositeTranslateResult result);
 
+        CompositeTranslateResult SetTranslateResultAndUpdateFrequency(string key, CompositeTranslateResult result);
+
+        Task<CompositeTranslateResult> SetTranslateResultAndUpdateFrequencyAsync(string key, CompositeTranslateResult result);
+
         Task<CompositeTranslateResult> SetTranslateResultAsync(string key, CompositeTranslateResult result);
     }
 }

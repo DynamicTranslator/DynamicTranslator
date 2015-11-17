@@ -3,6 +3,7 @@ namespace DynamicTranslator.Core.DBReezeNoSQL.Repository
     #region using
 
     using DBreeze.Transactions;
+    using DBReezeExtension;
     using Domain.Repository;
     using Helper;
 
@@ -21,12 +22,12 @@ namespace DynamicTranslator.Core.DBReezeNoSQL.Repository
 
         public override TEntity Get(TKey id)
         {
-            return (TEntity) ObjectHelper.ByteArrayToObject(Transaction.Select<TKey, byte[]>(typeof(TEntity).Name, id).Value);
+            return Transaction.Select<TKey, byte[]>(typeof (TEntity).Name, id).GetSafely<TEntity, TKey>();
         }
 
         public override TEntity Insert(TEntity entity, TKey key)
         {
-            Transaction.Insert(typeof(TEntity).Name, key, ObjectHelper.ObjectToByteArray(entity));
+            Transaction.Insert(typeof (TEntity).Name, key, ObjectHelper.ObjectToByteArray(entity));
             return entity;
         }
     }

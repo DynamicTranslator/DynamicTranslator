@@ -62,7 +62,9 @@
                     notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, new StringBuilder()
                         .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
                         .AppendLine(ex.Message)
-                        .AppendLine(ex.InnerException?.Message ?? string.Empty).ToString());
+                        .AppendLine(ex.InnerException?.Message ?? string.Empty)
+                        .AppendLine(ex.StackTrace)
+                        .ToString());
                 }
             }
         }

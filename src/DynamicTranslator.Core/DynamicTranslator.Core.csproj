@@ -86,6 +86,7 @@
     <Compile Include="Config\IDictionaryBasedConfig.cs" />
     <Compile Include="Config\IStartupConfiguration.cs" />
     <Compile Include="Config\StartupConfiguration.cs" />
+    <Compile Include="DBReezeNoSQL\DBReezeExtension\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntity.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />

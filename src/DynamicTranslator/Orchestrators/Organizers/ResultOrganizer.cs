@@ -27,7 +27,7 @@
             return await Task.Run(async () =>
             {
                 var mean = new StringBuilder();
-                await resultService.SaveAsync(currentString, new CompositeTranslateResult {Results = findedMeans, CreateDate = DateTime.Now, SearchText = currentString});
+                await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                 foreach (var result in findedMeans.Where(result => result.IsSucess))
                 {
                     mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());

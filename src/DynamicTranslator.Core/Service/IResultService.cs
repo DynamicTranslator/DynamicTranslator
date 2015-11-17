@@ -2,7 +2,6 @@
 {
     #region using
 
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Orchestrators;
 
@@ -12,7 +11,11 @@
     {
         CompositeTranslateResult Save(string key, CompositeTranslateResult translateResult);
 
+        CompositeTranslateResult SaveAndUpdateFrequency(string key, CompositeTranslateResult translateResult);
+
         Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult);
+
+        Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(string key, CompositeTranslateResult translateResult);
 
         CompositeTranslateResult Get(string key);
 
