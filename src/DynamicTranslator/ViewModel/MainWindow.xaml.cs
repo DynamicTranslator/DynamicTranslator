@@ -32,6 +32,7 @@
             if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
             {
                 translator.Dispose();
+                IocManager.Instance.Dispose();
                 GC.SuppressFinalize(this);
                 GC.Collect();
             }

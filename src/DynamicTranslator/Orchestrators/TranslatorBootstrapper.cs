@@ -76,7 +76,6 @@
             UnsubscribeLocalEvents();
             growlNotifications.Dispose();
             finderObservable.Dispose();
-            IocManager.Instance.Dispose();
         }
 
         public bool IsInitialized { get; private set; }

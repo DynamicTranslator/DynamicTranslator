@@ -7,6 +7,7 @@
     using System.Windows;
     using Core.Config;
     using Core.Dependency;
+    using Core.Dependency.Installer;
     using Core.Dependency.Manager;
     using Core.Optimizers.Runtime.Caching;
     using Core.ViewModel.Interfaces;
@@ -19,6 +20,7 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             IocManager.Instance.AddConventionalRegistrar(new BasicConventionalRegistrar());
+            UnitOfWorkRegistrar.Initialize(IocManager.Instance);
 
             IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("DynamicTranslator.Core"));
             IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("DynamicTranslator"));

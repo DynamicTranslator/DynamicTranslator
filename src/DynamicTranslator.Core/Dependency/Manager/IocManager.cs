@@ -144,11 +144,11 @@
         {
             var context = new ConventionalRegistrationContext(assembly, this, config);
 
-            if (config.InstallInstallers)
-                IocContainer.Install(FromAssembly.Instance(assembly));
-
             foreach (var registerer in _conventionalRegistrars)
                 registerer.RegisterAssembly(context);
+
+            if (config.InstallInstallers)
+                IocContainer.Install(FromAssembly.Instance(assembly));
         }
 
         /// <summary>

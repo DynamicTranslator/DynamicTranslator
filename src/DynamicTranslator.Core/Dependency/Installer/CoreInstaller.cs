@@ -10,6 +10,7 @@
     using Castle.Windsor;
     using Config;
     using DBreeze;
+    using Manager;
     using Orchestrators;
 
     #endregion
@@ -20,7 +21,6 @@
         {
             container.AddFacility<TypedFactoryFacility>();
             container.AddFacility<TextGuardConvention>();
-            container.AddFacility<UnitOfWorkConvention>();
 
             var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
@@ -28,7 +28,7 @@
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
-                Component.For(typeof (DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
+                Component.For(typeof(DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
                 );
         }
     }
