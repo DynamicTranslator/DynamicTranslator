@@ -2,11 +2,13 @@
 {
     #region using
 
+    using System;
     using System.Collections;
     using System.Collections.Generic;
 
     #endregion
 
+    [Serializable]
     public class Maybe<T> : IEnumerable<T>
     {
         private readonly IEnumerable<T> values;

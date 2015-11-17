@@ -8,19 +8,28 @@
     using System.Threading.Tasks;
     using Castle.DynamicProxy;
     using Exception;
+    using Helper;
     using Orchestrators;
+    using ViewModel.Constants;
 
     #endregion
 
     public class ExceptionInterceptor : IInterceptor
     {
+        private readonly INotifier notifier;
+
+        public ExceptionInterceptor(INotifier notifier)
+        {
+            this.notifier = notifier;
+        }
+
         public void Intercept(IInvocation invocation)
         {
             try
             {
                 invocation.Proceed();
 
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>) || invocation.Method.ReturnType == typeof (Task))
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
                 {
                     var task = invocation.ReturnValue as Task;
                     if (task != null && task.IsFaulted)
@@ -44,7 +53,17 @@
             }
             catch (Exception ex)
             {
-                invocation.ReturnValue = HandleReturnAsync(invocation, ex);
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
+                {
+                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
+                }
+                else
+                {
+                    notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, new StringBuilder()
+                        .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
+                        .AppendLine(ex.Message)
+                        .AppendLine(ex.InnerException?.Message ?? string.Empty).ToString());
+                }
             }
         }
 

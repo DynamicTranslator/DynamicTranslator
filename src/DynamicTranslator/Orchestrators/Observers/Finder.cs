@@ -21,6 +21,7 @@
         private readonly IResultOrganizer resultOrganizer;
         private readonly ICacheManager cacheManager;
         private readonly ITypedCache<string, TranslateResult[]> cache;
+
         private string previousString;
 
         public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager)

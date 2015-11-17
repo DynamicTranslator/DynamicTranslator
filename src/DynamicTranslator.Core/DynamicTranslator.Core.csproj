@@ -31,12 +31,20 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DBreeze, Version=1.72.2015.827, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBreeze.1.72.0\lib\net45\DBreeze.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -59,9 +67,12 @@
       <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,12 +86,20 @@
     <Compile Include="Config\IDictionaryBasedConfig.cs" />
     <Compile Include="Config\IStartupConfiguration.cs" />
     <Compile Include="Config\StartupConfiguration.cs" />
+    <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntity.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\ITranslateResultRepository.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\UnitOfWorkExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\UowTransactionProvider.cs" />
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
     <Compile Include="Dependency\Installer\TextGuardConvention.cs" />
+    <Compile Include="Dependency\Installer\UnitOfWorkConvention.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
-    <Compile Include="Dependency\Interceptors\ObserverExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
     <Compile Include="Dependency\Markers\DependencyLifeStyle.cs" />
     <Compile Include="Dependency\DisposableDependencyObjectWrapperOfT.cs" />
@@ -97,6 +116,25 @@
     <Compile Include="Dependency\Extensions\IocResolverExtensions.cs" />
     <Compile Include="Dependency\Markers\ISingletonDependency.cs" />
     <Compile Include="Dependency\Markers\ITransientDependency.cs" />
+    <Compile Include="Domain\Repository\RepositoryBase.cs" />
+    <Compile Include="Domain\Repository\IRepository.cs" />
+    <Compile Include="Domain\Repository\IRepositoryOfTEntityAndTPrimaryKey.cs" />
+    <Compile Include="Domain\Uow\CallContextCurrentUnitOfWorkProvider.cs" />
+    <Compile Include="Domain\Uow\IActiveUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\ICurrentUnitOfWorkProvider.cs" />
+    <Compile Include="Domain\Uow\InnerUnitOfWorkCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWork.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWorkCompleteHandle.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWorkDefaultOptions.cs" />
+    <Compile Include="Domain\Uow\IUnitOfWorkManager.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkAttribute.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkBase.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkDefaultOptions.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkFailedEventArgs.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkHelper.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkInterceptor.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkManager.cs" />
+    <Compile Include="Domain\Uow\UnitOfWorkOptions.cs" />
     <Compile Include="Exception\ApiKeyNullException.cs" />
     <Compile Include="Exception\BusinessException.cs" />
     <Compile Include="Exception\MaximumCharacterLimitException.cs" />
@@ -105,6 +143,8 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
+    <Compile Include="Helper\InternalAsyncHelper.cs" />
+    <Compile Include="Helper\ObjectHelper.cs" />
     <Compile Include="Maybe.cs" />
     <Compile Include="Optimizers\IPool.cs" />
     <Compile Include="Optimizers\Pool.cs" />
@@ -124,6 +164,9 @@
     <Compile Include="Optimizers\Runtime\MemoryCache\InMemoryCacheManager.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\TypedCacheExtensions.cs" />
     <Compile Include="Optimizers\Runtime\Caching\TypedCacheWrapper.cs" />
+    <Compile Include="Optimizers\Timing\Clock.cs" />
+    <Compile Include="Optimizers\Timing\IClockProvider.cs" />
+    <Compile Include="Optimizers\Timing\LocalClockProvider.cs" />
     <Compile Include="Orchestrators\IEvents.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
     <Compile Include="Orchestrators\IMeanFinderFactory.cs" />
@@ -132,10 +175,11 @@
     <Compile Include="Orchestrators\INotifier.cs" />
     <Compile Include="Orchestrators\IResultOrganizer.cs" />
     <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
-    <Compile Include="Orchestrators\ObserverBase.cs" />
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
     <Compile Include="Orchestrators\TranslateResult.cs" />
+    <Compile Include="Service\ResultService.cs" />
+    <Compile Include="Service\IResultService.cs" />
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />
@@ -149,7 +193,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Domain\Entities\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,8 @@
     using Castle.MicroKernel.SubSystems.Configuration;
     using Castle.Windsor;
     using Config;
+    using DBreeze;
+    using Domain.Uow;
     using Orchestrators;
 
     #endregion
@@ -17,11 +19,13 @@
         {
             container.AddFacility<TypedFactoryFacility>();
             container.AddFacility<TextGuardConvention>();
+            container.AddFacility<UnitOfWorkConvention>();
 
             container.Register(
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
-                Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient
+                Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
+                Component.For(typeof (DBreezeEngine)).Instance(new DBreezeEngine(@"D:\temp\DBR1"))
                 );
         }
     }

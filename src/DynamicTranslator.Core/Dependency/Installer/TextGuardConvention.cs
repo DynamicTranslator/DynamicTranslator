@@ -21,17 +21,11 @@
         private void KernelOnComponentRegistered(string key, IHandler handler)
         {
             var isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof (IMeanFinder));
-            var isObserver = handler.ComponentModel.Implementation.GetInterfaces().Any(i => i.Name.Contains("Observer"));
 
             if (isMeanFinder)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof (ExceptionInterceptor)));
                 handler.ComponentModel.Interceptors.Add(new InterceptorReference(typeof (TextGuardInterceptor)));
-            }
-
-            if (isObserver)
-            {
-                handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof (ObserverExceptionInterceptor)));
             }
         }
     }
