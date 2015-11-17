@@ -2,7 +2,9 @@
 {
     #region using
 
+    using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Orchestrators;
 
     #endregion
@@ -18,9 +20,19 @@
             return Get(key);
         }
 
+        public async Task<ICollection<TranslateResult>> GetTranslateResultAsync(string key)
+        {
+            return await GetAsync(key);
+        }
+
         public ICollection<TranslateResult> SetTranslateResult(string key, ICollection<TranslateResult> result)
         {
             return Insert(result, key);
+        }
+
+        public async Task<ICollection<TranslateResult>> SetTranslateResultAsync(string key, ICollection<TranslateResult> result)
+        {
+            return await InsertAsync(result, key);
         }
     }
 }

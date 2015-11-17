@@ -4,6 +4,7 @@ namespace DynamicTranslator.Core.Domain.Repository
 
     using System;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
 
     #endregion
 
@@ -12,7 +13,17 @@ namespace DynamicTranslator.Core.Domain.Repository
     {
         public abstract TEntity Get(TPrimaryKey id);
 
+        public async Task<TEntity> GetAsync(TPrimaryKey id)
+        {
+            return await Task.FromResult(Get(id));
+        }
+
         public abstract TEntity Insert(TEntity entity, TPrimaryKey key);
+
+        public async Task<TEntity> InsertAsync(TEntity entity, TPrimaryKey key)
+        {
+            return await Task.FromResult(Insert(entity, key));
+        }
 
         protected static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
         {

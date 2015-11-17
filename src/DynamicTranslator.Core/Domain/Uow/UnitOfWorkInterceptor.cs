@@ -17,10 +17,6 @@ namespace DynamicTranslator.Core.Domain.Uow
             _unitOfWorkManager = unitOfWorkManager;
         }
 
-        /// <summary>
-        ///     Intercepts a method.
-        /// </summary>
-        /// <param name="invocation">Method invocation arguments</param>
         public void Intercept(IInvocation invocation)
         {
             if (_unitOfWorkManager.Current != null)

@@ -23,11 +23,10 @@
 
         public async Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async () =>
             {
                 var mean = new StringBuilder();
-                //var b = resultService.Save(currentString, findedMeans);
-                //var a = resultService.Get(currentString);
+                await resultService.SaveAsync(currentString, findedMeans);
                 foreach (var result in findedMeans.Where(result => result.IsSucess))
                 {
                     mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
