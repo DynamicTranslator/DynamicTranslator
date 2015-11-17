@@ -2,7 +2,6 @@
 {
     #region using
 
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Orchestrators;
 
@@ -10,12 +9,12 @@
 
     public interface ITranslateResultRepository
     {
-        ICollection<TranslateResult> GetTranslateResult(string key);
+        CompositeTranslateResult GetTranslateResult(string key);
 
-        Task<ICollection<TranslateResult>> GetTranslateResultAsync(string key);
+        Task<CompositeTranslateResult> GetTranslateResultAsync(string key);
 
-        ICollection<TranslateResult> SetTranslateResult(string key, ICollection<TranslateResult> result);
+        CompositeTranslateResult SetTranslateResult(string key, CompositeTranslateResult result);
 
-        Task<ICollection<TranslateResult>> SetTranslateResultAsync(string key, ICollection<TranslateResult> result);
+        Task<CompositeTranslateResult> SetTranslateResultAsync(string key, CompositeTranslateResult result);
     }
 }

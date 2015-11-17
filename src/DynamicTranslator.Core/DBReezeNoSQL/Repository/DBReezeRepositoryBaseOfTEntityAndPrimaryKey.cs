@@ -21,12 +21,12 @@ namespace DynamicTranslator.Core.DBReezeNoSQL.Repository
 
         public override TEntity Get(TKey id)
         {
-            return (TEntity) ObjectHelper.ByteArrayToObject(Transaction.Select<TKey, byte[]>(nameof(TEntity), id).Value);
+            return (TEntity) ObjectHelper.ByteArrayToObject(Transaction.Select<TKey, byte[]>(typeof(TEntity).Name, id).Value);
         }
 
         public override TEntity Insert(TEntity entity, TKey key)
         {
-            Transaction.Insert(nameof(TEntity), key, ObjectHelper.ObjectToByteArray(entity));
+            Transaction.Insert(typeof(TEntity).Name, key, ObjectHelper.ObjectToByteArray(entity));
             return entity;
         }
     }

@@ -10,12 +10,12 @@
 
     public interface IResultService
     {
-        ICollection<TranslateResult> Save(string key, ICollection<TranslateResult> translateResult);
+        CompositeTranslateResult Save(string key, CompositeTranslateResult translateResult);
 
-        Task<ICollection<TranslateResult>> SaveAsync(string key, ICollection<TranslateResult> translateResult);
+        Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult);
 
-        ICollection<TranslateResult> Get(string key);
+        CompositeTranslateResult Get(string key);
 
-        Task<ICollection<TranslateResult>> GetAsync(string key);
+        Task<CompositeTranslateResult> GetAsync(string key);
     }
 }

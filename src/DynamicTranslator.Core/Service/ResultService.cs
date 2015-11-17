@@ -19,22 +19,22 @@
             this.resultRepository = resultRepository;
         }
 
-        public ICollection<TranslateResult> Save(string key, ICollection<TranslateResult> translateResult)
+        public CompositeTranslateResult Save(string key, CompositeTranslateResult translateResult)
         {
             return resultRepository.SetTranslateResult(key, translateResult);
         }
 
-        public async Task<ICollection<TranslateResult>> SaveAsync(string key, ICollection<TranslateResult> translateResult)
+        public async Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult)
         {
             return await resultRepository.SetTranslateResultAsync(key, translateResult);
         }
 
-        public ICollection<TranslateResult> Get(string key)
+        public CompositeTranslateResult Get(string key)
         {
             return resultRepository.GetTranslateResult(key);
         }
 
-        public async Task<ICollection<TranslateResult>> GetAsync(string key)
+        public async Task<CompositeTranslateResult> GetAsync(string key)
         {
             return await resultRepository.GetTranslateResultAsync(key);
         }

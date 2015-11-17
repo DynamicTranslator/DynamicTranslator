@@ -167,6 +167,7 @@
     <Compile Include="Optimizers\Timing\Clock.cs" />
     <Compile Include="Optimizers\Timing\IClockProvider.cs" />
     <Compile Include="Optimizers\Timing\LocalClockProvider.cs" />
+    <Compile Include="Orchestrators\CompositeTranslateResult.cs" />
     <Compile Include="Orchestrators\IEvents.cs" />
     <Compile Include="Orchestrators\IMeanFinder.cs" />
     <Compile Include="Orchestrators\IMeanFinderFactory.cs" />

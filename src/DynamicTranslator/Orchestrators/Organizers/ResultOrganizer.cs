@@ -2,6 +2,7 @@
 {
     #region using
 
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -26,7 +27,7 @@
             return await Task.Run(async () =>
             {
                 var mean = new StringBuilder();
-                await resultService.SaveAsync(currentString, findedMeans);
+                await resultService.SaveAsync(currentString, new CompositeTranslateResult {Results = findedMeans, CreateDate = DateTime.Now, SearchText = currentString});
                 foreach (var result in findedMeans.Where(result => result.IsSucess))
                 {
                     mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
