@@ -99,6 +99,7 @@
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
+    <Compile Include="Dependency\Installer\GoogleAnalyticsConvention.cs" />
     <Compile Include="Dependency\Installer\TextGuardConvention.cs" />
     <Compile Include="Dependency\Installer\UnitOfWorkRegistrar.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
     <Compile Include="Orchestrators\TranslateResult.cs" />
+    <Compile Include="Service\IApplicationService.cs" />
     <Compile Include="Service\Result\ResultService.cs" />
     <Compile Include="Service\Result\IResultService.cs" />
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />

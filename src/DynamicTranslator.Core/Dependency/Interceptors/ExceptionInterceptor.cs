@@ -38,40 +38,38 @@
             }
             catch (ApiKeyNullException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (MaximumCharacterLimitException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (WebException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (Exception ex)
             {
-                if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
-                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
-                }
-                else
-                {
-                    notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, new StringBuilder()
-                        .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
-                        .AppendLine(ex.Message)
-                        .AppendLine(ex.InnerException?.Message ?? string.Empty)
-                        .AppendLine(ex.StackTrace)
-                        .ToString());
-                }
+                HandleException(invocation, ex);
             }
+        }
+
+        private void HandleException(IInvocation invocation, Exception ex)
+        {
+            notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, new StringBuilder()
+                .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
+                .AppendLine(ex.Message)
+                .AppendLine(ex.InnerException?.Message ?? string.Empty)
+                .AppendLine(ex.StackTrace)
+                .ToString());
         }
 
         private dynamic HandleReturnAsync(IInvocation invocation, Exception ex)
         {
-            if (invocation.Method.ReturnType == typeof (void))
+            if (invocation.Method.ReturnType == typeof(void))
                 return null;
 
             var retVal = new Task<TranslateResult>(() =>

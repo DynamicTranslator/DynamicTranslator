@@ -21,6 +21,7 @@
         {
             container.AddFacility<TypedFactoryFacility>();
             container.AddFacility<TextGuardConvention>();
+            container.AddFacility<GoogleAnalyticsConvention>();
 
             var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 

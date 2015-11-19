@@ -28,7 +28,6 @@
             return await Task.Run(async () =>
             {
                 var mean = new StringBuilder();
-                await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                 foreach (var result in findedMeans.Where(result => result.IsSucess))
                 {
                     mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
@@ -44,6 +43,7 @@
 
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
+                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                     return new Maybe<string>(mean.ToString());
                 }
 

@@ -153,7 +153,7 @@ namespace DynamicTranslator.Core.Domain.Uow
                 return (UnitOfWorkAttribute) attrs[0];
             }
 
-            if (UnitOfWorkHelper.IsConventionalUowClass(methodInfo.DeclaringType))
+            if (UnitOfWorkHelper.IsConventionalUowClass(methodInfo.DeclaringType) || UnitOfWorkHelper.IsApplicationBasedConventionalUowClass(methodInfo.DeclaringType))
             {
                 return new UnitOfWorkAttribute(); //Default
             }

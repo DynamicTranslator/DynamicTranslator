@@ -21,7 +21,7 @@
 
         private static void KernelOnComponentRegistered(string key, IHandler handler)
         {
-            if (UnitOfWorkHelper.IsConventionalUowClass(handler.ComponentModel.Implementation))
+            if (UnitOfWorkHelper.IsApplicationBasedConventionalUowClass(handler.ComponentModel.Implementation))
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof (ExceptionInterceptor)));
                 handler.ComponentModel.Interceptors.Add(new InterceptorReference(typeof (UnitOfWorkInterceptor)));

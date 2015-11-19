@@ -21,7 +21,9 @@
 
         public void Initialize()
         {
+            SetViaConfigurationManager(nameof(ClientId));
             InitializeClientIdIfAbsent();
+
             SetViaConfigurationManager(nameof(ApiKey));
             SetViaConfigurationManager(nameof(LeftOffset));
             SetViaConfigurationManager(nameof(TopOffset));
@@ -34,7 +36,6 @@
             SetViaConfigurationManager(nameof(SesliSozlukUrl));
             SetViaConfigurationManager(nameof(TurengUrl));
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
-            SetViaConfigurationManager(nameof(ClientId));
             SetViaConfigurationManager(nameof(TrackingId));
             InitLanguageMap();
         }

@@ -21,6 +21,15 @@ namespace DynamicTranslator.Core.Domain.Uow
         public static bool IsConventionalUowClass(Type type)
         {
             return typeof (IRepository).IsAssignableFrom(type);
+        } 
+        
+        /// <summary>
+        ///     Returns true if UOW must be used for given type as convention.
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        public static bool IsApplicationBasedConventionalUowClass(Type type)
+        {
+            return typeof (IApplicationService).IsAssignableFrom(type);
         }
 
         /// <summary>
