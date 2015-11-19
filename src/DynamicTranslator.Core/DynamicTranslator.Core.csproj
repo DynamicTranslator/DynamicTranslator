@@ -144,8 +144,8 @@
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
-    <Compile Include="GoogleAnalytics\GoogleAnalyticsApi.cs" />
-    <Compile Include="GoogleAnalytics\IGoogleAnalyticsApi.cs" />
+    <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
+    <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Helper\InternalAsyncHelper.cs" />
     <Compile Include="Helper\ObjectHelper.cs" />
@@ -183,8 +183,8 @@
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
     <Compile Include="Orchestrators\TranslateResult.cs" />
-    <Compile Include="Service\ResultService.cs" />
-    <Compile Include="Service\IResultService.cs" />
+    <Compile Include="Service\Result\ResultService.cs" />
+    <Compile Include="Service\Result\IResultService.cs" />
     <Compile Include="ViewModel\Constants\TranslatorType.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />

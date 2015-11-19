@@ -21,6 +21,7 @@
 
         public void Initialize()
         {
+            InitializeClientIdIfAbsent();
             SetViaConfigurationManager(nameof(ApiKey));
             SetViaConfigurationManager(nameof(LeftOffset));
             SetViaConfigurationManager(nameof(TopOffset));
@@ -34,7 +35,7 @@
             SetViaConfigurationManager(nameof(TurengUrl));
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
             SetViaConfigurationManager(nameof(ClientId));
-            InitializeClientIdIfAbsent();
+            SetViaConfigurationManager(nameof(TrackingId));
             InitLanguageMap();
         }
 
@@ -71,6 +72,8 @@
         public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
 
         public string ClientId => Get<string>(nameof(ClientId));
+
+        public string TrackingId => Get<string>(nameof(TrackingId));
 
         private void InitializeClientIdIfAbsent()
         {

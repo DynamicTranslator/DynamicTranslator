@@ -44,7 +44,10 @@
         string TurengUrl { get; }
 
         string GoogleAnalyticsUrl { get; }
+
         string ClientId { get; }
+
+        string TrackingId { get; }
 
         void Initialize();
     }

@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core.Service
+﻿namespace DynamicTranslator.Core.Service.Result
 {
     #region using
 
