@@ -15,6 +15,7 @@
         void Set<T>(string name, T value);
 
         void SetViaConfigurationManager(string name);
+        void SetAndPersistConfigurationManager(string name, string value);
 
         object Get(string name);
 

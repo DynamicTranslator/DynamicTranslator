@@ -73,6 +73,7 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -143,6 +144,8 @@
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="GoogleAnalytics\GoogleAnalyticsApi.cs" />
+    <Compile Include="GoogleAnalytics\IGoogleAnalyticsApi.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
     <Compile Include="Helper\InternalAsyncHelper.cs" />
     <Compile Include="Helper\ObjectHelper.cs" />

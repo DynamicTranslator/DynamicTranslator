@@ -42,6 +42,14 @@
             this[name] = ConfigurationManager.AppSettings[name];
         }
 
+        public void SetAndPersistConfigurationManager(string name, string value)
+        {
+            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings[name].Value = value;
+            configuration.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
         public object Get(string name)
         {
             return Get(name, null);

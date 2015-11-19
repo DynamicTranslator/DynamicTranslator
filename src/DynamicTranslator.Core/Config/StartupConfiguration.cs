@@ -2,6 +2,7 @@
 {
     #region using
 
+    using System;
     using System.Collections.Generic;
     using Dependency.Manager;
 
@@ -31,6 +32,9 @@
             SetViaConfigurationManager(nameof(YandexUrl));
             SetViaConfigurationManager(nameof(SesliSozlukUrl));
             SetViaConfigurationManager(nameof(TurengUrl));
+            SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
+            SetViaConfigurationManager(nameof(ClientId));
+            InitializeClientIdIfAbsent();
             InitLanguageMap();
         }
 
@@ -63,6 +67,18 @@
         public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
 
         public string TurengUrl => Get<string>(nameof(TurengUrl));
+
+        public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
+
+        public string ClientId => Get<string>(nameof(ClientId));
+
+        private void InitializeClientIdIfAbsent()
+        {
+            if (string.IsNullOrEmpty(ClientId))
+            {
+                SetAndPersistConfigurationManager(nameof(ClientId), Guid.NewGuid().ToString());
+            }
+        }
 
         private void InitLanguageMap()
         {
