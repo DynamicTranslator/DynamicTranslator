@@ -99,7 +99,6 @@
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
     <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
-    <Compile Include="Dependency\Installer\GoogleAnalyticsConvention.cs" />
     <Compile Include="Dependency\Installer\TextGuardConvention.cs" />
     <Compile Include="Dependency\Installer\UnitOfWorkRegistrar.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />

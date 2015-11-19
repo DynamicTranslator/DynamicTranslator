@@ -10,6 +10,7 @@
     using Exception;
     using Helper;
     using Orchestrators;
+    using Service.GoogleAnalytics;
     using ViewModel.Constants;
 
     #endregion
@@ -17,10 +18,12 @@
     public class ExceptionInterceptor : IInterceptor
     {
         private readonly INotifier notifier;
+        private readonly IGoogleAnalyticsService googleAnalytics;
 
-        public ExceptionInterceptor(INotifier notifier)
+        public ExceptionInterceptor(INotifier notifier, IGoogleAnalyticsService googleAnalytics)
         {
             this.notifier = notifier;
+            this.googleAnalytics = googleAnalytics;
         }
 
         public void Intercept(IInvocation invocation)
@@ -59,12 +62,16 @@
 
         private void HandleException(IInvocation invocation, Exception ex)
         {
-            notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, new StringBuilder()
+            var exceptionText = new StringBuilder()
                 .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
                 .AppendLine(ex.Message)
                 .AppendLine(ex.InnerException?.Message ?? string.Empty)
                 .AppendLine(ex.StackTrace)
-                .ToString());
+                .ToString();
+
+            notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, exceptionText);
+
+            SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }
 
         private dynamic HandleReturnAsync(IInvocation invocation, Exception ex)
@@ -72,17 +79,28 @@
             if (invocation.Method.ReturnType == typeof(void))
                 return null;
 
+            var exceptionText = new StringBuilder()
+                .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
+                .AppendLine(ex.Message)
+                .AppendLine(ex.InnerException?.Message ?? string.Empty)
+                .AppendLine(ex.StackTrace)
+                .ToString();
+
             var retVal = new Task<TranslateResult>(() =>
                 new TranslateResult(false,
-                    new Maybe<string>(new StringBuilder()
-                        .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
-                        .AppendLine(ex.Message)
-                        .AppendLine(ex.InnerException?.Message ?? string.Empty).ToString())
+                    new Maybe<string>(exceptionText)
                     ));
 
             retVal.Start();
 
+            SendExceptionGoogleAnalyticsAsync(exceptionText, false);
+
             return retVal;
+        }
+
+        private void SendExceptionGoogleAnalyticsAsync(string text, bool isFatal)
+        {
+            Task.Run(async () => await googleAnalytics.TrackExceptionAsync(text, isFatal));
         }
     }
 }
