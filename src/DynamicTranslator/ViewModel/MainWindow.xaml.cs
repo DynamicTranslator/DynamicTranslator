@@ -19,32 +19,32 @@
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof(MainWindow), this);
+            IocManager.Instance.Register(typeof (MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
         }
 
         public CancellationTokenSource CancellationTokenSource { get; set; }
 
-        protected override void OnClosed(EventArgs e)
+        protected override async void OnClosed(EventArgs e)
         {
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
-                await this.Dispatcher.InvokeAsync(async () =>
-                  {
-                      CancellationTokenSource?.Cancel(false);
-                      Close();
-                      if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
-                      {
-                          translator.Dispose();
-                          await IocManager.Instance.DisposeAsync();
-                          GC.SuppressFinalize(this);
-                          GC.Collect();
-                      }
-                      Application.Current.Shutdown();
-                      base.OnClosed(e);
-                  });
-            });
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    CancellationTokenSource?.Cancel(false);
+                    Application.Current.Shutdown();
+                    Close();
+                    if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
+                    {
+                        translator.Dispose();
+                        //await IocManager.Instance.DisposeAsync();
+                        GC.SuppressFinalize(this);
+                        GC.Collect();
+                    }
 
+                    base.OnClosed(e);
+                });
+            });
         }
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
