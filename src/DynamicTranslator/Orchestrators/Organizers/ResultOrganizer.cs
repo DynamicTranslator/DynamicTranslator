@@ -23,9 +23,9 @@
             this.resultService = resultService;
         }
 
-        public async Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
+        public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
-            return await Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 var mean = new StringBuilder();
                 foreach (var result in findedMeans.Where(result => result.IsSucess))

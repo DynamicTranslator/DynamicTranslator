@@ -32,14 +32,15 @@
 
         public event EventHandler OnDispose;
 
-        public async Task AddNotificationAsync(Notification notification)
+        public Task AddNotificationAsync(Notification notification)
         {
-            await Task.Run(() => { AddNotification(notification); });
+            AddNotification(notification);
+            return Task.FromResult(0);
         }
 
         public void AddNotification(Notification notification)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 notification.Id = count++;
                 if (Notifications.Count + 1 > startupConfiguration.MaxNotifications)

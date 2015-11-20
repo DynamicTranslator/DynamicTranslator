@@ -3,6 +3,7 @@
     #region using
 
     using System;
+    using System.Threading.Tasks;
 
     #endregion
 
@@ -11,5 +12,9 @@
         bool IsInitialized { get; }
 
         void Initialize();
+
+        Task InitializeAsync();
+
+        Task DisposeAsync();
     }
 }

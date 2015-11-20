@@ -14,9 +14,9 @@
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer
     {
-        public async Task<Maybe<string>> OrganizeMean(string text)
+        public Task<Maybe<string>> OrganizeMean(string text)
         {
-            return await Task.Run(() =>
+            return Task.Run(() =>
             {
                 var output = new StringBuilder();
 

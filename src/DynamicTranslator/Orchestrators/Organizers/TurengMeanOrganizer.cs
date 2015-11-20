@@ -16,9 +16,9 @@
 
     public class TurengMeanOrganizer : IMeanOrganizer
     {
-        public async Task<Maybe<string>> OrganizeMean(string text)
+        public Task<Maybe<string>> OrganizeMean(string text)
         {
-            return await Task.Run(() =>
+            return Task.Run(() =>
             {
                 if (text == null) return new Maybe<string>();
 

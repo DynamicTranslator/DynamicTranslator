@@ -221,10 +221,10 @@
         /// </summary>
         public IWindsorContainer IocContainer { get; }
 
-        public async Task DisposeAsync()
+        public Task DisposeAsync()
         {
             Dispose();
-            await Task.FromResult(0);
+            return Task.FromResult(0);
         }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)

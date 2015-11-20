@@ -58,47 +58,53 @@
 
         public void Initialize()
         {
-            Task.Run(async () => await CompositionRoot());
+            CompositionRoot();
+        }
+
+        public Task InitializeAsync()
+        {
+            Initialize();
+            return Task.FromResult(0);
         }
 
         public void Dispose()
         {
-            Task.Run(async () => await DecomposeRoot());
+            DecomposeRoot();
+        }
+
+        public Task DisposeAsync()
+        {
+            DecomposeRoot();
+            return Task.FromResult(0);
         }
 
         public bool IsInitialized { get; private set; }
 
-        private async Task CompositionRoot()
+        private void CompositionRoot()
         {
-            await Task.Run(() =>
+            mainWindow.Dispatcher.InvokeAsync(async () =>
             {
-                mainWindow.Dispatcher.InvokeAsync(() =>
-                {
-                    mainWindow.CancellationTokenSource = new CancellationTokenSource();
-                    StartHooks();
-                    ConfigureNotificationMeasurements();
-                    SubscribeLocalevents();
-                    FlushCopyCommand();
-                    StartObservers();
-                    IsInitialized = true;
-                });
+                mainWindow.CancellationTokenSource = new CancellationTokenSource();
+                StartHooks();
+                ConfigureNotificationMeasurements();
+                SubscribeLocalevents();
+                FlushCopyCommand();
+                await StartObservers();
+                IsInitialized = true;
             });
         }
 
-        private async Task DecomposeRoot()
+        private void DecomposeRoot()
         {
-            await Task.Run(() =>
+            mainWindow.Dispatcher.InvokeAsync(() =>
             {
-                mainWindow.Dispatcher.InvokeAsync(() =>
-                {
-                    mainWindow.CancellationTokenSource.Cancel(false);
-                    DisposeHooks();
-                    FlushCopyCommand();
-                    UnsubscribeLocalEvents();
-                    growlNotifications.Dispose();
-                    finderObservable.Dispose();
-                    IsInitialized = false;
-                });
+                mainWindow.CancellationTokenSource.Cancel(false);
+                DisposeHooks();
+                FlushCopyCommand();
+                UnsubscribeLocalEvents();
+                growlNotifications.Dispose();
+                finderObservable.Dispose();
+                IsInitialized = false;
             });
         }
 
@@ -129,16 +135,16 @@
             }
         }
 
-        private void StartObservers()
+        private Task StartObservers()
         {
-            Task.Run(() =>
-            {
-                finderObservable = Observable
-                    .FromEventPattern<WhenClipboardContainsTextEventArgs>(
-                        h => WhenClipboardContainsTextEventHandler += h,
-                        h => WhenClipboardContainsTextEventHandler -= h)
-                    .Subscribe(IocManager.Instance.Resolve<Finder>());
-            });
+            return Task.Run(() =>
+             {
+                 finderObservable = Observable
+                     .FromEventPattern<WhenClipboardContainsTextEventArgs>(
+                         h => WhenClipboardContainsTextEventHandler += h,
+                         h => WhenClipboardContainsTextEventHandler -= h)
+                     .Subscribe(IocManager.Instance.Resolve<Finder>());
+             });
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -208,7 +214,7 @@
                                         if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                                             return;
 
-                                        WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
+                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
 
                                         await FlushCopyCommandAsync();
                                     });

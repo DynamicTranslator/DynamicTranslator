@@ -30,9 +30,9 @@
             this.configuration = configuration;
         }
 
-        public async Task<TranslateResult> Find(string text)
+        public Task<TranslateResult> Find(string text)
         {
-            return await Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 var parameter = $"sl={configuration.FromLanguageExtension}&text={Uri.EscapeUriString(text)}&tl={configuration.ToLanguageExtension}";
                 var client = new RestClient(configuration.SesliSozlukUrl);

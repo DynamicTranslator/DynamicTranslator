@@ -25,9 +25,9 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<TranslateResult> Find(string text)
+        public Task<TranslateResult> Find(string text)
         {
-            return await Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 var address = new Uri(
                     string.Format(configuration.YandexUrl + GetPostData(

@@ -14,9 +14,9 @@
 
     public class GoogleTranslateMeanOrganizer : IMeanOrganizer
     {
-        public async Task<Maybe<string>> OrganizeMean(string text)
+        public Task<Maybe<string>> OrganizeMean(string text)
         {
-            return await Task.Run(() =>
+            return Task.Run(() =>
             {
                 var arrayTree = JsonConvert.DeserializeObject(text) as JArray;
                 var output = arrayTree.GetFirstValueInArrayGraph<string>();

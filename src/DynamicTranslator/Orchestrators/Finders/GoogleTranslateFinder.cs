@@ -25,9 +25,9 @@
             this.configuration = configuration;
         }
 
-        public async Task<TranslateResult> Find(string text)
+        public Task<TranslateResult> Find(string text)
         {
-            return await Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 var address = string.Format(configuration.GoogleTranslateUrl,
                     configuration.FromLanguageExtension,
