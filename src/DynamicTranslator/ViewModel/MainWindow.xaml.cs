@@ -4,8 +4,8 @@
 
     using System;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Threading;
     using Core.Dependency.Manager;
     using Core.Orchestrators;
 
@@ -19,7 +19,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof (MainWindow), this);
+            IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
         }
 
@@ -27,43 +27,58 @@
 
         protected override void OnClosed(EventArgs e)
         {
-            CancellationTokenSource?.Cancel(false);
-            Close();
-            if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
+            Task.Run(async () =>
             {
-                translator.Dispose();
-                IocManager.Instance.Dispose();
-                GC.SuppressFinalize(this);
-                GC.Collect();
-            }
-            Application.Current.Shutdown();
-            base.OnClosed(e);
+                await this.Dispatcher.InvokeAsync(async () =>
+                  {
+                      CancellationTokenSource?.Cancel(false);
+                      Close();
+                      if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
+                      {
+                          translator.Dispose();
+                          await IocManager.Instance.DisposeAsync();
+                          GC.SuppressFinalize(this);
+                          GC.Collect();
+                      }
+                      Application.Current.Shutdown();
+                      base.OnClosed(e);
+                  });
+            });
+
         }
 
-        private async void btnSwitch_Click(object sender, RoutedEventArgs e)
+        private void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            if (isRunning)
             {
-                if (isRunning)
+                BtnSwitch.Content = "Start Translator";
+
+                isRunning = false;
+
+                Task.Run(async () =>
                 {
-                    BtnSwitch.Content = "Start Translator";
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        if (translator.IsInitialized)
+                            translator.Dispose();
+                    });
+                });
+            }
+            else
+            {
+                BtnSwitch.Content = "Stop Translator";
 
-                    isRunning = false;
-
-                    if (translator.IsInitialized)
-                        translator.Dispose();
-                }
-                else
+                Task.Run(async () =>
                 {
-                    BtnSwitch.Content = "Stop Translator";
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        if (!translator.IsInitialized)
+                            translator.Initialize();
+                    });
+                });
 
-                    if (!translator.IsInitialized)
-                        translator.Initialize();
-
-                    isRunning = true;
-                }
-            },
-                DispatcherPriority.Background);
+                isRunning = true;
+            }
         }
     }
 }

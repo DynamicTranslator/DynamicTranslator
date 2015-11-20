@@ -26,7 +26,8 @@
 
         private string previousString;
 
-        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager, IGoogleAnalyticsService googleAnalytics)
+        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager,
+            IGoogleAnalyticsService googleAnalytics)
         {
             if (notifier == null)
                 throw new ArgumentNullException(nameof(notifier));

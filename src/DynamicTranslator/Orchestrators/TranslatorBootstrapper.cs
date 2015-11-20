@@ -58,27 +58,49 @@
 
         public void Initialize()
         {
-            mainWindow.CancellationTokenSource = new CancellationTokenSource();
-            StartHooks();
-            ConfigureNotificationMeasurements();
-            SubscribeLocalevents();
-            FlushCopyCommand();
-            StartObservers();
-            IsInitialized = true;
+            Task.Run(async () => await CompositionRoot());
         }
 
         public void Dispose()
         {
-            mainWindow.CancellationTokenSource.Cancel(false);
-            IsInitialized = false;
-            DisposeHooks();
-            FlushCopyCommand();
-            UnsubscribeLocalEvents();
-            growlNotifications.Dispose();
-            finderObservable.Dispose();
+            Task.Run(async () => await DecomposeRoot());
         }
 
         public bool IsInitialized { get; private set; }
+
+        private async Task CompositionRoot()
+        {
+            await Task.Run(() =>
+            {
+                mainWindow.Dispatcher.InvokeAsync(() =>
+                {
+                    mainWindow.CancellationTokenSource = new CancellationTokenSource();
+                    StartHooks();
+                    ConfigureNotificationMeasurements();
+                    SubscribeLocalevents();
+                    FlushCopyCommand();
+                    StartObservers();
+                    IsInitialized = true;
+                });
+            });
+        }
+
+        private async Task DecomposeRoot()
+        {
+            await Task.Run(() =>
+            {
+                mainWindow.Dispatcher.InvokeAsync(() =>
+                {
+                    mainWindow.CancellationTokenSource.Cancel(false);
+                    DisposeHooks();
+                    FlushCopyCommand();
+                    UnsubscribeLocalEvents();
+                    growlNotifications.Dispose();
+                    finderObservable.Dispose();
+                    IsInitialized = false;
+                });
+            });
+        }
 
         private void DisposeHooks()
         {
@@ -107,13 +129,16 @@
             }
         }
 
-        public void StartObservers()
+        private void StartObservers()
         {
-            finderObservable = Observable
-                .FromEventPattern<WhenClipboardContainsTextEventArgs>(
-                    h => WhenClipboardContainsTextEventHandler += h,
-                    h => WhenClipboardContainsTextEventHandler -= h)
-                .Subscribe(IocManager.Instance.Resolve<Finder>());
+            Task.Run(() =>
+            {
+                finderObservable = Observable
+                    .FromEventPattern<WhenClipboardContainsTextEventArgs>(
+                        h => WhenClipboardContainsTextEventHandler += h,
+                        h => WhenClipboardContainsTextEventHandler -= h)
+                    .Subscribe(IocManager.Instance.Resolve<Finder>());
+            });
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -183,7 +208,7 @@
                                         if (mainWindow.CancellationTokenSource.Token.IsCancellationRequested)
                                             return;
 
-                                        WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
+                                        WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs { CurrentString = currentText });
 
                                         await FlushCopyCommandAsync();
                                     });

@@ -3,6 +3,7 @@
     #region using
 
     using System;
+    using System.Threading.Tasks;
     using Castle.Windsor;
 
     #endregion
@@ -14,5 +15,7 @@
         new bool IsRegistered(Type type);
 
         new bool IsRegistered<T>();
+
+        Task DisposeAsync();
     }
 }

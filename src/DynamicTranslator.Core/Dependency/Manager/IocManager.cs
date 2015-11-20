@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Castle.MicroKernel.Registration;
     using Castle.Windsor;
     using Castle.Windsor.Installer;
@@ -219,6 +220,11 @@
         ///     Reference to the Castle Windsor Container.
         /// </summary>
         public IWindsorContainer IocContainer { get; }
+
+        public async Task DisposeAsync()
+        {
+            await Task.Run(() => { Dispose(); });
+        }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)
             where T : class
