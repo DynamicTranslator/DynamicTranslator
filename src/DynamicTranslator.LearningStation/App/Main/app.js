@@ -1,5 +1,4 @@
-﻿/// <reference path="~/Scripts/angular.js" />
-(function () {
+﻿(function () {
     "use strict";
 
     var app = angular.module("app", []);
