@@ -61,9 +61,9 @@
             CompositionRoot();
         }
 
-        public Task InitializeAsync()
+        public async Task InitializeAsync()
         {
-            return Task.Run(() => { Initialize(); });
+            await CompositionRootAsync().ConfigureAwait(false);
         }
 
         public void Dispose()
@@ -71,55 +71,62 @@
             DecomposeRoot();
         }
 
-        public Task DisposeAsync()
-        {
-            return Task.Run(() => { DecomposeRoot(); });
-        }
-
         public bool IsInitialized { get; private set; }
 
         public void SubscribeShutdownEvents()
         {
             mainWindow.Dispatcher.ShutdownStarted +=
-                (sender, args) => Task.Run(async () => { await mainWindow.Dispatcher.InvokeAsync(() => { cancellationTokenSource?.Cancel(false); }); });
+                (sender, args) => { cancellationTokenSource?.Cancel(false); };
 
-            mainWindow.Dispatcher.ShutdownFinished += (sender, args) => Task.Run(async () =>
+            mainWindow.Dispatcher.ShutdownFinished += (sender, args) =>
             {
-                await mainWindow.Dispatcher.InvokeAsync(async () =>
-                {
-                    await DisposeAsync().ConfigureAwait(false);
-                    GC.SuppressFinalize(mainWindow);
-                    GC.Collect();
-                });
-            });
+                Dispose();
+                GC.SuppressFinalize(mainWindow);
+                GC.Collect();
+            };
         }
 
-        private void CompositionRoot()
+        private async Task CompositionRootAsync()
         {
-            mainWindow.Dispatcher.InvokeAsync(async () =>
+            await mainWindow.Dispatcher.InvokeAsync(async () =>
             {
                 cancellationTokenSource = new CancellationTokenSource();
                 StartHooks();
                 ConfigureNotificationMeasurements();
                 SubscribeLocalevents();
                 await FlushCopyCommandAsync().ConfigureAwait(false);
-                await StartObservers().ConfigureAwait(false);
+                await StartObserversAsync().ConfigureAwait(false);
                 IsInitialized = true;
             });
         }
 
+        private void CompositionRoot()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            StartHooks();
+            ConfigureNotificationMeasurements();
+            SubscribeLocalevents();
+            Task.Run(FlushCopyCommandAsync);
+            StartObservers();
+            IsInitialized = true;
+        }
+
         private void DecomposeRoot()
         {
-            mainWindow.Dispatcher.InvokeAsync(async () =>
+            if (IsInitialized)
             {
-                cancellationTokenSource.Cancel(false);
+                if (cancellationTokenSource.Token.CanBeCanceled)
+                {
+                    cancellationTokenSource.Cancel(false);
+                }
+
                 DisposeHooks();
-                await FlushCopyCommandAsync().ConfigureAwait(false);
+                Task.Run(FlushCopyCommandAsync);
                 UnsubscribeLocalEvents();
                 growlNotifications.Dispose();
                 finderObservable.Dispose();
                 IsInitialized = false;
-            });
+            }
         }
 
         private void DisposeHooks()
@@ -149,7 +156,7 @@
             }
         }
 
-        private async Task StartObservers()
+        private async Task StartObserversAsync()
         {
             await Task.Run(() =>
             {
@@ -159,6 +166,15 @@
                         h => WhenClipboardContainsTextEventHandler -= h)
                     .Subscribe(IocManager.Instance.Resolve<Finder>());
             }).ConfigureAwait(false);
+        }
+
+        private void StartObservers()
+        {
+            finderObservable = Observable
+                .FromEventPattern<WhenClipboardContainsTextEventArgs>(
+                    h => WhenClipboardContainsTextEventHandler += h,
+                    h => WhenClipboardContainsTextEventHandler -= h)
+                .Subscribe(IocManager.Instance.Resolve<Finder>());
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -231,11 +247,10 @@
 
                                         await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(
                                             this,
-                                            new WhenClipboardContainsTextEventArgs { CurrentString = currentText })
+                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText})
                                             .ConfigureAwait(false);
 
                                         await FlushCopyCommandAsync().ConfigureAwait(false);
-
                                     }).ConfigureAwait(false);
                                 }
                             }
@@ -274,6 +289,11 @@
         private async Task FlushCopyCommandAsync()
         {
             await Task.Run(() => { SendKeys.Flush(); }).ConfigureAwait(false);
+        }
+
+        private void FlushCopyCommand()
+        {
+            SendKeys.Flush();
         }
     }
 }

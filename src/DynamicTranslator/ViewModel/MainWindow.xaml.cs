@@ -19,7 +19,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof(MainWindow), this);
+            IocManager.Instance.Register(typeof (MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
         }
@@ -38,14 +38,7 @@
 
                 isRunning = false;
 
-                Task.Run(async () =>
-                {
-                    await Dispatcher.InvokeAsync(async () =>
-                    {
-                        if (translator.IsInitialized)
-                            await translator.DisposeAsync().ConfigureAwait(false);
-                    });
-                }).ConfigureAwait(false);
+                translator.Dispose();
             }
             else
             {

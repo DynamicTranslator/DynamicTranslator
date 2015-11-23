@@ -79,6 +79,9 @@
             if (IsDisposed)
                 return;
 
+            Notifications.Clear();
+            buffer.Clear();
+
             OnDispose.InvokeSafely(this, new EventArgs());
 
             IsDisposed = true;
