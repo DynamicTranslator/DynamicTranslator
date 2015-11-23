@@ -3,8 +3,8 @@ namespace DynamicTranslator.Core.DBReezeNoSQL.Repository
     #region using
 
     using DBreeze.Transactions;
-    using DBReezeExtension;
     using Domain.Repository;
+    using Extensions;
     using Helper;
 
     #endregion

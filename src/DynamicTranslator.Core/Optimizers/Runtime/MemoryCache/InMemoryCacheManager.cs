@@ -13,7 +13,7 @@
     {
         public InMemoryCacheManager(IIocManager iocManager, ICachingConfiguration configuration) : base(iocManager, configuration)
         {
-            IocManager.RegisterIfNot<InMemoryCache>(DependencyLifeStyle.Transient);
+            IocManager.RegisterIfAbsent<InMemoryCache>(DependencyLifeStyle.Transient);
         }
 
         protected override ICache CreateCacheImplementation(string name)

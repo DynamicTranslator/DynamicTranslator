@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.DBReezeExtension
+﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Extensions
 {
     #region using
 

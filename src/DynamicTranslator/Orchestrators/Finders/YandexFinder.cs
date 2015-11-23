@@ -30,10 +30,8 @@
             return await Task.Run(async () =>
             {
                 var address = new Uri(
-                    string.Format(configuration.YandexUrl + GetPostData(
-                        configuration.FromLanguageExtension,
-                        configuration.ToLanguageExtension,
-                        Uri.EscapeUriString(text))));
+                        string.Format(configuration.YandexUrl +
+                                      $"key={configuration.ApiKey}&lang={configuration.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(text)}"));
 
                 var yandexClient = new WebClient();
                 yandexClient.Encoding = Encoding.UTF8;

@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Threading;
     using Core.Config;
     using Core.Extensions;
     using Core.ViewModel;
@@ -49,25 +50,28 @@
 
                 if (Notifications.Count > 0 && !IsActive)
                     Show();
-            });
+            }, DispatcherPriority.Background);
         }
 
         public void RemoveNotification(Notification notification)
         {
-            if (Notifications.Contains(notification))
-                Notifications.Remove(notification);
-
-            if (buffer.Count > 0)
+            Dispatcher.InvokeAsync(() =>
             {
-                Notifications.Add(buffer[0]);
-                buffer.RemoveAt(0);
-            }
+                if (Notifications.Contains(notification))
+                    Notifications.Remove(notification);
 
-            if (Notifications.Count < 1)
-            {
-                Hide();
-                OnDispose.InvokeSafely(this, new EventArgs());
-            }
+                if (buffer.Count > 0)
+                {
+                    Notifications.Add(buffer[0]);
+                    buffer.RemoveAt(0);
+                }
+
+                if (Notifications.Count < 1)
+                {
+                    Hide();
+                    OnDispose.InvokeSafely(this, new EventArgs());
+                }
+            }, DispatcherPriority.Background);
         }
 
         public void Dispose()

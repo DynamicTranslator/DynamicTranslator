@@ -19,7 +19,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof (MainWindow), this);
+            IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
         }
@@ -45,7 +45,7 @@
                         if (translator.IsInitialized)
                             await translator.DisposeAsync().ConfigureAwait(false);
                     });
-                });
+                }).ConfigureAwait(false);
             }
             else
             {
@@ -58,7 +58,7 @@
                         if (!translator.IsInitialized)
                             await translator.InitializeAsync().ConfigureAwait(false);
                     });
-                });
+                }).ConfigureAwait(false);
 
                 isRunning = true;
             }

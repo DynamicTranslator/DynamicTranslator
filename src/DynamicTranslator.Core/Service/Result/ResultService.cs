@@ -4,6 +4,7 @@
 
     using System.Threading.Tasks;
     using DBReezeNoSQL.Repository;
+    using DBReezeNoSQL.Repository.TranslateResultRepository;
     using Dependency.Markers;
     using Orchestrators;
 

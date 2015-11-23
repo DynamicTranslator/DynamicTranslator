@@ -87,12 +87,11 @@
     <Compile Include="Config\IDictionaryBasedConfig.cs" />
     <Compile Include="Config\IStartupConfiguration.cs" />
     <Compile Include="Config\StartupConfiguration.cs" />
-    <Compile Include="DBReezeNoSQL\DBReezeExtension\DBReezeExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
-    <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntity.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
-    <Compile Include="DBReezeNoSQL\Repository\ITranslateResultRepository.cs" />
-    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\ITranslateResultRepository.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\TranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
     <Compile Include="DBReezeNoSQL\Uow\UnitOfWorkExtensions.cs" />
     <Compile Include="DBReezeNoSQL\Uow\UowTransactionProvider.cs" />

@@ -18,7 +18,7 @@
         /// <typeparam name="T">Type of the class</typeparam>
         /// <param name="iocRegistrar">Registrar</param>
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
-        public static void RegisterIfNot<T>(this IIocRegistrar iocRegistrar, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public static void RegisterIfAbsent<T>(this IIocRegistrar iocRegistrar, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where T : class
         {
             if (iocRegistrar.IsRegistered<T>())
@@ -33,7 +33,7 @@
         /// <param name="iocRegistrar">Registrar</param>
         /// <param name="type">Type of the class</param>
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
-        public static void RegisterIfNot(this IIocRegistrar iocRegistrar, Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public static void RegisterIfAbsent(this IIocRegistrar iocRegistrar, Type type, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
             if (iocRegistrar.IsRegistered(type))
                 return;
@@ -48,7 +48,7 @@
         /// <typeparam name="TImpl">The type that implements <see cref="TType" /></typeparam>
         /// <param name="iocRegistrar">Registrar</param>
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
-        public static void RegisterIfNot<TType, TImpl>(this IIocRegistrar iocRegistrar, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public static void RegisterIfAbsent<TType, TImpl>(this IIocRegistrar iocRegistrar, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where TType : class
             where TImpl : class, TType
         {
@@ -65,7 +65,7 @@
         /// <param name="type">Type of the class</param>
         /// <param name="impl">The type that implements <paramref name="type" /></param>
         /// <param name="lifeStyle">Lifestyle of the objects of this type</param>
-        public static void RegisterIfNot(this IIocRegistrar iocRegistrar, Type type, Type impl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public static void RegisterIfAbsent(this IIocRegistrar iocRegistrar, Type type, Type impl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
             if (iocRegistrar.IsRegistered(type))
                 return;

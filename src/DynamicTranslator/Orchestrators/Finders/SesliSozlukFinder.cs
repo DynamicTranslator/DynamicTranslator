@@ -16,7 +16,6 @@
     {
         private readonly IStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
-        private IRestResponse response;
 
         public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
         {
@@ -44,7 +43,7 @@
                     .AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
                     .AddParameter("application/x-www-form-urlencoded", parameter, ParameterType.RequestBody);
 
-                response = await client.ExecuteTaskAsync(request).ConfigureAwait(false);
+                var response = await client.ExecuteTaskAsync(request).ConfigureAwait(false);
                 var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.SESLISOZLUK);
                 var mean = await meanOrganizer.OrganizeMean(response.Content).ConfigureAwait(false);
 
