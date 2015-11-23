@@ -87,8 +87,8 @@
             {
                 await mainWindow.Dispatcher.InvokeAsync(async () =>
                 {
-                    await DisposeAsync();
-                    GC.SuppressFinalize(this.mainWindow);
+                    await DisposeAsync().ConfigureAwait(false);
+                    GC.SuppressFinalize(mainWindow);
                     GC.Collect();
                 });
             });
@@ -102,8 +102,8 @@
                 StartHooks();
                 ConfigureNotificationMeasurements();
                 SubscribeLocalevents();
-                await FlushCopyCommandAsync();
-                await StartObservers();
+                await FlushCopyCommandAsync().ConfigureAwait(false);
+                await StartObservers().ConfigureAwait(false);
                 IsInitialized = true;
             });
         }
@@ -114,7 +114,7 @@
             {
                 cancellationTokenSource.Cancel(false);
                 DisposeHooks();
-                await FlushCopyCommandAsync();
+                await FlushCopyCommandAsync().ConfigureAwait(false);
                 UnsubscribeLocalEvents();
                 growlNotifications.Dispose();
                 finderObservable.Dispose();
@@ -149,16 +149,16 @@
             }
         }
 
-        private Task StartObservers()
+        private async Task StartObservers()
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 finderObservable = Observable
                     .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                         h => WhenClipboardContainsTextEventHandler += h,
                         h => WhenClipboardContainsTextEventHandler -= h)
                     .Subscribe(IocManager.Instance.Resolve<Finder>());
-            });
+            }).ConfigureAwait(false);
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -171,10 +171,10 @@
                     if (cancellationTokenSource.Token.IsCancellationRequested)
                         return;
 
-                    await SendCopyCommandAsync();
+                    await SendCopyCommandAsync().ConfigureAwait(false);
                     isMouseDown = false;
                 }
-            });
+            }).ConfigureAwait(false);
         }
 
         private async void MouseDown(object sender, MouseEventArgs e)
@@ -186,7 +186,7 @@
 
                 mouseFirstPoint = e.Location;
                 isMouseDown = true;
-            });
+            }).ConfigureAwait(false);
         }
 
         private async void MouseDoubleClicked(object sender, MouseEventArgs e)
@@ -197,8 +197,8 @@
                 if (cancellationTokenSource.Token.IsCancellationRequested)
                     return;
 
-                await SendCopyCommandAsync();
-            });
+                await SendCopyCommandAsync().ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -229,11 +229,14 @@
                                         if (cancellationTokenSource.Token.IsCancellationRequested)
                                             return;
 
-                                        await
-                                            WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this, new WhenClipboardContainsTextEventArgs {CurrentString = currentText});
+                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(
+                                            this,
+                                            new WhenClipboardContainsTextEventArgs { CurrentString = currentText })
+                                            .ConfigureAwait(false);
 
-                                        await FlushCopyCommandAsync();
-                                    });
+                                        await FlushCopyCommandAsync().ConfigureAwait(false);
+
+                                    }).ConfigureAwait(false);
                                 }
                             }
                         }, DispatcherPriority.Background);
@@ -268,14 +271,9 @@
             });
         }
 
-        private Task FlushCopyCommandAsync()
+        private async Task FlushCopyCommandAsync()
         {
-            return Task.Run(() => { SendKeys.Flush(); });
-        }
-
-        private void FlushCopyCommand()
-        {
-            SendKeys.Flush();
+            await Task.Run(() => { SendKeys.Flush(); }).ConfigureAwait(false);
         }
     }
 }

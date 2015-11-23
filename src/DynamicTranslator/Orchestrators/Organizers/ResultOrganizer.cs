@@ -23,9 +23,9 @@
             this.resultService = resultService;
         }
 
-        public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
+        public async Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
-            return Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 var mean = new StringBuilder();
                 foreach (var result in findedMeans.Where(result => result.IsSucess))
@@ -43,12 +43,12 @@
 
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now)).ConfigureAwait(false);
                     return new Maybe<string>(mean.ToString());
                 }
 
                 return new Maybe<string>();
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

@@ -12,9 +12,9 @@
 
     public class YandexMeanOrganizer : IMeanOrganizer
     {
-        public Task<Maybe<string>> OrganizeMean(string text)
+        public async Task<Maybe<string>> OrganizeMean(string text)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 if (text == null) return new Maybe<string>();
 
@@ -24,7 +24,7 @@
                 var output = node?.InnerText ?? "!!! An error occured";
 
                 return new Maybe<string>(output.ToLower().Trim());
-            });
+            }).ConfigureAwait(false);
         }
 
         public TranslatorType TranslatorType => TranslatorType.YANDEX;

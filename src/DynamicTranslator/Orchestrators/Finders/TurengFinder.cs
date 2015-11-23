@@ -25,9 +25,9 @@
             this.configuration = configuration;
         }
 
-        public Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
-            return Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 var address = configuration.TurengUrl;
                 var uri = new Uri(address + text);
@@ -38,12 +38,12 @@
                 turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
                 turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await turenClient.DownloadStringTaskAsync(uri);
+                var compositeMean = await turenClient.DownloadStringTaskAsync(uri).ConfigureAwait(false);
                 var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
-                var mean = await organizer.OrganizeMean(compositeMean);
+                var mean = await organizer.OrganizeMean(compositeMean).ConfigureAwait(false);
 
                 return new TranslateResult(true, mean);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

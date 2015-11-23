@@ -30,9 +30,9 @@
             this.configuration = configuration;
         }
 
-        public Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
-            return Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 var parameter = $"sl={configuration.FromLanguageExtension}&text={Uri.EscapeUriString(text)}&tl={configuration.ToLanguageExtension}";
                 var client = new RestClient(configuration.SesliSozlukUrl);
@@ -44,12 +44,12 @@
                     .AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
                     .AddParameter("application/x-www-form-urlencoded", parameter, ParameterType.RequestBody);
 
-                response = await client.ExecuteTaskAsync(request);
+                response = await client.ExecuteTaskAsync(request).ConfigureAwait(false);
                 var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.SESLISOZLUK);
-                var mean = await meanOrganizer.OrganizeMean(response.Content);
+                var mean = await meanOrganizer.OrganizeMean(response.Content).ConfigureAwait(false);
 
                 return new TranslateResult(true, mean);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

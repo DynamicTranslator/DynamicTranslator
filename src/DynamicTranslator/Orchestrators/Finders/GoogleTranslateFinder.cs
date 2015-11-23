@@ -25,9 +25,9 @@
             this.configuration = configuration;
         }
 
-        public Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
-            return Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 var address = string.Format(configuration.GoogleTranslateUrl,
                     configuration.FromLanguageExtension,
@@ -42,12 +42,12 @@
                 googleClient.Headers.Add("X-DevTools-Emulate-Network-Conditions-Client-Id", "en-US,en;q=0.8,tr;q=0.6");
                 googleClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await googleClient.DownloadStringTaskAsync(uri);
+                var compositeMean = await googleClient.DownloadStringTaskAsync(uri).ConfigureAwait(false);
                 var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.GOOGLE);
-                var mean = await organizer.OrganizeMean(compositeMean);
+                var mean = await organizer.OrganizeMean(compositeMean).ConfigureAwait(false);
 
                 return new TranslateResult(true, mean);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

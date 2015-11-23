@@ -49,22 +49,22 @@
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
-        public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
+        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            Task.Run(async () =>
-            {
-                var currentString = value.EventArgs.CurrentString;
+            await Task.Run(async () =>
+             {
+                 var currentString = value.EventArgs.CurrentString;
 
-                if (previousString == currentString)
-                    return;
+                 if (previousString == currentString)
+                     return;
 
-                previousString = currentString;
+                 previousString = currentString;
 
-                var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString))));
-                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString);
-                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First());
-                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null);
-            });
+                 var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
+                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
+                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+                 await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
+             }).ConfigureAwait(false);
         }
 
         public void OnError(Exception error)

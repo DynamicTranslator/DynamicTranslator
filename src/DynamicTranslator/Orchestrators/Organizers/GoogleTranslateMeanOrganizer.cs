@@ -14,15 +14,15 @@
 
     public class GoogleTranslateMeanOrganizer : IMeanOrganizer
     {
-        public Task<Maybe<string>> OrganizeMean(string text)
+        public async Task<Maybe<string>> OrganizeMean(string text)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 var arrayTree = JsonConvert.DeserializeObject(text) as JArray;
                 var output = arrayTree.GetFirstValueInArrayGraph<string>();
 
                 return new Maybe<string>(output);
-            });
+            }).ConfigureAwait(false);
         }
 
         public TranslatorType TranslatorType => TranslatorType.GOOGLE;

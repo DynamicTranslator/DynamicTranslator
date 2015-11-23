@@ -16,9 +16,9 @@
 
     public class TurengMeanOrganizer : IMeanOrganizer
     {
-        public Task<Maybe<string>> OrganizeMean(string text)
+        public async Task<Maybe<string>> OrganizeMean(string text)
         {
-            return Task.Run(() =>
+            return await Task.Run(() =>
             {
                 if (text == null) return new Maybe<string>();
 
@@ -56,7 +56,7 @@
                 }
 
                 return new Maybe<string>(output.ToString().ToLower().Trim());
-            });
+            }).ConfigureAwait(false);
         }
 
         public TranslatorType TranslatorType => TranslatorType.TURENG;

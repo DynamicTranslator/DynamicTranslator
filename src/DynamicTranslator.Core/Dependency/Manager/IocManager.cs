@@ -84,7 +84,7 @@
         /// <typeparam name="TType">Type to check</typeparam>
         public bool IsRegistered<TType>()
         {
-            return IocContainer.Kernel.HasComponent(typeof(TType));
+            return IocContainer.Kernel.HasComponent(typeof (TType));
         }
 
         /// <summary>
@@ -221,10 +221,9 @@
         /// </summary>
         public IWindsorContainer IocContainer { get; }
 
-        public Task DisposeAsync()
+        public async Task DisposeAsync()
         {
-            Dispose();
-            return Task.FromResult(0);
+            await Task.Run(() => Dispose()).ConfigureAwait(false);
         }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)

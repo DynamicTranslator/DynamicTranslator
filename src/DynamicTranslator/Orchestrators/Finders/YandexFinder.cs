@@ -25,9 +25,9 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(string text)
         {
-            return Task.Run(async () =>
+            return await Task.Run(async () =>
             {
                 var address = new Uri(
                     string.Format(configuration.YandexUrl + GetPostData(
@@ -39,12 +39,12 @@
                 yandexClient.Encoding = Encoding.UTF8;
                 yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await yandexClient.DownloadStringTaskAsync(address);
+                var compositeMean = await yandexClient.DownloadStringTaskAsync(address).ConfigureAwait(false);
                 var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
-                var mean = await organizer.OrganizeMean(compositeMean);
+                var mean = await organizer.OrganizeMean(compositeMean).ConfigureAwait(false);
 
                 return new TranslateResult(true, mean);
-            });
+            }).ConfigureAwait(false);
         }
 
         private string GetPostData(string fromLanguage, string toLanguage, string content)

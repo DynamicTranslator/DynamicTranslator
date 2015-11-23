@@ -32,10 +32,9 @@
 
         public event EventHandler OnDispose;
 
-        public Task AddNotificationAsync(Notification notification)
+        public async Task AddNotificationAsync(Notification notification)
         {
-            AddNotification(notification);
-            return Task.FromResult(0);
+            await Task.Run(() => AddNotification(notification)).ConfigureAwait(false);
         }
 
         public void AddNotification(Notification notification)

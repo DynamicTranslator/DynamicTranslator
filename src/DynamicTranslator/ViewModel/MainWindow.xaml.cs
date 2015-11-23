@@ -40,10 +40,10 @@
 
                 Task.Run(async () =>
                 {
-                    await Dispatcher.InvokeAsync(() =>
+                    await Dispatcher.InvokeAsync(async () =>
                     {
                         if (translator.IsInitialized)
-                            translator.Dispose();
+                            await translator.DisposeAsync().ConfigureAwait(false);
                     });
                 });
             }
@@ -53,10 +53,10 @@
 
                 Task.Run(async () =>
                 {
-                    await Dispatcher.InvokeAsync(() =>
+                    await Dispatcher.InvokeAsync(async () =>
                     {
                         if (!translator.IsInitialized)
-                            translator.Initialize();
+                            await translator.InitializeAsync().ConfigureAwait(false);
                     });
                 });
 
