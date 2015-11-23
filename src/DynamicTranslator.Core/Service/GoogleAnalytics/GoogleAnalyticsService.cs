@@ -14,6 +14,8 @@
     {
         private readonly IStartupConfiguration configuration;
         private readonly string googleVersion = "1";
+        private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
+        private const string TrackingId = "UA-70082243-2";
 
         public GoogleAnalyticsService(IStartupConfiguration configuration)
         {
@@ -27,7 +29,7 @@
 
         public async Task TrackEventAsync(string category, string action, string label, string value)
         {
-            await PostDataAsync(PrepareTrackEvent(category, action, label, value));
+            await PostDataAsync(PrepareTrackEvent(category, action, label, value)).ConfigureAwait(false);
         }
 
         public void TrackPage(string hostname, string page, string title)
@@ -37,7 +39,7 @@
 
         public async Task TrackPageAsync(string hostname, string page, string title)
         {
-            await PostDataAsync(PrepareTrackPage(hostname, page, title));
+            await PostDataAsync(PrepareTrackPage(hostname, page, title)).ConfigureAwait(false);
         }
 
         public void EcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
@@ -47,7 +49,7 @@
 
         public async Task EcommerceTransactionAsync(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
-            await PostDataAsync(PrepareEcommerceTransaction(id, affiliation, revenue, shipping, tax, currency));
+            await PostDataAsync(PrepareEcommerceTransaction(id, affiliation, revenue, shipping, tax, currency)).ConfigureAwait(false);
         }
 
         public void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
@@ -57,7 +59,7 @@
 
         public async Task EcommerceItemAsync(string id, string name, string price, string quantity, string code, string category, string currency)
         {
-            await PostDataAsync(PrepareEcommerceItem(id, name, price, quantity, code, category, currency));
+            await PostDataAsync(PrepareEcommerceItem(id, name, price, quantity, code, category, currency)).ConfigureAwait(false);
         }
 
         public void TrackSocial(string action, string network, string target)
@@ -67,7 +69,7 @@
 
         public async Task TrackSocialAsync(string action, string network, string target)
         {
-            await PostDataAsync(PrepareTrackSocial(action, network, target));
+            await PostDataAsync(PrepareTrackSocial(action, network, target)).ConfigureAwait(false);
         }
 
         public void TrackException(string description, bool fatal)
@@ -77,7 +79,7 @@
 
         public async Task TrackExceptionAsync(string description, bool fatal)
         {
-            await PostDataAsync(PrepareTrackException(description, fatal));
+            await PostDataAsync(PrepareTrackException(description, fatal)).ConfigureAwait(false);
         }
 
         private Hashtable PrepareTrackEvent(string category, string action, string label, string value)
@@ -163,7 +165,7 @@
         {
             var ht = new Hashtable();
             ht.Add("v", googleVersion); // Version.
-            ht.Add("tid", configuration.TrackingId); // Tracking ID / Web property / Property ID.
+            ht.Add("tid", TrackingId); // Tracking ID / Web property / Property ID.
             ht.Add("cid", configuration.ClientId); // Anonymous Client ID.
             return ht;
         }
@@ -179,7 +181,7 @@
 
             using (var client = new WebClient())
             {
-                var result = client.UploadString(configuration.GoogleAnalyticsUrl, "POST", data);
+                var result = client.UploadString(GoogleAnalyticsUrl, "POST", data);
             }
         }
 
@@ -194,7 +196,7 @@
 
             using (var client = new WebClient())
             {
-                await client.UploadStringTaskAsync(configuration.GoogleAnalyticsUrl, "POST", data);
+                await client.UploadStringTaskAsync(GoogleAnalyticsUrl, "POST", data).ConfigureAwait(false);
             }
         }
     }
