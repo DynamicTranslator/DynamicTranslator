@@ -49,22 +49,22 @@
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
-        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
+        public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            await Task.Run(async () =>
-             {
-                 var currentString = value.EventArgs.CurrentString;
+            Task.Run(async () =>
+            {
+                var currentString = value.EventArgs.CurrentString;
 
-                 if (previousString == currentString)
-                     return;
+                if (previousString == currentString)
+                    return;
 
-                 previousString = currentString;
+                previousString = currentString;
 
-                 var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
-                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
-                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
-                 await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
-             }).ConfigureAwait(false);
+                var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
+                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
+                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
+            });
         }
 
         public void OnError(Exception error)
