@@ -16,5 +16,6 @@
         Task InitializeAsync();
 
         Task DisposeAsync();
+        void SubscribeShutdownEvents();
     }
 }

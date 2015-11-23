@@ -2,10 +2,10 @@
 {
     #region using
 
-    using System;
-    using System.Threading;
+    using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Threading;
     using Core.Dependency.Manager;
     using Core.Orchestrators;
 
@@ -21,30 +21,13 @@
             InitializeComponent();
             IocManager.Instance.Register(typeof (MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
+            translator.SubscribeShutdownEvents();
         }
 
-        public CancellationTokenSource CancellationTokenSource { get; set; }
-
-        protected override async void OnClosed(EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            await Task.Run(async () =>
-            {
-                await Dispatcher.InvokeAsync(() =>
-                {
-                    CancellationTokenSource?.Cancel(false);
-                    Application.Current.Shutdown();
-                    Close();
-                    if (CancellationTokenSource != null && !CancellationTokenSource.Token.CanBeCanceled)
-                    {
-                        translator.Dispose();
-                        //await IocManager.Instance.DisposeAsync();
-                        GC.SuppressFinalize(this);
-                        GC.Collect();
-                    }
-
-                    base.OnClosed(e);
-                });
-            });
+            Dispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
+            base.OnClosing(e);
         }
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
