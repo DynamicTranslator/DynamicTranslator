@@ -12,6 +12,7 @@
     using Core.Orchestrators;
     using Core.Service.GoogleAnalytics;
     using Core.ViewModel.Constants;
+    using ViewModel;
 
     #endregion
 
@@ -62,8 +63,15 @@
 
                 var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
+
                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+
                 await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
+
+                await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
+                    ApplicationVersion.Version310,
+                    "dynamictranslator",
+                    "dynamictranslator", "notification").ConfigureAwait(false);
             });
         }
 

@@ -13,6 +13,10 @@
 
         Task TrackEventAsync(string category, string action, string label, string value);
 
+        void TrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName);
+
+        Task TrackAppScreenAsync(string appName, string appVersion, string appId, string appInstallerId, string screenName);
+
         void TrackPage(string hostname, string page, string title);
 
         Task TrackPageAsync(string hostname, string page, string title);

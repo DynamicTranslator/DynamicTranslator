@@ -100,7 +100,7 @@
 
         private void SendExceptionGoogleAnalyticsAsync(string text, bool isFatal)
         {
-            Task.Run(async () => await googleAnalytics.TrackExceptionAsync(text, isFatal));
+            Task.Run(async () => await googleAnalytics.TrackExceptionAsync(text, isFatal).ConfigureAwait(false));
         }
     }
 }

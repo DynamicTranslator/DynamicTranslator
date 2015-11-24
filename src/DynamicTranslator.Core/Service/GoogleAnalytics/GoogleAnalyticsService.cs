@@ -12,10 +12,10 @@
 
     public class GoogleAnalyticsService : IGoogleAnalyticsService
     {
-        private readonly IStartupConfiguration configuration;
-        private readonly string googleVersion = "1";
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
+        private readonly IStartupConfiguration configuration;
+        private readonly string googleVersion = "1";
 
         public GoogleAnalyticsService(IStartupConfiguration configuration)
         {
@@ -30,6 +30,16 @@
         public async Task TrackEventAsync(string category, string action, string label, string value)
         {
             await PostDataAsync(PrepareTrackEvent(category, action, label, value)).ConfigureAwait(false);
+        }
+
+        public void TrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName)
+        {
+            PostData(PrepareTrackAppScreen(appName, appVersion, appId, appInstallerId, screenName));
+        }
+
+        public async Task TrackAppScreenAsync(string appName, string appVersion, string appId, string appInstallerId, string screenName)
+        {
+            await PostDataAsync(PrepareTrackAppScreen(appName, appVersion, appId, appInstallerId, screenName)).ConfigureAwait(false);
         }
 
         public void TrackPage(string hostname, string page, string title)
@@ -107,6 +117,20 @@
             return ht;
         }
 
+        private Hashtable PrepareTrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName)
+        {
+            var ht = BaseValues();
+
+            ht.Add("t", "screenview"); // Pageview hit type.
+            ht.Add("an", appName); //App Name
+            ht.Add("av", appVersion); //App version.
+            ht.Add("aid", appId); //App Id.
+            ht.Add("aiid", appInstallerId); //App Installer Id.
+            ht.Add("cd", screenName); //Screen name / content description.
+
+            return ht;
+        }
+
         private Hashtable PrepareEcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
             var ht = BaseValues();
@@ -155,8 +179,8 @@
             var ht = BaseValues();
 
             ht.Add("t", "exception"); // Exception hit type.
-            ht.Add("dh", description); // Exception description.         Required.
-            ht.Add("dp", fatal ? "1" : "0"); // Exception is fatal?            Required.
+            ht.Add("exd", description); // Exception description.         Required.
+            ht.Add("exf", fatal ? "1" : "0"); // Exception is fatal?            Required.
 
             return ht;
         }
