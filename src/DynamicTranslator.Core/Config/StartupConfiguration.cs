@@ -21,9 +21,8 @@
 
         public void Initialize()
         {
-            SetViaConfigurationManager(nameof(ClientId));
             InitializeClientIdIfAbsent();
-
+            SetViaConfigurationManager(nameof(ClientId));
             SetViaConfigurationManager(nameof(ApiKey));
             SetViaConfigurationManager(nameof(LeftOffset));
             SetViaConfigurationManager(nameof(TopOffset));
