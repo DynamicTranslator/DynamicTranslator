@@ -1,6 +1,9 @@
 language: csharp
 solution: ./src/DynamicTranslator.sln
-install: 
-  - ./automation/nuget/nuget.exe restore src/DynamicTranslator.sln
 before_install:
  - chmod +x automation/nuget/nuget.exe
+script:
+  - cd automation/nuget/
+  - nuget restore ../../src/DynamicTranslator.sln
+install: 
+  - ./automation/nuget/nuget.exe restore src/DynamicTranslator.sln
