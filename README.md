@@ -1,4 +1,4 @@
-# DynamicTranslator ![alt-tag(https://travis-ci.org/osoykan/DynamicTranslator.svg?branch=master)
+# DynamicTranslator 
 While you are reading a pdf or something, when you press the "Control + C"(it is not necessary anymore, DynamicTranslator detects selected texts instantly, but still working),  "Dynamic Translator" immediately detect the your word and translates it.
 
 ###Latest News
