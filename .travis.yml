@@ -3,4 +3,4 @@ solution: ./src/DynamicTranslator.sln
 install: 
   - automation/nuget/nuget restore src/DynamicTranslator.sln
 before_script:
- - chmod +x automation/nuget/nuget
+ - chmod +x automation/nuget/nuget.exe
