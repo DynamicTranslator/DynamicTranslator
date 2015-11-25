@@ -1,4 +1,4 @@
 language: csharp
 solution: ./src/DynamicTranslator.sln
 install:
-  -./automation/nuget/nuget restore ./src/DynamicTranslator.sln
+  - ./automation/nuget/nuget restore ./src/DynamicTranslator.sln
