@@ -5,5 +5,3 @@ before_install:
 script:
   - cd automation/nuget/
   - nuget restore ../../src/DynamicTranslator.sln
-install: 
-  - ./automation/nuget/nuget.exe restore src/DynamicTranslator.sln
