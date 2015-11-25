@@ -1,5 +1,5 @@
 language: csharp
-solution: DynamicTranslator.sln
+solution: src/DynamicTranslator.sln
 script:    # the following commands are just examples, use whatever your build process requires
   - ./build.sh
   - ./test.sh
