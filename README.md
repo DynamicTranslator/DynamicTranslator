@@ -1,4 +1,4 @@
-# DynamicTranslator | [![Build Status](https://travis-ci.org/osoykan/DynamicTranslator.svg?branch=master)](https://travis-ci.org/osoykan/DynamicTranslator)
+# DynamicTranslator | [![Build Status](https://travis-ci.org/osoykan/DynamicTranslator.svg?branch=master)](https://travis-ci.org/osoykan/DynamicTranslator) [![Issue Stats](http://issuestats.com/github/osoykan/dynamictranslator/badge/issue?style=flat)](http://issuestats.com/github/osoykan/dynamictranslator) [![Issue Stats](http://issuestats.com/github/osoykan/dynamictranslator/badge/pr?style=flat)](http://issuestats.com/github/osoykan/dynamictranslator)
 
 While you are reading a pdf or something, when you press the "Control + C"(it is not necessary anymore, DynamicTranslator detects selected texts instantly, but still working),  "Dynamic Translator" immediately detect the your word and translates it.
 
