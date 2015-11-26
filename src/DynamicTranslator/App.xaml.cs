@@ -15,9 +15,18 @@
 
     #endregion
 
+    /// <summary>
+    /// The app root class.
+    /// </summary>
     public partial class App
     {
-        protected override void OnStartup(StartupEventArgs e)
+        /// <summary>
+        /// First place of program start.
+        /// </summary>
+        /// <param name="eventArgs">
+        /// Bootstrap of program.
+        /// </param>
+        protected override void OnStartup(StartupEventArgs eventArgs)
         {
             IocManager.Instance.AddConventionalRegistrar(new BasicConventionalRegistrar());
             UnitOfWorkRegistrar.Initialize(IocManager.Instance);
@@ -32,7 +41,7 @@
 
             var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
             configurations.Initialize();
-            base.OnStartup(e);
+            base.OnStartup(eventArgs);
         }
     }
 }

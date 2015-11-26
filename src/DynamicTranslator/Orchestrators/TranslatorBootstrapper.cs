@@ -3,6 +3,7 @@
     #region using
 
     using System;
+    using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -29,14 +30,15 @@
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IStartupConfiguration startupConfiguration;
+        private CancellationTokenSource cancellationTokenSource;
+        private IDisposable finderObservable;
         private IKeyboardMouseEvents globalMouseHook;
         private IntPtr hWndNextViewer;
         private HwndSource hWndSource;
         private bool isMouseDown;
         private Point mouseFirstPoint;
         private Point mouseSecondPoint;
-        private IDisposable finderObservable;
-        private CancellationTokenSource cancellationTokenSource;
+        private IDisposable syncObserver;
 
         public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
         {
@@ -56,6 +58,13 @@
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
+        public bool IsInitialized { get; private set; }
+
+        public void Dispose()
+        {
+            DecomposeRoot();
+        }
+
         public void Initialize()
         {
             CompositionRoot();
@@ -65,13 +74,6 @@
         {
             await CompositionRootAsync().ConfigureAwait(false);
         }
-
-        public void Dispose()
-        {
-            DecomposeRoot();
-        }
-
-        public bool IsInitialized { get; private set; }
 
         public void SubscribeShutdownEvents()
         {
@@ -84,6 +86,17 @@
                 GC.SuppressFinalize(mainWindow);
                 GC.Collect();
             };
+        }
+
+        private void CompositionRoot()
+        {
+            cancellationTokenSource = new CancellationTokenSource();
+            StartHooks();
+            ConfigureNotificationMeasurements();
+            SubscribeLocalevents();
+            Task.Run(FlushCopyCommandAsync);
+            StartObservers();
+            IsInitialized = true;
         }
 
         private async Task CompositionRootAsync()
@@ -100,15 +113,10 @@
             });
         }
 
-        private void CompositionRoot()
+        private void ConfigureNotificationMeasurements()
         {
-            cancellationTokenSource = new CancellationTokenSource();
-            StartHooks();
-            ConfigureNotificationMeasurements();
-            SubscribeLocalevents();
-            Task.Run(FlushCopyCommandAsync);
-            StartObservers();
-            IsInitialized = true;
+            growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
+            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - startupConfiguration.LeftOffset;
         }
 
         private void DecomposeRoot()
@@ -125,6 +133,7 @@
                 UnsubscribeLocalEvents();
                 growlNotifications.Dispose();
                 finderObservable.Dispose();
+                syncObserver.Dispose();
                 IsInitialized = false;
             }
         }
@@ -137,44 +146,38 @@
             globalMouseHook.Dispose();
         }
 
-        private void ConfigureNotificationMeasurements()
+        private void FlushCopyCommand()
         {
-            growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
-            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - startupConfiguration.LeftOffset;
+            SendKeys.Flush();
         }
 
-        private void StartHooks()
+        private async Task FlushCopyCommandAsync()
         {
-            var wih = new WindowInteropHelper(mainWindow);
-            hWndSource = HwndSource.FromHwnd(wih.Handle);
-            globalMouseHook = Hook.GlobalEvents();
-            var source = hWndSource;
-            if (source != null)
-            {
-                source.AddHook(WinProc); // start processing window messages
-                hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
-            }
+            await Task.Run(() => { SendKeys.Flush(); }).ConfigureAwait(false);
         }
 
-        private async Task StartObserversAsync()
+        private async void MouseDoubleClicked(object sender, MouseEventArgs e)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
-                finderObservable = Observable
-                    .FromEventPattern<WhenClipboardContainsTextEventArgs>(
-                        h => WhenClipboardContainsTextEventHandler += h,
-                        h => WhenClipboardContainsTextEventHandler -= h)
-                    .Subscribe(IocManager.Instance.Resolve<Finder>());
+                isMouseDown = false;
+                if (cancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
+                await SendCopyCommandAsync().ConfigureAwait(false);
             }).ConfigureAwait(false);
         }
 
-        private void StartObservers()
+        private async void MouseDown(object sender, MouseEventArgs e)
         {
-            finderObservable = Observable
-                .FromEventPattern<WhenClipboardContainsTextEventArgs>(
-                    h => WhenClipboardContainsTextEventHandler += h,
-                    h => WhenClipboardContainsTextEventHandler -= h)
-                .Subscribe(IocManager.Instance.Resolve<Finder>());
+            await Task.Run(() =>
+            {
+                if (cancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
+                mouseFirstPoint = e.Location;
+                isMouseDown = true;
+            }).ConfigureAwait(false);
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -193,28 +196,59 @@
             }).ConfigureAwait(false);
         }
 
-        private async void MouseDown(object sender, MouseEventArgs e)
+        private Task SendCopyCommandAsync()
         {
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
-                if (cancellationTokenSource.Token.IsCancellationRequested)
-                    return;
-
-                mouseFirstPoint = e.Location;
-                isMouseDown = true;
-            }).ConfigureAwait(false);
+                SendKeys.SendWait("^c");
+                SendKeys.Flush();
+            });
         }
 
-        private async void MouseDoubleClicked(object sender, MouseEventArgs e)
+        private void StartHooks()
         {
-            await Task.Run(async () =>
+            var wih = new WindowInteropHelper(mainWindow);
+            hWndSource = HwndSource.FromHwnd(wih.Handle);
+            globalMouseHook = Hook.GlobalEvents();
+            var source = hWndSource;
+            if (source != null)
             {
-                isMouseDown = false;
-                if (cancellationTokenSource.Token.IsCancellationRequested)
-                    return;
+                source.AddHook(WinProc); // start processing window messages
+                hWndNextViewer = Win32.SetClipboardViewer(source.Handle); // set this window as a viewer
+            }
+        }
 
-                await SendCopyCommandAsync().ConfigureAwait(false);
-            }).ConfigureAwait(false);
+        private void StartObservers()
+        {
+            finderObservable = Observable
+                .FromEventPattern<WhenClipboardContainsTextEventArgs>(
+                    h => WhenClipboardContainsTextEventHandler += h,
+                    h => WhenClipboardContainsTextEventHandler -= h)
+                .Subscribe(IocManager.Instance.Resolve<Finder>());
+
+            syncObserver = Observable
+                .Interval(TimeSpan.FromSeconds(1.0), TaskPoolScheduler.Default)
+                .StartWith(-1L)
+                .Subscribe(IocManager.Instance.Resolve<Feeder>());
+        }
+
+        private async Task StartObserversAsync()
+        {
+            await Task.Run(() => { StartObservers(); });
+        }
+
+        private void SubscribeLocalevents()
+        {
+            globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
+            globalMouseHook.MouseDown += MouseDown;
+            globalMouseHook.MouseUp += MouseUp;
+        }
+
+        private void UnsubscribeLocalEvents()
+        {
+            globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
+            globalMouseHook.MouseDownExt -= MouseDown;
+            globalMouseHook.MouseUp -= MouseUp;
         }
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -245,10 +279,9 @@
                                         if (cancellationTokenSource.Token.IsCancellationRequested)
                                             return;
 
-                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(
-                                            this,
-                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText})
-                                            .ConfigureAwait(false);
+                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
+                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
+                                            ).ConfigureAwait(false);
 
                                         await FlushCopyCommandAsync().ConfigureAwait(false);
                                     }).ConfigureAwait(false);
@@ -261,39 +294,6 @@
             }
 
             return IntPtr.Zero;
-        }
-
-        private void SubscribeLocalevents()
-        {
-            globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
-            globalMouseHook.MouseDown += MouseDown;
-            globalMouseHook.MouseUp += MouseUp;
-        }
-
-        private void UnsubscribeLocalEvents()
-        {
-            globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
-            globalMouseHook.MouseDownExt -= MouseDown;
-            globalMouseHook.MouseUp -= MouseUp;
-        }
-
-        private Task SendCopyCommandAsync()
-        {
-            return Task.Run(() =>
-            {
-                SendKeys.SendWait("^c");
-                SendKeys.Flush();
-            });
-        }
-
-        private async Task FlushCopyCommandAsync()
-        {
-            await Task.Run(() => { SendKeys.Flush(); }).ConfigureAwait(false);
-        }
-
-        private void FlushCopyCommand()
-        {
-            SendKeys.Flush();
         }
     }
 }

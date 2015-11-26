@@ -149,8 +149,8 @@
     <Compile Include="Helper\InternalAsyncHelper.cs" />
     <Compile Include="Helper\ObjectHelper.cs" />
     <Compile Include="Maybe.cs" />
-    <Compile Include="Optimizers\IPool.cs" />
-    <Compile Include="Optimizers\Pool.cs" />
+    <Compile Include="Optimizers\Runtime\Pool\IPool.cs" />
+    <Compile Include="Optimizers\Runtime\Pool\Pool.cs" />
     <Compile Include="Optimizers\Runtime\Caching\CacheBase.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\CacheExtensions.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\CacheManagerExtensions.cs" />
