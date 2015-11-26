@@ -227,7 +227,7 @@
                 .Subscribe(IocManager.Instance.Resolve<Finder>());
 
             syncObserver = Observable
-                .Interval(TimeSpan.FromSeconds(1.0), TaskPoolScheduler.Default)
+                .Interval(TimeSpan.FromSeconds(7.0), TaskPoolScheduler.Default)
                 .StartWith(-1L)
                 .Subscribe(IocManager.Instance.Resolve<Feeder>());
         }
