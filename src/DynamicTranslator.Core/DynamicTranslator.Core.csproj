@@ -143,6 +143,7 @@
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="Orchestrators\ILanguageDetector.cs" />
     <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
     <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />

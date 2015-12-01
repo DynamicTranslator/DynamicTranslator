@@ -24,11 +24,12 @@
         private readonly ICacheManager cacheManager;
         private readonly ITypedCache<string, TranslateResult[]> cache;
         private readonly IGoogleAnalyticsService googleAnalytics;
+        private readonly ILanguageDetector languageDetector;
 
         private string previousString;
 
         public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager,
-            IGoogleAnalyticsService googleAnalytics)
+            IGoogleAnalyticsService googleAnalytics, ILanguageDetector languageDetector)
         {
             if (notifier == null)
                 throw new ArgumentNullException(nameof(notifier));
@@ -47,6 +48,7 @@
             this.resultOrganizer = resultOrganizer;
             this.cacheManager = cacheManager;
             this.googleAnalytics = googleAnalytics;
+            this.languageDetector = languageDetector;
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
@@ -60,6 +62,8 @@
                     return;
 
                 previousString = currentString;
+
+                //var at = await languageDetector.DetectLanguage(currentString);
 
                 var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);

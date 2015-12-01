@@ -36,6 +36,7 @@
             SetViaConfigurationManager(nameof(TurengUrl));
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
             SetViaConfigurationManager(nameof(TrackingId));
+            SetViaConfigurationManager(nameof(YandexDetectTextUrl));
             InitLanguageMap();
         }
 
@@ -62,6 +63,8 @@
         public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
 
         public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
+
+        public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
 
         public string YandexUrl => Get<string>(nameof(YandexUrl));
 

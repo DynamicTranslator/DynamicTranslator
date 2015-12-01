@@ -13,41 +13,43 @@
 
     public interface IStartupConfiguration : IDictionaryBasedConfig
     {
-        IIocManager IocManager { get; }
-
         string ApiKey { get; }
 
-        int LeftOffset { get; }
-
-        int TopOffset { get; }
-
-        int SearchableCharacterLimit { get; }
+        string ClientId { get; }
 
         string FromLanguage { get; }
 
         string FromLanguageExtension { get; }
 
+        string GoogleAnalyticsUrl { get; }
+
+        string GoogleTranslateUrl { get; }
+
+        IIocManager IocManager { get; }
+
+        Dictionary<string, string> LanguageMap { get; }
+
+        int LeftOffset { get; }
+
+        byte MaxNotifications { get; }
+
+        int SearchableCharacterLimit { get; }
+
+        string SesliSozlukUrl { get; }
+
         string ToLanguage { get; }
 
         string ToLanguageExtension { get; }
 
-        Dictionary<string, string> LanguageMap { get; }
+        int TopOffset { get; }
 
-        byte MaxNotifications { get; }
-
-        string GoogleTranslateUrl { get; }
-
-        string YandexUrl { get; }
-
-        string SesliSozlukUrl { get; }
+        string TrackingId { get; }
 
         string TurengUrl { get; }
 
-        string GoogleAnalyticsUrl { get; }
+        string YandexDetectTextUrl { get; }
 
-        string ClientId { get; }
-
-        string TrackingId { get; }
+        string YandexUrl { get; }
 
         void Initialize();
     }
