@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core.Orchestrators
+﻿namespace DynamicTranslator.Core.Orchestrators.Detector
 {
     #region using
 

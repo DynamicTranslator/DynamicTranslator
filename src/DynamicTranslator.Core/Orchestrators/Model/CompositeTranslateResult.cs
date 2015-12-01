@@ -1,11 +1,10 @@
-﻿namespace DynamicTranslator.Core.Orchestrators
+﻿namespace DynamicTranslator.Core.Orchestrators.Model
 {
     #region using
 
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
-    using Translate;
 
     #endregion
 

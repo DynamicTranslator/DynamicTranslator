@@ -11,6 +11,9 @@
     using Config;
     using DBreeze;
     using Orchestrators;
+    using Orchestrators.Detector;
+    using Orchestrators.Finder;
+    using Orchestrators.Organizer;
 
     #endregion
 

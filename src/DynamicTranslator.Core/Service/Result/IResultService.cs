@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Domain.Uow;
     using Orchestrators;
+    using Orchestrators.Model;
 
     #endregion
 

@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core
+﻿namespace DynamicTranslator.Core.Orchestrators.Model
 {
     #region using
 

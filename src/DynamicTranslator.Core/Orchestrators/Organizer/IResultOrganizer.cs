@@ -1,11 +1,11 @@
-﻿namespace DynamicTranslator.Core.Orchestrators
+﻿namespace DynamicTranslator.Core.Orchestrators.Organizer
 {
     #region using
 
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Dependency.Markers;
-    using Translate;
+    using Model;
 
     #endregion
 

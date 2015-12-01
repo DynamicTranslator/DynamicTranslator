@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Translate
+﻿namespace DynamicTranslator.Core.Orchestrators.Model
 {
     public class TranslateRequest
     {

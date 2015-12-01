@@ -10,7 +10,7 @@
     using Exception;
     using Helper;
     using Orchestrators;
-    using Orchestrators.Translate;
+    using Orchestrators.Model;
     using Service.GoogleAnalytics;
     using ViewModel.Constants;
 

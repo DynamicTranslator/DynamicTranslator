@@ -16,6 +16,7 @@
     using Core.Dependency.Markers;
     using Core.Extensions;
     using Core.Orchestrators;
+    using Core.Orchestrators.Event;
     using Gma.System.MouseKeyHook;
     using Observers;
     using Utility;
