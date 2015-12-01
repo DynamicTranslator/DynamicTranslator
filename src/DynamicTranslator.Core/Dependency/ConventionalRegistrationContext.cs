@@ -18,8 +18,8 @@
 
         public Assembly Assembly { get; }
 
-        public IIocManager IocManager { get; }
-
         public ConventionalRegistrationConfig Config { get; }
+
+        public IIocManager IocManager { get; }
     }
 }

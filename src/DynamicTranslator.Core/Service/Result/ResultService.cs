@@ -3,7 +3,6 @@
     #region using
 
     using System.Threading.Tasks;
-    using DBReezeNoSQL.Repository;
     using DBReezeNoSQL.Repository.TranslateResultRepository;
     using Dependency.Markers;
     using Orchestrators;
@@ -19,6 +18,16 @@
             this.resultRepository = resultRepository;
         }
 
+        public CompositeTranslateResult Get(string key)
+        {
+            return resultRepository.GetTranslateResult(key);
+        }
+
+        public async Task<CompositeTranslateResult> GetAsync(string key)
+        {
+            return await resultRepository.GetTranslateResultAsync(key);
+        }
+
         public CompositeTranslateResult Save(string key, CompositeTranslateResult translateResult)
         {
             return resultRepository.SetTranslateResult(key, translateResult);
@@ -29,24 +38,14 @@
             return resultRepository.SetTranslateResultAndUpdateFrequency(key, translateResult);
         }
 
-        public async Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult)
-        {
-            return await resultRepository.SetTranslateResultAsync(key, translateResult);
-        }
-
         public async Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(string key, CompositeTranslateResult translateResult)
         {
             return await resultRepository.SetTranslateResultAndUpdateFrequencyAsync(key, translateResult);
         }
 
-        public CompositeTranslateResult Get(string key)
+        public async Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult)
         {
-            return resultRepository.GetTranslateResult(key);
-        }
-
-        public async Task<CompositeTranslateResult> GetAsync(string key)
-        {
-            return await resultRepository.GetTranslateResultAsync(key);
+            return await resultRepository.SetTranslateResultAsync(key, translateResult);
         }
     }
 }

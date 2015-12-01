@@ -9,12 +9,6 @@
 
     public static class IocResolverExtensions
     {
-        public static void Using<T>(this IIocResolver iocResolver, Action<T> action)
-        {
-            using (var wrapper = new DisposableDependencyObjectWrapper<T>(iocResolver, iocResolver.Resolve<T>()))
-                action(wrapper.Object);
-        }
-
         public static IDisposableDependencyObjectWrapper<T> ResolveAsDisposable<T>(this IIocResolver iocResolver)
         {
             return new DisposableDependencyObjectWrapper<T>(iocResolver, iocResolver.Resolve<T>());
@@ -43,6 +37,12 @@
         public static IDisposableDependencyObjectWrapper ResolveAsDisposable(this IIocResolver iocResolver, Type type, object argumentsAsAnonymousType)
         {
             return new DisposableDependencyObjectWrapperOfT(iocResolver, iocResolver.Resolve(type, argumentsAsAnonymousType));
+        }
+
+        public static void Using<T>(this IIocResolver iocResolver, Action<T> action)
+        {
+            using (var wrapper = new DisposableDependencyObjectWrapper<T>(iocResolver, iocResolver.Resolve<T>()))
+                action(wrapper.Object);
         }
     }
 }

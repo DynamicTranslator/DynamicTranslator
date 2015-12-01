@@ -10,8 +10,6 @@
 
     public static class IocRegistrarExtensions
     {
-        #region RegisterIfNot
-
         /// <summary>
         ///     Registers a type as self registration if it's not registered before.
         /// </summary>
@@ -72,7 +70,5 @@
 
             iocRegistrar.Register(type, impl, lifeStyle);
         }
-
-        #endregion
     }
 }

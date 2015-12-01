@@ -1,4 +1,0 @@
-﻿var core = core || {};
-(function() {
-    
-});

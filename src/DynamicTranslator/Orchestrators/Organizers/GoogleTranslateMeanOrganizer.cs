@@ -14,6 +14,8 @@
 
     public class GoogleTranslateMeanOrganizer : IMeanOrganizer
     {
+        public TranslatorType TranslatorType => TranslatorType.GOOGLE;
+
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
             return await Task.Run(() =>
@@ -22,9 +24,7 @@
                 var output = arrayTree.GetFirstValueInArrayGraph<string>();
 
                 return new Maybe<string>(output);
-            }).ConfigureAwait(false);
+            });
         }
-
-        public TranslatorType TranslatorType => TranslatorType.GOOGLE;
     }
 }

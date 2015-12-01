@@ -12,10 +12,10 @@
     {
         IWindsorContainer IocContainer { get; }
 
+        Task DisposeAsync();
+
         new bool IsRegistered(Type type);
 
         new bool IsRegistered<T>();
-
-        Task DisposeAsync();
     }
 }

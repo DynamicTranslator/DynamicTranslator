@@ -24,8 +24,6 @@
             InternalCache = internalCache;
         }
 
-        public string Name => InternalCache.Name;
-
         public TimeSpan DefaultSlidingExpireTime
         {
             get { return InternalCache.DefaultSlidingExpireTime; }
@@ -34,10 +32,7 @@
 
         public ICache InternalCache { get; }
 
-        public void Dispose()
-        {
-            InternalCache.Dispose();
-        }
+        public string Name => InternalCache.Name;
 
         public void Clear()
         {
@@ -47,6 +42,11 @@
         public Task ClearAsync()
         {
             return InternalCache.ClearAsync();
+        }
+
+        public void Dispose()
+        {
+            InternalCache.Dispose();
         }
 
         public TValue Get(TKey key, Func<TKey, TValue> factory)
@@ -69,16 +69,6 @@
             return InternalCache.GetOrDefaultAsync<TKey, TValue>(key);
         }
 
-        public void Set(TKey key, TValue value, TimeSpan? slidingExpireTime = null)
-        {
-            InternalCache.Set(key.ToString(), value, slidingExpireTime);
-        }
-
-        public Task SetAsync(TKey key, TValue value, TimeSpan? slidingExpireTime = null)
-        {
-            return InternalCache.SetAsync(key.ToString(), value, slidingExpireTime);
-        }
-
         public void Remove(TKey key)
         {
             InternalCache.Remove(key.ToString());
@@ -87,6 +77,16 @@
         public Task RemoveAsync(TKey key)
         {
             return InternalCache.RemoveAsync(key.ToString());
+        }
+
+        public void Set(TKey key, TValue value, TimeSpan? slidingExpireTime = null)
+        {
+            InternalCache.Set(key.ToString(), value, slidingExpireTime);
+        }
+
+        public Task SetAsync(TKey key, TValue value, TimeSpan? slidingExpireTime = null)
+        {
+            return InternalCache.SetAsync(key.ToString(), value, slidingExpireTime);
         }
     }
 }

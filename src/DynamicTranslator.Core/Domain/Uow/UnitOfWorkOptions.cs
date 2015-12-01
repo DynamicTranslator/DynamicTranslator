@@ -14,21 +14,10 @@ namespace DynamicTranslator.Core.Domain.Uow
     public class UnitOfWorkOptions
     {
         /// <summary>
-        ///     Scope option.
+        ///     This option should be set to <see cref="TransactionScopeAsyncFlowOption.Enabled" />
+        ///     if unit of work is used in an async scope.
         /// </summary>
-        public TransactionScopeOption? Scope { get; set; }
-
-        /// <summary>
-        ///     Is this UOW transactional?
-        ///     Uses default value if not supplied.
-        /// </summary>
-        public bool? IsTransactional { get; set; }
-
-        /// <summary>
-        ///     Timeout of UOW As milliseconds.
-        ///     Uses default value if not supplied.
-        /// </summary>
-        public TimeSpan? Timeout { get; set; }
+        public TransactionScopeAsyncFlowOption? AsyncFlowOption { get; set; }
 
         /// <summary>
         ///     If this UOW is transactional, this option indicated the isolation level of the transaction.
@@ -37,10 +26,21 @@ namespace DynamicTranslator.Core.Domain.Uow
         public IsolationLevel? IsolationLevel { get; set; }
 
         /// <summary>
-        ///     This option should be set to <see cref="TransactionScopeAsyncFlowOption.Enabled" />
-        ///     if unit of work is used in an async scope.
+        ///     Is this UOW transactional?
+        ///     Uses default value if not supplied.
         /// </summary>
-        public TransactionScopeAsyncFlowOption? AsyncFlowOption { get; set; }
+        public bool? IsTransactional { get; set; }
+
+        /// <summary>
+        ///     Scope option.
+        /// </summary>
+        public TransactionScopeOption? Scope { get; set; }
+
+        /// <summary>
+        ///     Timeout of UOW As milliseconds.
+        ///     Uses default value if not supplied.
+        /// </summary>
+        public TimeSpan? Timeout { get; set; }
 
         internal void FillDefaultsForNonProvidedOptions(IUnitOfWorkDefaultOptions defaultOptions)
         {

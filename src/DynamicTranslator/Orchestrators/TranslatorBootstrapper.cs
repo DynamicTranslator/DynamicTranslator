@@ -72,7 +72,7 @@
 
         public async Task InitializeAsync()
         {
-            await CompositionRootAsync().ConfigureAwait(false);
+            await CompositionRootAsync();
         }
 
         public void SubscribeShutdownEvents()
@@ -107,8 +107,8 @@
                 StartHooks();
                 ConfigureNotificationMeasurements();
                 SubscribeLocalevents();
-                await FlushCopyCommandAsync().ConfigureAwait(false);
-                await StartObserversAsync().ConfigureAwait(false);
+                await FlushCopyCommandAsync();
+                await StartObserversAsync();
                 IsInitialized = true;
             });
         }
@@ -153,7 +153,7 @@
 
         private async Task FlushCopyCommandAsync()
         {
-            await Task.Run(() => { SendKeys.Flush(); }).ConfigureAwait(false);
+            await Task.Run(() => { SendKeys.Flush(); });
         }
 
         private async void MouseDoubleClicked(object sender, MouseEventArgs e)
@@ -164,8 +164,8 @@
                 if (cancellationTokenSource.Token.IsCancellationRequested)
                     return;
 
-                await SendCopyCommandAsync().ConfigureAwait(false);
-            }).ConfigureAwait(false);
+                await SendCopyCommandAsync();
+            });
         }
 
         private async void MouseDown(object sender, MouseEventArgs e)
@@ -177,7 +177,7 @@
 
                 mouseFirstPoint = e.Location;
                 isMouseDown = true;
-            }).ConfigureAwait(false);
+            });
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
@@ -190,10 +190,10 @@
                     if (cancellationTokenSource.Token.IsCancellationRequested)
                         return;
 
-                    await SendCopyCommandAsync().ConfigureAwait(false);
+                    await SendCopyCommandAsync();
                     isMouseDown = false;
                 }
-            }).ConfigureAwait(false);
+            });
         }
 
         private Task SendCopyCommandAsync()
@@ -281,10 +281,10 @@
 
                                         await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
                                             new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
-                                            ).ConfigureAwait(false);
+                                            );
 
-                                        await FlushCopyCommandAsync().ConfigureAwait(false);
-                                    }).ConfigureAwait(false);
+                                        await FlushCopyCommandAsync();
+                                    });
                                 }
                             }
                         }, DispatcherPriority.Background);

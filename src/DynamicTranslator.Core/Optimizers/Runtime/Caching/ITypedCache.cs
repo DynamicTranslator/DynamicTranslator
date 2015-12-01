@@ -18,11 +18,6 @@
     public interface ITypedCache<TKey, TValue> : IDisposable
     {
         /// <summary>
-        ///     Unique name of the cache.
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
         ///     Default sliding expire time of cache items.
         /// </summary>
         TimeSpan DefaultSlidingExpireTime { get; set; }
@@ -31,6 +26,21 @@
         ///     Gets the internal cache.
         /// </summary>
         ICache InternalCache { get; }
+
+        /// <summary>
+        ///     Unique name of the cache.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        ///     Clears all items in this cache.
+        /// </summary>
+        void Clear();
+
+        /// <summary>
+        ///     Clears all items in this cache.
+        /// </summary>
+        Task ClearAsync();
 
         /// <summary>
         ///     Gets an item from the cache.
@@ -63,6 +73,18 @@
         Task<TValue> GetOrDefaultAsync(TKey key);
 
         /// <summary>
+        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
+        /// </summary>
+        /// <param name="key">Key</param>
+        void Remove(TKey key);
+
+        /// <summary>
+        ///     Removes a cache item by it's key.
+        /// </summary>
+        /// <param name="key">Key</param>
+        Task RemoveAsync(TKey key);
+
+        /// <summary>
         ///     Saves/Overrides an item in the cache by a key.
         /// </summary>
         /// <param name="key">Key</param>
@@ -77,27 +99,5 @@
         /// <param name="value">Value</param>
         /// <param name="slidingExpireTime">Sliding expire time</param>
         Task SetAsync(TKey key, TValue value, TimeSpan? slidingExpireTime = null);
-
-        /// <summary>
-        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
-        /// </summary>
-        /// <param name="key">Key</param>
-        void Remove(TKey key);
-
-        /// <summary>
-        ///     Removes a cache item by it's key.
-        /// </summary>
-        /// <param name="key">Key</param>
-        Task RemoveAsync(TKey key);
-
-        /// <summary>
-        ///     Clears all items in this cache.
-        /// </summary>
-        void Clear();
-
-        /// <summary>
-        ///     Clears all items in this cache.
-        /// </summary>
-        Task ClearAsync();
     }
 }

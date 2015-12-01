@@ -10,7 +10,6 @@
     using Castle.Windsor;
     using Config;
     using DBreeze;
-    using Manager;
     using Orchestrators;
 
     #endregion
@@ -28,7 +27,8 @@
                 Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
-                Component.For(typeof(DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
+                Component.For<ILanguageDetectorFactory>().AsFactory().LifeStyle.Transient,
+                Component.For(typeof (DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
                 );
         }
     }

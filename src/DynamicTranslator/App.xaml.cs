@@ -16,15 +16,15 @@
     #endregion
 
     /// <summary>
-    /// The app root class.
+    ///     The app root class.
     /// </summary>
     public partial class App
     {
         /// <summary>
-        /// First place of program start.
+        ///     First place of program start.
         /// </summary>
         /// <param name="eventArgs">
-        /// Bootstrap of program.
+        ///     Bootstrap of program.
         /// </param>
         protected override void OnStartup(StartupEventArgs eventArgs)
         {

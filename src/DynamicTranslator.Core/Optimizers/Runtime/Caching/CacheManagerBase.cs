@@ -12,17 +12,26 @@
 
     public abstract class CacheManagerBase : ICacheManager
     {
-        protected readonly IIocManager IocManager;
+        protected readonly ConcurrentDictionary<string, ICache> Caches;
 
         protected readonly ICachingConfiguration Configuration;
-
-        protected readonly ConcurrentDictionary<string, ICache> Caches;
+        protected readonly IIocManager IocManager;
 
         protected CacheManagerBase(IIocManager iocManager, ICachingConfiguration configuration)
         {
             IocManager = iocManager;
             Configuration = configuration;
             Caches = new ConcurrentDictionary<string, ICache>();
+        }
+
+        public virtual void Dispose()
+        {
+            foreach (var cache in Caches)
+            {
+                IocManager.Release(cache.Value);
+            }
+
+            Caches.Clear();
         }
 
         public IReadOnlyList<ICache> GetAllCacheEnvironments()
@@ -45,16 +54,6 @@
 
                 return cache;
             });
-        }
-
-        public virtual void Dispose()
-        {
-            foreach (var cache in Caches)
-            {
-                IocManager.Release(cache.Value);
-            }
-
-            Caches.Clear();
         }
 
         /// <summary>

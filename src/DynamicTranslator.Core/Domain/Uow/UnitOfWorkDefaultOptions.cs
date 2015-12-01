@@ -17,15 +17,15 @@ namespace DynamicTranslator.Core.Domain.Uow
             Scope = TransactionScopeOption.Required;
         }
 
-        public TransactionScopeOption Scope { get; set; }
+        /// <inheritdoc />
+        public IsolationLevel? IsolationLevel { get; set; }
 
         /// <inheritdoc />
         public bool IsTransactional { get; set; }
 
-        /// <inheritdoc />
-        public TimeSpan? Timeout { get; set; }
+        public TransactionScopeOption Scope { get; set; }
 
         /// <inheritdoc />
-        public IsolationLevel? IsolationLevel { get; set; }
+        public TimeSpan? Timeout { get; set; }
     }
 }

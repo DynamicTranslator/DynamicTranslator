@@ -13,7 +13,7 @@
         {
             if (returnedRow.Exists)
             {
-                return (TEntity)ObjectHelper.ByteArrayToObject(returnedRow.Value);
+                return (TEntity) ObjectHelper.ByteArrayToObject(returnedRow.Value);
             }
 
             return default(TEntity);

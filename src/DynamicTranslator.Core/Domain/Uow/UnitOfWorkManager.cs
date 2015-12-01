@@ -13,9 +13,9 @@
     /// </summary>
     internal class UnitOfWorkManager : IUnitOfWorkManager, ITransientDependency
     {
-        private readonly IIocResolver _iocResolver;
         private readonly ICurrentUnitOfWorkProvider _currentUnitOfWorkProvider;
         private readonly IUnitOfWorkDefaultOptions _defaultOptions;
+        private readonly IIocResolver _iocResolver;
 
         public UnitOfWorkManager(
             IIocResolver iocResolver,

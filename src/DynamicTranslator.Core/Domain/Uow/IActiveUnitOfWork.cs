@@ -15,19 +15,14 @@ namespace DynamicTranslator.Core.Domain.Uow
     public interface IActiveUnitOfWork
     {
         /// <summary>
-        ///     Gets if this unit of work is transactional.
-        /// </summary>
-        UnitOfWorkOptions Options { get; }
-
-        /// <summary>
-        ///     Is this UOW disposed?
-        /// </summary>
-        bool IsDisposed { get; }
-
-        /// <summary>
         ///     This event is raised when this UOW is successfully completed.
         /// </summary>
         event EventHandler Completed;
+
+        /// <summary>
+        ///     This event is raised when this UOW is disposed.
+        /// </summary>
+        event EventHandler Disposed;
 
         /// <summary>
         ///     This event is raised when this UOW is failed.
@@ -35,9 +30,14 @@ namespace DynamicTranslator.Core.Domain.Uow
         event EventHandler<UnitOfWorkFailedEventArgs> Failed;
 
         /// <summary>
-        ///     This event is raised when this UOW is disposed.
+        ///     Is this UOW disposed?
         /// </summary>
-        event EventHandler Disposed;
+        bool IsDisposed { get; }
+
+        /// <summary>
+        ///     Gets if this unit of work is transactional.
+        /// </summary>
+        UnitOfWorkOptions Options { get; }
 
         /// <summary>
         ///     Saves all changes until now in this unit of work.

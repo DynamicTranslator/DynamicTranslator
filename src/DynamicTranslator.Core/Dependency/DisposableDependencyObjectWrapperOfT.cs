@@ -24,11 +24,11 @@
             Object = obj;
         }
 
+        public T Object { get; }
+
         public void Dispose()
         {
             _iocResolver.Release(Object);
         }
-
-        public T Object { get; }
     }
 }

@@ -19,6 +19,44 @@
             IocManager = iocManager;
         }
 
+        public string ApiKey => Get<string>(nameof(ApiKey));
+
+        public string ClientId => Get<string>(nameof(ClientId));
+
+        public string FromLanguage => Get<string>(nameof(FromLanguage));
+
+        public string FromLanguageExtension => LanguageMap[FromLanguage];
+
+        public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
+
+        public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
+
+        public IIocManager IocManager { get; }
+
+        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
+
+        public int LeftOffset => Get<int>(nameof(LeftOffset));
+
+        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
+
+        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
+
+        public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
+
+        public string ToLanguage => Get<string>(nameof(ToLanguage));
+
+        public string ToLanguageExtension => LanguageMap[ToLanguage];
+
+        public int TopOffset => Get<int>(nameof(TopOffset));
+
+        public string TrackingId => Get<string>(nameof(TrackingId));
+
+        public string TurengUrl => Get<string>(nameof(TurengUrl));
+
+        public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
+
+        public string YandexUrl => Get<string>(nameof(YandexUrl));
+
         public void Initialize()
         {
             InitializeClientIdIfAbsent();
@@ -39,44 +77,6 @@
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
             InitLanguageMap();
         }
-
-        public IIocManager IocManager { get; }
-
-        public string ApiKey => Get<string>(nameof(ApiKey));
-
-        public int LeftOffset => Get<int>(nameof(LeftOffset));
-
-        public int TopOffset => Get<int>(nameof(TopOffset));
-
-        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
-
-        public string FromLanguage => Get<string>(nameof(FromLanguage));
-
-        public string FromLanguageExtension => LanguageMap[FromLanguage];
-
-        public string ToLanguage => Get<string>(nameof(ToLanguage));
-
-        public string ToLanguageExtension => LanguageMap[ToLanguage];
-
-        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
-
-        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
-
-        public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
-
-        public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
-
-        public string YandexUrl => Get<string>(nameof(YandexUrl));
-
-        public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
-
-        public string TurengUrl => Get<string>(nameof(TurengUrl));
-
-        public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
-
-        public string ClientId => Get<string>(nameof(ClientId));
-
-        public string TrackingId => Get<string>(nameof(TrackingId));
 
         private void InitializeClientIdIfAbsent()
         {

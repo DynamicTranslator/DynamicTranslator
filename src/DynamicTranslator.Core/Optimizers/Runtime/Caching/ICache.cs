@@ -10,15 +10,25 @@
     public interface ICache : IDisposable
     {
         /// <summary>
+        ///     Default sliding expire time of cache items.
+        ///     Default value: 60 minutes. Can be changed by configuration.
+        /// </summary>
+        TimeSpan DefaultSlidingExpireTime { get; set; }
+
+        /// <summary>
         ///     Unique name of the cache.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        ///     Default sliding expire time of cache items.
-        ///     Default value: 60 minutes. Can be changed by configuration.
+        ///     Clears all items in this cache.
         /// </summary>
-        TimeSpan DefaultSlidingExpireTime { get; set; }
+        void Clear();
+
+        /// <summary>
+        ///     Clears all items in this cache.
+        /// </summary>
+        Task ClearAsync();
 
         /// <summary>
         ///     Gets an item from the cache.
@@ -51,6 +61,18 @@
         Task<object> GetOrDefaultAsync(string key);
 
         /// <summary>
+        ///     Removes a cache item by it's key.
+        /// </summary>
+        /// <param name="key">Key</param>
+        void Remove(string key);
+
+        /// <summary>
+        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
+        /// </summary>
+        /// <param name="key">Key</param>
+        Task RemoveAsync(string key);
+
+        /// <summary>
         ///     Saves/Overrides an item in the cache by a key.
         /// </summary>
         /// <param name="key">Key</param>
@@ -65,27 +87,5 @@
         /// <param name="value">Value</param>
         /// <param name="slidingExpireTime">Sliding expire time</param>
         Task SetAsync(string key, object value, TimeSpan? slidingExpireTime = null);
-
-        /// <summary>
-        ///     Removes a cache item by it's key.
-        /// </summary>
-        /// <param name="key">Key</param>
-        void Remove(string key);
-
-        /// <summary>
-        ///     Removes a cache item by it's key (does nothing if given key does not exists in the cache).
-        /// </summary>
-        /// <param name="key">Key</param>
-        Task RemoveAsync(string key);
-
-        /// <summary>
-        ///     Clears all items in this cache.
-        /// </summary>
-        void Clear();
-
-        /// <summary>
-        ///     Clears all items in this cache.
-        /// </summary>
-        Task ClearAsync();
     }
 }

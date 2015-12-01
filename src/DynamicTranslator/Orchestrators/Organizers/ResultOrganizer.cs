@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
     using Core;
     using Core.Orchestrators;
-    using Core.Service;
+    using Core.Orchestrators.Translate;
     using Core.Service.Result;
 
     #endregion
@@ -43,12 +43,12 @@
 
                     mean.Clear();
                     means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now)).ConfigureAwait(false);
+                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                     return new Maybe<string>(mean.ToString());
                 }
 
                 return new Maybe<string>();
-            }).ConfigureAwait(false);
+            });
         }
     }
 }

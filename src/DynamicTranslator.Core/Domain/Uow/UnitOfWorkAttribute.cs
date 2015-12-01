@@ -111,21 +111,11 @@ namespace DynamicTranslator.Core.Domain.Uow
         }
 
         /// <summary>
-        ///     Scope option.
+        ///     Used to prevent starting a unit of work for the method.
+        ///     If there is already a started unit of work, this property is ignored.
+        ///     Default: false.
         /// </summary>
-        public TransactionScopeOption? Scope { get; set; }
-
-        /// <summary>
-        ///     Is this UOW transactional?
-        ///     Uses default value if not supplied.
-        /// </summary>
-        public bool? IsTransactional { get; }
-
-        /// <summary>
-        ///     Timeout of UOW As milliseconds.
-        ///     Uses default value if not supplied.
-        /// </summary>
-        public TimeSpan? Timeout { get; }
+        public bool IsDisabled { get; set; }
 
         /// <summary>
         ///     If this UOW is transactional, this option indicated the isolation level of the transaction.
@@ -134,11 +124,21 @@ namespace DynamicTranslator.Core.Domain.Uow
         public IsolationLevel? IsolationLevel { get; set; }
 
         /// <summary>
-        ///     Used to prevent starting a unit of work for the method.
-        ///     If there is already a started unit of work, this property is ignored.
-        ///     Default: false.
+        ///     Is this UOW transactional?
+        ///     Uses default value if not supplied.
         /// </summary>
-        public bool IsDisabled { get; set; }
+        public bool? IsTransactional { get; }
+
+        /// <summary>
+        ///     Scope option.
+        /// </summary>
+        public TransactionScopeOption? Scope { get; set; }
+
+        /// <summary>
+        ///     Timeout of UOW As milliseconds.
+        ///     Uses default value if not supplied.
+        /// </summary>
+        public TimeSpan? Timeout { get; }
 
         /// <summary>
         ///     Gets UnitOfWorkAttribute for given method or null if no attribute defined.

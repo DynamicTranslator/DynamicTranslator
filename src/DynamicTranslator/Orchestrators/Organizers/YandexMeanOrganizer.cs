@@ -12,6 +12,8 @@
 
     public class YandexMeanOrganizer : IMeanOrganizer
     {
+        public TranslatorType TranslatorType => TranslatorType.YANDEX;
+
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
             return await Task.Run(() =>
@@ -24,9 +26,7 @@
                 var output = node?.InnerText ?? "!!! An error occured";
 
                 return new Maybe<string>(output.ToLower().Trim());
-            }).ConfigureAwait(false);
+            });
         }
-
-        public TranslatorType TranslatorType => TranslatorType.YANDEX;
     }
 }

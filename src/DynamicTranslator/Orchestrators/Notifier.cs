@@ -21,12 +21,12 @@
 
         public void AddNotification(string title, string imageUrl, string text)
         {
-            growlNotifiactions.AddNotification(new Notification { ImageUrl = imageUrl, Message = text, Title = title });
+            growlNotifiactions.AddNotification(new Notification {ImageUrl = imageUrl, Message = text, Title = title});
         }
 
         public async Task AddNotificationAsync(string title, string imageUrl, string text)
         {
-            await growlNotifiactions.AddNotificationAsync(new Notification { ImageUrl = imageUrl, Message = text, Title = title }).ConfigureAwait(false);
+            await growlNotifiactions.AddNotificationAsync(new Notification {ImageUrl = imageUrl, Message = text, Title = title});
         }
     }
 }

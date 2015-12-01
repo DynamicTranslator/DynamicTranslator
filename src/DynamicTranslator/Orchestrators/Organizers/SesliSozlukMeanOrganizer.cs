@@ -14,36 +14,36 @@
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer
     {
+        public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
+
         public async Task<Maybe<string>> OrganizeMean(string text)
         {
             return await Task.Run(() =>
-           {
-               var output = new StringBuilder();
+            {
+                var output = new StringBuilder();
 
-               var document = new HtmlDocument();
-               document.LoadHtml(text);
+                var document = new HtmlDocument();
+                document.LoadHtml(text);
 
-               (from x in document.DocumentNode.Descendants()
-                where x.Name == "pre"
-                from y in x.Descendants()
-                where y.Name == "ol"
-                from z in y.Descendants()
-                where z.Name == "li"
-                select z.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
-
-               if (string.IsNullOrEmpty(output.ToString()))
-               {
-                   (from x in document.DocumentNode.Descendants()
+                (from x in document.DocumentNode.Descendants()
                     where x.Name == "pre"
                     from y in x.Descendants()
-                    where y.Name == "span"
-                    select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
-               }
+                    where y.Name == "ol"
+                    from z in y.Descendants()
+                    where z.Name == "li"
+                    select z.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
 
-               return new Maybe<string>(output.ToString());
-           }).ConfigureAwait(false);
+                if (string.IsNullOrEmpty(output.ToString()))
+                {
+                    (from x in document.DocumentNode.Descendants()
+                        where x.Name == "pre"
+                        from y in x.Descendants()
+                        where y.Name == "span"
+                        select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
+                }
+
+                return new Maybe<string>(output.ToString());
+            });
         }
-
-        public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
     }
 }

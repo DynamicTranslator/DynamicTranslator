@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using Core.Config;
     using Core.Orchestrators;
+    using Core.Orchestrators.Translate;
     using Core.ViewModel.Constants;
 
     #endregion
@@ -25,12 +26,12 @@
             this.configuration = configuration;
         }
 
-        public async Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             return await Task.Run(async () =>
             {
                 var address = configuration.TurengUrl;
-                var uri = new Uri(address + text);
+                var uri = new Uri(address + translateRequest.CurrentText);
 
                 var turenClient = new WebClient();
                 turenClient.Encoding = Encoding.UTF8;
@@ -38,12 +39,12 @@
                 turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
                 turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await turenClient.DownloadStringTaskAsync(uri).ConfigureAwait(false);
+                var compositeMean = await turenClient.DownloadStringTaskAsync(uri);
                 var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
-                var mean = await organizer.OrganizeMean(compositeMean).ConfigureAwait(false);
+                var mean = await organizer.OrganizeMean(compositeMean);
 
                 return new TranslateResult(true, mean);
-            }).ConfigureAwait(false);
+            });
         }
     }
 }

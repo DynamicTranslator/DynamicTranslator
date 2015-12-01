@@ -17,19 +17,16 @@
         void AddConventionalRegistrar(IConventionalDependencyRegistrar registrar);
 
         /// <summary>
-        ///     Registers types of given assembly by all conventional registrars. See
-        ///     <see cref="IocManager.AddConventionalRegistrar" /> method.
+        ///     Checks whether given type is registered before.
         /// </summary>
-        /// <param name="assembly">Assembly to register</param>
-        void RegisterAssemblyByConvention(Assembly assembly);
+        /// <param name="type">Type to check</param>
+        bool IsRegistered(Type type);
 
         /// <summary>
-        ///     Registers types of given assembly by all conventional registrars. See
-        ///     <see cref="IocManager.AddConventionalRegistrar" /> method.
+        ///     Checks whether given type is registered before.
         /// </summary>
-        /// <param name="assembly">Assembly to register</param>
-        /// <param name="config">Additional configuration</param>
-        void RegisterAssemblyByConvention(Assembly assembly, ConventionalRegistrationConfig config);
+        /// <typeparam name="TType">Type to check</typeparam>
+        bool IsRegistered<TType>();
 
         /// <summary>
         ///     Registers a type as self registration.
@@ -73,15 +70,18 @@
         void Register(Type type, object typeImpl, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton);
 
         /// <summary>
-        ///     Checks whether given type is registered before.
+        ///     Registers types of given assembly by all conventional registrars. See
+        ///     <see cref="IocManager.AddConventionalRegistrar" /> method.
         /// </summary>
-        /// <param name="type">Type to check</param>
-        bool IsRegistered(Type type);
+        /// <param name="assembly">Assembly to register</param>
+        void RegisterAssemblyByConvention(Assembly assembly);
 
         /// <summary>
-        ///     Checks whether given type is registered before.
+        ///     Registers types of given assembly by all conventional registrars. See
+        ///     <see cref="IocManager.AddConventionalRegistrar" /> method.
         /// </summary>
-        /// <typeparam name="TType">Type to check</typeparam>
-        bool IsRegistered<TType>();
+        /// <param name="assembly">Assembly to register</param>
+        /// <param name="config">Additional configuration</param>
+        void RegisterAssemblyByConvention(Assembly assembly, ConventionalRegistrationConfig config);
     }
 }

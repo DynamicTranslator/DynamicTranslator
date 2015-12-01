@@ -12,19 +12,14 @@
     /// </summary>
     public static class CacheExtensions
     {
-        public static object Get(this ICache cache, string key, Func<object> factory)
-        {
-            return cache.Get(key, k => factory());
-        }
-
-        public static Task<object> GetAsync(this ICache cache, string key, Func<Task<object>> factory)
-        {
-            return cache.GetAsync(key, k => factory());
-        }
-
         public static ITypedCache<TKey, TValue> AsTyped<TKey, TValue>(this ICache cache)
         {
             return new TypedCacheWrapper<TKey, TValue>(cache);
+        }
+
+        public static object Get(this ICache cache, string key, Func<object> factory)
+        {
+            return cache.Get(key, k => factory());
         }
 
         public static TValue Get<TKey, TValue>(this ICache cache, TKey key, Func<TKey, TValue> factory)
@@ -35,6 +30,11 @@
         public static TValue Get<TKey, TValue>(this ICache cache, TKey key, Func<TValue> factory)
         {
             return cache.Get(key, k => factory());
+        }
+
+        public static Task<object> GetAsync(this ICache cache, string key, Func<Task<object>> factory)
+        {
+            return cache.GetAsync(key, k => factory());
         }
 
         public static async Task<TValue> GetAsync<TKey, TValue>(this ICache cache, TKey key, Func<TKey, Task<TValue>> factory)

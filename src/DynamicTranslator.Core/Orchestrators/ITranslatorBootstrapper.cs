@@ -15,7 +15,6 @@
 
         Task InitializeAsync();
 
-       
         void SubscribeShutdownEvents();
     }
 }

@@ -10,6 +10,7 @@
     using Core.Optimizers.Runtime.Caching;
     using Core.Optimizers.Runtime.Caching.Extensions;
     using Core.Orchestrators;
+    using Core.Orchestrators.Translate;
     using Core.Service.GoogleAnalytics;
     using Core.ViewModel.Constants;
     using ViewModel;
@@ -18,13 +19,13 @@
 
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, ISingletonDependency
     {
+        private readonly ITypedCache<string, TranslateResult[]> cache;
+        private readonly ICacheManager cacheManager;
+        private readonly IGoogleAnalyticsService googleAnalytics;
+        private readonly ILanguageDetector languageDetector;
         private readonly IMeanFinderFactory meanFinderFactory;
         private readonly INotifier notifier;
         private readonly IResultOrganizer resultOrganizer;
-        private readonly ICacheManager cacheManager;
-        private readonly ITypedCache<string, TranslateResult[]> cache;
-        private readonly IGoogleAnalyticsService googleAnalytics;
-        private readonly ILanguageDetector languageDetector;
 
         private string previousString;
 
@@ -43,6 +44,9 @@
             if (cacheManager == null)
                 throw new ArgumentNullException(nameof(cacheManager));
 
+            if (languageDetector == null)
+                throw new ArgumentNullException(nameof(languageDetector));
+
             this.notifier = notifier;
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
@@ -50,6 +54,14 @@
             this.googleAnalytics = googleAnalytics;
             this.languageDetector = languageDetector;
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
+        }
+
+        public void OnCompleted()
+        {
+        }
+
+        public void OnError(Exception error)
+        {
         }
 
         public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
@@ -63,28 +75,21 @@
 
                 previousString = currentString;
 
-                //var at = await languageDetector.DetectLanguage(currentString);
+                var results = languageDetector.DetectLanguage(currentString)
+                    .ContinueWith(x => cache.GetAsync(currentString,
+                        () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, x.Result))))));
 
-                var results = await cache.GetAsync(currentString, () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(currentString)))).ConfigureAwait(false);
-                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
+                var findedMeans = await resultOrganizer.OrganizeResult(results.Result.Result, currentString);
 
-                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First());
 
-                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
+                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
-                    ApplicationVersion.Version310,
+                    ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "notification").ConfigureAwait(false);
+                    "dynamictranslator", "notification");
             });
-        }
-
-        public void OnError(Exception error)
-        {
-        }
-
-        public void OnCompleted()
-        {
         }
     }
 }

@@ -21,8 +21,8 @@
         {
         }
 
-        public string ResultMessage { get; set; }
-
         public object[] MessageParameters { get; set; }
+
+        public string ResultMessage { get; set; }
     }
 }

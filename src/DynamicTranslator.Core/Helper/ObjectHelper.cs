@@ -9,16 +9,6 @@
 
     public static class ObjectHelper
     {
-        public static byte[] ObjectToByteArray(object obj)
-        {
-            var bf = new BinaryFormatter();
-            using (var ms = new MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
-        }
-
         public static object ByteArrayToObject(byte[] arrBytes)
         {
             using (var memStream = new MemoryStream())
@@ -28,6 +18,16 @@
                 memStream.Seek(0, SeekOrigin.Begin);
                 var obj = binForm.Deserialize(memStream);
                 return obj;
+            }
+        }
+
+        public static byte[] ObjectToByteArray(object obj)
+        {
+            var bf = new BinaryFormatter();
+            using (var ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
             }
         }
     }

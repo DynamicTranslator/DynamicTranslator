@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using Core.Config;
     using Core.Orchestrators;
+    using Core.Orchestrators.Translate;
     using Core.ViewModel.Constants;
 
     #endregion
@@ -25,24 +26,24 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<TranslateResult> Find(string text)
+        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             return await Task.Run(async () =>
             {
                 var address = new Uri(
-                        string.Format(configuration.YandexUrl +
-                                      $"key={configuration.ApiKey}&lang={configuration.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(text)}"));
+                    string.Format(configuration.YandexUrl +
+                                  $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
 
                 var yandexClient = new WebClient();
                 yandexClient.Encoding = Encoding.UTF8;
                 yandexClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await yandexClient.DownloadStringTaskAsync(address).ConfigureAwait(false);
+                var compositeMean = await yandexClient.DownloadStringTaskAsync(address);
                 var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
-                var mean = await organizer.OrganizeMean(compositeMean).ConfigureAwait(false);
+                var mean = await organizer.OrganizeMean(compositeMean);
 
                 return new TranslateResult(true, mean);
-            }).ConfigureAwait(false);
+            });
         }
 
         private string GetPostData(string fromLanguage, string toLanguage, string content)

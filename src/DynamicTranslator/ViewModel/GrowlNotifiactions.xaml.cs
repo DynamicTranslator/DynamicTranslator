@@ -17,11 +17,11 @@
 
     public partial class GrowlNotifiactions : IGrowlNotifications
     {
-        private readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
+        public bool IsDisposed;
+        private readonly Notifications buffer = new Notifications();
         private readonly IStartupConfiguration startupConfiguration;
         private int count;
-        public bool IsDisposed;
 
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
@@ -32,11 +32,6 @@
         }
 
         public event EventHandler OnDispose;
-
-        public async Task AddNotificationAsync(Notification notification)
-        {
-            await Task.Run(() => AddNotification(notification)).ConfigureAwait(false);
-        }
 
         public void AddNotification(Notification notification)
         {
@@ -51,6 +46,24 @@
                 if (Notifications.Count > 0 && !IsActive)
                     Show();
             }, DispatcherPriority.Background);
+        }
+
+        public async Task AddNotificationAsync(Notification notification)
+        {
+            await Task.Run(() => AddNotification(notification));
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+
+            Notifications.Clear();
+            buffer.Clear();
+
+            OnDispose.InvokeSafely(this, new EventArgs());
+
+            IsDisposed = true;
         }
 
         public void RemoveNotification(Notification notification)
@@ -72,19 +85,6 @@
                     OnDispose.InvokeSafely(this, new EventArgs());
                 }
             }, DispatcherPriority.Background);
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-
-            Notifications.Clear();
-            buffer.Clear();
-
-            OnDispose.InvokeSafely(this, new EventArgs());
-
-            IsDisposed = true;
         }
 
         private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)

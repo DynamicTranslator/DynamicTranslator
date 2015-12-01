@@ -25,12 +25,16 @@
                 <Canvas>
                     <DockPanel Height="120" Canvas.Left="-25" Canvas.Top="21" Width="184">
                         <Button x:Name="BtnSwitch" Height="120" Content="Start Translator" Padding="2"
-                			Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04" Width="184" BorderBrush="#FF040404" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Showcard Gothic" FontSize="16" FontWeight="Bold" Opacity="0.9">
+                                Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04" Width="184"
+                                BorderBrush="#FF040404" Foreground="White" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" FontFamily="Showcard Gothic" FontSize="16" FontWeight="Bold"
+                                Opacity="0.9">
                             <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                    <GradientStop Color="Black" Offset="1"/>
-                                    <GradientStop Color="#FF8D4242"/>
-                                    <GradientStop Color="#FF8A4040" Offset="0.142"/>
+                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox"
+                                                     StartPoint="0.5,0">
+                                    <GradientStop Color="Black" Offset="1" />
+                                    <GradientStop Color="#FF8D4242" />
+                                    <GradientStop Color="#FF8A4040" Offset="0.142" />
                                 </LinearGradientBrush>
                             </Button.Background>
                             <Button.RenderTransform>

@@ -15,6 +15,11 @@ namespace DynamicTranslator.Core.Domain.Uow
     public abstract class UnitOfWorkBase : IUnitOfWork
     {
         /// <summary>
+        ///     A reference to the exception if this unit of work failed.
+        /// </summary>
+        private Exception _exception;
+
+        /// <summary>
         ///     Is <see cref="Begin" /> method called before?
         /// </summary>
         private bool _isBeginCalledBefore;
@@ -30,11 +35,6 @@ namespace DynamicTranslator.Core.Domain.Uow
         private bool _succeed;
 
         /// <summary>
-        ///     A reference to the exception if this unit of work failed.
-        /// </summary>
-        private Exception _exception;
-
-        /// <summary>
         ///     Constructor.
         /// </summary>
         protected UnitOfWorkBase(IUnitOfWorkDefaultOptions defaultOptions)
@@ -44,34 +44,34 @@ namespace DynamicTranslator.Core.Domain.Uow
             Id = Guid.NewGuid().ToString("N");
         }
 
-        /// <summary>
-        ///     Gets default UOW options.
-        /// </summary>
-        protected IUnitOfWorkDefaultOptions DefaultOptions { get; private set; }
+        /// <inheritdoc />
+        public event EventHandler Completed;
+
+        /// <inheritdoc />
+        public event EventHandler Disposed;
+
+        /// <inheritdoc />
+        public event EventHandler<UnitOfWorkFailedEventArgs> Failed;
 
         /// <summary>
         ///     Reference to current session.
         /// </summary>
         public string Id { get; }
 
-        public IUnitOfWork Outer { get; set; }
-
-        /// <inheritdoc />
-        public event EventHandler Completed;
-
-        /// <inheritdoc />
-        public event EventHandler<UnitOfWorkFailedEventArgs> Failed;
-
-        /// <inheritdoc />
-        public event EventHandler Disposed;
-
-        /// <inheritdoc />
-        public UnitOfWorkOptions Options { get; private set; }
-
         /// <summary>
         ///     Gets a value indicates that this unit of work is disposed or not.
         /// </summary>
         public bool IsDisposed { get; private set; }
+
+        /// <inheritdoc />
+        public UnitOfWorkOptions Options { get; private set; }
+
+        public IUnitOfWork Outer { get; set; }
+
+        /// <summary>
+        ///     Gets default UOW options.
+        /// </summary>
+        protected IUnitOfWorkDefaultOptions DefaultOptions { get; private set; }
 
         /// <inheritdoc />
         public void Begin(UnitOfWorkOptions options)
@@ -86,12 +86,6 @@ namespace DynamicTranslator.Core.Domain.Uow
 
             BeginUow();
         }
-
-        /// <inheritdoc />
-        public abstract void SaveChanges();
-
-        /// <inheritdoc />
-        public abstract Task SaveChangesAsync();
 
         public void Complete()
         {
@@ -145,25 +139,11 @@ namespace DynamicTranslator.Core.Domain.Uow
             OnDisposed();
         }
 
-        /// <summary>
-        ///     Should be implemented by derived classes to start UOW.
-        /// </summary>
-        protected abstract void BeginUow();
+        /// <inheritdoc />
+        public abstract void SaveChanges();
 
-        /// <summary>
-        ///     Should be implemented by derived classes to complete UOW.
-        /// </summary>
-        protected abstract void CompleteUow();
-
-        /// <summary>
-        ///     Should be implemented by derived classes to complete UOW.
-        /// </summary>
-        protected abstract Task CompleteUowAsync();
-
-        /// <summary>
-        ///     Should be implemented by derived classes to dispose UOW.
-        /// </summary>
-        protected abstract void DisposeUow();
+        /// <inheritdoc />
+        public abstract Task SaveChangesAsync();
 
         /// <summary>
         ///     Concrete Unit of work classes should implement this
@@ -199,11 +179,39 @@ namespace DynamicTranslator.Core.Domain.Uow
         }
 
         /// <summary>
+        ///     Should be implemented by derived classes to start UOW.
+        /// </summary>
+        protected abstract void BeginUow();
+
+        /// <summary>
+        ///     Should be implemented by derived classes to complete UOW.
+        /// </summary>
+        protected abstract void CompleteUow();
+
+        /// <summary>
+        ///     Should be implemented by derived classes to complete UOW.
+        /// </summary>
+        protected abstract Task CompleteUowAsync();
+
+        /// <summary>
+        ///     Should be implemented by derived classes to dispose UOW.
+        /// </summary>
+        protected abstract void DisposeUow();
+
+        /// <summary>
         ///     Called to trigger <see cref="Completed" /> event.
         /// </summary>
         protected virtual void OnCompleted()
         {
             Completed.InvokeSafely(this);
+        }
+
+        /// <summary>
+        ///     Called to trigger <see cref="Disposed" /> event.
+        /// </summary>
+        protected virtual void OnDisposed()
+        {
+            Disposed.InvokeSafely(this);
         }
 
         /// <summary>
@@ -213,14 +221,6 @@ namespace DynamicTranslator.Core.Domain.Uow
         protected virtual void OnFailed(Exception exception)
         {
             Failed.InvokeSafely(this, new UnitOfWorkFailedEventArgs(exception));
-        }
-
-        /// <summary>
-        ///     Called to trigger <see cref="Disposed" /> event.
-        /// </summary>
-        protected virtual void OnDisposed()
-        {
-            Disposed.InvokeSafely(this);
         }
 
         private void PreventMultipleBegin()

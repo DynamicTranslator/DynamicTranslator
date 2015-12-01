@@ -14,9 +14,10 @@ namespace DynamicTranslator.Core.Domain.Uow
     public interface IUnitOfWorkDefaultOptions
     {
         /// <summary>
-        ///     Scope option.
+        ///     Gets/sets isolation level of transaction.
+        ///     This is used if <see cref="IsTransactional" /> is true.
         /// </summary>
-        TransactionScopeOption Scope { get; set; }
+        IsolationLevel? IsolationLevel { get; set; }
 
         /// <summary>
         ///     Should unit of works be transactional.
@@ -25,14 +26,13 @@ namespace DynamicTranslator.Core.Domain.Uow
         bool IsTransactional { get; set; }
 
         /// <summary>
+        ///     Scope option.
+        /// </summary>
+        TransactionScopeOption Scope { get; set; }
+
+        /// <summary>
         ///     Gets/sets a timeout value for unit of works.
         /// </summary>
         TimeSpan? Timeout { get; set; }
-
-        /// <summary>
-        ///     Gets/sets isolation level of transaction.
-        ///     This is used if <see cref="IsTransactional" /> is true.
-        /// </summary>
-        IsolationLevel? IsolationLevel { get; set; }
     }
 }

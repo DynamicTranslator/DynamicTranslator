@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Translate;
 
     #endregion
 
@@ -20,7 +21,7 @@
         }
 
         [DataMember]
-        public string SearchText { get; protected set; }
+        public DateTime CreateDate { get; protected set; }
 
         [DataMember]
         public int Frequency { get; protected set; }
@@ -29,11 +30,11 @@
         public ICollection<TranslateResult> Results { get; protected set; }
 
         [DataMember]
-        public DateTime CreateDate { get; protected set; }
+        public string SearchText { get; protected set; }
 
-        public CompositeTranslateResult SetResults(ICollection<TranslateResult> results)
+        public CompositeTranslateResult IncreaseFrequency()
         {
-            Results = results;
+            Frequency += 1;
             return this;
         }
 
@@ -43,9 +44,9 @@
             return this;
         }
 
-        public CompositeTranslateResult IncreaseFrequency()
+        public CompositeTranslateResult SetResults(ICollection<TranslateResult> results)
         {
-            Frequency += 1;
+            Results = results;
             return this;
         }
     }

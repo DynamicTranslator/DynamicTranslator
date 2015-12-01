@@ -19,14 +19,14 @@
 
         public IReadOnlyList<ICacheConfigurator> Configurators => _configurators.ToImmutableList();
 
-        public void ConfigureAll(Action<ICache> initAction)
-        {
-            _configurators.Add(new CacheConfigurator(initAction));
-        }
-
         public void Configure(string cacheName, Action<ICache> initAction)
         {
             _configurators.Add(new CacheConfigurator(cacheName, initAction));
+        }
+
+        public void ConfigureAll(Action<ICache> initAction)
+        {
+            _configurators.Add(new CacheConfigurator(initAction));
         }
     }
 }

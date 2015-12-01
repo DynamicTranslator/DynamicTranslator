@@ -19,9 +19,26 @@
             _memoryCache = new MemoryCache(Name);
         }
 
+        public override void Clear()
+        {
+            _memoryCache.Dispose();
+            _memoryCache = new MemoryCache(Name);
+        }
+
+        public override void Dispose()
+        {
+            _memoryCache.Dispose();
+            base.Dispose();
+        }
+
         public override object GetOrDefault(string key)
         {
             return _memoryCache.Get(key);
+        }
+
+        public override void Remove(string key)
+        {
+            _memoryCache.Remove(key);
         }
 
         public override void Set(string key, object value, TimeSpan? slidingExpireTime = null)
@@ -39,23 +56,6 @@
                 {
                     SlidingExpiration = slidingExpireTime ?? DefaultSlidingExpireTime
                 });
-        }
-
-        public override void Remove(string key)
-        {
-            _memoryCache.Remove(key);
-        }
-
-        public override void Clear()
-        {
-            _memoryCache.Dispose();
-            _memoryCache = new MemoryCache(Name);
-        }
-
-        public override void Dispose()
-        {
-            _memoryCache.Dispose();
-            base.Dispose();
         }
     }
 }

@@ -38,27 +38,6 @@ namespace DynamicTranslator.Core.Domain.Uow
             PerformUow(invocation, unitOfWorkAttr.CreateOptions());
         }
 
-        private void PerformUow(IInvocation invocation, UnitOfWorkOptions options)
-        {
-            if (AsyncHelper.IsAsyncMethod(invocation.Method))
-            {
-                PerformAsyncUow(invocation, options);
-            }
-            else
-            {
-                PerformSyncUow(invocation, options);
-            }
-        }
-
-        private void PerformSyncUow(IInvocation invocation, UnitOfWorkOptions options)
-        {
-            using (var uow = _unitOfWorkManager.Begin(options))
-            {
-                invocation.Proceed();
-                uow.Complete();
-            }
-        }
-
         private void PerformAsyncUow(IInvocation invocation, UnitOfWorkOptions options)
         {
             var uow = _unitOfWorkManager.Begin(options);
@@ -81,6 +60,27 @@ namespace DynamicTranslator.Core.Domain.Uow
                     async () => await uow.CompleteAsync(),
                     exception => uow.Dispose()
                     );
+            }
+        }
+
+        private void PerformSyncUow(IInvocation invocation, UnitOfWorkOptions options)
+        {
+            using (var uow = _unitOfWorkManager.Begin(options))
+            {
+                invocation.Proceed();
+                uow.Complete();
+            }
+        }
+
+        private void PerformUow(IInvocation invocation, UnitOfWorkOptions options)
+        {
+            if (AsyncHelper.IsAsyncMethod(invocation.Method))
+            {
+                PerformAsyncUow(invocation, options);
+            }
+            else
+            {
+                PerformSyncUow(invocation, options);
             }
         }
     }

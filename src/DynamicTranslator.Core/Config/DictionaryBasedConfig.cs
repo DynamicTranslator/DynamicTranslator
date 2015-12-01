@@ -16,13 +16,13 @@
             CustomSettings = new Dictionary<string, object>();
         }
 
+        protected Dictionary<string, object> CustomSettings { get; }
+
         public object this[string name]
         {
             get { return CustomSettings.GetOrDefault(name); }
             set { CustomSettings[name] = value; }
         }
-
-        protected Dictionary<string, object> CustomSettings { get; }
 
         public T Get<T>(string name)
         {
@@ -30,24 +30,6 @@
             return value == null
                 ? default(T)
                 : (T) Convert.ChangeType(value, typeof (T));
-        }
-
-        public void Set<T>(string name, T value)
-        {
-            this[name] = value;
-        }
-
-        public void SetViaConfigurationManager(string name)
-        {
-            this[name] = ConfigurationManager.AppSettings[name];
-        }
-
-        public void SetAndPersistConfigurationManager(string name, string value)
-        {
-            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings[name].Value = value;
-            configuration.Save();
-            ConfigurationManager.RefreshSection("appSettings");
         }
 
         public object Get(string name)
@@ -78,6 +60,24 @@
                 Set(name, value);
             }
             return (T) value;
+        }
+
+        public void Set<T>(string name, T value)
+        {
+            this[name] = value;
+        }
+
+        public void SetAndPersistConfigurationManager(string name, string value)
+        {
+            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings[name].Value = value;
+            configuration.Save();
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        public void SetViaConfigurationManager(string name)
+        {
+            this[name] = ConfigurationManager.AppSettings[name];
         }
     }
 }

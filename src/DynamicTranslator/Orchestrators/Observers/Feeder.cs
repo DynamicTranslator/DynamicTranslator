@@ -32,10 +32,10 @@
             Task.Run(async () =>
             {
                 await googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
-                    ApplicationVersion.Version310,
+                    ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "notification").ConfigureAwait(false);
-            }).ConfigureAwait(false);
+                    "dynamictranslator", "notification");
+            });
         }
     }
 }

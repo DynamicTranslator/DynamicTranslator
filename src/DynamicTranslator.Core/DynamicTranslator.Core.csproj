@@ -144,6 +144,8 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Orchestrators\ILanguageDetector.cs" />
+    <Compile Include="Orchestrators\ILanguageDetectorFactory.cs" />
+    <Compile Include="Orchestrators\Translate\TranslateRequest.cs" />
     <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
     <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
@@ -182,7 +184,7 @@
     <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
     <Compile Include="Orchestrators\WhenClipboardContainsTextEventArgs.cs" />
     <Compile Include="Orchestrators\WhenNotificationAddEventArgs.cs" />
-    <Compile Include="Orchestrators\TranslateResult.cs" />
+    <Compile Include="Orchestrators\Translate\TranslateResult.cs" />
     <Compile Include="Service\IApplicationService.cs" />
     <Compile Include="Service\Result\ResultService.cs" />
     <Compile Include="Service\Result\IResultService.cs" />

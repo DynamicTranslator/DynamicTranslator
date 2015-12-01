@@ -47,12 +47,46 @@
         public static IocManager Instance { get; private set; }
 
         /// <summary>
+        ///     Reference to the Castle Windsor Container.
+        /// </summary>
+        public IWindsorContainer IocContainer { get; }
+
+        /// <summary>
         ///     Adds a dependency registrar for conventional registration.
         /// </summary>
         /// <param name="registrar">dependency registrar</param>
         public void AddConventionalRegistrar(IConventionalDependencyRegistrar registrar)
         {
             _conventionalRegistrars.Add(registrar);
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            IocContainer.Dispose();
+        }
+
+        public async Task DisposeAsync()
+        {
+            await Task.Run(() => Dispose());
+        }
+
+        /// <summary>
+        ///     Checks whether given type is registered before.
+        /// </summary>
+        /// <typeparam name="TType">Type to check</typeparam>
+        public bool IsRegistered<TType>()
+        {
+            return IocContainer.Kernel.HasComponent(typeof (TType));
+        }
+
+        /// <summary>
+        ///     Checks whether given type is registered before.
+        /// </summary>
+        /// <param name="type">Type to check</param>
+        public bool IsRegistered(Type type)
+        {
+            return IocContainer.Kernel.HasComponent(type);
         }
 
         /// <summary>
@@ -76,80 +110,6 @@
             where TImpl : class, TType
         {
             IocContainer.Register(ApplyLifestyle(Component.For<TType, TImpl>().ImplementedBy<TImpl>(), lifeStyle));
-        }
-
-        /// <summary>
-        ///     Checks whether given type is registered before.
-        /// </summary>
-        /// <typeparam name="TType">Type to check</typeparam>
-        public bool IsRegistered<TType>()
-        {
-            return IocContainer.Kernel.HasComponent(typeof (TType));
-        }
-
-        /// <summary>
-        ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
-        /// </summary>
-        /// <typeparam name="T">Type of the object to get</typeparam>
-        /// <returns>The instance object</returns>
-        public T Resolve<T>()
-        {
-            return IocContainer.Resolve<T>();
-        }
-
-        /// <summary>
-        ///     Gets an object from IOC container.
-        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
-        /// </summary>
-        /// <typeparam name="T">Type of the object to get</typeparam>
-        /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
-        /// <returns>The instance object</returns>
-        public T Resolve<T>(object argumentsAsAnonymousType)
-        {
-            return IocContainer.Resolve<T>(argumentsAsAnonymousType);
-        }
-
-        /// <summary>
-        ///     Releases a pre-resolved object. See Resolve methods.
-        /// </summary>
-        /// <param name="obj">Object to be released</param>
-        public void Release(object obj)
-        {
-            IocContainer.Release(obj);
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            IocContainer.Dispose();
-        }
-
-        /// <summary>
-        ///     Registers types of given assembly by all conventional registrars. See <see cref="AddConventionalRegistrar" />
-        ///     method.
-        /// </summary>
-        /// <param name="assembly">Assembly to register</param>
-        public void RegisterAssemblyByConvention(Assembly assembly)
-        {
-            RegisterAssemblyByConvention(assembly, new ConventionalRegistrationConfig());
-        }
-
-        /// <summary>
-        ///     Registers types of given assembly by all conventional registrars. See <see cref="AddConventionalRegistrar" />
-        ///     method.
-        /// </summary>
-        /// <param name="assembly">Assembly to register</param>
-        /// <param name="config">Additional configuration</param>
-        public void RegisterAssemblyByConvention(Assembly assembly, ConventionalRegistrationConfig config)
-        {
-            var context = new ConventionalRegistrationContext(assembly, this, config);
-
-            if (config.InstallInstallers)
-                IocContainer.Install(FromAssembly.Instance(assembly));
-
-            foreach (var registerer in _conventionalRegistrars)
-                registerer.RegisterAssembly(context);
         }
 
         /// <summary>
@@ -185,12 +145,62 @@
         }
 
         /// <summary>
-        ///     Checks whether given type is registered before.
+        ///     Registers types of given assembly by all conventional registrars. See <see cref="AddConventionalRegistrar" />
+        ///     method.
         /// </summary>
-        /// <param name="type">Type to check</param>
-        public bool IsRegistered(Type type)
+        /// <param name="assembly">Assembly to register</param>
+        public void RegisterAssemblyByConvention(Assembly assembly)
         {
-            return IocContainer.Kernel.HasComponent(type);
+            RegisterAssemblyByConvention(assembly, new ConventionalRegistrationConfig());
+        }
+
+        /// <summary>
+        ///     Registers types of given assembly by all conventional registrars. See <see cref="AddConventionalRegistrar" />
+        ///     method.
+        /// </summary>
+        /// <param name="assembly">Assembly to register</param>
+        /// <param name="config">Additional configuration</param>
+        public void RegisterAssemblyByConvention(Assembly assembly, ConventionalRegistrationConfig config)
+        {
+            var context = new ConventionalRegistrationContext(assembly, this, config);
+
+            if (config.InstallInstallers)
+                IocContainer.Install(FromAssembly.Instance(assembly));
+
+            foreach (var registerer in _conventionalRegistrars)
+                registerer.RegisterAssembly(context);
+        }
+
+        /// <summary>
+        ///     Releases a pre-resolved object. See Resolve methods.
+        /// </summary>
+        /// <param name="obj">Object to be released</param>
+        public void Release(object obj)
+        {
+            IocContainer.Release(obj);
+        }
+
+        /// <summary>
+        ///     Gets an object from IOC container.
+        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to get</typeparam>
+        /// <returns>The instance object</returns>
+        public T Resolve<T>()
+        {
+            return IocContainer.Resolve<T>();
+        }
+
+        /// <summary>
+        ///     Gets an object from IOC container.
+        ///     Returning object must be Released (see <see cref="IIocResolver.Release" />) after usage.
+        /// </summary>
+        /// <typeparam name="T">Type of the object to get</typeparam>
+        /// <param name="argumentsAsAnonymousType">Constructor arguments</param>
+        /// <returns>The instance object</returns>
+        public T Resolve<T>(object argumentsAsAnonymousType)
+        {
+            return IocContainer.Resolve<T>(argumentsAsAnonymousType);
         }
 
         /// <summary>
@@ -214,16 +224,6 @@
         public object Resolve(Type type, object argumentsAsAnonymousType)
         {
             return IocContainer.Resolve(type, argumentsAsAnonymousType);
-        }
-
-        /// <summary>
-        ///     Reference to the Castle Windsor Container.
-        /// </summary>
-        public IWindsorContainer IocContainer { get; }
-
-        public async Task DisposeAsync()
-        {
-            await Task.Run(() => Dispose()).ConfigureAwait(false);
         }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)

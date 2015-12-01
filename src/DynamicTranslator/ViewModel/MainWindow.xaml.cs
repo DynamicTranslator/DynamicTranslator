@@ -49,9 +49,9 @@
                     await Dispatcher.InvokeAsync(async () =>
                     {
                         if (!translator.IsInitialized)
-                            await translator.InitializeAsync().ConfigureAwait(false);
+                            await translator.InitializeAsync();
                     });
-                }).ConfigureAwait(false);
+                });
 
                 isRunning = true;
             }

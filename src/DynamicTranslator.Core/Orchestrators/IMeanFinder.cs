@@ -4,11 +4,12 @@
 
     using System.Threading.Tasks;
     using Dependency.Markers;
+    using Translate;
 
     #endregion
 
     public interface IMeanFinder : ITransientDependency
     {
-        Task<TranslateResult> Find(string text);
+        Task<TranslateResult> Find(TranslateRequest translateRequest);
     }
 }

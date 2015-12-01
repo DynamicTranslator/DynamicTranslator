@@ -20,9 +20,21 @@
             DefaultSlidingExpireTime = TimeSpan.FromHours(1);
         }
 
+        public TimeSpan DefaultSlidingExpireTime { get; set; }
+
         public string Name { get; }
 
-        public TimeSpan DefaultSlidingExpireTime { get; set; }
+        public abstract void Clear();
+
+        public virtual Task ClearAsync()
+        {
+            Clear();
+            return Task.FromResult(0);
+        }
+
+        public virtual void Dispose()
+        {
+        }
 
         public virtual object Get(string key, Func<string, object> factory)
         {
@@ -81,14 +93,6 @@
             return Task.FromResult(GetOrDefault(key));
         }
 
-        public abstract void Set(string key, object value, TimeSpan? slidingExpireTime = null);
-
-        public virtual Task SetAsync(string key, object value, TimeSpan? slidingExpireTime = null)
-        {
-            Set(key, value, slidingExpireTime);
-            return Task.FromResult(0);
-        }
-
         public abstract void Remove(string key);
 
         public virtual Task RemoveAsync(string key)
@@ -97,16 +101,12 @@
             return Task.FromResult(0);
         }
 
-        public abstract void Clear();
+        public abstract void Set(string key, object value, TimeSpan? slidingExpireTime = null);
 
-        public virtual Task ClearAsync()
+        public virtual Task SetAsync(string key, object value, TimeSpan? slidingExpireTime = null)
         {
-            Clear();
+            Set(key, value, slidingExpireTime);
             return Task.FromResult(0);
-        }
-
-        public virtual void Dispose()
-        {
         }
     }
 }

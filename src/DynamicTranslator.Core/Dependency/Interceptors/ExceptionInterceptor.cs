@@ -10,6 +10,7 @@
     using Exception;
     using Helper;
     using Orchestrators;
+    using Orchestrators.Translate;
     using Service.GoogleAnalytics;
     using ViewModel.Constants;
 
@@ -17,8 +18,8 @@
 
     public class ExceptionInterceptor : IInterceptor
     {
-        private readonly INotifier notifier;
         private readonly IGoogleAnalyticsService googleAnalytics;
+        private readonly INotifier notifier;
 
         public ExceptionInterceptor(INotifier notifier, IGoogleAnalyticsService googleAnalytics)
         {
@@ -41,17 +42,17 @@
             }
             catch (ApiKeyNullException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (MaximumCharacterLimitException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (WebException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
                     invocation.ReturnValue = HandleReturnAsync(invocation, ex);
             }
             catch (Exception ex)
@@ -76,7 +77,7 @@
 
         private dynamic HandleReturnAsync(IInvocation invocation, Exception ex)
         {
-            if (invocation.Method.ReturnType == typeof(void))
+            if (invocation.Method.ReturnType == typeof (void))
                 return null;
 
             var exceptionText = new StringBuilder()
@@ -100,7 +101,7 @@
 
         private void SendExceptionGoogleAnalyticsAsync(string text, bool isFatal)
         {
-            Task.Run(async () => await googleAnalytics.TrackExceptionAsync(text, isFatal).ConfigureAwait(false));
+            Task.Run(async () => await googleAnalytics.TrackExceptionAsync(text, isFatal));
         }
     }
 }

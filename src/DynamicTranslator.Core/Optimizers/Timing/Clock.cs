@@ -17,6 +17,11 @@
         }
 
         /// <summary>
+        ///     Gets Now using current <see cref="Provider" />.
+        /// </summary>
+        public static DateTime Now => Provider.Now;
+
+        /// <summary>
         ///     This object is used to perform all <see cref="Clock" /> operations.
         ///     Default value: <see cref="LocalClockProvider" />.
         /// </summary>
@@ -33,11 +38,6 @@
                 _provider = value;
             }
         }
-
-        /// <summary>
-        ///     Gets Now using current <see cref="Provider" />.
-        /// </summary>
-        public static DateTime Now => Provider.Now;
 
         /// <summary>
         ///     Normalizes given <see cref="DateTime" /> using current <see cref="Provider" />.
