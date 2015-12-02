@@ -3,6 +3,7 @@
     #region using
 
     using System;
+    using System.Globalization;
     using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using System.Threading;
@@ -271,7 +272,7 @@
                             Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
                             if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
                             {
-                                var currentText = Clipboard.GetText().RemoveSpecialCharacters();
+                                var currentText = Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();
 
                                 if (!string.IsNullOrEmpty(currentText))
                                 {
