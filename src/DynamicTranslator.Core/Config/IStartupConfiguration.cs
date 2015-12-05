@@ -27,6 +27,8 @@
 
         IIocManager IocManager { get; }
 
+        bool IsToLanguageTurkish { get; }
+
         Dictionary<string, string> LanguageMap { get; }
 
         int LeftOffset { get; }

@@ -9,7 +9,6 @@
     using System.Text;
     using System.Threading.Tasks;
     using Core.Config;
-    using Core.Orchestrators;
     using Core.Orchestrators.Finder;
     using Core.Orchestrators.Model;
     using Core.Orchestrators.Organizer;
@@ -28,10 +27,17 @@
             this.configuration = configuration;
         }
 
+        private bool CanBeTranslated => configuration.IsToLanguageTurkish;
+
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             return await Task.Run(async () =>
             {
+                if (!CanBeTranslated)
+                {
+                    return new TranslateResult();
+                }
+
                 var address = configuration.TurengUrl;
                 var uri = new Uri(address + translateRequest.CurrentText);
 

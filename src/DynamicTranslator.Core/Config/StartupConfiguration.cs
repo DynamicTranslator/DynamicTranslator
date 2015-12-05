@@ -21,6 +21,8 @@
 
         public string ApiKey => Get<string>(nameof(ApiKey));
 
+        public bool IsToLanguageTurkish => ToLanguageExtension == "tr";
+
         public string ClientId => Get<string>(nameof(ClientId));
 
         public string FromLanguage => Get<string>(nameof(FromLanguage));

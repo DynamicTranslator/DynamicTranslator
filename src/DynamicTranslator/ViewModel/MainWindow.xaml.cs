@@ -18,13 +18,13 @@
     {
         private readonly ITranslatorBootstrapper translator;
         private readonly IStartupConfiguration configuration;
-        
+
         private bool isRunning;
 
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof (MainWindow), this);
+            IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
             configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
@@ -44,7 +44,7 @@
 
         private void GithubButton_Click()
         {
-            
+
         }
 
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
@@ -55,13 +55,19 @@
 
                 isRunning = false;
 
+                ComboBoxLanguages.Focusable = true;
+                ComboBoxLanguages.IsHitTestVisible = true;
+               
                 translator.Dispose();
             }
             else
             {
                 BtnSwitch.Content = "Stop Translator";
-                
-                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language) ComboBoxLanguages.SelectedItem).Name);
+
+                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language)ComboBoxLanguages.SelectedItem).Name);
+
+                ComboBoxLanguages.Focusable = false;
+                ComboBoxLanguages.IsHitTestVisible = false;
 
                 Task.Run(async () =>
                 {
