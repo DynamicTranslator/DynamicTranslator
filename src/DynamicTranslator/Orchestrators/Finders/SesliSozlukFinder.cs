@@ -37,12 +37,7 @@
         {
             return await Task.Run(async () =>
             {
-                if (!CanBeTranslated)
-                {
-                    return new TranslateResult();
-                }
-
-                var parameter = $"sl={translateRequest.FromLanguageExtension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={configuration.ToLanguageExtension}";
+                var parameter = $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={configuration.ToLanguageExtension}";
                 var client = new RestClient(configuration.SesliSozlukUrl);
                 var request = new RestRequest(Method.POST)
                     .AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6")

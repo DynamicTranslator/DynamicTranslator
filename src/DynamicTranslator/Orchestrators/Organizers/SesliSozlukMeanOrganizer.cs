@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Core;
+    using Core.Extensions;
     using Core.Orchestrators;
     using Core.Orchestrators.Model;
     using Core.Orchestrators.Organizer;
@@ -41,7 +42,7 @@
                         where x.Name == "pre"
                         from y in x.Descendants()
                         where y.Name == "span"
-                        select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean));
+                        select y.InnerHtml).AsParallel().ToList().ForEach(mean => output.AppendLine(mean.StripTagsCharArray()));
                 }
 
                 return new Maybe<string>(output.ToString());

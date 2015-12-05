@@ -17,7 +17,6 @@
     using Core.Orchestrators.Organizer;
     using Core.Service.GoogleAnalytics;
     using Core.ViewModel.Constants;
-    using ViewModel;
     using ViewModel.Model;
 
     #endregion
@@ -80,11 +79,11 @@
 
                 previousString = currentString;
 
-                var results = languageDetector.DetectLanguage(currentString)
+                var results = await await languageDetector.DetectLanguage(currentString)
                     .ContinueWith(x => cache.GetAsync(currentString,
                         () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, x.Result))))));
 
-                var findedMeans = await resultOrganizer.OrganizeResult(results.Result.Result, currentString);
+                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString);
 
                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First());
 

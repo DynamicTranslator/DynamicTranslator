@@ -3,7 +3,6 @@
     #region using
 
     using System;
-    using System.Globalization;
     using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using System.Threading;
@@ -16,8 +15,11 @@
     using Core.Dependency.Manager;
     using Core.Dependency.Markers;
     using Core.Extensions;
+    using Core.Optimizers.Runtime.Caching;
+    using Core.Optimizers.Runtime.Caching.Extensions;
     using Core.Orchestrators;
     using Core.Orchestrators.Event;
+    using Core.Orchestrators.Model;
     using Gma.System.MouseKeyHook;
     using Observers;
     using Utility;
@@ -29,6 +31,8 @@
 
     public class TranslatorBootstrapper : ITranslatorBootstrapper, ISingletonDependency
     {
+        private readonly ITypedCache<string, TranslateResult[]> cache;
+        private readonly ICacheManager cacheManager;
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IStartupConfiguration startupConfiguration;
@@ -42,7 +46,7 @@
         private Point mouseSecondPoint;
         private IDisposable syncObserver;
 
-        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration)
+        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration, ICacheManager cacheManager)
         {
             if (mainWindow == null)
                 throw new ArgumentNullException(nameof(mainWindow));
@@ -53,9 +57,14 @@
             if (startupConfiguration == null)
                 throw new ArgumentNullException(nameof(startupConfiguration));
 
+            if (cacheManager == null)
+                throw new ArgumentNullException(nameof(cacheManager));
+
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
+            this.cacheManager = cacheManager;
+            cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
@@ -136,6 +145,7 @@
                 growlNotifications.Dispose();
                 finderObservable.Dispose();
                 syncObserver.Dispose();
+                cache.Clear();
                 IsInitialized = false;
             }
         }
