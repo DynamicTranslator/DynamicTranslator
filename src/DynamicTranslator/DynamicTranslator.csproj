@@ -89,6 +89,13 @@
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\packages\MaterialDesignThemes.1.2.0.339\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -154,6 +161,7 @@
     <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />
     <Compile Include="Orchestrators\TranslatorBootstrapper.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utility\Win32.cs" />
     <DesignData Include="ViewModel\DesignTimeNotificationData.xaml">
       <SubType>Designer</SubType>
@@ -171,10 +179,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ApplicationVersion.cs" />
+    <Compile Include="ViewModel\Model\ApplicationVersion.cs" />
     <Compile Include="ViewModel\GrowlNotifiactions.xaml.cs">
       <DependentUpon>GrowlNotifiactions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Model\Language.cs" />
+    <Compile Include="ViewModel\Model\Languages.cs" />
     <Compile Include="ViewModel\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -253,6 +263,12 @@
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>
       <Name>DynamicTranslator.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\donate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\github_100x150.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

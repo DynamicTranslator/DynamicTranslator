@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel1="clr-namespace:DynamicTranslator.Core.ViewModel;assembly=DynamicTranslator.Core"
         mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="Transparent"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         Title="GrowlNotifiactions" Height="Auto" Width="500" ShowActivated="False" AllowsTransparency="True"
         SizeToContent="Height"
-        WindowStyle="None" ShowInTaskbar="False" Background="Transparent" Topmost="True" UseLayoutRounding="True">
+        WindowStyle="None" ShowInTaskbar="False" Topmost="True" UseLayoutRounding="True">
     <Window.Resources>
         <Storyboard x:Key="CollapseStoryboard">
             <DoubleAnimation From="100" To="0" Storyboard.TargetProperty="Height" Duration="0:0:1" />
@@ -30,8 +33,6 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="40*" />
                         </Grid.ColumnDefinitions>
-                        <!--<Image Grid.RowSpan="2" Source="{Binding Path=ImageUrl}" Margin="-20,10,10,10" Visibility="Hidden" Width="Auto"
-                               Grid.ColumnSpan="2" />-->
                         <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Title}"
                                    TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display"
                                    Foreground="White"

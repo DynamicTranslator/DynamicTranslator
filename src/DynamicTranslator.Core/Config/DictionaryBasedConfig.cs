@@ -73,6 +73,8 @@
             configuration.AppSettings.Settings[name].Value = value;
             configuration.Save();
             ConfigurationManager.RefreshSection("appSettings");
+            this[name] = value;
+
         }
 
         public void SetViaConfigurationManager(string name)

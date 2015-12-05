@@ -18,6 +18,7 @@
     using Core.Service.GoogleAnalytics;
     using Core.ViewModel.Constants;
     using ViewModel;
+    using ViewModel.Model;
 
     #endregion
 

@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.ViewModel
+﻿namespace DynamicTranslator.ViewModel.Model
 {
     public static class ApplicationVersion
     {
