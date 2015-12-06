@@ -6,18 +6,20 @@
        src="https://scan.coverity.com/projects/7147/badge.svg"/>
 </a>
 
-While you are reading a pdf or something, when you press the "Control + C"(it is not necessary anymore, DynamicTranslator detects selected texts instantly, but still working),  "Dynamic Translator" immediately detect the your word and translates it.
+While you are reading a pdf or something, DynamicTranslator detects selected texts instantly, translates them according to your language choice.
 
 ###Latest News
-You are not using Control + C (it's optional) no longer and DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
+DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
 
 #### *Instantly detect text implemented.
 #### *Google Translate added.
-
+#### *Language Detection implemented
 
 
 ###In Turkish
 Bilindiği gibi bazı sözlükler bize api sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır. Bulunduğunuz pencere/pdf veya herhangi birşeyde gezinirken mouse ile seçtiğiniz text'i algılayıp sonrasında, sırasıyla Google Translate, Tureng, Yandex, SesliSozluk'e gidip bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
+
+Seçilen metnin dilini algılar.
 
 ###Başvurulan sözlükler
         
