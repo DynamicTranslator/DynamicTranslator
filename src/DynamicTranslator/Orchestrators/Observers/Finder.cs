@@ -79,9 +79,10 @@
 
                 previousString = currentString;
 
-                var results = await await languageDetector.DetectLanguage(currentString)
-                    .ContinueWith(x => cache.GetAsync(currentString,
-                        () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, x.Result))))));
+                var languageExtension = await languageDetector.DetectLanguage(currentString);
+
+                var results = await cache.GetAsync(currentString,
+                    () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))));
 
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString);
 
