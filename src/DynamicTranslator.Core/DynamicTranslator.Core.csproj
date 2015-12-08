@@ -149,7 +149,7 @@
     <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
     <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
-    <Compile Include="Helper\InternalAsyncHelper.cs" />
+    <Compile Include="Helper\ExtendedAsyncHelper.cs" />
     <Compile Include="Helper\ObjectHelper.cs" />
     <Compile Include="Orchestrators\Model\Maybe.cs" />
     <Compile Include="Optimizers\Runtime\Pool\IPool.cs" />

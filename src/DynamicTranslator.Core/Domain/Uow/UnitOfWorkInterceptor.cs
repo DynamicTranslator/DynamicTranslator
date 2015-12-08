@@ -46,7 +46,7 @@ namespace DynamicTranslator.Core.Domain.Uow
 
             if (invocation.Method.ReturnType == typeof (Task))
             {
-                invocation.ReturnValue = InternalAsyncHelper.AwaitTaskWithPostActionAndFinally(
+                invocation.ReturnValue = ExtendedAsyncHelper.AwaitTaskWithPostActionAndFinally(
                     (Task) invocation.ReturnValue,
                     async () => await uow.CompleteAsync(),
                     exception => uow.Dispose()
@@ -54,7 +54,7 @@ namespace DynamicTranslator.Core.Domain.Uow
             }
             else //Task<TResult>
             {
-                invocation.ReturnValue = InternalAsyncHelper.CallAwaitTaskWithPostActionAndFinallyAndGetResult(
+                invocation.ReturnValue = ExtendedAsyncHelper.CallAwaitTaskWithPostActionAndFinallyAndGetResult(
                     invocation.Method.ReturnType.GenericTypeArguments[0],
                     invocation.ReturnValue,
                     async () => await uow.CompleteAsync(),

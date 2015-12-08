@@ -35,7 +35,7 @@
                 await googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "notification");
+                    "dynamictranslator", "MainWindow");
             });
         }
     }

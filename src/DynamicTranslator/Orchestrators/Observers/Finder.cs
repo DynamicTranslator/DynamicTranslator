@@ -81,19 +81,23 @@
 
                 var languageExtension = await languageDetector.DetectLanguage(currentString);
 
-                var results = await cache.GetAsync(currentString,
-                    () => Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))));
+                var whenall = Task.WhenAll(
+                    meanFinderFactory.GetFinders()
+                        .Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))
+                        .Where(x => x.IsFaulted == false && x.Exception == null));
 
-                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString);
+                var results = await cache.GetAsync(currentString, async () => await whenall).ConfigureAwait(false);
 
-                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First());
+                var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
 
-                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null);
+                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+
+                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "notification");
+                    "dynamictranslator", "notification").ConfigureAwait(false);
             });
         }
     }

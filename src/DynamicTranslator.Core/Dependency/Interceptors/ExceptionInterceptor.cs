@@ -10,7 +10,6 @@
     using Exception;
     using Helper;
     using Orchestrators;
-    using Orchestrators.Model;
     using Service.GoogleAnalytics;
     using ViewModel.Constants;
 
@@ -35,25 +34,26 @@
 
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
                 {
-                    var task = invocation.ReturnValue as Task;
-                    if (task != null && task.IsFaulted)
-                        invocation.ReturnValue = HandleReturnAsync(invocation, task.Exception);
+                    ExtendedAsyncHelper.CallAwaitTaskWithFinallyAndGetResult(
+                        invocation.Method.ReturnType.GenericTypeArguments[0],
+                        (Task) invocation.ReturnValue,
+                        exception => HandleExceptionAsync(invocation, exception));
                 }
             }
             catch (ApiKeyNullException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
+                    HandleExceptionAsync(invocation, ex);
             }
             catch (MaximumCharacterLimitException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
+                    HandleExceptionAsync(invocation, ex);
             }
             catch (WebException ex)
             {
-                if (invocation.Method.ReturnType.GetGenericTypeDefinition() == typeof (Task<>))
-                    invocation.ReturnValue = HandleReturnAsync(invocation, ex);
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
+                    HandleExceptionAsync(invocation, ex);
             }
             catch (Exception ex)
             {
@@ -75,10 +75,13 @@
             SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }
 
-        private dynamic HandleReturnAsync(IInvocation invocation, Exception ex)
+        private void HandleExceptionAsync(IInvocation invocation, Exception ex)
         {
             if (invocation.Method.ReturnType == typeof (void))
-                return null;
+                return;
+
+            if (ex == null)
+                return;
 
             var exceptionText = new StringBuilder()
                 .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
@@ -87,16 +90,7 @@
                 .AppendLine(ex.StackTrace)
                 .ToString();
 
-            var retVal = new Task<TranslateResult>(() =>
-                new TranslateResult(false,
-                    new Maybe<string>(exceptionText)
-                    ));
-
-            retVal.Start();
-
             SendExceptionGoogleAnalyticsAsync(exceptionText, false);
-
-            return retVal;
         }
 
         private void SendExceptionGoogleAnalyticsAsync(string text, bool isFatal)

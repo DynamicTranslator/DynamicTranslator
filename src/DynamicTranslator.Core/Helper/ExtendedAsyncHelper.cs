@@ -8,7 +8,7 @@
 
     #endregion
 
-    internal static class InternalAsyncHelper
+    public static class ExtendedAsyncHelper
     {
         public static async Task AwaitTaskWithFinally(Task actualReturnValue, Action<Exception> finalAction)
         {
@@ -159,7 +159,7 @@
 
         public static object CallAwaitTaskWithFinallyAndGetResult(Type taskReturnType, object actualReturnValue, Action<Exception> finalAction)
         {
-            return typeof (InternalAsyncHelper)
+            return typeof (ExtendedAsyncHelper)
                 .GetMethod("AwaitTaskWithFinallyAndGetResult", BindingFlags.Public | BindingFlags.Static)
                 .MakeGenericMethod(taskReturnType)
                 .Invoke(null, new[] {actualReturnValue, finalAction});
@@ -167,7 +167,7 @@
 
         public static object CallAwaitTaskWithPostActionAndFinallyAndGetResult(Type taskReturnType, object actualReturnValue, Func<Task> action, Action<Exception> finalAction)
         {
-            return typeof (InternalAsyncHelper)
+            return typeof (ExtendedAsyncHelper)
                 .GetMethod("AwaitTaskWithPostActionAndFinallyAndGetResult", BindingFlags.Public | BindingFlags.Static)
                 .MakeGenericMethod(taskReturnType)
                 .Invoke(null, new[] {actualReturnValue, action, finalAction});
@@ -176,7 +176,7 @@
         public static object CallAwaitTaskWithPreActionAndPostActionAndFinallyAndGetResult(Type taskReturnType, Func<object> actualReturnValue, Func<Task> preAction = null,
             Func<Task> postAction = null, Action<Exception> finalAction = null)
         {
-            return typeof (InternalAsyncHelper)
+            return typeof (ExtendedAsyncHelper)
                 .GetMethod("AwaitTaskWithPreActionAndPostActionAndFinallyAndGetResult", BindingFlags.Public | BindingFlags.Static)
                 .MakeGenericMethod(taskReturnType)
                 .Invoke(null, new object[] {actualReturnValue, preAction, postAction, finalAction});
