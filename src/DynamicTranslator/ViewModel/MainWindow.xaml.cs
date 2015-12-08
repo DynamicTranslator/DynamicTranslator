@@ -88,7 +88,7 @@
         }
         private void DonateButton_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BRD64ND693C98");
+            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6U2T5SPVDZ7TW");
         }
     }
 }
