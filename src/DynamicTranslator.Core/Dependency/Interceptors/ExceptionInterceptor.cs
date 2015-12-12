@@ -34,10 +34,10 @@
 
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
                 {
-                    ExtendedAsyncHelper.CallAwaitTaskWithFinallyAndGetResult(
-                        invocation.Method.ReturnType.GenericTypeArguments[0],
-                        (Task) invocation.ReturnValue,
-                        exception => HandleExceptionAsync(invocation, exception));
+                    invocation.ReturnValue = ExtendedAsyncHelper.CallAwaitTaskWithFinallyAndGetResult(
+                         invocation.Method.ReturnType.GenericTypeArguments[0],
+                         invocation.ReturnValue,
+                         exception => HandleExceptionAsync(invocation, exception));
                 }
             }
             catch (ApiKeyNullException ex)
@@ -77,7 +77,7 @@
 
         private void HandleExceptionAsync(IInvocation invocation, Exception ex)
         {
-            if (invocation.Method.ReturnType == typeof (void))
+            if (invocation.Method.ReturnType == typeof(void))
                 return;
 
             if (ex == null)

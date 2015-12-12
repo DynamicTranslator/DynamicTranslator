@@ -31,28 +31,25 @@
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            return await Task.Run(async () =>
+            if (!CanBeTranslated)
             {
-                if (!CanBeTranslated)
-                {
-                    return new TranslateResult();
-                }
+                return new TranslateResult();
+            }
 
-                var address = configuration.TurengUrl;
-                var uri = new Uri(address + translateRequest.CurrentText);
+            var address = configuration.TurengUrl;
+            var uri = new Uri(address + translateRequest.CurrentText);
 
-                var turenClient = new WebClient();
-                turenClient.Encoding = Encoding.UTF8;
-                turenClient.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
-                turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
-                turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
+            var turenClient = new WebClient();
+            turenClient.Encoding = Encoding.UTF8;
+            turenClient.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
+            turenClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
+            turenClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
 
-                var compositeMean = await turenClient.DownloadStringTaskAsync(uri);
-                var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
-                var mean = await organizer.OrganizeMean(compositeMean);
+            var compositeMean = await turenClient.DownloadStringTaskAsync(uri);
+            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
+            var mean = await organizer.OrganizeMean(compositeMean);
 
-                return new TranslateResult(true, mean);
-            });
+            return new TranslateResult(true, mean);
         }
     }
 }

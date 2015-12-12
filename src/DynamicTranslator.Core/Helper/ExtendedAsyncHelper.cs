@@ -39,7 +39,7 @@
             }
             catch (Exception ex)
             {
-                exception = ex;
+                exception = ex; 
                 throw;
             }
             finally
