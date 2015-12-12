@@ -27,8 +27,13 @@
             this.configuration = configuration;
         }
 
+        public TranslatorType TranslatorType => TranslatorType.GOOGLE;
+
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+                return new TranslateResult(false, new Maybe<string>());
+
             var address = string.Format(configuration.GoogleTranslateUrl,
                 configuration.ToLanguageExtension,
                 translateRequest.CurrentText);

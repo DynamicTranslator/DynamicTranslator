@@ -4,6 +4,7 @@
 
     using System.Collections.Generic;
     using Dependency.Manager;
+    using ViewModel.Constants;
 
     #endregion
 
@@ -26,6 +27,8 @@
         string GoogleTranslateUrl { get; }
 
         IIocManager IocManager { get; }
+
+        bool IsAppropriateForTranslation(TranslatorType translatorType);
 
         bool IsToLanguageTurkish { get; }
 
@@ -50,6 +53,10 @@
         string TurengUrl { get; }
 
         string YandexDetectTextUrl { get; }
+
+        Dictionary<string, string> YandexLanguageMap { get; }
+
+        IList<string> YandexLanguageMapExtensions { get; }
 
         string YandexUrl { get; }
 

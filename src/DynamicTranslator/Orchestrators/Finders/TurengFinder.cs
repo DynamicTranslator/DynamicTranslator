@@ -27,14 +27,12 @@
             this.configuration = configuration;
         }
 
-        private bool CanBeTranslated => configuration.IsToLanguageTurkish;
+        public TranslatorType TranslatorType => TranslatorType.TURENG;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!CanBeTranslated)
-            {
-                return new TranslateResult();
-            }
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+                return new TranslateResult(false, new Maybe<string>());
 
             var address = configuration.TurengUrl;
             var uri = new Uri(address + translateRequest.CurrentText);

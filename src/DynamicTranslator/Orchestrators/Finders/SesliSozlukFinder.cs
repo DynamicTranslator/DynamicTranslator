@@ -31,10 +31,13 @@
             this.configuration = configuration;
         }
 
-        private bool CanBeTranslated => configuration.IsToLanguageTurkish;
+        public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+                return new TranslateResult(false, new Maybe<string>());
+
             var parameter = $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={configuration.ToLanguageExtension}";
             var client = new RestClient(configuration.SesliSozlukUrl);
             var request = new RestRequest(Method.POST)

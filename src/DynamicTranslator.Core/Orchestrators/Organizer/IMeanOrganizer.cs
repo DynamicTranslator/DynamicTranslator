@@ -9,10 +9,8 @@
 
     #endregion
 
-    public interface IMeanOrganizer : ITransientDependency
+    public interface IMeanOrganizer : IOrchestrator
     {
-        TranslatorType TranslatorType { get; }
-
         Task<Maybe<string>> OrganizeMean(string text);
     }
 }

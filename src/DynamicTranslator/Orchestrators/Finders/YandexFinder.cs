@@ -27,8 +27,13 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
+        public TranslatorType TranslatorType => TranslatorType.YANDEX;
+
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+                return new TranslateResult(false, new Maybe<string>());
+
             var address = new Uri(
                 string.Format(configuration.YandexUrl +
                               $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));

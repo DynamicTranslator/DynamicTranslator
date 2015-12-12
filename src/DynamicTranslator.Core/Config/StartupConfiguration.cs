@@ -4,11 +4,9 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Dependency.Manager;
-
-    #endregion
-
-    #region using
+    using ViewModel.Constants;
 
     #endregion
 
@@ -21,8 +19,6 @@
 
         public string ApiKey => Get<string>(nameof(ApiKey));
 
-        public bool IsToLanguageTurkish => ToLanguageExtension == "tr";
-
         public string ClientId => Get<string>(nameof(ClientId));
 
         public string FromLanguage => Get<string>(nameof(FromLanguage));
@@ -34,6 +30,8 @@
         public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
 
         public IIocManager IocManager { get; }
+
+        public bool IsToLanguageTurkish => ToLanguageExtension == "tr";
 
         public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
 
@@ -57,6 +55,10 @@
 
         public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
 
+        public Dictionary<string, string> YandexLanguageMap => Get<Dictionary<string, string>>(nameof(YandexLanguageMap));
+
+        public IList<string> YandexLanguageMapExtensions => YandexLanguageMap.Select(x => x.Value).ToList();
+
         public string YandexUrl => Get<string>(nameof(YandexUrl));
 
         public void Initialize()
@@ -78,6 +80,23 @@
             SetViaConfigurationManager(nameof(TrackingId));
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
             InitLanguageMap();
+        }
+
+        public bool IsAppropriateForTranslation(TranslatorType translatorType)
+        {
+            switch (translatorType)
+            {
+                case TranslatorType.GOOGLE:
+                    return LanguageMap.ContainsValue(ToLanguageExtension);
+                case TranslatorType.SESLISOZLUK:
+                    return LanguageMap.ContainsValue(ToLanguageExtension);
+                case TranslatorType.YANDEX:
+                    return YandexLanguageMapExtensions.Contains(ToLanguageExtension);
+                case TranslatorType.TURENG:
+                    return IsToLanguageTurkish;
+            }
+
+            return false;
         }
 
         private void InitializeClientIdIfAbsent()
@@ -157,7 +176,75 @@
                 {"Yiddish", "yi"}
             };
 
+            var yandexLanguageMap = new Dictionary<string, string>
+            {
+                {"Albanian", "sq"},
+                {"English", "en"},
+                {"Arabic", "ar"},
+                {"Armenian", "hy"},
+                {"Azerbaijan", "az"},
+                {"Afrikaans", "af"},
+                {"Basque", "eu"},
+                {"Belarusian", "be"},
+                {"Bulgarian", "bg"},
+                {"Bosnian", "bs"},
+                {"Welsh", "cy"},
+                {"Vietnamese", "vi"},
+                {"Hungarian", "hu"},
+                {"Haitian (Creole)", "ht"},
+                {"Galician", "gl"},
+                {"Dutch", "nl"},
+                {"Greek", "el"},
+                {"Georgian", "ka"},
+                {"Danish", "da"},
+                {"Yiddish", "he"},
+                {"Indonesian", "id"},
+                {"Irish", "ga"},
+                {"Italian", "it"},
+                {"Icelandic", "is"},
+                {"Spanish", "es"},
+                {"Kazakh", "kk"},
+                {"Catalan", "ca"},
+                {"Kyrgyz", "ky"},
+                {"Chinese", "zh"},
+                {"Korean", "ko"},
+                {"Latin", "la"},
+                {"Latvian", "lv"},
+                {"Lithuanian", "lt"},
+                {"Malagasy", "mg"},
+                {"Malay", "ms"},
+                {"Maltese", "mt"},
+                {"Macedonian", "mk"},
+                {"Mongolian", "mn"},
+                {"German", "de"},
+                {"Norwegian", "no"},
+                {"Persian", "fa"},
+                {"Polish", "pl"},
+                {"Portuguese", "pt"},
+                {"Romanian", "ro"},
+                {"Russian", "ru"},
+                {"Serbian", "sr"},
+                {"Slovakian", "sk"},
+                {"Slovenian", "sl"},
+                {"Swahili", "sw"},
+                {"Tajik", "tg"},
+                {"Thai", "th"},
+                {"Tagalog", "tl"},
+                {"Tatar", "tt"},
+                {"Turkish", "tr"},
+                {"Uzbek", "uz"},
+                {"Ukrainian", "uk"},
+                {"Finish", "fi"},
+                {"French", "fr"},
+                {"Croatian", "hr"},
+                {"Czech", "cs"},
+                {"Swedish", "sv"},
+                {"Estonian", "et"},
+                {"Japanese", "ja"}
+            };
+
             Set(nameof(LanguageMap), languageMap);
+            Set(nameof(yandexLanguageMap), yandexLanguageMap);
         }
     }
 }

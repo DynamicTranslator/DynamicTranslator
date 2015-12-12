@@ -3,12 +3,11 @@
     #region using
 
     using System.Threading.Tasks;
-    using Dependency.Markers;
     using Model;
 
     #endregion
 
-    public interface IMeanFinder : ITransientDependency
+    public interface IMeanFinder : IOrchestrator
     {
         Task<TranslateResult> Find(TranslateRequest translateRequest);
     }
