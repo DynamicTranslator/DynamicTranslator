@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Reactive;
     using System.Threading.Tasks;
+    using Core.Config;
     using Core.Dependency.Markers;
     using Core.Optimizers.Runtime.Caching;
     using Core.Optimizers.Runtime.Caching.Extensions;
@@ -33,8 +34,13 @@
 
         private string previousString;
 
-        public Finder(INotifier notifier, IMeanFinderFactory meanFinderFactory, IResultOrganizer resultOrganizer, ICacheManager cacheManager,
-            IGoogleAnalyticsService googleAnalytics, ILanguageDetector languageDetector)
+        public Finder(INotifier notifier,
+            IMeanFinderFactory meanFinderFactory,
+            IResultOrganizer resultOrganizer,
+            ICacheManager cacheManager,
+            IGoogleAnalyticsService googleAnalytics,
+            ILanguageDetector languageDetector,
+            IStartupConfiguration configuration)
         {
             if (notifier == null)
                 throw new ArgumentNullException(nameof(notifier));
@@ -81,10 +87,7 @@
 
                 var languageExtension = await languageDetector.DetectLanguage(currentString);
 
-                var whenall = Task.WhenAll(
-                    meanFinderFactory.GetFinders()
-                        .Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))
-                        .Where(x => x.IsFaulted == false && x.Exception == null));
+                var whenall = Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension))));
 
                 var results = await cache.GetAsync(currentString, async () => await whenall).ConfigureAwait(false);
 

@@ -4,8 +4,6 @@
 
     using System.Threading.Tasks;
     using System.Xml;
-    using Core;
-    using Core.Orchestrators;
     using Core.Orchestrators.Model;
     using Core.Orchestrators.Organizer;
     using Core.ViewModel.Constants;
@@ -14,6 +12,8 @@
 
     public class YandexMeanOrganizer : IMeanOrganizer
     {
+        public bool IsTranslationActive => true;
+
         public TranslatorType TranslatorType => TranslatorType.YANDEX;
 
         public async Task<Maybe<string>> OrganizeMean(string text)

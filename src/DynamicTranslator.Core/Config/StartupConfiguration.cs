@@ -17,6 +17,8 @@
             IocManager = iocManager;
         }
 
+        public IList<TranslatorType> ActiveTranslators { get; private set; }
+
         public string ApiKey => Get<string>(nameof(ApiKey));
 
         public string ClientId => Get<string>(nameof(ClientId));
@@ -61,9 +63,20 @@
 
         public string YandexUrl => Get<string>(nameof(YandexUrl));
 
+        public void AddTranslator(TranslatorType translatorType)
+        {
+            ActiveTranslators.Add(translatorType);
+        }
+
+        public void ClearActiveTranslators()
+        {
+            ActiveTranslators.Clear();
+        }
+
         public void Initialize()
         {
             InitializeClientIdIfAbsent();
+            InitLanguageMap();
             SetViaConfigurationManager(nameof(ClientId));
             SetViaConfigurationManager(nameof(ApiKey));
             SetViaConfigurationManager(nameof(LeftOffset));
@@ -79,7 +92,8 @@
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
             SetViaConfigurationManager(nameof(TrackingId));
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
-            InitLanguageMap();
+            ActiveTranslators = new List<TranslatorType>();
+          
         }
 
         public bool IsAppropriateForTranslation(TranslatorType translatorType)
@@ -97,6 +111,11 @@
             }
 
             return false;
+        }
+
+        public void RemoveTranslator(TranslatorType translatorType)
+        {
+            ActiveTranslators.Remove(translatorType);
         }
 
         private void InitializeClientIdIfAbsent()
@@ -244,7 +263,7 @@
             };
 
             Set(nameof(LanguageMap), languageMap);
-            Set(nameof(yandexLanguageMap), yandexLanguageMap);
+            Set(nameof(YandexLanguageMap), yandexLanguageMap);
         }
     }
 }

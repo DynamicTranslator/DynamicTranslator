@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using Core.Config;
     using Core.Dependency.Markers;
-    using Core.Orchestrators;
     using Core.Orchestrators.Detector;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;

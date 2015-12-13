@@ -2,11 +2,12 @@
 {
     public class Language
     {
-        public Language(string name,string extension)
+        public Language(string name, string extension)
         {
-            this.Name = name;
-            this.Extension = extension;
+            Name = name;
+            Extension = extension;
         }
+
         public string Extension { get; set; }
 
         public string Name { get; set; }

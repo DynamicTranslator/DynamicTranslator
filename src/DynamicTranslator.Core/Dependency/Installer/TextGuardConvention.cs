@@ -7,7 +7,6 @@
     using Castle.MicroKernel;
     using Castle.MicroKernel.Facilities;
     using Interceptors;
-    using Orchestrators;
     using Orchestrators.Finder;
 
     #endregion

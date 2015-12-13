@@ -7,8 +7,6 @@
     using System.Net;
     using System.Text;
     using System.Threading.Tasks;
-    using Core;
-    using Core.Orchestrators;
     using Core.Orchestrators.Model;
     using Core.Orchestrators.Organizer;
     using Core.ViewModel.Constants;
@@ -18,6 +16,8 @@
 
     public class TurengMeanOrganizer : IMeanOrganizer
     {
+        public bool IsTranslationActive => true;
+
         public TranslatorType TranslatorType => TranslatorType.TURENG;
 
         public async Task<Maybe<string>> OrganizeMean(string text)

@@ -6,7 +6,6 @@
     using System.Threading.Tasks;
     using Core.Dependency.Markers;
     using Core.Service.GoogleAnalytics;
-    using ViewModel;
     using ViewModel.Model;
 
     #endregion

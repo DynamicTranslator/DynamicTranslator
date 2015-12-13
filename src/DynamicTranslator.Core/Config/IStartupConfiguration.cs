@@ -14,6 +14,8 @@
 
     public interface IStartupConfiguration : IDictionaryBasedConfig
     {
+        IList<TranslatorType> ActiveTranslators { get; }
+
         string ApiKey { get; }
 
         string ClientId { get; }
@@ -27,8 +29,6 @@
         string GoogleTranslateUrl { get; }
 
         IIocManager IocManager { get; }
-
-        bool IsAppropriateForTranslation(TranslatorType translatorType);
 
         bool IsToLanguageTurkish { get; }
 
@@ -60,6 +60,14 @@
 
         string YandexUrl { get; }
 
+        void AddTranslator(TranslatorType translatorType);
+
+        void ClearActiveTranslators();
+
         void Initialize();
+
+        bool IsAppropriateForTranslation(TranslatorType translatorType);
+
+        void RemoveTranslator(TranslatorType translatorType);
     }
 }

@@ -10,21 +10,21 @@
     using Core.Config;
     using Core.Dependency.Manager;
     using Core.Orchestrators;
+    using Core.ViewModel.Constants;
     using Model;
 
     #endregion
 
     public partial class MainWindow
     {
-        private readonly ITranslatorBootstrapper translator;
         private readonly IStartupConfiguration configuration;
-
+        private readonly ITranslatorBootstrapper translator;
         private bool isRunning;
 
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof(MainWindow), this);
+            IocManager.Instance.Register(typeof (MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
             configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
@@ -42,11 +42,6 @@
             base.OnClosing(e);
         }
 
-        private void GithubButton_Click()
-        {
-
-        }
-
         private void btnSwitch_Click(object sender, RoutedEventArgs e)
         {
             if (isRunning)
@@ -55,19 +50,18 @@
 
                 isRunning = false;
 
-                ComboBoxLanguages.Focusable = true;
-                ComboBoxLanguages.IsHitTestVisible = true;
-               
+                UnlockUiElements();
+
                 translator.Dispose();
             }
             else
             {
                 BtnSwitch.Content = "Stop Translator";
 
-                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language)ComboBoxLanguages.SelectedItem).Name);
+                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language) ComboBoxLanguages.SelectedItem).Name);
 
-                ComboBoxLanguages.Focusable = false;
-                ComboBoxLanguages.IsHitTestVisible = false;
+                PrepairTranslators();
+                LockUiElements();
 
                 Task.Run(async () =>
                 {
@@ -82,13 +76,56 @@
             }
         }
 
+        private void DonateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6U2T5SPVDZ7TW");
+        }
+
         private void GithubButton_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/osoykan/DynamicTranslator");
         }
-        private void DonateButton_Click(object sender, RoutedEventArgs e)
+
+        private void LockUiElements()
         {
-            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6U2T5SPVDZ7TW");
+            ComboBoxLanguages.Focusable = false;
+            ComboBoxLanguages.IsHitTestVisible = false;
+            CheckBoxGoogleTranslate.IsHitTestVisible = false;
+            CheckBoxTureng.IsHitTestVisible = false;
+            CheckBoxYandexTranslate.IsHitTestVisible = false;
+            CheckBoxSesliSozluk.IsHitTestVisible = false;
+        }
+
+        private void PrepairTranslators()
+        {
+            configuration.ClearActiveTranslators();
+
+            if (CheckBoxGoogleTranslate.IsChecked != null && CheckBoxGoogleTranslate.IsChecked.Value)
+            {
+                configuration.AddTranslator(TranslatorType.GOOGLE);
+            }
+            if (CheckBoxYandexTranslate.IsChecked != null && CheckBoxYandexTranslate.IsChecked.Value)
+            {
+                configuration.AddTranslator(TranslatorType.YANDEX);
+            }
+            if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
+            {
+                configuration.AddTranslator(TranslatorType.TURENG);
+            }
+            if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
+            {
+                configuration.AddTranslator(TranslatorType.SESLISOZLUK);
+            }
+        }
+
+        private void UnlockUiElements()
+        {
+            ComboBoxLanguages.Focusable = true;
+            ComboBoxLanguages.IsHitTestVisible = true;
+            CheckBoxGoogleTranslate.IsHitTestVisible = true;
+            CheckBoxTureng.IsHitTestVisible = true;
+            CheckBoxYandexTranslate.IsHitTestVisible = true;
+            CheckBoxSesliSozluk.IsHitTestVisible = true;
         }
     }
 }

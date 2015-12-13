@@ -31,11 +31,13 @@
             this.configuration = configuration;
         }
 
+        public bool IsTranslationActive => configuration.ActiveTranslators.Contains(TranslatorType);
+
         public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+            if (!configuration.IsAppropriateForTranslation(TranslatorType) || !IsTranslationActive)
                 return new TranslateResult(false, new Maybe<string>());
 
             var parameter = $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={configuration.ToLanguageExtension}";

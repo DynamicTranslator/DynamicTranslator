@@ -9,6 +9,8 @@
 
     public interface IOrchestrator : ITransientDependency
     {
+        bool IsTranslationActive { get; }
+
         TranslatorType TranslatorType { get; }
     }
 }

@@ -3,9 +3,7 @@
     #region using
 
     using System.Threading.Tasks;
-    using Dependency.Markers;
     using Model;
-    using ViewModel.Constants;
 
     #endregion
 
