@@ -16,8 +16,6 @@
 
     public class TurengMeanOrganizer : IMeanOrganizer
     {
-        public bool IsTranslationActive => true;
-
         public TranslatorType TranslatorType => TranslatorType.TURENG;
 
         public async Task<Maybe<string>> OrganizeMean(string text)

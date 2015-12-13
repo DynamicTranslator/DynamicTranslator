@@ -14,8 +14,6 @@
 
     public class GoogleTranslateMeanOrganizer : IMeanOrganizer
     {
-        public bool IsTranslationActive => true;
-
         public TranslatorType TranslatorType => TranslatorType.GOOGLE;
 
         public async Task<Maybe<string>> OrganizeMean(string text)

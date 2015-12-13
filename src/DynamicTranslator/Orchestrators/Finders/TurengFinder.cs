@@ -27,13 +27,11 @@
             this.configuration = configuration;
         }
 
-        public bool IsTranslationActive => configuration.ActiveTranslators.Contains(TranslatorType);
-
         public TranslatorType TranslatorType => TranslatorType.TURENG;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType) || !IsTranslationActive)
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
                 return new TranslateResult(false, new Maybe<string>());
 
             var address = configuration.TurengUrl;

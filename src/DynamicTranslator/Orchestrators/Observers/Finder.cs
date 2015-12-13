@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Reactive;
     using System.Threading.Tasks;
-    using Core.Config;
     using Core.Dependency.Markers;
     using Core.Optimizers.Runtime.Caching;
     using Core.Optimizers.Runtime.Caching.Extensions;
@@ -39,8 +38,8 @@
             IResultOrganizer resultOrganizer,
             ICacheManager cacheManager,
             IGoogleAnalyticsService googleAnalytics,
-            ILanguageDetector languageDetector,
-            IStartupConfiguration configuration)
+            ILanguageDetector languageDetector 
+            )
         {
             if (notifier == null)
                 throw new ArgumentNullException(nameof(notifier));

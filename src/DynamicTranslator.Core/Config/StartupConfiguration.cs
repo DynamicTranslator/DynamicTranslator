@@ -101,13 +101,13 @@
             switch (translatorType)
             {
                 case TranslatorType.GOOGLE:
-                    return LanguageMap.ContainsValue(ToLanguageExtension);
+                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
                 case TranslatorType.SESLISOZLUK:
-                    return LanguageMap.ContainsValue(ToLanguageExtension);
+                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
                 case TranslatorType.YANDEX:
-                    return YandexLanguageMapExtensions.Contains(ToLanguageExtension);
+                    return YandexLanguageMapExtensions.Contains(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
                 case TranslatorType.TURENG:
-                    return IsToLanguageTurkish;
+                    return IsToLanguageTurkish && ActiveTranslators.Contains(translatorType);
             }
 
             return false;

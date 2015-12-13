@@ -12,8 +12,6 @@
 
     public class YandexMeanOrganizer : IMeanOrganizer
     {
-        public bool IsTranslationActive => true;
-
         public TranslatorType TranslatorType => TranslatorType.YANDEX;
 
         public async Task<Maybe<string>> OrganizeMean(string text)

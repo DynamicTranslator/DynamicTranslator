@@ -15,8 +15,6 @@
 
     public class SesliSozlukMeanOrganizer : IMeanOrganizer
     {
-        public bool IsTranslationActive => true;
-
         public TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
 
         public async Task<Maybe<string>> OrganizeMean(string text)
