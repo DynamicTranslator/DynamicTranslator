@@ -2,8 +2,10 @@
 {
     #region using
 
+    using System;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
@@ -24,7 +26,7 @@
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof (MainWindow), this);
+            IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
             configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
@@ -58,7 +60,7 @@
             {
                 BtnSwitch.Content = "Stop Translator";
 
-                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language) ComboBoxLanguages.SelectedItem).Name);
+                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language)ComboBoxLanguages.SelectedItem).Name);
 
                 PrepairTranslators();
                 LockUiElements();
@@ -115,6 +117,15 @@
             if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
             {
                 configuration.AddTranslator(TranslatorType.SESLISOZLUK);
+            }
+
+            if (!configuration.ActiveTranslators.Any())
+            {
+                foreach (var value in Enum.GetValues(typeof(TranslatorType)))
+                {
+                    configuration.AddTranslator((TranslatorType)value);
+                }
+            
             }
         }
 

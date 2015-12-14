@@ -14,7 +14,7 @@
 
     public interface IStartupConfiguration : IDictionaryBasedConfig
     {
-        IList<TranslatorType> ActiveTranslators { get; }
+        HashSet<TranslatorType> ActiveTranslators { get; }
 
         string ApiKey { get; }
 

@@ -17,7 +17,7 @@
             IocManager = iocManager;
         }
 
-        public IList<TranslatorType> ActiveTranslators { get; private set; }
+        public HashSet<TranslatorType> ActiveTranslators { get; private set; }
 
         public string ApiKey => Get<string>(nameof(ApiKey));
 
@@ -92,8 +92,8 @@
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
             SetViaConfigurationManager(nameof(TrackingId));
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
-            ActiveTranslators = new List<TranslatorType>();
-          
+            ActiveTranslators = new HashSet<TranslatorType>();
+
         }
 
         public bool IsAppropriateForTranslation(TranslatorType translatorType)
