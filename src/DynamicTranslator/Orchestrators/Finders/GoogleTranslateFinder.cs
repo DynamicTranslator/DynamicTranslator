@@ -2,12 +2,14 @@
 {
     #region using
 
+    using System.Linq;
     using System.Threading.Tasks;
     using Core.Config;
     using Core.Orchestrators.Finder;
     using Core.Orchestrators.Model;
     using Core.Orchestrators.Organizer;
     using Core.ViewModel.Constants;
+    using RestSharp;
 
     #endregion
 
@@ -26,28 +28,18 @@
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            return new TranslateResult(false, new Maybe<string>());
+            if (!configuration.IsAppropriateForTranslation(TranslatorType))
+                return new TranslateResult(false, new Maybe<string>());
 
-            //if (!configuration.IsAppropriateForTranslation(TranslatorType))
-            //    return new TranslateResult(false, new Maybe<string>());
+            var address = string.Format(configuration.GoogleTranslateUrl, configuration.ToLanguageExtension, configuration.ToLanguageExtension, translateRequest.CurrentText);
 
-            //var address = string.Format(configuration.GoogleTranslateUrl,
-            //    configuration.ToLanguageExtension,
-            //    translateRequest.CurrentText);
-            //var uri = new Uri(address);
+            var client = new RestClient(address);
+            var request = new RestRequest(Method.GET);
+            var compositeMean = await client.ExecuteGetTaskAsync(request);
+            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.GOOGLE);
+            var mean = await organizer.OrganizeMean(compositeMean.Content);
 
-            //var googleClient = new WebClient();
-            //googleClient.Encoding = Encoding.UTF8;
-            //googleClient.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36");
-            //googleClient.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
-            //googleClient.Headers.Add("X-DevTools-Emulate-Network-Conditions-Client-Id", "en-US,en;q=0.8,tr;q=0.6");
-            //googleClient.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
-
-            //var compositeMean = await googleClient.DownloadStringTaskAsync(uri);
-            //var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.GOOGLE);
-            //var mean = await organizer.OrganizeMean(compositeMean);
-
-            //return new TranslateResult(true, mean);
+            return new TranslateResult(true, mean);
         }
     }
 }

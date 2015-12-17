@@ -12,7 +12,7 @@
 
     #endregion
 
-    public class YandexLanguageDetector : ILanguageDetector, ISingletonDependency
+    public class YandexLanguageDetector : ILanguageDetector
     {
         private readonly IStartupConfiguration configuration;
 

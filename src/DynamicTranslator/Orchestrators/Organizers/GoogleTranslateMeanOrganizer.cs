@@ -2,6 +2,7 @@
 {
     #region using
 
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Core.Extensions;
     using Core.Orchestrators.Model;
@@ -20,9 +21,9 @@
         {
             return await Task.Run(() =>
             {
-                var arrayTree = JsonConvert.DeserializeObject(text) as JArray;
+                var result = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+                var arrayTree = result["sentences"] as JArray;
                 var output = arrayTree.GetFirstValueInArrayGraph<string>();
-
                 return new Maybe<string>(output);
             });
         }
