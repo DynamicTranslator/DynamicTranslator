@@ -38,7 +38,7 @@
             IResultOrganizer resultOrganizer,
             ICacheManager cacheManager,
             IGoogleAnalyticsService googleAnalytics,
-            ILanguageDetector languageDetector 
+            ILanguageDetector languageDetector
             )
         {
             if (notifier == null)
@@ -86,9 +86,9 @@
 
                 var languageExtension = await languageDetector.DetectLanguage(currentString);
 
-                var whenall = Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension))));
-
-                var results = await cache.GetAsync(currentString, async () => await whenall).ConfigureAwait(false);
+                var results = await cache.GetAsync(currentString,
+                    async () => await Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))))
+                    .ConfigureAwait(false);
 
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
 

@@ -147,6 +147,7 @@
     <Compile Include="Orchestrators\Detector\ILanguageDetectorFactory.cs" />
     <Compile Include="Orchestrators\Model\TranslateRequest.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
+    <Compile Include="Orchestrators\Model\YandexDetectResponse.cs" />
     <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
     <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />
