@@ -34,7 +34,7 @@
                 return result["src"].ToString();
             }
 
-            return configuration.ToLanguageExtension;
+            return configuration.FromLanguageExtension;
         }
     }
 }

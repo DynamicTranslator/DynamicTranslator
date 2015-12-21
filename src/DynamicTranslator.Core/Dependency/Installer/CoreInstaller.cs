@@ -21,7 +21,7 @@
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.AddFacility<TypedFactoryFacility>();
-            container.AddFacility<TextGuardConvention>();
+            container.AddFacility<InterceptorConventions>();
 
             var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
