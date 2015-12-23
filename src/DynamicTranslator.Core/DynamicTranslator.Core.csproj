@@ -154,8 +154,6 @@
     <Compile Include="Helper\ExtendedAsyncHelper.cs" />
     <Compile Include="Helper\ObjectHelper.cs" />
     <Compile Include="Orchestrators\Model\Maybe.cs" />
-    <Compile Include="Optimizers\Runtime\Pool\IPool.cs" />
-    <Compile Include="Optimizers\Runtime\Pool\Pool.cs" />
     <Compile Include="Optimizers\Runtime\Caching\CacheBase.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\CacheExtensions.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\CacheManagerExtensions.cs" />
@@ -172,9 +170,6 @@
     <Compile Include="Optimizers\Runtime\MemoryCache\InMemoryCacheManager.cs" />
     <Compile Include="Optimizers\Runtime\Caching\Extensions\TypedCacheExtensions.cs" />
     <Compile Include="Optimizers\Runtime\Caching\TypedCacheWrapper.cs" />
-    <Compile Include="Optimizers\Timing\Clock.cs" />
-    <Compile Include="Optimizers\Timing\IClockProvider.cs" />
-    <Compile Include="Optimizers\Timing\LocalClockProvider.cs" />
     <Compile Include="Orchestrators\Model\CompositeTranslateResult.cs" />
     <Compile Include="Orchestrators\Event\IEvents.cs" />
     <Compile Include="Orchestrators\Finder\IMeanFinder.cs" />
