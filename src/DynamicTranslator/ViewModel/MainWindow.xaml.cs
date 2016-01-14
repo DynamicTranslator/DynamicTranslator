@@ -62,7 +62,7 @@
 
                 configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language)ComboBoxLanguages.SelectedItem).Name);
 
-                PrepairTranslators();
+                PrepareTranslators();
                 LockUiElements();
 
                 Task.Run(async () =>
@@ -98,7 +98,7 @@
             CheckBoxSesliSozluk.IsHitTestVisible = false;
         }
 
-        private void PrepairTranslators()
+        private void PrepareTranslators()
         {
             configuration.ClearActiveTranslators();
 

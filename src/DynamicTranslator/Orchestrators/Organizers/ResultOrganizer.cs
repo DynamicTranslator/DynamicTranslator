@@ -24,30 +24,27 @@
 
         public async Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
-            return await Task.Run(async () =>
+            var mean = new StringBuilder();
+            foreach (var result in findedMeans.Where(result => result.IsSucess))
             {
-                var mean = new StringBuilder();
-                foreach (var result in findedMeans.Where(result => result.IsSucess))
-                {
-                    mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
-                }
+                mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
+            }
 
-                if (!string.IsNullOrEmpty(mean.ToString()))
-                {
-                    var means = mean.ToString().Split('\r')
-                        .Select(x => x.Trim().ToLower())
-                        .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
-                        .Distinct()
-                        .ToList();
+            if (!string.IsNullOrEmpty(mean.ToString()))
+            {
+                var means = mean.ToString().Split('\r')
+                    .Select(x => x.Trim().ToLower())
+                    .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
+                    .Distinct()
+                    .ToList();
 
-                    mean.Clear();
-                    means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                    await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
-                    return new Maybe<string>(mean.ToString());
-                }
+                mean.Clear();
+                means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
+                await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                return new Maybe<string>(mean.ToString());
+            }
 
-                return new Maybe<string>();
-            });
+            return new Maybe<string>();
         }
     }
 }
