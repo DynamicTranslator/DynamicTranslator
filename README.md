@@ -6,7 +6,7 @@
        src="https://scan.coverity.com/projects/7147/badge.svg"/>
 </a>
 
-While you are reading a pdf or something, DynamicTranslator detects selected texts instantly, translates them according to your language choice.
+While you are reading a pdf or something, DynamicTranslator detects selected texts instantly, translates them according to your language choice. 
 
 ###Latest News
 DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
