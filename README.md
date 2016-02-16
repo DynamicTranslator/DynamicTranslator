@@ -63,4 +63,8 @@ It has an app.config like below. I didn't do any UI implementation yet, i think 
     <add key="FromLanguage" value="English" />
     <add key="ToLanguage" value="Turkish" />
   ```
-#İmplemented C# 6.0 and .NET 4.6
+##Powered By
+
+<p><a href="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" target="_blank"><img src="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" width="142" height="29" alt="ReSharper" data-canonical-src="http://www.jetbrains.com/img/logos/logo_resharper_small.gif" style="max-width:100%;"></a></p>
+  
+#Implemented C# 6.0 and .NET 4.6
