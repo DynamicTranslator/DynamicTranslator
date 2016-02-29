@@ -1,10 +1,16 @@
-﻿namespace DynamicTranslator.Core.Config
+﻿#region using
+
+using System.Collections.Generic;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+#endregion
+
+namespace DynamicTranslator.Core.Config
 {
     #region using
 
-    using System.Collections.Generic;
-    using Dependency.Manager;
-    using ViewModel.Constants;
+    
 
     #endregion
 
@@ -41,6 +47,8 @@
         int SearchableCharacterLimit { get; }
 
         string SesliSozlukUrl { get; }
+
+        string BingTranslatorUrl { get; }
 
         string ToLanguage { get; }
 

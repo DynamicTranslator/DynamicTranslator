@@ -152,6 +152,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Orchestrators\Detector\YandexLanguageDetector.cs" />
+    <Compile Include="Orchestrators\Finders\BingTranslatorFinder.cs" />
     <Compile Include="Orchestrators\Finders\GoogleTranslateFinder.cs" />
     <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
     <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Orchestrators\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Feeder.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
+    <Compile Include="Orchestrators\Organizers\BingTranslatorMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\GoogleTranslateMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />

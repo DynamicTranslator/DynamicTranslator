@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Model
+﻿namespace DynamicTranslator.Core.Orchestrators.Model.Yandex
 {
     public class YandexDetectResponse
     {

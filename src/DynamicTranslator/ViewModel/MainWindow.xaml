@@ -40,7 +40,7 @@
                     Margin="194,244,10,-16">
                 <Image Source="../Resources/donate.png" Height="53" Width="136" />
             </Button>
-            <Grid x:Name="languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="59"
+            <Grid x:Name="languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
                   VerticalAlignment="Top">
                 <CheckBox x:Name="CheckBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
                           Margin="23,10,0,0" VerticalAlignment="Top" IsChecked="True" />
@@ -50,6 +50,8 @@
                           Margin="205,33,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
                           Margin="23,33,0,0" VerticalAlignment="Top" IsChecked="True" />
+                <CheckBox x:Name="CheckBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
+                	Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
             </Grid>
 
         </Grid>

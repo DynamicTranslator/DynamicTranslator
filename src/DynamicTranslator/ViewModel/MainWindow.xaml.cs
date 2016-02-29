@@ -1,32 +1,28 @@
-﻿namespace DynamicTranslator.ViewModel
+﻿#region using
+
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.Orchestrators;
+using DynamicTranslator.Core.ViewModel.Constants;
+using DynamicTranslator.ViewModel.Model;
+
+#endregion
+
+namespace DynamicTranslator.ViewModel
 {
-    #region using
-
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Threading;
-    using Core.Config;
-    using Core.Dependency.Manager;
-    using Core.Orchestrators;
-    using Core.ViewModel.Constants;
-    using Model;
-
-    #endregion
-
     public partial class MainWindow
     {
-        private readonly IStartupConfiguration configuration;
-        private readonly ITranslatorBootstrapper translator;
-        private bool isRunning;
-
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof(MainWindow), this);
+            IocManager.Instance.Register(typeof (MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
             configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
@@ -37,6 +33,10 @@
 
             ComboBoxLanguages.SelectedValue = configuration.ToLanguageExtension;
         }
+
+        private readonly IStartupConfiguration configuration;
+        private readonly ITranslatorBootstrapper translator;
+        private bool isRunning;
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -60,19 +60,23 @@
             {
                 BtnSwitch.Content = "Stop Translator";
 
-                configuration.SetAndPersistConfigurationManager(nameof(configuration.ToLanguage), ((Language)ComboBoxLanguages.SelectedItem).Name);
+                configuration.SetAndPersistConfigurationManager(
+                    nameof(configuration.ToLanguage),
+                    ((Language) ComboBoxLanguages.SelectedItem).Name);
 
                 PrepareTranslators();
                 LockUiElements();
 
-                Task.Run(async () =>
-                {
-                    await Dispatcher.InvokeAsync(async () =>
+                Task.Run(
+                    async () =>
                     {
-                        if (!translator.IsInitialized)
-                            await translator.InitializeAsync();
+                        await Dispatcher.InvokeAsync(
+                            async () =>
+                            {
+                                if (!translator.IsInitialized)
+                                    await translator.InitializeAsync();
+                            });
                     });
-                });
 
                 isRunning = true;
             }
@@ -103,29 +107,22 @@
             configuration.ClearActiveTranslators();
 
             if (CheckBoxGoogleTranslate.IsChecked != null && CheckBoxGoogleTranslate.IsChecked.Value)
-            {
                 configuration.AddTranslator(TranslatorType.GOOGLE);
-            }
             if (CheckBoxYandexTranslate.IsChecked != null && CheckBoxYandexTranslate.IsChecked.Value)
-            {
                 configuration.AddTranslator(TranslatorType.YANDEX);
-            }
             if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
-            {
                 configuration.AddTranslator(TranslatorType.TURENG);
-            }
             if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
-            {
                 configuration.AddTranslator(TranslatorType.SESLISOZLUK);
-            }
+            if (CheckBoxBing.IsChecked != null && CheckBoxBing.IsChecked.Value)
+                configuration.AddTranslator(TranslatorType.BING);
 
             if (!configuration.ActiveTranslators.Any())
             {
-                foreach (var value in Enum.GetValues(typeof(TranslatorType)))
+                foreach (var value in Enum.GetValues(typeof (TranslatorType)))
                 {
-                    configuration.AddTranslator((TranslatorType)value);
+                    configuration.AddTranslator((TranslatorType) value);
                 }
-            
             }
         }
 

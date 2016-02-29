@@ -63,6 +63,8 @@
 
         public string YandexUrl => Get<string>(nameof(YandexUrl));
 
+        public string BingTranslatorUrl => Get<string>(nameof(BingTranslatorUrl));
+
         public void AddTranslator(TranslatorType translatorType)
         {
             ActiveTranslators.Add(translatorType);
@@ -92,6 +94,7 @@
             SetViaConfigurationManager(nameof(GoogleAnalyticsUrl));
             SetViaConfigurationManager(nameof(TrackingId));
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
+            SetViaConfigurationManager(nameof(BingTranslatorUrl));
             ActiveTranslators = new HashSet<TranslatorType>();
 
         }
@@ -101,6 +104,8 @@
             switch (translatorType)
             {
                 case TranslatorType.GOOGLE:
+                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.BING:
                     return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
                 case TranslatorType.SESLISOZLUK:
                     return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);

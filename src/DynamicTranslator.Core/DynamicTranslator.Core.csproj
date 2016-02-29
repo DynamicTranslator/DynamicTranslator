@@ -149,9 +149,11 @@
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Orchestrators\Detector\ILanguageDetector.cs" />
     <Compile Include="Orchestrators\Detector\ILanguageDetectorFactory.cs" />
+    <Compile Include="Orchestrators\Model\Bing\BingTranslatorResponse.cs" />
+    <Compile Include="Orchestrators\Model\Bing\WordDetail.cs" />
     <Compile Include="Orchestrators\Model\TranslateRequest.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
-    <Compile Include="Orchestrators\Model\YandexDetectResponse.cs" />
+    <Compile Include="Orchestrators\Model\Yandex\YandexDetectResponse.cs" />
     <Compile Include="Service\GoogleAnalytics\GoogleAnalyticsService.cs" />
     <Compile Include="Service\GoogleAnalytics\IGoogleAnalyticsService.cs" />
     <Compile Include="Helper\AsyncHelper.cs" />

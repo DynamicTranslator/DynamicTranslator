@@ -1,4 +1,6 @@
-﻿namespace DynamicTranslator.Orchestrators.Detector
+﻿using DynamicTranslator.Core.Orchestrators.Model.Yandex;
+
+namespace DynamicTranslator.Orchestrators.Detector
 {
     #region using
 

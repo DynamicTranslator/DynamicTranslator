@@ -5,6 +5,7 @@
         TURENG,
         YANDEX,
         SESLISOZLUK,
-        GOOGLE
+        GOOGLE,
+        BING
     }
 }
