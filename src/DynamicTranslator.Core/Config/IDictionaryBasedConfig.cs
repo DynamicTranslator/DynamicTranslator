@@ -1,15 +1,11 @@
-﻿namespace DynamicTranslator.Core.Config
+﻿#region using
+
+using System;
+
+#endregion
+
+namespace DynamicTranslator.Core.Config
 {
-    #region using
-
-    using System;
-
-    #endregion
-
-    #region using
-
-    #endregion
-
     public interface IDictionaryBasedConfig
     {
         object Get(string name);

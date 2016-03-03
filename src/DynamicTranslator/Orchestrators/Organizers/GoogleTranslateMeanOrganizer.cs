@@ -14,7 +14,7 @@ namespace DynamicTranslator.Orchestrators.Organizers
 {
     public class GoogleTranslateMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.GOOGLE;
+        public override TranslatorType TranslatorType => TranslatorType.Google;
 
         public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {

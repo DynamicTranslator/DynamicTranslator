@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DynamicTranslator.Core.Extensions;
 using DynamicTranslator.Core.Orchestrators.Model;
-using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.ViewModel.Constants;
 using HtmlAgilityPack;
 
@@ -13,9 +13,9 @@ using HtmlAgilityPack;
 
 namespace DynamicTranslator.Orchestrators.Organizers
 {
-    public class TurengMeanOrganizer : AbstractMeanOrganizer
+    public class ZarganMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.Tureng;
+        public override TranslatorType TranslatorType => TranslatorType.Zargan;
 
         public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
@@ -29,21 +29,12 @@ namespace DynamicTranslator.Orchestrators.Organizers
                 var decoded = WebUtility.HtmlDecode(result);
                 doc.LoadHtml(decoded);
 
-                if (!result.Contains("table") || doc.DocumentNode.SelectSingleNode("//table") == null)
-                    return new Maybe<string>();
-
                 (from x in doc.DocumentNode.Descendants()
-                 where x.Name == "table"
-                 from y in x.Descendants().AsParallel()
-                 where y.Name == "tr"
-                 from z in y.Descendants().AsParallel()
-                 where (z.Name == "th" || z.Name == "td") && z.GetAttributeValue("lang", string.Empty) == (fromLanguageExtension == "tr" ? "en" : "tr")
-                 from t in z.Descendants().AsParallel()
-                 where t.Name == "a"
-                 select t.InnerHtml)
+                 where x.Name == "div" && x.GetAttributeValue("class", string.Empty) == "numberedList"
+                 select x.InnerHtml)
                     .AsParallel()
                     .ToList()
-                    .ForEach(mean => output.AppendLine(mean));
+                    .ForEach(mean => output.AppendLine(mean.StripTagsCharArray()));
 
                 return new Maybe<string>(output.ToString().ToLower().Trim());
             });

@@ -24,7 +24,7 @@ namespace DynamicTranslator.Test.Finder
             [Frozen] Mock<IStartupConfiguration> startupConfigurationMock,
             [Frozen] Mock<TranslateRequest> requestMock)
         {
-            googleTranslateFinderMock.Setup(x => x.TranslatorType).Returns(TranslatorType.GOOGLE);
+            googleTranslateFinderMock.Setup(x => x.TranslatorType).Returns(TranslatorType.Google);
             finderFactoryMock.Setup(x => x.GetFinders())
                              .Returns(new List<IMeanFinder> {googleTranslateFinderMock.Object});
 

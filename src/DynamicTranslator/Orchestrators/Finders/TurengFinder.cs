@@ -33,7 +33,7 @@ namespace DynamicTranslator.Orchestrators.Finders
             this.configuration = configuration;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.TURENG;
+        public TranslatorType TranslatorType => TranslatorType.Tureng;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -51,7 +51,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                     .AddHeader("User-Agent","Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
                     .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6"));
 
-            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);
+            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await organizer.OrganizeMean(compositeMean.Content, translateRequest.FromLanguageExtension);
 
             return new TranslateResult(true, mean);

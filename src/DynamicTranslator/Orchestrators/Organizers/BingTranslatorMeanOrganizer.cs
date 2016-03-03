@@ -14,7 +14,7 @@ namespace DynamicTranslator.Orchestrators.Organizers
 {
     public class BingTranslatorMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.BING;
+        public override TranslatorType TranslatorType => TranslatorType.Bing;
 
         public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {

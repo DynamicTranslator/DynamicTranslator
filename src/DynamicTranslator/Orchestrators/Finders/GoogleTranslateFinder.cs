@@ -30,7 +30,7 @@ namespace DynamicTranslator.Orchestrators.Finders
             this.configuration = configuration;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.GOOGLE;
+        public TranslatorType TranslatorType => TranslatorType.Google;
         private readonly IStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
@@ -53,7 +53,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                         .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
                         .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 
-            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.GOOGLE);
+            var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await organizer.OrganizeMean(compositeMean.Content);
 
             return new TranslateResult(true, mean);

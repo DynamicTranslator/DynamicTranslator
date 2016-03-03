@@ -11,7 +11,7 @@ namespace DynamicTranslator.Orchestrators.Organizers
 {
     public class YandexMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.YANDEX;
+        public override TranslatorType TranslatorType => TranslatorType.Yandex;
 
         public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {

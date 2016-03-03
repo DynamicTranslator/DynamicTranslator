@@ -100,6 +100,8 @@ namespace DynamicTranslator.ViewModel
             CheckBoxTureng.IsHitTestVisible = false;
             CheckBoxYandexTranslate.IsHitTestVisible = false;
             CheckBoxSesliSozluk.IsHitTestVisible = false;
+            CheckBoxZargan.IsHitTestVisible = false;
+            CheckBoxBing.IsHitTestVisible = false;
         }
 
         private void PrepareTranslators()
@@ -107,15 +109,17 @@ namespace DynamicTranslator.ViewModel
             configuration.ClearActiveTranslators();
 
             if (CheckBoxGoogleTranslate.IsChecked != null && CheckBoxGoogleTranslate.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.GOOGLE);
+                configuration.AddTranslator(TranslatorType.Google);
             if (CheckBoxYandexTranslate.IsChecked != null && CheckBoxYandexTranslate.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.YANDEX);
+                configuration.AddTranslator(TranslatorType.Yandex);
             if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.TURENG);
+                configuration.AddTranslator(TranslatorType.Tureng);
             if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.SESLISOZLUK);
+                configuration.AddTranslator(TranslatorType.Seslisozluk);
             if (CheckBoxBing.IsChecked != null && CheckBoxBing.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.BING);
+                configuration.AddTranslator(TranslatorType.Bing);
+            if (CheckBoxZargan.IsChecked != null && CheckBoxZargan.IsChecked.Value)
+                configuration.AddTranslator(TranslatorType.Zargan);
 
             if (!configuration.ActiveTranslators.Any())
             {
@@ -134,6 +138,8 @@ namespace DynamicTranslator.ViewModel
             CheckBoxTureng.IsHitTestVisible = true;
             CheckBoxYandexTranslate.IsHitTestVisible = true;
             CheckBoxSesliSozluk.IsHitTestVisible = true;
+            CheckBoxZargan.IsHitTestVisible = true;
+            CheckBoxBing.IsHitTestVisible = true;
         }
     }
 }

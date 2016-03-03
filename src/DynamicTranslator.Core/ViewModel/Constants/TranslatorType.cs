@@ -2,10 +2,11 @@
 {
     public enum TranslatorType
     {
-        TURENG,
-        YANDEX,
-        SESLISOZLUK,
-        GOOGLE,
-        BING
+        Tureng,
+        Yandex,
+        Seslisozluk,
+        Google,
+        Bing,
+        Zargan
     }
 }

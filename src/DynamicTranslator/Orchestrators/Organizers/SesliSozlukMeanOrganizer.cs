@@ -19,7 +19,7 @@ namespace DynamicTranslator.Orchestrators.Organizers
 
     public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.SESLISOZLUK;
+        public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;
 
         public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {

@@ -34,7 +34,7 @@
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.BING;
+        public TranslatorType TranslatorType => TranslatorType.Bing;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -58,7 +58,7 @@
                     JsonConvert.SerializeObject(requestObject),
                     ParameterType.RequestBody));
 
-            var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.BING);
+            var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await meanOrganizer.OrganizeMean(response.Content);
 
             return new TranslateResult(true, mean);

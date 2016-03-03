@@ -8,16 +8,6 @@ using DynamicTranslator.Core.ViewModel.Constants;
 
 namespace DynamicTranslator.Core.Config
 {
-    #region using
-
-
-
-    #endregion
-
-    #region using
-
-    #endregion
-
     public interface IStartupConfiguration : IDictionaryBasedConfig
     {
         HashSet<TranslatorType> ActiveTranslators { get; }
@@ -33,6 +23,8 @@ namespace DynamicTranslator.Core.Config
         string GoogleAnalyticsUrl { get; }
 
         string GoogleTranslateUrl { get; }
+
+        string ZarganTranslateUrl { get; }
 
         IIocManager IocManager { get; }
 

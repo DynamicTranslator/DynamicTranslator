@@ -70,6 +70,8 @@ namespace DynamicTranslator.Core.Config
 
         public string BingTranslatorUrl => Get<string>(nameof(BingTranslatorUrl));
 
+        public string ZarganTranslateUrl => Get<string>(nameof(ZarganTranslateUrl));
+
         public void AddTranslator(TranslatorType translatorType)
         {
             ActiveTranslators.Add(translatorType);
@@ -100,6 +102,7 @@ namespace DynamicTranslator.Core.Config
             SetViaConfigurationManager(nameof(TrackingId));
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
             SetViaConfigurationManager(nameof(BingTranslatorUrl));
+            SetViaConfigurationManager(nameof(ZarganTranslateUrl));
             ActiveTranslators = new HashSet<TranslatorType>();
         }
 
@@ -112,26 +115,30 @@ namespace DynamicTranslator.Core.Config
         {
             switch (translatorType)
             {
-                case TranslatorType.GOOGLE:
+                case TranslatorType.Google:
                     return LanguageMap.ContainsValue(ToLanguageExtension)
-                        && LanguageMap.ContainsValue(fromLanguageExtension)
-                        && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.BING:
+                           && LanguageMap.ContainsValue(fromLanguageExtension)
+                           && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.Bing:
                     return LanguageMap.ContainsValue(ToLanguageExtension)
-                        && LanguageMap.ContainsValue(fromLanguageExtension)
-                        && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.SESLISOZLUK:
+                           && LanguageMap.ContainsValue(fromLanguageExtension)
+                           && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.Seslisozluk:
                     return LanguageMap.ContainsValue(ToLanguageExtension)
-                        && LanguageMap.ContainsValue(fromLanguageExtension)
-                        && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.YANDEX:
+                           && LanguageMap.ContainsValue(fromLanguageExtension)
+                           && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.Yandex:
                     return YandexLanguageMapExtensions.Contains(ToLanguageExtension)
-                        && YandexLanguageMapExtensions.Contains(fromLanguageExtension)
-                        && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.TURENG:
-                    return (fromLanguageExtension == "en" && IsToLanguageTurkish) 
-                        || (fromLanguageExtension == "tr")
-                            && ActiveTranslators.Contains(translatorType);
+                           && YandexLanguageMapExtensions.Contains(fromLanguageExtension)
+                           && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.Tureng:
+                    return (fromLanguageExtension == "en" && IsToLanguageTurkish)
+                           || (fromLanguageExtension == "tr")
+                           && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.Zargan:
+                    return (fromLanguageExtension == "en" && IsToLanguageTurkish)
+                           || (fromLanguageExtension == "tr")
+                           && ActiveTranslators.Contains(translatorType);
             }
 
             return false;
