@@ -96,4 +96,61 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="TextToSpeechButton" TargetType="{x:Type Button}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="MinWidth" Value="16" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="Border" CornerRadius="3" BorderThickness="0" ClipToBounds="False"
+                                Background="{StaticResource CloseNormal}"
+                                BorderBrush="{StaticResource NormalBorderBrush}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" Opacity=".4" BlurRadius="5" Color="Black" />
+                            </Border.Effect>
+                            <Grid>
+                                <Image Source="pack://application:,,,/Resources/texToSpeech.png" IsHitTestVisible="False"
+                                       Margin="2">
+                                    <Image.Effect>
+                                        <DropShadowEffect Direction="90" ShadowDepth="1" BlurRadius="1" />
+                                    </Image.Effect>
+                                </Image>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  RecognizesAccessKey="True" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource CloseOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ClosePressed}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Border" Property="BorderBrush"
+                                    Value="{StaticResource DefaultedBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter TargetName="Border" Property="BorderBrush"
+                                    Value="{StaticResource DefaultedBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{StaticResource DisabledBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush"
+                                    Value="{StaticResource DisabledBorderBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

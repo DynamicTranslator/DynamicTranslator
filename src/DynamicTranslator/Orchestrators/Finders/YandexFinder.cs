@@ -43,11 +43,7 @@ namespace DynamicTranslator.Orchestrators.Finders
             var address = new Uri(string.Format(configuration.YandexUrl +
                 $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
 
-            var compositeMean = await new RestClient(address)
-            {
-                Encoding = Encoding.UTF8,
-                CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
-            }.ExecutePostTaskAsync(new RestRequest(Method.POST));
+            var compositeMean = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.YANDEX);
             var mean = await organizer.OrganizeMean(compositeMean.Content);

@@ -48,8 +48,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(
                 new RestRequest(Method.GET)
-                    .AddHeader("User-Agent",
-                        "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
+                    .AddHeader("User-Agent","Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
                     .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6"));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType.TURENG);

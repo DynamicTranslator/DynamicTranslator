@@ -19,7 +19,7 @@
             <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
                   SizeChanged="NotificationWindowSizeChanged">
                 <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10"
-                        MaxHeight="Infinity" Margin="10">
+                        MaxHeight="Infinity" Margin="5">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
                     </Border.Effect>
@@ -38,6 +38,9 @@
                                    Foreground="White"
                                    FontFamily="Arial" FontSize="14" FontWeight="UltraBold" VerticalAlignment="Center"
                                    Margin="2,4,4,2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Height="20" />
+                        <Button x:Name="TextToSpeechButton" Grid.Row="0" Grid.Column="1" Width="20" Height="Auto"
+                                HorizontalAlignment="Left"
+                                Margin="3,2,0,3" Style="{StaticResource TextToSpeechButton}" Click="TextToSpeechButton_OnClick"/>
                         <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="2" Width="16" Height="Auto"
                                 HorizontalAlignment="Right"
                                 Margin="0,3,12,3" Style="{StaticResource CloseButton}" />
