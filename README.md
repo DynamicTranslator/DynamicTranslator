@@ -38,8 +38,7 @@ This project provides translation words or sentences while reading and working a
 C# , WPF
 
 This is a view while translating, the translating is showing via toast notification for translated words.
-![alt-tag](http://i57.tinypic.com/r9mrdg.png)
-
+[![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 ### Using
 It has an app.config like below. I didn't do any UI implementation yet, i think it's not necessary :), but you can do, then let's contribute !
 
