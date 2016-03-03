@@ -18,6 +18,12 @@ namespace DynamicTranslator.ViewModel
 {
     public partial class GrowlNotifiactions : IGrowlNotifications
     {
+        private readonly Notifications buffer = new Notifications();
+        public readonly Notifications Notifications;
+        private readonly IStartupConfiguration startupConfiguration;
+        private int count;
+        public bool IsDisposed;
+
         public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
         {
             InitializeComponent();
@@ -27,11 +33,6 @@ namespace DynamicTranslator.ViewModel
         }
 
         public event EventHandler OnDispose;
-        public readonly Notifications Notifications;
-        public bool IsDisposed;
-        private readonly Notifications buffer = new Notifications();
-        private readonly IStartupConfiguration startupConfiguration;
-        private int count;
 
         public void AddNotification(Notification notification)
         {
@@ -103,20 +104,22 @@ namespace DynamicTranslator.ViewModel
 
         private async void TextToSpeechButton_OnClick(object sender, RoutedEventArgs e)
         {
-            await Task.Run(
+            await Task.Run(async
                 () =>
                 {
-                    Dispatcher.InvokeAsync(
+                    await Dispatcher.InvokeAsync(
                         () =>
                         {
-                            var notification = (sender as FrameworkElement).DataContext as Notification;
+                            var notification = ((FrameworkElement) sender).DataContext as Notification;
                             using (var synthesizer = new SpeechSynthesizer())
                             {
                                 synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
                                 synthesizer.SetOutputToDefaultAudioDevice();
                                 synthesizer.Volume = 100;
                                 synthesizer.Rate = 0;
-                                synthesizer.Speak(notification.Title);
+
+                                if (notification != null)
+                                    synthesizer.Speak(notification.Title);
                             }
                         });
                 });
