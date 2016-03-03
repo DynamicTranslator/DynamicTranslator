@@ -14,7 +14,8 @@ DynamicTranslator detects your selected text where the current window/applicatio
 #### *Instantly detect text implemented.
 #### *Google Translate added.
 #### *Language Detection implemented
-#### *Bing Translate added. (2016-02-29)
+#### *Bing Translate added (2016-02-29)
+#### *Text to speech added (2016-03-03)
 
 
 ###In Turkish
