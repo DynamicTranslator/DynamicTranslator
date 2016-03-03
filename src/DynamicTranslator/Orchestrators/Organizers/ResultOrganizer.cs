@@ -1,24 +1,27 @@
-﻿namespace DynamicTranslator.Orchestrators.Organizers
+﻿#region using
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Core.Orchestrators.Organizer;
+using DynamicTranslator.Core.Service.Result;
+
+#endregion
+
+namespace DynamicTranslator.Orchestrators.Organizers
 {
-    #region using
-
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Core.Orchestrators.Model;
-    using Core.Orchestrators.Organizer;
-    using Core.Service.Result;
-
-    #endregion
-
     public class ResultOrganizer : IResultOrganizer
     {
         private readonly IResultService resultService;
 
         public ResultOrganizer(IResultService resultService)
         {
+            if (resultService == null)
+                throw new ArgumentNullException(nameof(resultService));
+
             this.resultService = resultService;
         }
 

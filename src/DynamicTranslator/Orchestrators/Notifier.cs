@@ -1,21 +1,25 @@
-﻿namespace DynamicTranslator.Orchestrators
+﻿#region using
+
+using System;
+using System.Threading.Tasks;
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Orchestrators;
+using DynamicTranslator.Core.ViewModel;
+using DynamicTranslator.Core.ViewModel.Interfaces;
+
+#endregion
+
+namespace DynamicTranslator.Orchestrators
 {
-    #region using
-
-    using System.Threading.Tasks;
-    using Core.Dependency.Markers;
-    using Core.Orchestrators;
-    using Core.ViewModel;
-    using Core.ViewModel.Interfaces;
-
-    #endregion
-
     public class Notifier : INotifier, ITransientDependency
     {
         private readonly IGrowlNotifications growlNotifiactions;
 
         public Notifier(IGrowlNotifications growlNotifiactions)
         {
+            if (growlNotifiactions == null)
+                throw new ArgumentNullException(nameof(growlNotifiactions));
+
             this.growlNotifiactions = growlNotifiactions;
         }
 

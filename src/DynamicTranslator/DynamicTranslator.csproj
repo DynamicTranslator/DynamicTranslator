@@ -161,6 +161,7 @@
     <Compile Include="Orchestrators\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Feeder.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
+    <Compile Include="Orchestrators\Organizers\AbstractMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\BingTranslatorMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\GoogleTranslateMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />

@@ -46,7 +46,10 @@
         private Point mouseSecondPoint;
         private IDisposable syncObserver;
 
-        public TranslatorBootstrapper(MainWindow mainWindow, GrowlNotifiactions growlNotifications, IStartupConfiguration startupConfiguration, ICacheManager cacheManager)
+        public TranslatorBootstrapper(MainWindow mainWindow,
+            GrowlNotifiactions growlNotifications,
+            IStartupConfiguration startupConfiguration,
+            ICacheManager cacheManager)
         {
             if (mainWindow == null)
                 throw new ArgumentNullException(nameof(mainWindow));
@@ -94,8 +97,7 @@
             mainWindow.Dispatcher.ShutdownFinished += (sender, args) =>
             {
                 Dispose();
-                GC.SuppressFinalize(mainWindow);
-                GC.Collect();
+                GC.SuppressFinalize(this);
             };
         }
 
@@ -292,7 +294,7 @@
                                             return;
 
                                         await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
+                                            new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
                                             );
 
                                         await FlushCopyCommandAsync();

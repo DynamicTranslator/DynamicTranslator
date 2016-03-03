@@ -1,21 +1,24 @@
-﻿namespace DynamicTranslator.Orchestrators.Observers
+﻿#region using
+
+using System;
+using System.Threading.Tasks;
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Service.GoogleAnalytics;
+using DynamicTranslator.ViewModel.Model;
+
+#endregion
+
+namespace DynamicTranslator.Orchestrators.Observers
 {
-    #region using
-
-    using System;
-    using System.Threading.Tasks;
-    using Core.Dependency.Markers;
-    using Core.Service.GoogleAnalytics;
-    using ViewModel.Model;
-
-    #endregion
-
     public class Feeder : IObserver<long>, ISingletonDependency
     {
         private readonly IGoogleAnalyticsService googleAnalyticsService;
 
         public Feeder(IGoogleAnalyticsService googleAnalyticsService)
         {
+            if (googleAnalyticsService == null)
+                throw new ArgumentNullException(nameof(googleAnalyticsService));
+
             this.googleAnalyticsService = googleAnalyticsService;
         }
 
@@ -27,9 +30,9 @@
         {
         }
 
-        public void OnNext(long value)
+        public async void OnNext(long value)
         {
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
                 await googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),

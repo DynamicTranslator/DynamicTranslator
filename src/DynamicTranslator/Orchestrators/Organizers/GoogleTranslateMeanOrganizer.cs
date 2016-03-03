@@ -1,23 +1,22 @@
-﻿namespace DynamicTranslator.Orchestrators.Organizers
+﻿#region using
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Core.ViewModel.Constants;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+#endregion
+
+namespace DynamicTranslator.Orchestrators.Organizers
 {
-    #region using
-
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Core.Extensions;
-    using Core.Orchestrators.Model;
-    using Core.Orchestrators.Organizer;
-    using Core.ViewModel.Constants;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-
-    #endregion
-
-    public class GoogleTranslateMeanOrganizer : IMeanOrganizer
+    public class GoogleTranslateMeanOrganizer : AbstractMeanOrganizer
     {
-        public TranslatorType TranslatorType => TranslatorType.GOOGLE;
+        public override TranslatorType TranslatorType => TranslatorType.GOOGLE;
 
-        public async Task<Maybe<string>> OrganizeMean(string text)
+        public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
             return await Task.Run(() =>
             {

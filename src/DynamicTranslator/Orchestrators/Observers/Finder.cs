@@ -56,6 +56,9 @@
             if (languageDetector == null)
                 throw new ArgumentNullException(nameof(languageDetector));
 
+            if (googleAnalytics == null)
+                throw new ArgumentNullException(nameof(googleAnalytics));
+
             this.notifier = notifier;
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
@@ -73,9 +76,9 @@
         {
         }
 
-        public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
+        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            Task.Run(async () =>
+           await Task.Run(async () =>
             {
                 var currentString = value.EventArgs.CurrentString;
 
@@ -84,10 +87,10 @@
 
                 previousString = currentString;
 
-                var languageExtension = await languageDetector.DetectLanguage(currentString);
+                var fromLanguageExtension = await languageDetector.DetectLanguage(currentString);
 
                 var results = await cache.GetAsync(currentString,
-                    async () => await Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, languageExtension)))))
+                    async () => await Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension)))))
                     .ConfigureAwait(false);
 
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
@@ -99,7 +102,8 @@
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "notification").ConfigureAwait(false);
+                    "dynamictranslator", 
+                    "notification").ConfigureAwait(false);
             });
         }
     }

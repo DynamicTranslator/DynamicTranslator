@@ -1,12 +1,17 @@
-﻿namespace DynamicTranslator.Core.Config
-{
-    #region using
+﻿#region using
 
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Dependency.Manager;
-    using ViewModel.Constants;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+#endregion
+
+namespace DynamicTranslator.Core.Config
+{
+
+    #region using
 
     #endregion
 
@@ -96,26 +101,6 @@
             SetViaConfigurationManager(nameof(YandexDetectTextUrl));
             SetViaConfigurationManager(nameof(BingTranslatorUrl));
             ActiveTranslators = new HashSet<TranslatorType>();
-
-        }
-
-        public bool IsAppropriateForTranslation(TranslatorType translatorType)
-        {
-            switch (translatorType)
-            {
-                case TranslatorType.GOOGLE:
-                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.BING:
-                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.SESLISOZLUK:
-                    return LanguageMap.ContainsValue(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.YANDEX:
-                    return YandexLanguageMapExtensions.Contains(ToLanguageExtension) && ActiveTranslators.Contains(translatorType);
-                case TranslatorType.TURENG:
-                    return IsToLanguageTurkish && ActiveTranslators.Contains(translatorType);
-            }
-
-            return false;
         }
 
         public void RemoveTranslator(TranslatorType translatorType)
@@ -123,12 +108,39 @@
             ActiveTranslators.Remove(translatorType);
         }
 
+        public bool IsAppropriateForTranslation(TranslatorType translatorType, string fromLanguageExtension)
+        {
+            switch (translatorType)
+            {
+                case TranslatorType.GOOGLE:
+                    return LanguageMap.ContainsValue(ToLanguageExtension)
+                        && LanguageMap.ContainsValue(fromLanguageExtension)
+                        && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.BING:
+                    return LanguageMap.ContainsValue(ToLanguageExtension)
+                        && LanguageMap.ContainsValue(fromLanguageExtension)
+                        && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.SESLISOZLUK:
+                    return LanguageMap.ContainsValue(ToLanguageExtension)
+                        && LanguageMap.ContainsValue(fromLanguageExtension)
+                        && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.YANDEX:
+                    return YandexLanguageMapExtensions.Contains(ToLanguageExtension)
+                        && YandexLanguageMapExtensions.Contains(fromLanguageExtension)
+                        && ActiveTranslators.Contains(translatorType);
+                case TranslatorType.TURENG:
+                    return (fromLanguageExtension == "en" && IsToLanguageTurkish) 
+                        || (fromLanguageExtension == "tr")
+                            && ActiveTranslators.Contains(translatorType);
+            }
+
+            return false;
+        }
+
         private void InitializeClientIdIfAbsent()
         {
             if (string.IsNullOrEmpty(ClientId))
-            {
                 SetAndPersistConfigurationManager(nameof(ClientId), Guid.NewGuid().ToString());
-            }
         }
 
         private void InitLanguageMap()

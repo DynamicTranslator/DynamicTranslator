@@ -1,10 +1,15 @@
-﻿namespace DynamicTranslator.Core.Extensions
-{
-    #region using
+﻿#region using
 
-    using System;
-    using System.Text;
-    using System.Text.RegularExpressions;
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
+
+#endregion
+
+namespace DynamicTranslator.Core.Extensions
+{
+
+    #region using
 
     #endregion
 
@@ -72,6 +77,56 @@
         {
             var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return Encoding.ASCII.GetString(bytes);
+        }
+
+        public static string GetEncodedUrlForTurkishCharacters(this string textToEncode)
+        {
+            var temp = textToEncode;
+
+            for (var i = 0; i < temp.Length; i++)
+            {
+                switch (temp[i])
+                {
+                    case 'ç':
+                        temp = temp.Replace("ç", "%C3%A7");
+                        break;
+                    case 'Ç':
+                        temp = temp.Replace("Ç", "%C3%87");
+                        break;
+                    case 'ğ':
+                        temp = temp.Replace("ğ", "%C4%9F");
+                        break;
+                    case 'Ğ':
+                        temp = temp.Replace("Ğ", "%C4%9E");
+                        break;
+                    case 'ı':
+                        temp = temp.Replace("ı", "%C4%B1");
+                        break;
+                    case 'İ':
+                        temp = temp.Replace("İ", "%C4%B0");
+                        break;
+                    case 'ö':
+                        temp = temp.Replace("ö", "%C3%B6");
+                        break;
+                    case 'Ö':
+                        temp = temp.Replace("Ö", "%C3%96");
+                        break;
+                    case 'ş':
+                        temp = temp.Replace("ş", "%C5%9F");
+                        break;
+                    case 'Ş':
+                        temp = temp.Replace("Ş", "%C5%9E");
+                        break;
+                    case 'ü':
+                        temp = temp.Replace("ü", "%C3%BC");
+                        break;
+                    case 'Ü':
+                        temp = temp.Replace("Ü", "%C3%9C");
+                        break;
+                }
+            }
+
+            return temp;
         }
     }
 }

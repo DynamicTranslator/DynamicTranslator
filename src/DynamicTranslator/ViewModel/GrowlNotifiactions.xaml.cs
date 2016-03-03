@@ -64,6 +64,7 @@
             OnDispose.InvokeSafely(this, new EventArgs());
 
             IsDisposed = true;
+            GC.SuppressFinalize(this);
         }
 
         public void RemoveNotification(Notification notification)

@@ -1,20 +1,19 @@
-﻿namespace DynamicTranslator.Orchestrators.Organizers
+﻿#region using
+
+using System.Threading.Tasks;
+using System.Xml;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+#endregion
+
+namespace DynamicTranslator.Orchestrators.Organizers
 {
-    #region using
-
-    using System.Threading.Tasks;
-    using System.Xml;
-    using Core.Orchestrators.Model;
-    using Core.Orchestrators.Organizer;
-    using Core.ViewModel.Constants;
-
-    #endregion
-
-    public class YandexMeanOrganizer : IMeanOrganizer
+    public class YandexMeanOrganizer : AbstractMeanOrganizer
     {
-        public TranslatorType TranslatorType => TranslatorType.YANDEX;
+        public override TranslatorType TranslatorType => TranslatorType.YANDEX;
 
-        public async Task<Maybe<string>> OrganizeMean(string text)
+        public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
             return await Task.Run(() =>
             {

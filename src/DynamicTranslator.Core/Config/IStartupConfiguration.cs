@@ -10,7 +10,7 @@ namespace DynamicTranslator.Core.Config
 {
     #region using
 
-    
+
 
     #endregion
 
@@ -74,7 +74,7 @@ namespace DynamicTranslator.Core.Config
 
         void Initialize();
 
-        bool IsAppropriateForTranslation(TranslatorType translatorType);
+        bool IsAppropriateForTranslation(TranslatorType translatorType, string fromLanguageExtension);
 
         void RemoveTranslator(TranslatorType translatorType);
     }
