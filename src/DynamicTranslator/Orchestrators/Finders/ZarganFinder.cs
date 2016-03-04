@@ -44,7 +44,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                         .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
-            var mean = await organizer.OrganizeMean(compositeMean.Content);
+            var mean = await organizer.OrganizeMean(compositeMean.Content, translateRequest.FromLanguageExtension);
 
             return new TranslateResult(true, mean);
         }
