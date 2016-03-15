@@ -1,0 +1,5 @@
+version: 1.0.{build}
+before-build:
+  - nuget restore
+build:
+  verbosity: minimal

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator", "Dynami
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Core", "DynamicTranslator.Core\DynamicTranslator.Core.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Test", "DynamicTranslator.Test\DynamicTranslator.Test.csproj", "{27BFF15B-0CAB-4DCB-8CBE-B81E7874D961}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27BFF15B-0CAB-4DCB-8CBE-B81E7874D961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27BFF15B-0CAB-4DCB-8CBE-B81E7874D961}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27BFF15B-0CAB-4DCB-8CBE-B81E7874D961}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27BFF15B-0CAB-4DCB-8CBE-B81E7874D961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
