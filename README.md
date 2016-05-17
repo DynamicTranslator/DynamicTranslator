@@ -41,6 +41,7 @@ This is a view while translating, the translating is showing via toast notificat
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
  
 ##Powered By
+This project would not have been possible without the support of JetBrains. We thank them generously for providing us with the ReSharper licenses necessary to make us productive developers.
 
 <p><a href="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" target="_blank"><img src="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" width="142" height="29" alt="ReSharper" data-canonical-src="http://www.jetbrains.com/img/logos/logo_resharper_small.gif" style="max-width:100%;"></a></p>
   
