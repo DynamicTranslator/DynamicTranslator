@@ -1,9 +1,11 @@
+using System;
+using System.Threading.Tasks;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
+    
 
     #endregion
 
@@ -14,6 +16,16 @@ namespace DynamicTranslator.Core.Domain.Uow
     /// </summary>
     public interface IActiveUnitOfWork
     {
+        /// <summary>
+        ///     Is this UOW disposed?
+        /// </summary>
+        bool IsDisposed { get; }
+
+        /// <summary>
+        ///     Gets if this unit of work is transactional.
+        /// </summary>
+        UnitOfWorkOptions Options { get; }
+
         /// <summary>
         ///     This event is raised when this UOW is successfully completed.
         /// </summary>
@@ -28,16 +40,6 @@ namespace DynamicTranslator.Core.Domain.Uow
         ///     This event is raised when this UOW is failed.
         /// </summary>
         event EventHandler<UnitOfWorkFailedEventArgs> Failed;
-
-        /// <summary>
-        ///     Is this UOW disposed?
-        /// </summary>
-        bool IsDisposed { get; }
-
-        /// <summary>
-        ///     Gets if this unit of work is transactional.
-        /// </summary>
-        UnitOfWorkOptions Options { get; }
 
         /// <summary>
         ///     Saves all changes until now in this unit of work.

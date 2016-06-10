@@ -1,16 +1,21 @@
-﻿namespace DynamicTranslator.Orchestrators.Detector
+﻿using System;
+using System.Net.Cache;
+using System.Text;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Orchestrators.Detector;
+using DynamicTranslator.Core.Orchestrators.Model.Yandex;
+
+using Newtonsoft.Json;
+
+using RestSharp;
+
+namespace DynamicTranslator.Orchestrators.Detector
 {
     #region using
 
-    using System;
-    using System.Net.Cache;
-    using System.Text;
-    using System.Threading.Tasks;
-    using DynamicTranslator.Core.Config;
-    using DynamicTranslator.Core.Orchestrators.Detector;
-    using DynamicTranslator.Core.Orchestrators.Model.Yandex;
-    using Newtonsoft.Json;
-    using RestSharp;
+    
 
     #endregion
 

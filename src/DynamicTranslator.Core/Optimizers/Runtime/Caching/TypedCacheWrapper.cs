@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Extensions;
+    
 
     #endregion
 
@@ -23,16 +26,6 @@
         {
             InternalCache = internalCache;
         }
-
-        public TimeSpan DefaultSlidingExpireTime
-        {
-            get { return InternalCache.DefaultSlidingExpireTime; }
-            set { InternalCache.DefaultSlidingExpireTime = value; }
-        }
-
-        public ICache InternalCache { get; }
-
-        public string Name => InternalCache.Name;
 
         public void Clear()
         {
@@ -88,5 +81,15 @@
         {
             return InternalCache.SetAsync(key.ToString(), value, slidingExpireTime);
         }
+
+        public TimeSpan DefaultSlidingExpireTime
+        {
+            get { return InternalCache.DefaultSlidingExpireTime; }
+            set { InternalCache.DefaultSlidingExpireTime = value; }
+        }
+
+        public ICache InternalCache { get; }
+
+        public string Name => InternalCache.Name;
     }
 }

@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+
 using DynamicTranslator.Core.Config;
 using DynamicTranslator.Core.Orchestrators.Finder;
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using RestSharp;
 
 #endregion
@@ -18,6 +20,9 @@ namespace DynamicTranslator.Orchestrators.Finders
 {
     public class GoogleTranslateFinder : IMeanFinder
     {
+        private readonly IStartupConfiguration configuration;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+
         public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
         {
             if (meanOrganizerFactory == null)
@@ -30,10 +35,6 @@ namespace DynamicTranslator.Orchestrators.Finders
             this.configuration = configuration;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.Google;
-        private readonly IStartupConfiguration configuration;
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
-
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
@@ -45,7 +46,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                 configuration.ToLanguageExtension,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
-            var compositeMean = await new RestClient(uri) { Encoding = Encoding.UTF8 }
+            var compositeMean = await new RestClient(uri) {Encoding = Encoding.UTF8}
                 .ExecuteGetTaskAsync(
                     new RestRequest(Method.GET)
                         .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
@@ -58,5 +59,7 @@ namespace DynamicTranslator.Orchestrators.Finders
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Google;
     }
 }

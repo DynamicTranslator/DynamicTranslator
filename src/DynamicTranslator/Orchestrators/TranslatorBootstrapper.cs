@@ -1,31 +1,35 @@
-﻿namespace DynamicTranslator.Orchestrators
-{
-    #region using
+﻿using System;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Interop;
+using System.Windows.Threading;
 
-    using System;
-    using System.Reactive.Concurrency;
-    using System.Reactive.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Forms;
-    using System.Windows.Interop;
-    using System.Windows.Threading;
-    using Core.Config;
-    using Core.Dependency.Manager;
-    using Core.Dependency.Markers;
-    using Core.Extensions;
-    using Core.Optimizers.Runtime.Caching;
-    using Core.Optimizers.Runtime.Caching.Extensions;
-    using Core.Orchestrators;
-    using Core.Orchestrators.Event;
-    using Core.Orchestrators.Model;
-    using Gma.System.MouseKeyHook;
-    using Observers;
-    using Utility;
-    using ViewModel;
-    using Clipboard = System.Windows.Clipboard;
-    using Point = System.Drawing.Point;
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions;
+using DynamicTranslator.Core.Orchestrators;
+using DynamicTranslator.Core.Orchestrators.Event;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Orchestrators.Observers;
+using DynamicTranslator.Utility;
+using DynamicTranslator.ViewModel;
+
+using Gma.System.MouseKeyHook;
+
+using Clipboard = System.Windows.Clipboard;
+using Point = System.Drawing.Point;
+
+namespace DynamicTranslator.Orchestrators
+{
+
+    #region using
 
     #endregion
 
@@ -72,8 +76,6 @@
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
-        public bool IsInitialized { get; private set; }
-
         public void Dispose()
         {
             DecomposeRoot();
@@ -100,6 +102,8 @@
                 GC.SuppressFinalize(this);
             };
         }
+
+        public bool IsInitialized { get; private set; }
 
         private void CompositionRoot()
         {
@@ -165,9 +169,10 @@
             SendKeys.Flush();
         }
 
-        private async Task FlushCopyCommandAsync()
+        private Task FlushCopyCommandAsync()
         {
-            await Task.Run(() => { SendKeys.Flush(); });
+            SendKeys.Flush();
+            return Task.FromResult(0);
         }
 
         private async void MouseDoubleClicked(object sender, MouseEventArgs e)
@@ -212,11 +217,9 @@
 
         private Task SendCopyCommandAsync()
         {
-            return Task.Run(() =>
-            {
-                SendKeys.SendWait("^c");
-                SendKeys.Flush();
-            });
+            SendKeys.SendWait("^c");
+            SendKeys.Flush();
+            return Task.FromResult(0);
         }
 
         private void StartHooks()
@@ -246,9 +249,10 @@
                 .Subscribe(IocManager.Instance.Resolve<Feeder>());
         }
 
-        private async Task StartObserversAsync()
+        private Task StartObserversAsync()
         {
-            await Task.Run(() => { StartObservers(); });
+            StartObservers();
+            return Task.FromResult(0);
         }
 
         private void SubscribeLocalevents()
@@ -294,14 +298,15 @@
                                             return;
 
                                         await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                            new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
+                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
                                             );
 
                                         await FlushCopyCommandAsync();
                                     });
                                 }
                             }
-                        }, DispatcherPriority.Background);
+                        },
+                            DispatcherPriority.Background);
                     });
 
                     break;

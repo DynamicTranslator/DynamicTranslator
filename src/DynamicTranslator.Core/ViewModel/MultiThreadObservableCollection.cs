@@ -1,11 +1,13 @@
-﻿namespace DynamicTranslator.Core.ViewModel
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Threading;
+
+namespace DynamicTranslator.Core.ViewModel
 {
     #region using
 
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.Windows.Threading;
+    
 
     #endregion
 
@@ -20,13 +22,13 @@
             {
                 foreach (var @delegate in CollectionChanged.GetInvocationList())
                 {
-                    var nh = (NotifyCollectionChangedEventHandler) @delegate;
+                    var nh = (NotifyCollectionChangedEventHandler)@delegate;
                     var dispObj = nh.Target as DispatcherObject;
                     var dispatcher = dispObj?.Dispatcher;
                     if (dispatcher != null && !dispatcher.CheckAccess())
                     {
                         dispatcher.BeginInvoke(
-                            (Action) (() => nh.Invoke(this,
+                            (Action)(() => nh.Invoke(this,
                                 new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))),
                             DispatcherPriority.DataBind);
                         continue;

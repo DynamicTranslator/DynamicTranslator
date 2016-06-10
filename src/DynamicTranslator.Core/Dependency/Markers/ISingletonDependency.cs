@@ -1,6 +1,4 @@
 ﻿namespace DynamicTranslator.Core.Dependency.Markers
 {
-    public interface ISingletonDependency
-    {
-    }
+    public interface ISingletonDependency {}
 }

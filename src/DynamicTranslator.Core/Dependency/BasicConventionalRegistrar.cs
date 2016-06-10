@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Dependency
+﻿using Castle.DynamicProxy;
+using Castle.MicroKernel.Registration;
+
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Dependency
 {
     #region using
 
-    using Castle.DynamicProxy;
-    using Castle.MicroKernel.Registration;
-    using Markers;
+    
 
     #endregion
 
@@ -15,32 +18,32 @@
             //Transient
             context.IocManager.IocContainer.Register(
                 Classes.FromAssembly(context.Assembly)
-                    .IncludeNonPublicTypes()
-                    .BasedOn<ITransientDependency>()
-                    .WithService.Self()
-                    .WithService.DefaultInterfaces()
-                    .LifestyleTransient()
-                    .WithServiceAllInterfaces()
+                       .IncludeNonPublicTypes()
+                       .BasedOn<ITransientDependency>()
+                       .WithService.Self()
+                       .WithService.DefaultInterfaces()
+                       .LifestyleTransient()
+                       .WithServiceAllInterfaces()
                 );
 
             //Singleton
             context.IocManager.IocContainer.Register(
                 Classes.FromAssembly(context.Assembly)
-                    .IncludeNonPublicTypes()
-                    .BasedOn<ISingletonDependency>()
-                    .WithService.Self()
-                    .WithService.DefaultInterfaces()
-                    .LifestyleSingleton()
-                    .WithServiceAllInterfaces()
+                       .IncludeNonPublicTypes()
+                       .BasedOn<ISingletonDependency>()
+                       .WithService.Self()
+                       .WithService.DefaultInterfaces()
+                       .LifestyleSingleton()
+                       .WithServiceAllInterfaces()
                 );
 
             //Windsor Interceptors
             context.IocManager.IocContainer.Register(
                 Classes.FromAssembly(context.Assembly)
-                    .IncludeNonPublicTypes()
-                    .BasedOn<IInterceptor>()
-                    .WithService.Self()
-                    .LifestyleTransient()
+                       .IncludeNonPublicTypes()
+                       .BasedOn<IInterceptor>()
+                       .WithService.Self()
+                       .LifestyleTransient()
                 );
         }
     }

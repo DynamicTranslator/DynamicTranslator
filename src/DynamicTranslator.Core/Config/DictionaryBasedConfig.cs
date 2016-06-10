@@ -1,11 +1,14 @@
-﻿namespace DynamicTranslator.Core.Config
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+
+using DynamicTranslator.Core.Extensions;
+
+namespace DynamicTranslator.Core.Config
 {
     #region using
 
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using Extensions;
+    
 
     #endregion
 
@@ -29,7 +32,7 @@
             var value = this[name];
             return value == null
                 ? default(T)
-                : (T) Convert.ChangeType(value, typeof (T));
+                : (T)Convert.ChangeType(value, typeof(T));
         }
 
         public object Get(string name)
@@ -48,7 +51,7 @@
 
         public T Get<T>(string name, T defaultValue)
         {
-            return (T) Get(name, (object) defaultValue);
+            return (T)Get(name, (object)defaultValue);
         }
 
         public T GetOrCreate<T>(string name, Func<T> creator)
@@ -59,7 +62,7 @@
                 value = creator();
                 Set(name, value);
             }
-            return (T) value;
+            return (T)value;
         }
 
         public void Set<T>(string name, T value)

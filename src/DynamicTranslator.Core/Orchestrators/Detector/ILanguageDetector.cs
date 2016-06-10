@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Detector
+﻿using System.Threading.Tasks;
+
+namespace DynamicTranslator.Core.Orchestrators.Detector
 {
     #region using
 
-    using System.Threading.Tasks;
+    
 
     #endregion
 

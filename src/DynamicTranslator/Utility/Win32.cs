@@ -1,9 +1,11 @@
-﻿namespace DynamicTranslator.Utility
+﻿using System;
+using System.Runtime.InteropServices;
+
+namespace DynamicTranslator.Utility
 {
     #region using
 
-    using System;
-    using System.Runtime.InteropServices;
+    
 
     #endregion
 

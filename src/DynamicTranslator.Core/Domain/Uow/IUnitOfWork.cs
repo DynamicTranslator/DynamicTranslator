@@ -1,8 +1,10 @@
+using DynamicTranslator.Core.Dependency.Markers;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using Dependency.Markers;
+    
 
     #endregion
 

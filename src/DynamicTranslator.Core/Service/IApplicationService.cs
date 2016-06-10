@@ -1,6 +1,4 @@
 ﻿namespace DynamicTranslator.Core.Service
 {
-    public interface IApplicationService
-    {
-    }
+    public interface IApplicationService {}
 }

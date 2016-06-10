@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Orchestrators
+﻿using System;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Orchestrators.Event;
+
+namespace DynamicTranslator.Core.Orchestrators
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Event;
+    
 
     #endregion
 

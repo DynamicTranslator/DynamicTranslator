@@ -1,10 +1,12 @@
-﻿namespace DynamicTranslator.Core.Extensions
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+
+namespace DynamicTranslator.Core.Extensions
 {
     #region using
 
-    using System;
-    using System.ComponentModel;
-    using System.Threading.Tasks;
+    
 
     #endregion
 
@@ -17,7 +19,7 @@
         /// <param name="sender">Source of the event</param>
         public static void InvokeSafely(this PropertyChangedEventHandler eventHandler, object sender)
         {
-            eventHandler.InvokeSafely(sender, (PropertyChangedEventArgs) EventArgs.Empty);
+            eventHandler.InvokeSafely(sender, (PropertyChangedEventArgs)EventArgs.Empty);
         }
 
         /// <summary>

@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL
+﻿using DBreeze.Transactions;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL
 {
     #region using
 
-    using DBreeze.Transactions;
+    
 
     #endregion
 

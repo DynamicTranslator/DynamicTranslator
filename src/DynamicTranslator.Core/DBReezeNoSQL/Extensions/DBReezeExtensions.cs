@@ -1,9 +1,12 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Extensions
+﻿using DBreeze.DataTypes;
+
+using DynamicTranslator.Core.Helper;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Extensions
 {
     #region using
 
-    using DBreeze.DataTypes;
-    using Helper;
+    
 
     #endregion
 
@@ -13,7 +16,7 @@
         {
             if (returnedRow.Exists)
             {
-                return (TEntity) ObjectHelper.ByteArrayToObject(returnedRow.Value);
+                return (TEntity)ObjectHelper.ByteArrayToObject(returnedRow.Value);
             }
 
             return default(TEntity);

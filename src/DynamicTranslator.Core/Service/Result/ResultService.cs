@@ -1,11 +1,14 @@
-﻿namespace DynamicTranslator.Core.Service.Result
+﻿using System.Threading.Tasks;
+
+using DynamicTranslator.Core.DBReezeNoSQL.Repository.TranslateResultRepository;
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Orchestrators.Model;
+
+namespace DynamicTranslator.Core.Service.Result
 {
     #region using
 
-    using System.Threading.Tasks;
-    using DBReezeNoSQL.Repository.TranslateResultRepository;
-    using Dependency.Markers;
-    using Orchestrators.Model;
+    
 
     #endregion
 

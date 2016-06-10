@@ -1,10 +1,12 @@
+using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+
 namespace DynamicTranslator.Core.Domain.Repository
 {
     #region using
 
-    using System;
-    using System.Linq.Expressions;
-    using System.Threading.Tasks;
+    
 
     #endregion
 
@@ -27,11 +29,11 @@ namespace DynamicTranslator.Core.Domain.Repository
 
         protected static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
         {
-            var lambdaParam = Expression.Parameter(typeof (TEntity));
+            var lambdaParam = Expression.Parameter(typeof(TEntity));
 
             var lambdaBody = Expression.Equal(
                 Expression.PropertyOrField(lambdaParam, "Id"),
-                Expression.Constant(id, typeof (TPrimaryKey))
+                Expression.Constant(id, typeof(TPrimaryKey))
                 );
 
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);

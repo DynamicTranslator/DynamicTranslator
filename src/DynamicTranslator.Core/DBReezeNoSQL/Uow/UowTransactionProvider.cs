@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
+﻿using DBreeze.Transactions;
+
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Domain.Uow;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
 {
     #region using
 
-    using DBreeze.Transactions;
-    using Dependency.Markers;
-    using Domain.Uow;
+    
 
     #endregion
 

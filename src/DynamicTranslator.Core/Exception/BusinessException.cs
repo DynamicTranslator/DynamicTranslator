@@ -2,24 +2,20 @@
 {
     #region using
 
-    using System;
+    
 
     #endregion
 
-    public class BusinessException : Exception
+    public class BusinessException : System.Exception
     {
-        public BusinessException(string message, Exception ex, object[] messageParameters) : base(message, ex)
+        public BusinessException(string message, System.Exception ex, object[] messageParameters) : base(message, ex)
         {
             MessageParameters = messageParameters;
         }
 
-        public BusinessException(string message, Exception ex) : base(message, ex)
-        {
-        }
+        public BusinessException(string message, System.Exception ex) : base(message, ex) {}
 
-        public BusinessException(string message) : base(message)
-        {
-        }
+        public BusinessException(string message) : base(message) {}
 
         public object[] MessageParameters { get; set; }
 

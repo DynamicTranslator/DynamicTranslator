@@ -2,9 +2,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Extensions;
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

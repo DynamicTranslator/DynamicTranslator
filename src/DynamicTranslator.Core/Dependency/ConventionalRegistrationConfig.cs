@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Dependency
+﻿using DynamicTranslator.Core.Config;
+
+namespace DynamicTranslator.Core.Dependency
 {
     #region using
 
-    using Config;
+    
 
     #endregion
 

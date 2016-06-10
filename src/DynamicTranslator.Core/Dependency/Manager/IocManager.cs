@@ -1,15 +1,19 @@
-﻿namespace DynamicTranslator.Core.Dependency.Manager
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
+
+using Castle.MicroKernel.Registration;
+using Castle.Windsor;
+using Castle.Windsor.Installer;
+
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Dependency.Manager
 {
     #region using
 
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using Castle.MicroKernel.Registration;
-    using Castle.Windsor;
-    using Castle.Windsor.Installer;
-    using Markers;
+    
 
     #endregion
 
@@ -47,11 +51,6 @@
         public static IocManager Instance { get; private set; }
 
         /// <summary>
-        ///     Reference to the Castle Windsor Container.
-        /// </summary>
-        public IWindsorContainer IocContainer { get; }
-
-        /// <summary>
         ///     Adds a dependency registrar for conventional registration.
         /// </summary>
         /// <param name="registrar">dependency registrar</param>
@@ -77,7 +76,7 @@
         /// <typeparam name="TType">Type to check</typeparam>
         public bool IsRegistered<TType>()
         {
-            return IocContainer.Kernel.HasComponent(typeof (TType));
+            return IocContainer.Kernel.HasComponent(typeof(TType));
         }
 
         /// <summary>
@@ -225,6 +224,11 @@
         {
             return IocContainer.Resolve(type, argumentsAsAnonymousType);
         }
+
+        /// <summary>
+        ///     Reference to the Castle Windsor Container.
+        /// </summary>
+        public IWindsorContainer IocContainer { get; }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)
             where T : class

@@ -1,9 +1,11 @@
-﻿namespace DynamicTranslator.Core.Orchestrators
+﻿using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+namespace DynamicTranslator.Core.Orchestrators
 {
     #region using
 
-    using Dependency.Markers;
-    using ViewModel.Constants;
+    
 
     #endregion
 

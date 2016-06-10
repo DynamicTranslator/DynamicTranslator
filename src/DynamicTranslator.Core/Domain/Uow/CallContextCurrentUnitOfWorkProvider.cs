@@ -1,13 +1,17 @@
-﻿namespace DynamicTranslator.Core.Domain.Uow
+﻿using System.Collections.Concurrent;
+using System.Runtime.Remoting.Messaging;
+
+using Castle.Core;
+using Castle.Core.Logging;
+
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Exception;
+
+namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System.Collections.Concurrent;
-    using System.Runtime.Remoting.Messaging;
-    using Castle.Core;
-    using Castle.Core.Logging;
-    using Dependency.Markers;
-    using Exception;
+    
 
     #endregion
 
@@ -23,6 +27,8 @@
             Logger = NullLogger.Instance;
         }
 
+        public ILogger Logger { get; set; }
+
         /// <inheritdoc />
         [DoNotWire]
         public IUnitOfWork Current
@@ -30,8 +36,6 @@
             get { return GetCurrentUow(Logger); }
             set { SetCurrentUow(value, Logger); }
         }
-
-        public ILogger Logger { get; set; }
 
         private static void ExitFromCurrentUowScope(ILogger logger)
         {

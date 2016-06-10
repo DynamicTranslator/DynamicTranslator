@@ -1,11 +1,13 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
+﻿using DynamicTranslator.Core.Dependency.Extensions;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
 {
     #region using
 
-    using Caching;
-    using Dependency.Extensions;
-    using Dependency.Manager;
-    using Dependency.Markers;
+    
 
     #endregion
 

@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Extensions
+﻿using System.Collections.Generic;
+
+namespace DynamicTranslator.Core.Extensions
 {
     #region using
 
-    using System.Collections.Generic;
+    
 
     #endregion
 
@@ -19,7 +21,7 @@
             object valueObj;
             if (dictionary.TryGetValue(key, out valueObj) && valueObj is T)
             {
-                value = (T) valueObj;
+                value = (T)valueObj;
                 return true;
             }
 

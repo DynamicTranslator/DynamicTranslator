@@ -1,11 +1,14 @@
+using System;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Exception;
+using DynamicTranslator.Core.Extensions;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Exception;
-    using Extensions;
+    
 
     #endregion
 
@@ -17,7 +20,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <summary>
         ///     A reference to the exception if this unit of work failed.
         /// </summary>
-        private Exception _exception;
+        private System.Exception _exception;
 
         /// <summary>
         ///     Is <see cref="Begin" /> method called before?
@@ -44,6 +47,11 @@ namespace DynamicTranslator.Core.Domain.Uow
             Id = Guid.NewGuid().ToString("N");
         }
 
+        /// <summary>
+        ///     Gets default UOW options.
+        /// </summary>
+        protected IUnitOfWorkDefaultOptions DefaultOptions { get; private set; }
+
         /// <inheritdoc />
         public event EventHandler Completed;
 
@@ -52,26 +60,6 @@ namespace DynamicTranslator.Core.Domain.Uow
 
         /// <inheritdoc />
         public event EventHandler<UnitOfWorkFailedEventArgs> Failed;
-
-        /// <summary>
-        ///     Reference to current session.
-        /// </summary>
-        public string Id { get; }
-
-        /// <summary>
-        ///     Gets a value indicates that this unit of work is disposed or not.
-        /// </summary>
-        public bool IsDisposed { get; private set; }
-
-        /// <inheritdoc />
-        public UnitOfWorkOptions Options { get; private set; }
-
-        public IUnitOfWork Outer { get; set; }
-
-        /// <summary>
-        ///     Gets default UOW options.
-        /// </summary>
-        protected IUnitOfWorkDefaultOptions DefaultOptions { get; private set; }
 
         /// <inheritdoc />
         public void Begin(UnitOfWorkOptions options)
@@ -96,7 +84,7 @@ namespace DynamicTranslator.Core.Domain.Uow
                 _succeed = true;
                 OnCompleted();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 _exception = ex;
                 throw;
@@ -113,7 +101,7 @@ namespace DynamicTranslator.Core.Domain.Uow
                 _succeed = true;
                 OnCompleted();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 _exception = ex;
                 throw;
@@ -144,6 +132,21 @@ namespace DynamicTranslator.Core.Domain.Uow
 
         /// <inheritdoc />
         public abstract Task SaveChangesAsync();
+
+        /// <summary>
+        ///     Reference to current session.
+        /// </summary>
+        public string Id { get; }
+
+        /// <summary>
+        ///     Gets a value indicates that this unit of work is disposed or not.
+        /// </summary>
+        public bool IsDisposed { get; private set; }
+
+        /// <inheritdoc />
+        public UnitOfWorkOptions Options { get; private set; }
+
+        public IUnitOfWork Outer { get; set; }
 
         /// <summary>
         ///     Concrete Unit of work classes should implement this
@@ -218,7 +221,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         ///     Called to trigger <see cref="Failed" /> event.
         /// </summary>
         /// <param name="exception">Exception that cause failure</param>
-        protected virtual void OnFailed(Exception exception)
+        protected virtual void OnFailed(System.Exception exception)
         {
             Failed.InvokeSafely(this, new UnitOfWorkFailedEventArgs(exception));
         }

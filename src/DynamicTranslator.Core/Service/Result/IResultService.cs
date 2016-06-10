@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Service.Result
+﻿using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Domain.Uow;
+using DynamicTranslator.Core.Orchestrators.Model;
+
+namespace DynamicTranslator.Core.Service.Result
 {
     #region using
 
-    using System.Threading.Tasks;
-    using Domain.Uow;
-    using Orchestrators.Model;
+    
 
     #endregion
 

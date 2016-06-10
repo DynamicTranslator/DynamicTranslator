@@ -1,18 +1,23 @@
-﻿namespace DynamicTranslator.Core.Dependency.Installer
+﻿using System.IO;
+using System.Reflection;
+
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.SubSystems.Configuration;
+using Castle.Windsor;
+
+using DBreeze;
+
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Orchestrators.Detector;
+using DynamicTranslator.Core.Orchestrators.Finder;
+using DynamicTranslator.Core.Orchestrators.Organizer;
+
+namespace DynamicTranslator.Core.Dependency.Installer
 {
     #region using
 
-    using System.IO;
-    using System.Reflection;
-    using Castle.Facilities.TypedFactory;
-    using Castle.MicroKernel.Registration;
-    using Castle.MicroKernel.SubSystems.Configuration;
-    using Castle.Windsor;
-    using Config;
-    using DBreeze;
-    using Orchestrators.Detector;
-    using Orchestrators.Finder;
-    using Orchestrators.Organizer;
+    
 
     #endregion
 
@@ -30,7 +35,7 @@
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<ILanguageDetectorFactory>().AsFactory().LifeStyle.Transient,
-                Component.For(typeof (DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
+                Component.For(typeof(DBreezeEngine)).Instance(new DBreezeEngine(noSqlDBPath))
                 );
         }
     }

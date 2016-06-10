@@ -1,28 +1,31 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
+﻿using System;
+using System.Runtime.Caching;
+
+using DynamicTranslator.Core.Exception;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.MemoryCache
 {
     #region using
 
-    using System;
-    using System.Runtime.Caching;
-    using Caching;
-    using Exception;
+    
 
     #endregion
 
     public class InMemoryCache : CacheBase
     {
-        private MemoryCache _memoryCache;
+        private System.Runtime.Caching.MemoryCache _memoryCache;
 
         public InMemoryCache(string name)
             : base(name)
         {
-            _memoryCache = new MemoryCache(Name);
+            _memoryCache = new System.Runtime.Caching.MemoryCache(Name);
         }
 
         public override void Clear()
         {
             _memoryCache.Dispose();
-            _memoryCache = new MemoryCache(Name);
+            _memoryCache = new System.Runtime.Caching.MemoryCache(Name);
         }
 
         public override void Dispose()

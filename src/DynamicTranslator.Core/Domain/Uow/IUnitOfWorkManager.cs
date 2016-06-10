@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Domain.Uow
+﻿using System.Transactions;
+
+namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System.Transactions;
+    
 
     #endregion
 

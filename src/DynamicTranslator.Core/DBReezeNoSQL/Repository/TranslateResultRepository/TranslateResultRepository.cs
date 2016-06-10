@@ -1,18 +1,19 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Repository.TranslateResultRepository
+﻿using System;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Orchestrators.Model;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Repository.TranslateResultRepository
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Orchestrators.Model;
+    
 
     #endregion
 
     public class TranslateResultRepository : DBReezeRepositoryBase<CompositeTranslateResult, string>, ITranslateResultRepository
     {
-        public TranslateResultRepository(ITransactionProvider transactionProvider) : base(transactionProvider)
-        {
-        }
+        public TranslateResultRepository(ITransactionProvider transactionProvider) : base(transactionProvider) {}
 
         public CompositeTranslateResult GetTranslateResult(string key)
         {

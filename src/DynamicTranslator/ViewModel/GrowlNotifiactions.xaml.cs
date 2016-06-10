@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+
 using DynamicTranslator.Core.Config;
 using DynamicTranslator.Core.Extensions;
 using DynamicTranslator.Core.ViewModel;
@@ -110,7 +111,7 @@ namespace DynamicTranslator.ViewModel
                     await Dispatcher.InvokeAsync(
                         () =>
                         {
-                            var notification = ((FrameworkElement) sender).DataContext as Notification;
+                            var notification = ((FrameworkElement)sender).DataContext as Notification;
                             using (var synthesizer = new SpeechSynthesizer())
                             {
                                 synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);

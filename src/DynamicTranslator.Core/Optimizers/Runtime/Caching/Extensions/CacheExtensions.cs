@@ -1,9 +1,11 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions
+﻿using System;
+using System.Threading.Tasks;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
+    
 
     #endregion
 
@@ -24,7 +26,7 @@
 
         public static TValue Get<TKey, TValue>(this ICache cache, TKey key, Func<TKey, TValue> factory)
         {
-            return (TValue) cache.Get(key.ToString(), k => (object) factory(key));
+            return (TValue)cache.Get(key.ToString(), k => (object)factory(key));
         }
 
         public static TValue Get<TKey, TValue>(this ICache cache, TKey key, Func<TValue> factory)
@@ -39,13 +41,14 @@
 
         public static async Task<TValue> GetAsync<TKey, TValue>(this ICache cache, TKey key, Func<TKey, Task<TValue>> factory)
         {
-            var value = await cache.GetAsync(key.ToString(), async keyAsString =>
-            {
-                var v = await factory(key);
-                return (object) v;
-            });
+            var value = await cache.GetAsync(key.ToString(),
+                async keyAsString =>
+                {
+                    var v = await factory(key);
+                    return (object)v;
+                });
 
-            return (TValue) value;
+            return (TValue)value;
         }
 
         public static Task<TValue> GetAsync<TKey, TValue>(this ICache cache, TKey key, Func<Task<TValue>> factory)
@@ -55,13 +58,13 @@
 
         public static TValue GetOrDefault<TKey, TValue>(this ICache cache, TKey key)
         {
-            return (TValue) cache.GetOrDefault(key.ToString());
+            return (TValue)cache.GetOrDefault(key.ToString());
         }
 
         public static async Task<TValue> GetOrDefaultAsync<TKey, TValue>(this ICache cache, TKey key)
         {
             var value = await cache.GetOrDefaultAsync(key.ToString());
-            return (TValue) value;
+            return (TValue)value;
         }
     }
 }

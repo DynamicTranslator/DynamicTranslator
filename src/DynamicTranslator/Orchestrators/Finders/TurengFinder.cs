@@ -5,11 +5,13 @@ using System.Linq;
 using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Config;
 using DynamicTranslator.Core.Orchestrators.Finder;
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using RestSharp;
 
 #endregion
@@ -33,8 +35,6 @@ namespace DynamicTranslator.Orchestrators.Finders
             this.configuration = configuration;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.Tureng;
-
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
@@ -48,7 +48,7 @@ namespace DynamicTranslator.Orchestrators.Finders
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(
                 new RestRequest(Method.GET)
-                    .AddHeader("User-Agent","Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
+                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
                     .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6"));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
@@ -56,5 +56,7 @@ namespace DynamicTranslator.Orchestrators.Finders
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Tureng;
     }
 }

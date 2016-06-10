@@ -1,11 +1,14 @@
-﻿namespace DynamicTranslator.Core.ViewModel
+﻿using System.ComponentModel;
+
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.ViewModel.Interfaces;
+
+namespace DynamicTranslator.Core.ViewModel
 {
     #region using
 
-    using System.ComponentModel;
-    using Dependency.Markers;
-    using Extensions;
-    using Interfaces;
+    
 
     #endregion
 
@@ -80,8 +83,6 @@
             }
         }
 
-        protected virtual void OnPropertyChanged(object sender, string propertyName)
-        {
-        }
+        protected virtual void OnPropertyChanged(object sender, string propertyName) {}
     }
 }

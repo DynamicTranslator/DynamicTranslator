@@ -1,11 +1,14 @@
+using System;
+using System.Reflection;
+using System.Transactions;
+
+using IsolationLevel = System.Data.IsolationLevel;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Reflection;
-    using System.Transactions;
-    using IsolationLevel = System.Data.IsolationLevel;
+    
 
     #endregion
 
@@ -27,9 +30,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <summary>
         ///     Creates a new UnitOfWorkAttribute object.
         /// </summary>
-        public UnitOfWorkAttribute()
-        {
-        }
+        public UnitOfWorkAttribute() {}
 
         /// <summary>
         ///     Creates a new <see cref="UnitOfWorkAttribute" /> object.
@@ -140,27 +141,6 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// </summary>
         public TimeSpan? Timeout { get; }
 
-        /// <summary>
-        ///     Gets UnitOfWorkAttribute for given method or null if no attribute defined.
-        /// </summary>
-        /// <param name="methodInfo">Method to get attribute</param>
-        /// <returns>The UnitOfWorkAttribute object</returns>
-        internal static UnitOfWorkAttribute GetUnitOfWorkAttributeOrNull(MemberInfo methodInfo)
-        {
-            var attrs = methodInfo.GetCustomAttributes(typeof (UnitOfWorkAttribute), false);
-            if (attrs.Length > 0)
-            {
-                return (UnitOfWorkAttribute) attrs[0];
-            }
-
-            if (UnitOfWorkHelper.IsConventionalUowClass(methodInfo.DeclaringType) || UnitOfWorkHelper.IsApplicationBasedConventionalUowClass(methodInfo.DeclaringType))
-            {
-                return new UnitOfWorkAttribute(); //Default
-            }
-
-            return null;
-        }
-
         internal UnitOfWorkOptions CreateOptions()
         {
             return new UnitOfWorkOptions
@@ -170,6 +150,27 @@ namespace DynamicTranslator.Core.Domain.Uow
                 Timeout = Timeout,
                 Scope = Scope
             };
+        }
+
+        /// <summary>
+        ///     Gets UnitOfWorkAttribute for given method or null if no attribute defined.
+        /// </summary>
+        /// <param name="methodInfo">Method to get attribute</param>
+        /// <returns>The UnitOfWorkAttribute object</returns>
+        internal static UnitOfWorkAttribute GetUnitOfWorkAttributeOrNull(MemberInfo methodInfo)
+        {
+            var attrs = methodInfo.GetCustomAttributes(typeof(UnitOfWorkAttribute), false);
+            if (attrs.Length > 0)
+            {
+                return (UnitOfWorkAttribute)attrs[0];
+            }
+
+            if (UnitOfWorkHelper.IsConventionalUowClass(methodInfo.DeclaringType) || UnitOfWorkHelper.IsApplicationBasedConventionalUowClass(methodInfo.DeclaringType))
+            {
+                return new UnitOfWorkAttribute(); //Default
+            }
+
+            return null;
         }
     }
 }

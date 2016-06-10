@@ -115,7 +115,8 @@
                                 <DropShadowEffect ShadowDepth="0" Opacity=".4" BlurRadius="5" Color="Black" />
                             </Border.Effect>
                             <Grid>
-                                <Image Source="pack://application:,,,/Resources/texToSpeech.png" IsHitTestVisible="False"
+                                <Image Source="pack://application:,,,/Resources/texToSpeech.png"
+                                       IsHitTestVisible="False"
                                        Margin="2">
                                     <Image.Effect>
                                         <DropShadowEffect Direction="90" ShadowDepth="1" BlurRadius="1" />

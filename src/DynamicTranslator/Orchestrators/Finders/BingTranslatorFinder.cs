@@ -1,19 +1,24 @@
-﻿namespace DynamicTranslator.Orchestrators.Finders
+﻿using System;
+using System.Linq;
+using System.Net.Cache;
+using System.Text;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Orchestrators.Finder;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Core.Orchestrators.Organizer;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+using Newtonsoft.Json;
+
+using RestSharp;
+
+namespace DynamicTranslator.Orchestrators.Finders
 {
     #region using
 
-    using System;
-    using System.Linq;
-    using System.Net.Cache;
-    using System.Text;
-    using System.Threading.Tasks;
-    using DynamicTranslator.Core.Config;
-    using DynamicTranslator.Core.Orchestrators.Finder;
-    using DynamicTranslator.Core.Orchestrators.Model;
-    using DynamicTranslator.Core.Orchestrators.Organizer;
-    using DynamicTranslator.Core.ViewModel.Constants;
-    using Newtonsoft.Json;
-    using RestSharp;
+    
 
     #endregion
 
@@ -33,8 +38,6 @@
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Bing;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -63,5 +66,7 @@
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Bing;
     }
 }

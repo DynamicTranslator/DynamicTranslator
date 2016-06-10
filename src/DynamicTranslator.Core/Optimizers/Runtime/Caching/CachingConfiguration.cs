@@ -1,10 +1,12 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.Immutable;
+    
 
     #endregion
 
@@ -17,8 +19,6 @@
             _configurators = new List<ICacheConfigurator>();
         }
 
-        public IReadOnlyList<ICacheConfigurator> Configurators => _configurators.ToImmutableList();
-
         public void Configure(string cacheName, Action<ICache> initAction)
         {
             _configurators.Add(new CacheConfigurator(cacheName, initAction));
@@ -28,5 +28,7 @@
         {
             _configurators.Add(new CacheConfigurator(initAction));
         }
+
+        public IReadOnlyList<ICacheConfigurator> Configurators => _configurators.ToImmutableList();
     }
 }

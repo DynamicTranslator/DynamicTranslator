@@ -1,23 +1,26 @@
-﻿namespace DynamicTranslator.Orchestrators.Observers
+﻿using System;
+using System.Linq;
+using System.Reactive;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Dependency.Markers;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching.Extensions;
+using DynamicTranslator.Core.Orchestrators;
+using DynamicTranslator.Core.Orchestrators.Detector;
+using DynamicTranslator.Core.Orchestrators.Event;
+using DynamicTranslator.Core.Orchestrators.Finder;
+using DynamicTranslator.Core.Orchestrators.Model;
+using DynamicTranslator.Core.Orchestrators.Organizer;
+using DynamicTranslator.Core.Service.GoogleAnalytics;
+using DynamicTranslator.Core.ViewModel.Constants;
+using DynamicTranslator.ViewModel.Model;
+
+namespace DynamicTranslator.Orchestrators.Observers
 {
     #region using
 
-    using System;
-    using System.Linq;
-    using System.Reactive;
-    using System.Threading.Tasks;
-    using Core.Dependency.Markers;
-    using Core.Optimizers.Runtime.Caching;
-    using Core.Optimizers.Runtime.Caching.Extensions;
-    using Core.Orchestrators;
-    using Core.Orchestrators.Detector;
-    using Core.Orchestrators.Event;
-    using Core.Orchestrators.Finder;
-    using Core.Orchestrators.Model;
-    using Core.Orchestrators.Organizer;
-    using Core.Service.GoogleAnalytics;
-    using Core.ViewModel.Constants;
-    using ViewModel.Model;
+    
 
     #endregion
 
@@ -68,17 +71,13 @@
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
-        public void OnCompleted()
-        {
-        }
+        public void OnCompleted() {}
 
-        public void OnError(Exception error)
-        {
-        }
+        public void OnError(Exception error) {}
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-           await Task.Run(async () =>
+            await Task.Run(async () =>
             {
                 var currentString = value.EventArgs.CurrentString;
 
@@ -91,7 +90,7 @@
 
                 var results = await cache.GetAsync(currentString,
                     async () => await Task.WhenAll(meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension)))))
-                    .ConfigureAwait(false);
+                                         .ConfigureAwait(false);
 
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
 
@@ -102,7 +101,7 @@
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", 
+                    "dynamictranslator",
                     "notification").ConfigureAwait(false);
             });
         }

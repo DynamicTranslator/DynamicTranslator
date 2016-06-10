@@ -1,12 +1,12 @@
+using DynamicTranslator.Core.Dependency.Markers;
+
 namespace DynamicTranslator.Core.Domain.Repository
 {
     #region using
 
-    using Dependency.Markers;
+    
 
     #endregion
 
-    public interface IRepository : ITransientDependency
-    {
-    }
+    public interface IRepository : ITransientDependency {}
 }

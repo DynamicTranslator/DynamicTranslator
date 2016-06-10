@@ -4,9 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Orchestrators.Model;
-using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using HtmlAgilityPack;
 
 #endregion

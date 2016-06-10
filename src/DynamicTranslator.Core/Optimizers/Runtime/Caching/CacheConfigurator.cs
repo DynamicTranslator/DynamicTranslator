@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System;
+    
 
     #endregion
 

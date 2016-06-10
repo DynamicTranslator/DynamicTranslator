@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Dependency.Manager
+﻿using System;
+
+namespace DynamicTranslator.Core.Dependency.Manager
 {
     #region using
 
-    using System;
+    
 
     #endregion
 

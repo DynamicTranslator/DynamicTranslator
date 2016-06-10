@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+
 using DynamicTranslator.Core.Config;
 using DynamicTranslator.Core.Dependency.Manager;
 using DynamicTranslator.Core.Orchestrators;
@@ -19,10 +20,14 @@ namespace DynamicTranslator.ViewModel
 {
     public partial class MainWindow
     {
+        private readonly IStartupConfiguration configuration;
+        private readonly ITranslatorBootstrapper translator;
+        private bool isRunning;
+
         public MainWindow()
         {
             InitializeComponent();
-            IocManager.Instance.Register(typeof (MainWindow), this);
+            IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
             configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
@@ -33,10 +38,6 @@ namespace DynamicTranslator.ViewModel
 
             ComboBoxLanguages.SelectedValue = configuration.ToLanguageExtension;
         }
-
-        private readonly IStartupConfiguration configuration;
-        private readonly ITranslatorBootstrapper translator;
-        private bool isRunning;
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -62,7 +63,7 @@ namespace DynamicTranslator.ViewModel
 
                 configuration.SetAndPersistConfigurationManager(
                     nameof(configuration.ToLanguage),
-                    ((Language) ComboBoxLanguages.SelectedItem).Name);
+                    ((Language)ComboBoxLanguages.SelectedItem).Name);
 
                 PrepareTranslators();
                 LockUiElements();
@@ -100,7 +101,7 @@ namespace DynamicTranslator.ViewModel
             CheckBoxTureng.IsHitTestVisible = false;
             CheckBoxYandexTranslate.IsHitTestVisible = false;
             CheckBoxSesliSozluk.IsHitTestVisible = false;
-            CheckBoxZargan.IsHitTestVisible = false;
+
             CheckBoxBing.IsHitTestVisible = false;
         }
 
@@ -118,14 +119,12 @@ namespace DynamicTranslator.ViewModel
                 configuration.AddTranslator(TranslatorType.Seslisozluk);
             if (CheckBoxBing.IsChecked != null && CheckBoxBing.IsChecked.Value)
                 configuration.AddTranslator(TranslatorType.Bing);
-            if (CheckBoxZargan.IsChecked != null && CheckBoxZargan.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Zargan);
 
             if (!configuration.ActiveTranslators.Any())
             {
-                foreach (var value in Enum.GetValues(typeof (TranslatorType)))
+                foreach (var value in Enum.GetValues(typeof(TranslatorType)))
                 {
-                    configuration.AddTranslator((TranslatorType) value);
+                    configuration.AddTranslator((TranslatorType)value);
                 }
             }
         }
@@ -138,7 +137,6 @@ namespace DynamicTranslator.ViewModel
             CheckBoxTureng.IsHitTestVisible = true;
             CheckBoxYandexTranslate.IsHitTestVisible = true;
             CheckBoxSesliSozluk.IsHitTestVisible = true;
-            CheckBoxZargan.IsHitTestVisible = true;
             CheckBoxBing.IsHitTestVisible = true;
         }
     }

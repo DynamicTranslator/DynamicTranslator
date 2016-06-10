@@ -1,12 +1,12 @@
-﻿namespace DynamicTranslator.Core.ViewModel
+﻿using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.ViewModel
 {
     #region using
 
-    using Dependency.Markers;
+    
 
     #endregion
 
-    public class Notifications : MultiThreadObservableCollection<Notification>, ITransientDependency
-    {
-    }
+    public class Notifications : MultiThreadObservableCollection<Notification>, ITransientDependency {}
 }

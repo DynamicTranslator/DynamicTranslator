@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Dependency.Manager
+﻿using System;
+using System.Threading.Tasks;
+
+using Castle.Windsor;
+
+namespace DynamicTranslator.Core.Dependency.Manager
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Castle.Windsor;
+    
 
     #endregion
 

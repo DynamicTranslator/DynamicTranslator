@@ -1,9 +1,11 @@
-﻿namespace DynamicTranslator.Core.Helper
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+namespace DynamicTranslator.Core.Helper
 {
     #region using
 
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
+    
 
     #endregion
 

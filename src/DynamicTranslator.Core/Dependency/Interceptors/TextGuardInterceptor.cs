@@ -1,11 +1,15 @@
-﻿namespace DynamicTranslator.Core.Dependency.Interceptors
+﻿using System.Linq;
+
+using Castle.DynamicProxy;
+
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Exception;
+
+namespace DynamicTranslator.Core.Dependency.Interceptors
 {
     #region using
 
-    using System.Linq;
-    using Castle.DynamicProxy;
-    using Config;
-    using Exception;
+    
 
     #endregion
 

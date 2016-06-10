@@ -3,9 +3,11 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.Orchestrators.Model.Bing;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using Newtonsoft.Json;
 
 #endregion

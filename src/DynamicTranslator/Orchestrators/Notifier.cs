@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Dependency.Markers;
 using DynamicTranslator.Core.Orchestrators;
 using DynamicTranslator.Core.ViewModel;
@@ -28,9 +29,9 @@ namespace DynamicTranslator.Orchestrators
             growlNotifiactions.AddNotification(new Notification {ImageUrl = imageUrl, Message = text, Title = title});
         }
 
-        public async Task AddNotificationAsync(string title, string imageUrl, string text)
+        public Task AddNotificationAsync(string title, string imageUrl, string text)
         {
-            await growlNotifiactions.AddNotificationAsync(new Notification {ImageUrl = imageUrl, Message = text, Title = title});
+            return growlNotifiactions.AddNotificationAsync(new Notification {ImageUrl = imageUrl, Message = text, Title = title});
         }
     }
 }

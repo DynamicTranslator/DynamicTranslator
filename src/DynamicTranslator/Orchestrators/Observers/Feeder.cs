@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Dependency.Markers;
 using DynamicTranslator.Core.Service.GoogleAnalytics;
 using DynamicTranslator.ViewModel.Model;
@@ -22,13 +23,9 @@ namespace DynamicTranslator.Orchestrators.Observers
             this.googleAnalyticsService = googleAnalyticsService;
         }
 
-        public void OnCompleted()
-        {
-        }
+        public void OnCompleted() {}
 
-        public void OnError(Exception error)
-        {
-        }
+        public void OnError(Exception error) {}
 
         public async void OnNext(long value)
         {
@@ -37,7 +34,8 @@ namespace DynamicTranslator.Orchestrators.Observers
                 await googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
-                    "dynamictranslator", "MainWindow");
+                    "dynamictranslator",
+                    "MainWindow");
             });
         }
     }

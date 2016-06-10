@@ -1,10 +1,14 @@
+using System.Threading.Tasks;
+
+using Castle.DynamicProxy;
+
+using DynamicTranslator.Core.Helper;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System.Threading.Tasks;
-    using Castle.DynamicProxy;
-    using Helper;
+    
 
     #endregion
 
@@ -44,10 +48,10 @@ namespace DynamicTranslator.Core.Domain.Uow
 
             invocation.Proceed();
 
-            if (invocation.Method.ReturnType == typeof (Task))
+            if (invocation.Method.ReturnType == typeof(Task))
             {
                 invocation.ReturnValue = ExtendedAsyncHelper.AwaitTaskWithPostActionAndFinally(
-                    (Task) invocation.ReturnValue,
+                    (Task)invocation.ReturnValue,
                     async () => await uow.CompleteAsync(),
                     exception => uow.Dispose()
                     );

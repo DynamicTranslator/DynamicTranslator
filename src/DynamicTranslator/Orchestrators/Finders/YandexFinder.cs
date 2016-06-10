@@ -2,14 +2,14 @@
 
 using System;
 using System.Linq;
-using System.Net.Cache;
-using System.Text;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Config;
 using DynamicTranslator.Core.Orchestrators.Finder;
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.ViewModel.Constants;
+
 using RestSharp;
 
 #endregion
@@ -33,8 +33,6 @@ namespace DynamicTranslator.Orchestrators.Finders
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.Yandex;
-
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
@@ -50,5 +48,7 @@ namespace DynamicTranslator.Orchestrators.Finders
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Yandex;
     }
 }

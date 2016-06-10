@@ -1,9 +1,12 @@
-﻿namespace DynamicTranslator.Core.Dependency
+﻿using System.Reflection;
+
+using DynamicTranslator.Core.Dependency.Manager;
+
+namespace DynamicTranslator.Core.Dependency
 {
     #region using
 
-    using System.Reflection;
-    using Manager;
+    
 
     #endregion
 

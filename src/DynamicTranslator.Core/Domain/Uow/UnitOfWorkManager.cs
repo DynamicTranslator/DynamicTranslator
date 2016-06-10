@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Domain.Uow
+﻿using System.Transactions;
+
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System.Transactions;
-    using Dependency.Manager;
-    using Dependency.Markers;
+    
 
     #endregion
 
@@ -26,8 +29,6 @@
             _currentUnitOfWorkProvider = currentUnitOfWorkProvider;
             _defaultOptions = defaultOptions;
         }
-
-        public IActiveUnitOfWork Current => _currentUnitOfWorkProvider.Current;
 
         public IUnitOfWorkCompleteHandle Begin()
         {
@@ -62,5 +63,7 @@
 
             return uow;
         }
+
+        public IActiveUnitOfWork Current => _currentUnitOfWorkProvider.Current;
     }
 }

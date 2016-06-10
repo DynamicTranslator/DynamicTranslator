@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Domain.Uow
+﻿using System;
+
+namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
+    
 
     #endregion
 
@@ -15,7 +17,7 @@
         ///     Creates a new <see cref="UnitOfWorkFailedEventArgs" /> object.
         /// </summary>
         /// <param name="exception">Exception that caused failure</param>
-        public UnitOfWorkFailedEventArgs(Exception exception)
+        public UnitOfWorkFailedEventArgs(System.Exception exception)
         {
             Exception = exception;
         }
@@ -23,6 +25,6 @@
         /// <summary>
         ///     Exception that caused failure.
         /// </summary>
-        public Exception Exception { get; private set; }
+        public System.Exception Exception { get; private set; }
     }
 }

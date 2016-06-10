@@ -1,6 +1,4 @@
 ﻿namespace DynamicTranslator.ViewModel.Model
 {
-    public class Languages
-    {
-    }
+    public class Languages {}
 }

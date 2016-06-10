@@ -1,9 +1,12 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Finder
+﻿using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Orchestrators.Model;
+
+namespace DynamicTranslator.Core.Orchestrators.Finder
 {
     #region using
 
-    using System.Threading.Tasks;
-    using Model;
+    
 
     #endregion
 

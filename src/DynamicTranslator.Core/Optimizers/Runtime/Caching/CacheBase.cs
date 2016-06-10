@@ -1,28 +1,26 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System;
+using System.Threading.Tasks;
+
+using Nito.AsyncEx;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using Nito.AsyncEx;
+    
 
     #endregion
 
     public abstract class CacheBase : ICache
     {
-        protected readonly object SyncObj = new object();
-
         private readonly AsyncLock _asyncLock = new AsyncLock();
+        protected readonly object SyncObj = new object();
 
         protected CacheBase(string name)
         {
             Name = name;
             DefaultSlidingExpireTime = TimeSpan.FromHours(1);
         }
-
-        public TimeSpan DefaultSlidingExpireTime { get; set; }
-
-        public string Name { get; }
 
         public abstract void Clear();
 
@@ -32,9 +30,7 @@
             return Task.FromResult(0);
         }
 
-        public virtual void Dispose()
-        {
-        }
+        public virtual void Dispose() {}
 
         public virtual object Get(string key, Func<string, object> factory)
         {
@@ -108,5 +104,9 @@
             Set(key, value, slidingExpireTime);
             return Task.FromResult(0);
         }
+
+        public TimeSpan DefaultSlidingExpireTime { get; set; }
+
+        public string Name { get; }
     }
 }

@@ -9,7 +9,7 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="/Resources/dynamic-link-library 16.png" Height="354" Width="394">
+    Icon="/Resources/dynamic-link-library 16.png" Height="325.404" Width="393.014">
     <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,0,2">
         <Grid Height="285">
             <Label x:Name="LabelCurrentLanguage" Width="Auto" Height="40" Content="To Language:" Margin="10,25,273,220" />
@@ -33,12 +33,8 @@
                 </Button.Background>
             </Button>
             <Button Click="GithubButton_Click" Height="Auto" Width="Auto" Background="Transparent"
-                    Margin="10,225,256,-30">
-                <Image Source="../Resources/github_100x150.png" Height="70" Width="79" />
-            </Button>
-            <Button Click="DonateButton_Click" Height="Auto" Width="Auto" Background="Transparent"
-                    Margin="194,244,10,-16">
-                <Image Source="../Resources/donate.png" Height="53" Width="136" />
+                    Margin="141,225,169,10">
+                <Image Source="../Resources/github_100x150.png" />
             </Button>
             <Grid x:Name="languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
                   VerticalAlignment="Top">
@@ -51,9 +47,7 @@
                 <CheckBox x:Name="CheckBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
                           Margin="23,33,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
-                	Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxZargan" Content="Zargan Sozluk Translate" HorizontalAlignment="Left"
-                	Margin="205,58,0,0" VerticalAlignment="Top" IsChecked="True" />
+                          Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
             </Grid>
 
         </Grid>

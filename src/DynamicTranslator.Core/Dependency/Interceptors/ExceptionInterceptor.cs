@@ -1,17 +1,20 @@
-﻿namespace DynamicTranslator.Core.Dependency.Interceptors
+﻿using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+using Castle.DynamicProxy;
+
+using DynamicTranslator.Core.Exception;
+using DynamicTranslator.Core.Helper;
+using DynamicTranslator.Core.Orchestrators;
+using DynamicTranslator.Core.Service.GoogleAnalytics;
+using DynamicTranslator.Core.ViewModel.Constants;
+
+namespace DynamicTranslator.Core.Dependency.Interceptors
 {
     #region using
 
-    using System;
-    using System.Net;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Castle.DynamicProxy;
-    using Exception;
-    using Helper;
-    using Orchestrators;
-    using Service.GoogleAnalytics;
-    using ViewModel.Constants;
+    
 
     #endregion
 
@@ -55,13 +58,13 @@
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
                     HandleExceptionAsync(invocation, ex);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 HandleException(invocation, ex);
             }
         }
 
-        private void HandleException(IInvocation invocation, Exception ex)
+        private void HandleException(IInvocation invocation, System.Exception ex)
         {
             var exceptionText = new StringBuilder()
                 .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
@@ -75,9 +78,9 @@
             SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }
 
-        private void HandleExceptionAsync(IInvocation invocation, Exception ex)
+        private void HandleExceptionAsync(IInvocation invocation, System.Exception ex)
         {
-            if (invocation.Method.ReturnType == typeof (void))
+            if (invocation.Method.ReturnType == typeof(void))
                 return;
 
             if (ex == null)

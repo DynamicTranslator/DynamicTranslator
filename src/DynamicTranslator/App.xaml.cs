@@ -1,17 +1,20 @@
-﻿namespace DynamicTranslator
+﻿using System;
+using System.Reflection;
+using System.Windows;
+
+using DynamicTranslator.Core.Config;
+using DynamicTranslator.Core.Dependency;
+using DynamicTranslator.Core.Dependency.Installer;
+using DynamicTranslator.Core.Dependency.Manager;
+using DynamicTranslator.Core.Optimizers.Runtime.Caching;
+using DynamicTranslator.Core.ViewModel.Interfaces;
+using DynamicTranslator.ViewModel;
+
+namespace DynamicTranslator
 {
     #region using
 
-    using System;
-    using System.Reflection;
-    using System.Windows;
-    using Core.Config;
-    using Core.Dependency;
-    using Core.Dependency.Installer;
-    using Core.Dependency.Manager;
-    using Core.Optimizers.Runtime.Caching;
-    using Core.ViewModel.Interfaces;
-    using ViewModel;
+    
 
     #endregion
 

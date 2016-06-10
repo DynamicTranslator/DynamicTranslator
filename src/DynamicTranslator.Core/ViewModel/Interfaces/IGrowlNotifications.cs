@@ -1,9 +1,11 @@
-﻿namespace DynamicTranslator.Core.ViewModel.Interfaces
+﻿using System;
+using System.Threading.Tasks;
+
+namespace DynamicTranslator.Core.ViewModel.Interfaces
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
+    
 
     #endregion
 

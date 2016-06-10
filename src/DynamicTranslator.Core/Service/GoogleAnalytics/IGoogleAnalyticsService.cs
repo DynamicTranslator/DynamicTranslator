@@ -1,9 +1,12 @@
-﻿namespace DynamicTranslator.Core.Service.GoogleAnalytics
+﻿using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Service.GoogleAnalytics
 {
     #region using
 
-    using System.Threading.Tasks;
-    using Dependency.Markers;
+    
 
     #endregion
 

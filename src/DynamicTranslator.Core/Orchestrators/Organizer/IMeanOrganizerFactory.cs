@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Organizer
+﻿using System.Collections.Generic;
+
+namespace DynamicTranslator.Core.Orchestrators.Organizer
 {
     #region using
 
-    using System.Collections.Generic;
+    
 
     #endregion
 

@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Event
+﻿using System;
+
+namespace DynamicTranslator.Core.Orchestrators.Event
 {
     #region using
 
-    using System;
+    
 
     #endregion
 

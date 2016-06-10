@@ -1,10 +1,14 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
+﻿using System;
+
+using DBreeze.Transactions;
+
+using DynamicTranslator.Core.Domain.Uow;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
 {
     #region using
 
-    using System;
-    using DBreeze.Transactions;
-    using Domain.Uow;
+    
 
     #endregion
 
@@ -19,10 +23,10 @@
 
             if (!(unitOfWork is DbReezeUnitOfWork))
             {
-                throw new ArgumentException("unitOfWork is not type of " + typeof (DbReezeUnitOfWork).FullName, nameof(unitOfWork));
+                throw new ArgumentException("unitOfWork is not type of " + typeof(DbReezeUnitOfWork).FullName, nameof(unitOfWork));
             }
 
-            return ((DbReezeUnitOfWork) unitOfWork).Transaction;
+            return ((DbReezeUnitOfWork)unitOfWork).Transaction;
         }
     }
 }

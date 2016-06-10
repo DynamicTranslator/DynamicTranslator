@@ -1,6 +1,7 @@
 ﻿#region using
 
 using System.Collections.Generic;
+
 using DynamicTranslator.Core.Dependency.Manager;
 using DynamicTranslator.Core.ViewModel.Constants;
 

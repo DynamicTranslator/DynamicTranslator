@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System;
+using System.Collections.Generic;
+
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System;
-    using System.Collections.Generic;
-    using Dependency.Markers;
+    
 
     #endregion
 

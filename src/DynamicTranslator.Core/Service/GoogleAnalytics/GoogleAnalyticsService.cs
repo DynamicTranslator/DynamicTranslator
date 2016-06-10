@@ -1,12 +1,15 @@
-﻿namespace DynamicTranslator.Core.Service.GoogleAnalytics
+﻿using System.Collections;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web;
+
+using DynamicTranslator.Core.Config;
+
+namespace DynamicTranslator.Core.Service.GoogleAnalytics
 {
     #region using
 
-    using System.Collections;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System.Web;
-    using Config;
+    
 
     #endregion
 

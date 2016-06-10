@@ -1,12 +1,16 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
+﻿using System;
+using System.Threading.Tasks;
+
+using DBreeze;
+using DBreeze.Transactions;
+
+using DynamicTranslator.Core.Domain.Uow;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Uow
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
-    using DBreeze;
-    using DBreeze.Transactions;
-    using Domain.Uow;
+    
 
     #endregion
 

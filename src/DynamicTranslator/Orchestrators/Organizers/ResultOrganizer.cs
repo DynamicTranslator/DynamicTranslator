@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using DynamicTranslator.Core.Orchestrators.Model;
 using DynamicTranslator.Core.Orchestrators.Organizer;
 using DynamicTranslator.Core.Service.Result;
@@ -36,10 +37,10 @@ namespace DynamicTranslator.Orchestrators.Organizers
             if (!string.IsNullOrEmpty(mean.ToString()))
             {
                 var means = mean.ToString().Split('\r')
-                    .Select(x => x.Trim().ToLower())
-                    .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
-                    .Distinct()
-                    .ToList();
+                                .Select(x => x.Trim().ToLower())
+                                .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
+                                .Distinct()
+                                .ToList();
 
                 mean.Clear();
                 means.ForEach(m => mean.AppendLine("* " + m.ToLower()));

@@ -1,10 +1,13 @@
+using System;
+using System.Transactions;
+
+using IsolationLevel = System.Data.IsolationLevel;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Transactions;
-    using IsolationLevel = System.Data.IsolationLevel;
+    
 
     #endregion
 

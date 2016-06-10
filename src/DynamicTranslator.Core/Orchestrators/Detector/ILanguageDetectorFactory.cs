@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Orchestrators.Detector
+﻿using System.Collections.Generic;
+
+namespace DynamicTranslator.Core.Orchestrators.Detector
 {
     #region using
 
-    using System.Collections.Generic;
+    
 
     #endregion
 

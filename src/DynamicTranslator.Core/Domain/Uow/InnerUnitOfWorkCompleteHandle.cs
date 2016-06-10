@@ -1,11 +1,13 @@
-﻿namespace DynamicTranslator.Core.Domain.Uow
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Exception;
+
+namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Threading.Tasks;
-    using Exception;
+    
 
     #endregion
 
@@ -58,7 +60,7 @@
             {
                 return Marshal.GetExceptionCode() != 0;
             }
-            catch (Exception)
+            catch (System.Exception)
             {
                 return false;
             }

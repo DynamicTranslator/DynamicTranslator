@@ -1,10 +1,13 @@
-﻿namespace DynamicTranslator.Core.Dependency.Manager
+﻿using System;
+using System.Reflection;
+
+using DynamicTranslator.Core.Dependency.Markers;
+
+namespace DynamicTranslator.Core.Dependency.Manager
 {
     #region using
 
-    using System;
-    using System.Reflection;
-    using Markers;
+    
 
     #endregion
 

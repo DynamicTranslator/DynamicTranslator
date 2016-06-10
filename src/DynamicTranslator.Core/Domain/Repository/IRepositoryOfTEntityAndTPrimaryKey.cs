@@ -1,8 +1,10 @@
-﻿namespace DynamicTranslator.Core.Domain.Repository
+﻿using System.Threading.Tasks;
+
+namespace DynamicTranslator.Core.Domain.Repository
 {
     #region using
 
-    using System.Threading.Tasks;
+    
 
     #endregion
 

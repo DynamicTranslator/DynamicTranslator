@@ -1,12 +1,15 @@
-﻿namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+
+using DynamicTranslator.Core.Dependency.Manager;
+
+namespace DynamicTranslator.Core.Optimizers.Runtime.Caching
 {
     #region using
 
-    using System.Collections.Concurrent;
-    using System.Collections.Generic;
-    using System.Collections.Immutable;
-    using System.Linq;
-    using Dependency.Manager;
+    
 
     #endregion
 
@@ -41,19 +44,20 @@
 
         public virtual ICache GetCacheEnvironment(string name)
         {
-            return Caches.GetOrAdd(name, cacheName =>
-            {
-                var cache = CreateCacheImplementation(cacheName);
-
-                var configurators = Configuration.Configurators.Where(c => c.CacheName == null || c.CacheName == cacheName);
-
-                foreach (var configurator in configurators)
+            return Caches.GetOrAdd(name,
+                cacheName =>
                 {
-                    configurator.InitAction?.Invoke(cache);
-                }
+                    var cache = CreateCacheImplementation(cacheName);
 
-                return cache;
-            });
+                    var configurators = Configuration.Configurators.Where(c => c.CacheName == null || c.CacheName == cacheName);
+
+                    foreach (var configurator in configurators)
+                    {
+                        configurator.InitAction?.Invoke(cache);
+                    }
+
+                    return cache;
+                });
         }
 
         /// <summary>

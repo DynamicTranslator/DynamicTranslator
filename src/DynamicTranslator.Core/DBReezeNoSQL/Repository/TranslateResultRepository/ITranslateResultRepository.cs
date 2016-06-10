@@ -1,9 +1,12 @@
-﻿namespace DynamicTranslator.Core.DBReezeNoSQL.Repository.TranslateResultRepository
+﻿using System.Threading.Tasks;
+
+using DynamicTranslator.Core.Orchestrators.Model;
+
+namespace DynamicTranslator.Core.DBReezeNoSQL.Repository.TranslateResultRepository
 {
     #region using
 
-    using System.Threading.Tasks;
-    using Orchestrators.Model;
+    
 
     #endregion
 

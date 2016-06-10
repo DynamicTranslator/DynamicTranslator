@@ -1,11 +1,14 @@
+using System;
+using System.Reflection;
+
+using DynamicTranslator.Core.Domain.Repository;
+using DynamicTranslator.Core.Service;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Reflection;
-    using Repository;
-    using Service;
+    
 
     #endregion
 
@@ -20,13 +23,13 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <param name="methodInfo">Method info to check</param>
         public static UnitOfWorkAttribute GetUnitOfWorkAttributeOrNull(MemberInfo methodInfo)
         {
-            var attrs = methodInfo.GetCustomAttributes(typeof (UnitOfWorkAttribute), false);
+            var attrs = methodInfo.GetCustomAttributes(typeof(UnitOfWorkAttribute), false);
             if (attrs.Length <= 0)
             {
                 return null;
             }
 
-            return (UnitOfWorkAttribute) attrs[0];
+            return (UnitOfWorkAttribute)attrs[0];
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <param name="methodInfo">Method info to check</param>
         public static bool HasUnitOfWorkAttribute(MemberInfo methodInfo)
         {
-            return methodInfo.IsDefined(typeof (UnitOfWorkAttribute), true);
+            return methodInfo.IsDefined(typeof(UnitOfWorkAttribute), true);
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <param name="type">Type to check</param>
         public static bool IsApplicationBasedConventionalUowClass(Type type)
         {
-            return typeof (IApplicationService).IsAssignableFrom(type);
+            return typeof(IApplicationService).IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -53,7 +56,7 @@ namespace DynamicTranslator.Core.Domain.Uow
         /// <param name="type">Type to check</param>
         public static bool IsConventionalUowClass(Type type)
         {
-            return typeof (IRepository).IsAssignableFrom(type);
+            return typeof(IRepository).IsAssignableFrom(type);
         }
     }
 }

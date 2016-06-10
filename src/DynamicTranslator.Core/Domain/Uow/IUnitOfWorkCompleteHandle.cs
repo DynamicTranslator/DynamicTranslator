@@ -1,9 +1,11 @@
+using System;
+using System.Threading.Tasks;
+
 namespace DynamicTranslator.Core.Domain.Uow
 {
     #region using
 
-    using System;
-    using System.Threading.Tasks;
+    
 
     #endregion
 
