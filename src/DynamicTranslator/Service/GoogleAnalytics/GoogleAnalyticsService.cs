@@ -11,10 +11,10 @@ namespace DynamicTranslator.Service.GoogleAnalytics
     {
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly string googleVersion = "1";
 
-        public GoogleAnalyticsService(IStartupConfiguration configuration)
+        public GoogleAnalyticsService(IDynamicTranslatorStartupConfiguration configuration)
         {
             this.configuration = configuration;
         }

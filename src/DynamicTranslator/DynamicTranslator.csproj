@@ -31,12 +31,20 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Abp, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Abp.0.9.3.0\lib\net452\Abp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
       <HintPath>..\packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -51,8 +59,9 @@
       <HintPath>..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
@@ -71,6 +80,7 @@
       <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
@@ -81,17 +91,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\DictionaryBasedConfig.cs" />
-    <Compile Include="Config\IDictionaryBasedConfig.cs" />
-    <Compile Include="Config\IStartupConfiguration.cs" />
-    <Compile Include="Config\StartupConfiguration.cs" />
+    <Compile Include="Config\DynamicTranslatorDictionayBasedConfig.cs" />
+    <Compile Include="Config\IDynamicTranslatorDictionayBasedConfig.cs" />
+    <Compile Include="Config\IDynamicTranslatorStartupConfiguration.cs" />
+    <Compile Include="Config\DynamicTranslatorStartupConfiguration.cs" />
     <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
     <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\ITranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\TranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
-    <Compile Include="DBReezeNoSQL\Uow\UnitOfWorkExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeDatabaseProvider.cs" />
     <Compile Include="DBReezeNoSQL\Uow\UowTransactionProvider.cs" />
     <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
     <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
@@ -182,14 +192,14 @@
     <Compile Include="Service\IApplicationService.cs" />
     <Compile Include="Service\Result\ResultService.cs" />
     <Compile Include="Service\Result\IResultService.cs" />
-    <Compile Include="ViewModel\Constants\TranslatorType.cs" />
+    <Compile Include="Constants\TranslatorType.cs" />
     <Compile Include="ViewModel\Interfaces\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\Interfaces\INotification.cs" />
     <Compile Include="ViewModel\MultiThreadObservableCollection.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
-    <Compile Include="ViewModel\Constants\Titles.cs" />
+    <Compile Include="Constants\Titles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Constants\ImageUrls.cs" />
+    <Compile Include="Constants\ImageUrls.cs" />
     <Compile Include="ViewModel\Notification.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,10 +16,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class TurengFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public TurengFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
+        public TurengFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorStartupConfiguration configuration)
         {
             if (meanOrganizerFactory == null)
                 throw new ArgumentNullException(nameof(meanOrganizerFactory));

@@ -16,7 +16,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class MainWindow
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly ITranslatorBootstrapper translator;
         private bool isRunning;
 
@@ -26,7 +26,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
-            configuration = IocManager.Instance.Resolve<IStartupConfiguration>();
+            configuration = IocManager.Instance.Resolve<IDynamicTranslatorStartupConfiguration>();
             foreach (var language in configuration.LanguageMap)
             {
                 ComboBoxLanguages.Items.Add(new Language(language.Key, language.Value));

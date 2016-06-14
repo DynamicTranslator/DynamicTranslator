@@ -14,9 +14,9 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
     public class GoogleLanguageDetector : ILanguageDetector, ISingletonDependency
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
 
-        public GoogleLanguageDetector(IStartupConfiguration configuration)
+        public GoogleLanguageDetector(IDynamicTranslatorStartupConfiguration configuration)
         {
             this.configuration = configuration;
         }

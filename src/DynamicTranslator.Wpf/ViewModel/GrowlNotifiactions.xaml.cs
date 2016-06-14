@@ -17,11 +17,11 @@ namespace DynamicTranslator.Wpf.ViewModel
     {
         private readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
-        private readonly IStartupConfiguration startupConfiguration;
+        private readonly IDynamicTranslatorStartupConfiguration startupConfiguration;
         private int count;
         public bool IsDisposed;
 
-        public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
+        public GrowlNotifiactions(IDynamicTranslatorStartupConfiguration startupConfiguration, Notifications notifications)
         {
             InitializeComponent();
             this.startupConfiguration = startupConfiguration;

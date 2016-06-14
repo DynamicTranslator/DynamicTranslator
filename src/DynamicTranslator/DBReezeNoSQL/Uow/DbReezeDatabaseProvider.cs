@@ -6,7 +6,7 @@ using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {
-    public static class UnitOfWorkExtensions
+    public static class DbReezeDatabaseProvider
     {
         public static Transaction GetTransaction(this IActiveUnitOfWork unitOfWork)
         {

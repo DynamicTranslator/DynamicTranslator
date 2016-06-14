@@ -16,10 +16,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class GoogleTranslateFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
+        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorStartupConfiguration configuration)
         {
             if (meanOrganizerFactory == null)
                 throw new ArgumentNullException(nameof(meanOrganizerFactory));

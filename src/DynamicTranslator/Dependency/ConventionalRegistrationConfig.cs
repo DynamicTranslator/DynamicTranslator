@@ -2,7 +2,7 @@
 
 namespace DynamicTranslator.Dependency
 {
-    public class ConventionalRegistrationConfig : DictionayBasedConfig
+    public class ConventionalRegistrationConfig : DynamicTranslatorDictionayBasedConfig
     {
         public ConventionalRegistrationConfig()
         {

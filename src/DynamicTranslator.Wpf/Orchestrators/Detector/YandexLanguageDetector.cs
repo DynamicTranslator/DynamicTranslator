@@ -15,9 +15,9 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
     public class YandexLanguageDetector : ILanguageDetector
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
 
-        public YandexLanguageDetector(IStartupConfiguration configuration)
+        public YandexLanguageDetector(IDynamicTranslatorStartupConfiguration configuration)
         {
             this.configuration = configuration;
         }

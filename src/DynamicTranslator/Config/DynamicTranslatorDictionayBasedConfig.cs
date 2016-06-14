@@ -6,9 +6,9 @@ using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Config
 {
-    public class DictionayBasedConfig : IDictionaryBasedConfig
+    public class DynamicTranslatorDictionayBasedConfig : IDynamicTranslatorDictionayBasedConfig
     {
-        protected DictionayBasedConfig()
+        protected DynamicTranslatorDictionayBasedConfig()
         {
             CustomSettings = new Dictionary<string, object>();
         }

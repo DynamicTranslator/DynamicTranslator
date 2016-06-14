@@ -7,9 +7,9 @@ using DynamicTranslator.ViewModel.Constants;
 
 namespace DynamicTranslator.Config
 {
-    public class StartupConfiguration : DictionayBasedConfig, IStartupConfiguration
+    public class DynamicTranslatorStartupConfiguration : DynamicTranslatorDictionayBasedConfig, IDynamicTranslatorStartupConfiguration
     {
-        public StartupConfiguration(IIocManager iocManager)
+        public DynamicTranslatorStartupConfiguration(IIocManager iocManager)
         {
             IocManager = iocManager;
         }

@@ -14,10 +14,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class YandexFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public YandexFinder(IStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public YandexFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             if (meanOrganizerFactory == null)
                 throw new ArgumentNullException(nameof(meanOrganizerFactory));

@@ -2,7 +2,7 @@
 
 namespace DynamicTranslator.Config
 {
-    public interface IDictionaryBasedConfig
+    public interface IDynamicTranslatorDictionayBasedConfig
     {
         object Get(string name);
 

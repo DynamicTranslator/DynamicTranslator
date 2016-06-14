@@ -15,10 +15,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class ZarganFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public ZarganFinder(IStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public ZarganFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;

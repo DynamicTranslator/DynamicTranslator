@@ -5,11 +5,13 @@ using DynamicTranslator.ViewModel.Constants;
 
 namespace DynamicTranslator.Config
 {
-    public interface IStartupConfiguration : IDictionaryBasedConfig
+    public interface IDynamicTranslatorStartupConfiguration : IDynamicTranslatorDictionayBasedConfig
     {
         HashSet<TranslatorType> ActiveTranslators { get; }
 
         string ApiKey { get; }
+
+        string BingTranslatorUrl { get; }
 
         string ClientId { get; }
 
@@ -20,8 +22,6 @@ namespace DynamicTranslator.Config
         string GoogleAnalyticsUrl { get; }
 
         string GoogleTranslateUrl { get; }
-
-        string ZarganTranslateUrl { get; }
 
         IIocManager IocManager { get; }
 
@@ -36,8 +36,6 @@ namespace DynamicTranslator.Config
         int SearchableCharacterLimit { get; }
 
         string SesliSozlukUrl { get; }
-
-        string BingTranslatorUrl { get; }
 
         string ToLanguage { get; }
 
@@ -56,6 +54,8 @@ namespace DynamicTranslator.Config
         IList<string> YandexLanguageMapExtensions { get; }
 
         string YandexUrl { get; }
+
+        string ZarganTranslateUrl { get; }
 
         void AddTranslator(TranslatorType translatorType);
 

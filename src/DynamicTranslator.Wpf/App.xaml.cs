@@ -36,7 +36,7 @@ namespace DynamicTranslator.Wpf
             var defaultSlidingExpireTime = TimeSpan.FromHours(24);
             IocManager.Instance.Resolve<ICachingConfiguration>().ConfigureAll(cache => { cache.DefaultSlidingExpireTime = defaultSlidingExpireTime; });
 
-            var configurations = IocManager.Instance.Resolve<IStartupConfiguration>();
+            var configurations = IocManager.Instance.Resolve<IDynamicTranslatorStartupConfiguration>();
             configurations.Initialize();
             base.OnStartup(eventArgs);
         }

@@ -25,7 +25,7 @@ namespace DynamicTranslator.Dependency.Installer
             var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
             container.Register(
-                Component.For<IStartupConfiguration>().ImplementedBy<StartupConfiguration>().LifeStyle.Singleton,
+                Component.For<IDynamicTranslatorStartupConfiguration>().ImplementedBy<DynamicTranslatorStartupConfiguration>().LifeStyle.Singleton,
                 Component.For<IMeanFinderFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<IMeanOrganizerFactory>().AsFactory().LifeStyle.Transient,
                 Component.For<ILanguageDetectorFactory>().AsFactory().LifeStyle.Transient,

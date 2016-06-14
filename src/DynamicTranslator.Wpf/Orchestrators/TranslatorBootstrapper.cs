@@ -34,7 +34,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
         private readonly ICacheManager cacheManager;
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
-        private readonly IStartupConfiguration startupConfiguration;
+        private readonly IDynamicTranslatorStartupConfiguration startupConfiguration;
         private CancellationTokenSource cancellationTokenSource;
         private IDisposable finderObservable;
         private IKeyboardMouseEvents globalMouseHook;
@@ -47,7 +47,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
 
         public TranslatorBootstrapper(MainWindow mainWindow,
             GrowlNotifiactions growlNotifications,
-            IStartupConfiguration startupConfiguration,
+            IDynamicTranslatorStartupConfiguration startupConfiguration,
             ICacheManager cacheManager)
         {
             if (mainWindow == null)
