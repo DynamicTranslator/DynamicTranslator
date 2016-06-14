@@ -5,12 +5,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Dependency.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class IocRegistrarExtensions
     {
         /// <summary>

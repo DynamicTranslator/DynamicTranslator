@@ -6,12 +6,6 @@ using DynamicTranslator.Helper;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     internal class UnitOfWorkInterceptor : IInterceptor
     {
         private readonly IUnitOfWorkManager _unitOfWorkManager;

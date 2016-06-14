@@ -4,12 +4,6 @@ using DynamicTranslator.Helper;
 
 namespace DynamicTranslator.DBReezeNoSQL.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     internal static class DBReezeExtensions
     {
         internal static TEntity GetSafely<TEntity, TKey>(this Row<TKey, byte[]> returnedRow)

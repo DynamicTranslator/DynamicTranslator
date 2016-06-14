@@ -7,12 +7,6 @@ using IsolationLevel = System.Data.IsolationLevel;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     internal class UnitOfWorkDefaultOptions : IUnitOfWorkDefaultOptions, ISingletonDependency
     {
         public UnitOfWorkDefaultOptions()

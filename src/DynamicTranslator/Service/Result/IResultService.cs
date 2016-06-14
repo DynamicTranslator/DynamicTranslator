@@ -5,12 +5,6 @@ using DynamicTranslator.Orchestrators.Model;
 
 namespace DynamicTranslator.Service.Result
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IResultService : IApplicationService
     {
         [UnitOfWork]

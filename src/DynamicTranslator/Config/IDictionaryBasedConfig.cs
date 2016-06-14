@@ -1,8 +1,4 @@
-﻿#region using
-
-using System;
-
-#endregion
+﻿using System;
 
 namespace DynamicTranslator.Config
 {

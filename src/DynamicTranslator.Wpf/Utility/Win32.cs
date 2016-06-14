@@ -3,12 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace DynamicTranslator.Wpf.Utility
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     This static class holds the Win32 function declarations and constants needed by
     ///     this sample application.

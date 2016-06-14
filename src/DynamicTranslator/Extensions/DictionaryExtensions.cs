@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class DictionaryExtensions
     {
         public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)

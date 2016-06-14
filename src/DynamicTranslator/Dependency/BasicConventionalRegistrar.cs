@@ -5,12 +5,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Dependency
 {
-    #region using
-
-    
-
-    #endregion
-
     public class BasicConventionalRegistrar : IConventionalDependencyRegistrar
     {
         public void RegisterAssembly(IConventionalRegistrationContext context)

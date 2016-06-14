@@ -4,12 +4,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Domain.Repository
 {
-    #region using
-
-    
-
-    #endregion
-
     public abstract class RepositoryBase<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
         where TEntity : class
     {

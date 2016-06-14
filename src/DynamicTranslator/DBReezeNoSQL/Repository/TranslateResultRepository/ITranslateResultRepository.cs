@@ -4,12 +4,6 @@ using DynamicTranslator.Orchestrators.Model;
 
 namespace DynamicTranslator.DBReezeNoSQL.Repository.TranslateResultRepository
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface ITranslateResultRepository
     {
         CompositeTranslateResult GetTranslateResult(string key);

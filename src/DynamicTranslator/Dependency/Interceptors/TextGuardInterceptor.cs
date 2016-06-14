@@ -7,12 +7,6 @@ using DynamicTranslator.Exception;
 
 namespace DynamicTranslator.Dependency.Interceptors
 {
-    #region using
-
-    
-
-    #endregion
-
     public class TextGuardInterceptor : IInterceptor
     {
         private readonly IStartupConfiguration configuration;

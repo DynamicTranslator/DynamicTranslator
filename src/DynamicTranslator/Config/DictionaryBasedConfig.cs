@@ -6,12 +6,6 @@ using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Config
 {
-    #region using
-
-    
-
-    #endregion
-
     public class DictionayBasedConfig : IDictionaryBasedConfig
     {
         protected DictionayBasedConfig()

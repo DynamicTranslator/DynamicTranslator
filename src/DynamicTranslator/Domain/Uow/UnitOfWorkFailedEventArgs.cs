@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Used as event arguments on <see cref="IActiveUnitOfWork.Failed" /> event.
     /// </summary>

@@ -12,12 +12,6 @@ using DynamicTranslator.Wpf.ViewModel;
 
 namespace DynamicTranslator.Wpf
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     The app root class.
     /// </summary>

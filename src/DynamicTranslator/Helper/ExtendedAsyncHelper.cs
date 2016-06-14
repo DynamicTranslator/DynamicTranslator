@@ -4,12 +4,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Helper
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class ExtendedAsyncHelper
     {
         public static async Task AwaitTaskWithFinally(Task actualReturnValue, Action<System.Exception> finalAction)

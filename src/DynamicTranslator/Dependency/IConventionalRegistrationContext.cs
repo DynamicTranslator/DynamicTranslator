@@ -4,12 +4,6 @@ using DynamicTranslator.Dependency.Manager;
 
 namespace DynamicTranslator.Dependency
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IConventionalRegistrationContext
     {
         /// <summary>

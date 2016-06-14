@@ -1,21 +1,12 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using DynamicTranslator.Dependency.Manager;
 using DynamicTranslator.ViewModel.Constants;
 
-#endregion
-
 namespace DynamicTranslator.Config
 {
-
-    #region using
-
-    #endregion
-
     public class StartupConfiguration : DictionayBasedConfig, IStartupConfiguration
     {
         public StartupConfiguration(IIocManager iocManager)

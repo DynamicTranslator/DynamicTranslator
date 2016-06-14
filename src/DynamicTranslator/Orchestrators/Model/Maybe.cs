@@ -4,12 +4,6 @@ using System.Collections.Generic;
 
 namespace DynamicTranslator.Orchestrators.Model
 {
-    #region using
-
-    
-
-    #endregion
-
     [Serializable]
     public class Maybe<T> : IEnumerable<T>
     {

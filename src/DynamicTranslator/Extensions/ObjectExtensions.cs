@@ -4,12 +4,6 @@ using Newtonsoft.Json.Serialization;
 
 namespace DynamicTranslator.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class ObjectExtensions
     {
         public static T GetFirstValueInArrayGraph<T>(this JArray jarray)

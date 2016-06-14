@@ -6,12 +6,6 @@ using DynamicTranslator.ViewModel.Interfaces;
 
 namespace DynamicTranslator.ViewModel
 {
-    #region using
-
-    
-
-    #endregion
-
     public class Notification : INotifyPropertyChanged, INotification, ITransientDependency
     {
         private int id;

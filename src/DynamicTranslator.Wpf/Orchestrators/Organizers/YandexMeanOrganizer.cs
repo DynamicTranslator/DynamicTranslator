@@ -1,12 +1,8 @@
-﻿#region using
-
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Xml;
 
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.ViewModel.Constants;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

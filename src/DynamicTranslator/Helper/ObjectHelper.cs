@@ -3,12 +3,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DynamicTranslator.Helper
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class ObjectHelper
     {
         public static object ByteArrayToObject(byte[] arrBytes)

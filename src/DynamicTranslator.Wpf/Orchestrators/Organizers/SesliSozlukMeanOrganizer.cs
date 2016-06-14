@@ -1,6 +1,4 @@
-﻿#region using
-
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,15 +8,8 @@ using DynamicTranslator.ViewModel.Constants;
 
 using HtmlAgilityPack;
 
-#endregion
-
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {
-
-    #region using
-
-    #endregion
-
     public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;

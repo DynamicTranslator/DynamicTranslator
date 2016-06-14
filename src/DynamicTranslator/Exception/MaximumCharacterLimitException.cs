@@ -1,11 +1,5 @@
 ﻿namespace DynamicTranslator.Exception
 {
-    #region using
-
-    
-
-    #endregion
-
     public class MaximumCharacterLimitException : System.Exception
     {
         public MaximumCharacterLimitException(string message, System.Exception ex, object[] messageParameters) : base(message, ex)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
@@ -237,7 +236,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => WhenClipboardContainsTextEventHandler += h,
                     h => WhenClipboardContainsTextEventHandler -= h).
-                 Subscribe((IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>)IocManager.Instance.Resolve<Finder>());
+                 Subscribe(IocManager.Instance.Resolve<Finder>());
 
             syncObserver = Observable
                 .Interval(TimeSpan.FromSeconds(7.0), TaskPoolScheduler.Default)

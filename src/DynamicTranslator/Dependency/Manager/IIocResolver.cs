@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Dependency.Manager
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IIocResolver
     {
         bool IsRegistered(Type type);

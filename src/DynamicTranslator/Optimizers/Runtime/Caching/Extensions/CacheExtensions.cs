@@ -3,12 +3,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Extension methods for <see cref="ICache" />.
     /// </summary>

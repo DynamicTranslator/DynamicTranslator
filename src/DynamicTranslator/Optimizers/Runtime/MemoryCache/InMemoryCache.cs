@@ -6,12 +6,6 @@ using DynamicTranslator.Optimizers.Runtime.Caching;
 
 namespace DynamicTranslator.Optimizers.Runtime.MemoryCache
 {
-    #region using
-
-    
-
-    #endregion
-
     public class InMemoryCache : CacheBase
     {
         private System.Runtime.Caching.MemoryCache _memoryCache;

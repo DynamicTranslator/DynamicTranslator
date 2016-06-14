@@ -5,12 +5,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Unit of work manager.
     /// </summary>

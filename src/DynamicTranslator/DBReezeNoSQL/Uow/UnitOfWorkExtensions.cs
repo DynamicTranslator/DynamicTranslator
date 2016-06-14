@@ -6,12 +6,6 @@ using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class UnitOfWorkExtensions
     {
         public static Transaction GetTransaction(this IActiveUnitOfWork unitOfWork)

@@ -1,6 +1,4 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -13,8 +11,6 @@ using DynamicTranslator.Dependency.Manager;
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.ViewModel.Constants;
 using DynamicTranslator.Wpf.ViewModel.Model;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.ViewModel
 {

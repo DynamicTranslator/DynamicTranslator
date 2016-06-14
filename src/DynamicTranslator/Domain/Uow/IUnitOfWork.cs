@@ -2,12 +2,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Defines a unit of work.
     ///     Use <see cref="IUnitOfWorkManager.Begin()" /> to start a new unit of work.

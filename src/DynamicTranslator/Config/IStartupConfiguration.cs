@@ -1,11 +1,7 @@
-﻿#region using
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using DynamicTranslator.Dependency.Manager;
 using DynamicTranslator.ViewModel.Constants;
-
-#endregion
 
 namespace DynamicTranslator.Config
 {

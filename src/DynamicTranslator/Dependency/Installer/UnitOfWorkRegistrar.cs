@@ -10,12 +10,6 @@ using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.Dependency.Installer
 {
-    #region using
-
-    
-
-    #endregion
-
     public class UnitOfWorkRegistrar
     {
         public static void Initialize(IocManager iocManager)

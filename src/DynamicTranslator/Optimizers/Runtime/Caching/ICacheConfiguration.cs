@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     A registered cache configurator.
     /// </summary>

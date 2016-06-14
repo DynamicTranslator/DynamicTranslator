@@ -1,13 +1,9 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Dependency.Markers;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel.Model;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers
 {

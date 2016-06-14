@@ -16,12 +16,6 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
-    #region using
-
-    
-
-    #endregion
-
     public class BingTranslatorFinder : IMeanFinder
     {
         private readonly IStartupConfiguration configuration;

@@ -1,18 +1,9 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-#endregion
-
 namespace DynamicTranslator.Extensions
 {
-
-    #region using
-
-    #endregion
-
     public static class StringExtension
     {
         private static readonly Regex _htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
@@ -85,7 +76,6 @@ namespace DynamicTranslator.Extensions
 
         public static string RemoveSpecialCharacters(this string str)
         {
-            //return Regex.Replace(Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(),@"\t|\n|\r", " "),"[^ -~]", ""); //REmove non-AsCII characters
             return Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(), @"\t|\n|\r", " "); //REmove non-AsCII characters
         }
 

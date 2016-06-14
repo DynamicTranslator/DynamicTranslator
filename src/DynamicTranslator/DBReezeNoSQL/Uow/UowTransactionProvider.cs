@@ -5,12 +5,6 @@ using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     public class UowTransactionProvider : ITransactionProvider, ITransientDependency
     {
         private readonly ICurrentUnitOfWorkProvider currentUnitOfWorkProvider;

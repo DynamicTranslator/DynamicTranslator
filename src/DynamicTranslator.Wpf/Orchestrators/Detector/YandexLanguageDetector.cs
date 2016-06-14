@@ -13,12 +13,6 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
-    #region using
-
-    
-
-    #endregion
-
     public class YandexLanguageDetector : ILanguageDetector
     {
         private readonly IStartupConfiguration configuration;

@@ -3,12 +3,6 @@ using System.Runtime.Serialization;
 
 namespace DynamicTranslator.Orchestrators.Model
 {
-    #region using
-
-    
-
-    #endregion
-
     [Serializable]
     public class TranslateResult
     {

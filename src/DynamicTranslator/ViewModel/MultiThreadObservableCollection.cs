@@ -5,12 +5,6 @@ using System.Windows.Threading;
 
 namespace DynamicTranslator.ViewModel
 {
-    #region using
-
-    
-
-    #endregion
-
     public class MultiThreadObservableCollection<T> : ObservableCollection<T>
     {
         public override event NotifyCollectionChangedEventHandler CollectionChanged;

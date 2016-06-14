@@ -6,12 +6,6 @@ using DynamicTranslator.Helper;
 
 namespace DynamicTranslator.DBReezeNoSQL.Repository
 {
-    #region using
-
-    
-
-    #endregion
-
     public class DBReezeRepositoryBase<TEntity, TKey> : RepositoryBase<TEntity, TKey> where TEntity : class
     {
         private readonly ITransactionProvider transactionProvider;

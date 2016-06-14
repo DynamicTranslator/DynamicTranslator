@@ -1,6 +1,4 @@
-﻿#region using
-
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +7,6 @@ using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.ViewModel.Constants;
 
 using HtmlAgilityPack;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

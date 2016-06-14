@@ -4,12 +4,6 @@ using DynamicTranslator.Dependency.Manager;
 
 namespace DynamicTranslator.Dependency
 {
-    #region using
-
-    
-
-    #endregion
-
     internal class ConventionalRegistrationContext : IConventionalRegistrationContext
     {
         internal ConventionalRegistrationContext(Assembly assembly, IIocManager iocManager, ConventionalRegistrationConfig config)

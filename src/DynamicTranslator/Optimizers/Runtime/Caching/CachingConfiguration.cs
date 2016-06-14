@@ -4,12 +4,6 @@ using System.Collections.Immutable;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     internal class CachingConfiguration : ICachingConfiguration
     {
         private readonly List<ICacheConfigurator> _configurators;

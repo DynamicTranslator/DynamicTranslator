@@ -8,12 +8,6 @@ using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     public class DbReezeUnitOfWork : UnitOfWorkBase
     {
         private readonly DBreezeEngine dBreezeEngine;

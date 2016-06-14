@@ -5,12 +5,6 @@ using DynamicTranslator.Optimizers.Runtime.Caching.Extensions;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     An interface to work with cache in a typed manner.
     ///     Use <see cref="CacheExtensions.AsTyped{TKey,TValue}" /> method

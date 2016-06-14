@@ -7,12 +7,6 @@ using DynamicTranslator.Config;
 
 namespace DynamicTranslator.Service.GoogleAnalytics
 {
-    #region using
-
-    
-
-    #endregion
-
     public class GoogleAnalyticsService : IGoogleAnalyticsService
     {
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";

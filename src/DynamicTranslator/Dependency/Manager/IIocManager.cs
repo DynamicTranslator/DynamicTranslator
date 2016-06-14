@@ -5,12 +5,6 @@ using Castle.Windsor;
 
 namespace DynamicTranslator.Dependency.Manager
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IIocManager : IIocRegistrar, IIocResolver, IDisposable
     {
         IWindsorContainer IocContainer { get; }

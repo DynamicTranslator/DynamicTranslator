@@ -1,14 +1,10 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Dependency.Markers;
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.ViewModel;
 using DynamicTranslator.ViewModel.Interfaces;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators
 {

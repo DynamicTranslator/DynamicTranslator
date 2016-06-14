@@ -6,12 +6,6 @@ using IsolationLevel = System.Data.IsolationLevel;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     This attribute is used to indicate that declaring method is atomic and should be considered as a unit of work.
     ///     A method that has this attribute is intercepted, a database connection is opened and a transaction is started

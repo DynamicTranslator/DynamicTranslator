@@ -7,12 +7,6 @@ using DynamicTranslator.Dependency.Manager;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     public abstract class CacheManagerBase : ICacheManager
     {
         protected readonly ConcurrentDictionary<string, ICache> Caches;

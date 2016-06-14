@@ -1,6 +1,4 @@
-﻿#region using
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -12,15 +10,8 @@ using Newtonsoft.Json;
 
 using RestSharp;
 
-#endregion
-
 namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
-
-    #region using
-
-    #endregion
-
     public class GoogleLanguageDetector : ILanguageDetector, ISingletonDependency
     {
         private readonly IStartupConfiguration configuration;

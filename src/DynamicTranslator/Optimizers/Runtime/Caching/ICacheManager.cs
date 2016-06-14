@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface ICacheManager : IDisposable
     {
         /// <summary>

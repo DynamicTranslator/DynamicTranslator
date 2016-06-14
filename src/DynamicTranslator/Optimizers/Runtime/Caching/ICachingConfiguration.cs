@@ -5,12 +5,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Used to configure caching system.
     /// </summary>

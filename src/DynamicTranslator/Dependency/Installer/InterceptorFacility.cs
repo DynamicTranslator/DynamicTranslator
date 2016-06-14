@@ -10,13 +10,7 @@ using DynamicTranslator.Orchestrators.Finder;
 
 namespace DynamicTranslator.Dependency.Installer
 {
-    #region using
-
-    
-
-    #endregion
-
-    public class InterceptorConventions : AbstractFacility
+    public class InterceptorFacility : AbstractFacility
     {
         protected override void Init()
         {

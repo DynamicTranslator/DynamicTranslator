@@ -4,12 +4,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Service.GoogleAnalytics
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IGoogleAnalyticsService : ITransientDependency
     {
         void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency);

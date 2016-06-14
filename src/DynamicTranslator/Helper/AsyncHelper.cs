@@ -6,12 +6,6 @@ using Nito.AsyncEx;
 
 namespace DynamicTranslator.Helper
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class AsyncHelper
     {
         /// <summary>

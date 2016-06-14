@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Orchestrators.Event
 {
-    #region using
-
-    
-
-    #endregion
-
     public class WhenNotificationAddEventArgs : EventArgs
     {
         public string ImageUrl;

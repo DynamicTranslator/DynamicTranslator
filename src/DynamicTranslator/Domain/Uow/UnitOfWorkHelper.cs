@@ -6,12 +6,6 @@ using DynamicTranslator.Service;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     A helper class to simplify unit of work process.
     /// </summary>

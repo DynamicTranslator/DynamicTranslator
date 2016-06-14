@@ -3,12 +3,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.ViewModel.Interfaces
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface IGrowlNotifications : IDisposable
     {
         event EventHandler OnDispose;

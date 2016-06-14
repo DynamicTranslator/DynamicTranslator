@@ -1,6 +1,4 @@
-﻿#region using
-
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +7,6 @@ using DynamicTranslator.Orchestrators.Model.Bing;
 using DynamicTranslator.ViewModel.Constants;
 
 using Newtonsoft.Json;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

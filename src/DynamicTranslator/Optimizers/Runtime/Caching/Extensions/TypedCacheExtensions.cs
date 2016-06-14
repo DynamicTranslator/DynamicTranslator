@@ -3,12 +3,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class TypedCacheExtensions
     {
         public static TValue Get<TKey, TValue>(this ITypedCache<TKey, TValue> cache, TKey key, Func<TValue> factory)

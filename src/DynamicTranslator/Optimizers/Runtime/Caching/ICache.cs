@@ -3,12 +3,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     public interface ICache : IDisposable
     {
         /// <summary>

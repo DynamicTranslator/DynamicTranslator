@@ -3,12 +3,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Used to complete a unit of work.
     ///     This interface can not be injected or directly used.

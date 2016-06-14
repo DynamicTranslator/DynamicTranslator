@@ -5,12 +5,6 @@ using IsolationLevel = System.Data.IsolationLevel;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Used to get/set default options for a unit of work.
     /// </summary>

@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     internal class CacheConfigurator : ICacheConfigurator
     {
         public CacheConfigurator(Action<ICache> initAction)

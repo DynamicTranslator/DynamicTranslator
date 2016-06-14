@@ -9,12 +9,6 @@ using DynamicTranslator.Exception;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     public class CallContextCurrentUnitOfWorkProvider : ICurrentUnitOfWorkProvider, ITransientDependency
     {
         private const string ContextKey = "UnitOfWork.Current";

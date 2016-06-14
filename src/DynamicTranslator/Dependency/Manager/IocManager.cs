@@ -11,12 +11,6 @@ using DynamicTranslator.Dependency.Markers;
 
 namespace DynamicTranslator.Dependency.Manager
 {
-    #region using
-
-    
-
-    #endregion
-
     public class IocManager : IIocManager
     {
         /// <summary>

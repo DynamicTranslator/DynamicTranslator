@@ -20,7 +20,7 @@ namespace DynamicTranslator.Dependency.Installer
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.AddFacility<TypedFactoryFacility>();
-            container.AddFacility<InterceptorConventions>();
+            container.AddFacility<InterceptorFacility>();
 
             var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 

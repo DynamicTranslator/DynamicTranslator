@@ -12,12 +12,6 @@ using DynamicTranslator.ViewModel.Constants;
 
 namespace DynamicTranslator.Dependency.Interceptors
 {
-    #region using
-
-    
-
-    #endregion
-
     public class ExceptionInterceptor : IInterceptor
     {
         private readonly IGoogleAnalyticsService googleAnalytics;

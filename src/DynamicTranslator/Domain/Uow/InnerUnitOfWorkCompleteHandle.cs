@@ -5,12 +5,6 @@ using DynamicTranslator.Exception;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     This handle is used for innet unit of work scopes.
     ///     A inner unit of work scope actually uses outer unit of work scope

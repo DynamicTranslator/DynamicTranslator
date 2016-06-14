@@ -5,12 +5,6 @@ using Nito.AsyncEx;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     public abstract class CacheBase : ICache
     {
         private readonly AsyncLock _asyncLock = new AsyncLock();

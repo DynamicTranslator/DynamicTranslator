@@ -11,8 +11,6 @@ using DynamicTranslator.Extensions;
 using DynamicTranslator.ViewModel;
 using DynamicTranslator.ViewModel.Interfaces;
 
-
-
 namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class GrowlNotifiactions : IGrowlNotifications

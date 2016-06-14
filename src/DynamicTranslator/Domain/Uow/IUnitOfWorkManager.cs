@@ -2,12 +2,6 @@
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Unit of work manager.
     ///     Used to begin and control a unit of work.

@@ -5,12 +5,6 @@ using DynamicTranslator.Optimizers.Runtime.Caching.Extensions;
 
 namespace DynamicTranslator.Optimizers.Runtime.Caching
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Implements <see cref="ITypedCache{TKey,TValue}" /> to wrap a <see cref="ICache" />.
     /// </summary>

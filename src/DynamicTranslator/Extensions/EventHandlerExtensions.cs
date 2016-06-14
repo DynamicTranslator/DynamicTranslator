@@ -4,12 +4,6 @@ using System.Threading.Tasks;
 
 namespace DynamicTranslator.Extensions
 {
-    #region using
-
-    
-
-    #endregion
-
     public static class EventHandlerExtensions
     {
         /// <summary>

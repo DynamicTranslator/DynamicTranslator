@@ -6,12 +6,6 @@ using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Domain.Uow
 {
-    #region using
-
-    
-
-    #endregion
-
     /// <summary>
     ///     Base for all Unit Of Work classes.
     /// </summary>

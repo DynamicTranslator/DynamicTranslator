@@ -1,6 +1,4 @@
-﻿#region using
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,8 +9,6 @@ using DynamicTranslator.Orchestrators.Organizer;
 using DynamicTranslator.ViewModel.Constants;
 
 using RestSharp;
-
-#endregion
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {

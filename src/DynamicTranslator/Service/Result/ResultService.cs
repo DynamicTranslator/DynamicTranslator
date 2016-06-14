@@ -6,12 +6,6 @@ using DynamicTranslator.Orchestrators.Model;
 
 namespace DynamicTranslator.Service.Result
 {
-    #region using
-
-    
-
-    #endregion
-
     public class ResultService : IResultService, ITransientDependency
     {
         private readonly ITranslateResultRepository resultRepository;

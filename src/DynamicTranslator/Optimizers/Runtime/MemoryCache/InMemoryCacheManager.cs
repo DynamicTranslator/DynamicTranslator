@@ -5,12 +5,6 @@ using DynamicTranslator.Optimizers.Runtime.Caching;
 
 namespace DynamicTranslator.Optimizers.Runtime.MemoryCache
 {
-    #region using
-
-    
-
-    #endregion
-
     public class InMemoryCacheManager : CacheManagerBase, ISingletonDependency
     {
         public InMemoryCacheManager(IIocManager iocManager, ICachingConfiguration configuration) : base(iocManager, configuration)
