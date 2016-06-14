@@ -1,7 +1,7 @@
-﻿using DBreeze.Transactions;
+﻿using Abp.Dependency;
+using Abp.Domain.Uow;
 
-using DynamicTranslator.Dependency.Markers;
-using DynamicTranslator.Domain.Uow;
+using DBreeze.Transactions;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {

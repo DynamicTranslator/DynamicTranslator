@@ -81,6 +81,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Abp">
+      <HintPath>..\packages\Abp.0.9.3.0\lib\net452\Abp.dll</HintPath>
+    </Reference>
     <Reference Include="Gma.System.MouseKeyHook, Version=5.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
       <Private>True</Private>
@@ -148,6 +151,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DynamicTranslatorWpfModule.cs" />
     <Compile Include="Orchestrators\Detector\YandexLanguageDetector.cs" />
     <Compile Include="Orchestrators\Finders\BingTranslatorFinder.cs" />
     <Compile Include="Orchestrators\Finders\GoogleTranslateFinder.cs" />

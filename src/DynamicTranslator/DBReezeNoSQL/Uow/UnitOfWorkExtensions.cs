@@ -1,8 +1,8 @@
 ﻿using System;
 
-using DBreeze.Transactions;
+using Abp.Domain.Uow;
 
-using DynamicTranslator.Domain.Uow;
+using DBreeze.Transactions;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {

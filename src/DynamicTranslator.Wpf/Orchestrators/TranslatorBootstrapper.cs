@@ -34,7 +34,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
         private readonly ICacheManager cacheManager;
         private readonly GrowlNotifiactions growlNotifications;
         private readonly MainWindow mainWindow;
-        private readonly IStartupConfiguration startupConfiguration;
+        private readonly IDynamicTranslatorConfiguration dynamicTranslatorConfiguration;
         private CancellationTokenSource cancellationTokenSource;
         private IDisposable finderObservable;
         private IKeyboardMouseEvents globalMouseHook;
@@ -47,7 +47,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
 
         public TranslatorBootstrapper(MainWindow mainWindow,
             GrowlNotifiactions growlNotifications,
-            IStartupConfiguration startupConfiguration,
+            IDynamicTranslatorConfiguration dynamicTranslatorConfiguration,
             ICacheManager cacheManager)
         {
             if (mainWindow == null)
@@ -56,15 +56,15 @@ namespace DynamicTranslator.Wpf.Orchestrators
             if (growlNotifications == null)
                 throw new ArgumentNullException(nameof(growlNotifications));
 
-            if (startupConfiguration == null)
-                throw new ArgumentNullException(nameof(startupConfiguration));
+            if (dynamicTranslatorConfiguration == null)
+                throw new ArgumentNullException(nameof(dynamicTranslatorConfiguration));
 
             if (cacheManager == null)
                 throw new ArgumentNullException(nameof(cacheManager));
 
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
-            this.startupConfiguration = startupConfiguration;
+            this.dynamicTranslatorConfiguration = dynamicTranslatorConfiguration;
             this.cacheManager = cacheManager;
             cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
         }
@@ -127,8 +127,8 @@ namespace DynamicTranslator.Wpf.Orchestrators
 
         private void ConfigureNotificationMeasurements()
         {
-            growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
-            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - startupConfiguration.LeftOffset;
+            growlNotifications.Top = SystemParameters.WorkArea.Top + dynamicTranslatorConfiguration.TopOffset;
+            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - dynamicTranslatorConfiguration.LeftOffset;
         }
 
         private void DecomposeRoot()

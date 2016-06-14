@@ -18,10 +18,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class BingTranslatorFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public BingTranslatorFinder(IStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public BingTranslatorFinder(IDynamicTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));

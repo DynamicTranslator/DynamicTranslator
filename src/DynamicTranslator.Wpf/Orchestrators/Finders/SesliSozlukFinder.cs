@@ -16,10 +16,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class SesliSozlukFinder : IMeanFinder
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, IStartupConfiguration configuration)
+        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorConfiguration configuration)
         {
             if (meanOrganizerFactory == null)
                 throw new ArgumentNullException(nameof(meanOrganizerFactory));

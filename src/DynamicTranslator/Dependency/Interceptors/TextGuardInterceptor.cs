@@ -9,10 +9,10 @@ namespace DynamicTranslator.Dependency.Interceptors
 {
     public class TextGuardInterceptor : IInterceptor
     {
-        private readonly IStartupConfiguration configuration;
+        private readonly IDynamicTranslatorConfiguration configuration;
         private string currentString;
 
-        public TextGuardInterceptor(IStartupConfiguration configuration)
+        public TextGuardInterceptor(IDynamicTranslatorConfiguration configuration)
         {
             this.configuration = configuration;
         }

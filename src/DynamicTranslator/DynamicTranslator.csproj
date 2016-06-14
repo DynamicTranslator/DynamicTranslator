@@ -31,12 +31,20 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Abp, Version=0.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Abp.0.9.3.0\lib\net452\Abp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
       <HintPath>..\packages\AjaxMin.5.14.5506.26202\lib\net40\AjaxMin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Windsor, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -51,8 +59,9 @@
       <HintPath>..\packages\MouseKeyHook.5.4.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.dll</HintPath>
@@ -71,6 +80,7 @@
       <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
@@ -81,10 +91,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\DictionaryBasedConfig.cs" />
-    <Compile Include="Config\IDictionaryBasedConfig.cs" />
-    <Compile Include="Config\IStartupConfiguration.cs" />
-    <Compile Include="Config\StartupConfiguration.cs" />
+    <Compile Include="Config\DynamicTranslatorDictionayBasedConfig.cs" />
+    <Compile Include="Config\IDynamicTranslatorDictionayBasedConfig.cs" />
+    <Compile Include="Config\IDynamicTranslatorConfiguration.cs" />
+    <Compile Include="Config\DynamicTranslatorConfiguration.cs" />
     <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
@@ -93,43 +103,14 @@
     <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
     <Compile Include="DBReezeNoSQL\Uow\UnitOfWorkExtensions.cs" />
     <Compile Include="DBReezeNoSQL\Uow\UowTransactionProvider.cs" />
-    <Compile Include="Dependency\BasicConventionalRegistrar.cs" />
-    <Compile Include="Dependency\ConventionalRegistrationConfig.cs" />
-    <Compile Include="Dependency\ConventionalRegistrationContext.cs" />
-    <Compile Include="Dependency\IConventionalDependencyRegistrar.cs" />
-    <Compile Include="Dependency\IConventionalRegistrationContext.cs" />
     <Compile Include="Dependency\Installer\InterceptorFacility.cs" />
-    <Compile Include="Dependency\Installer\UnitOfWorkRegistrar.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
-    <Compile Include="Dependency\Markers\DependencyLifeStyle.cs" />
-    <Compile Include="Dependency\Manager\IIocManager.cs" />
-    <Compile Include="Dependency\Manager\IIocRegistrar.cs" />
-    <Compile Include="Dependency\Manager\IIocResolver.cs" />
     <Compile Include="Dependency\Installer\CoreInstaller.cs" />
-    <Compile Include="Dependency\Manager\IocManager.cs" />
-    <Compile Include="Dependency\Extensions\IocRegistrarExtensions.cs" />
-    <Compile Include="Dependency\Markers\ISingletonDependency.cs" />
-    <Compile Include="Dependency\Markers\ITransientDependency.cs" />
     <Compile Include="Domain\Repository\RepositoryBase.cs" />
     <Compile Include="Domain\Repository\IRepository.cs" />
     <Compile Include="Domain\Repository\IRepositoryOfTEntityAndTPrimaryKey.cs" />
-    <Compile Include="Domain\Uow\CallContextCurrentUnitOfWorkProvider.cs" />
-    <Compile Include="Domain\Uow\IActiveUnitOfWork.cs" />
-    <Compile Include="Domain\Uow\ICurrentUnitOfWorkProvider.cs" />
-    <Compile Include="Domain\Uow\InnerUnitOfWorkCompleteHandle.cs" />
-    <Compile Include="Domain\Uow\IUnitOfWork.cs" />
-    <Compile Include="Domain\Uow\IUnitOfWorkCompleteHandle.cs" />
-    <Compile Include="Domain\Uow\IUnitOfWorkDefaultOptions.cs" />
-    <Compile Include="Domain\Uow\IUnitOfWorkManager.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkAttribute.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkBase.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkDefaultOptions.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkFailedEventArgs.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkHelper.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkInterceptor.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkManager.cs" />
-    <Compile Include="Domain\Uow\UnitOfWorkOptions.cs" />
+    <Compile Include="DynamicTranslatorCoreModule.cs" />
     <Compile Include="Exception\ApiKeyNullException.cs" />
     <Compile Include="Exception\BusinessException.cs" />
     <Compile Include="Exception\MaximumCharacterLimitException.cs" />
@@ -193,6 +174,7 @@
     <Compile Include="ViewModel\Notification.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

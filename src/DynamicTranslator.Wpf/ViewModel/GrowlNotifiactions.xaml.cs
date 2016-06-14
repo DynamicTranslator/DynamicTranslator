@@ -17,14 +17,14 @@ namespace DynamicTranslator.Wpf.ViewModel
     {
         private readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
-        private readonly IStartupConfiguration startupConfiguration;
+        private readonly IDynamicTranslatorConfiguration dynamicTranslatorConfiguration;
         private int count;
         public bool IsDisposed;
 
-        public GrowlNotifiactions(IStartupConfiguration startupConfiguration, Notifications notifications)
+        public GrowlNotifiactions(IDynamicTranslatorConfiguration dynamicTranslatorConfiguration, Notifications notifications)
         {
             InitializeComponent();
-            this.startupConfiguration = startupConfiguration;
+            this.dynamicTranslatorConfiguration = dynamicTranslatorConfiguration;
             Notifications = notifications;
             NotificationsControl.DataContext = Notifications;
         }
@@ -37,7 +37,7 @@ namespace DynamicTranslator.Wpf.ViewModel
                 () =>
                 {
                     notification.Id = count++;
-                    if (Notifications.Count + 1 > startupConfiguration.MaxNotifications)
+                    if (Notifications.Count + 1 > dynamicTranslatorConfiguration.MaxNotifications)
                         buffer.Add(notification);
                     else
                         Notifications.Add(notification);

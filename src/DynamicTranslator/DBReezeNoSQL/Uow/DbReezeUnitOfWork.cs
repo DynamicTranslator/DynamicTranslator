@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using Abp.Domain.Uow;
+
 using DBreeze;
 using DBreeze.Transactions;
-
-using DynamicTranslator.Domain.Uow;
 
 namespace DynamicTranslator.DBReezeNoSQL.Uow
 {
@@ -12,7 +12,8 @@ namespace DynamicTranslator.DBReezeNoSQL.Uow
     {
         private readonly DBreezeEngine dBreezeEngine;
 
-        public DbReezeUnitOfWork(IUnitOfWorkDefaultOptions defaultOptions, DBreezeEngine dBreezeEngine) : base(defaultOptions)
+        public DbReezeUnitOfWork(IUnitOfWorkDefaultOptions defaultOptions, IConnectionStringResolver connectionStringResolver, DBreezeEngine dBreezeEngine)
+            : base(connectionStringResolver, defaultOptions)
         {
             this.dBreezeEngine = dBreezeEngine;
         }
