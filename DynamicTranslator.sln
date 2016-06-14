@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Wpf", "DynamicTranslator.Wpf\DynamicTranslator.Wpf.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Wpf", "src\DynamicTranslator.Wpf\DynamicTranslator.Wpf.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator", "DynamicTranslator\DynamicTranslator.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator", "src\DynamicTranslator\DynamicTranslator.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
