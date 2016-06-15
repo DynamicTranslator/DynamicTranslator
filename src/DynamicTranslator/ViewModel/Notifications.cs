@@ -1,4 +1,4 @@
-﻿using DynamicTranslator.Dependency.Markers;
+﻿using Abp.Dependency;
 
 namespace DynamicTranslator.ViewModel
 {

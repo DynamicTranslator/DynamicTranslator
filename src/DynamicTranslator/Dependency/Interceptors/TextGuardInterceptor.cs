@@ -2,7 +2,7 @@
 
 using Castle.DynamicProxy;
 
-using DynamicTranslator.Config;
+using DynamicTranslator.Configuration;
 using DynamicTranslator.Exception;
 
 namespace DynamicTranslator.Dependency.Interceptors

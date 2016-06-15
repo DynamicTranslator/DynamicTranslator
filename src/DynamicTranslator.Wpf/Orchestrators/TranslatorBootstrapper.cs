@@ -8,12 +8,12 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-using DynamicTranslator.Config;
-using DynamicTranslator.Dependency.Manager;
-using DynamicTranslator.Dependency.Markers;
+using Abp.Dependency;
+using Abp.Runtime.Caching;
+
+using DynamicTranslator.Configuration;
+using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Optimizers.Runtime.Caching;
-using DynamicTranslator.Optimizers.Runtime.Caching.Extensions;
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.Orchestrators.Event;
 using DynamicTranslator.Orchestrators.Model;
@@ -66,7 +66,7 @@ namespace DynamicTranslator.Wpf.Orchestrators
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
             this.cacheManager = cacheManager;
-            cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
+            cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;

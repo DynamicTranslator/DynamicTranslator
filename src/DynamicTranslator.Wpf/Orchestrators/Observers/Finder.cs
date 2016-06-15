@@ -3,9 +3,10 @@ using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Dependency.Markers;
-using DynamicTranslator.Optimizers.Runtime.Caching;
-using DynamicTranslator.Optimizers.Runtime.Caching.Extensions;
+using Abp.Dependency;
+using Abp.Runtime.Caching;
+
+using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.Orchestrators.Detector;
 using DynamicTranslator.Orchestrators.Event;
@@ -13,7 +14,6 @@ using DynamicTranslator.Orchestrators.Finder;
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Orchestrators.Organizer;
 using DynamicTranslator.Service.GoogleAnalytics;
-using DynamicTranslator.ViewModel.Constants;
 using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers
@@ -62,7 +62,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
             this.cacheManager = cacheManager;
             this.googleAnalytics = googleAnalytics;
             this.languageDetector = languageDetector;
-            cache = this.cacheManager.GetCacheEnvironment<string, TranslateResult[]>(CacheNames.MeanCache);
+            cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public void OnCompleted() {}

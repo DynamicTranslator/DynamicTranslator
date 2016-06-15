@@ -3,7 +3,7 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Config;
+using DynamicTranslator.Configuration;
 using DynamicTranslator.Orchestrators.Detector;
 using DynamicTranslator.Orchestrators.Model.Yandex;
 

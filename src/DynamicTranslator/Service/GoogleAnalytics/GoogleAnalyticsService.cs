@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-using DynamicTranslator.Config;
+using DynamicTranslator.Configuration;
 
 namespace DynamicTranslator.Service.GoogleAnalytics
 {

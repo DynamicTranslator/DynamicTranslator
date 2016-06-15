@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
+using Abp.Domain.Entities;
+
 namespace DynamicTranslator.Orchestrators.Model
 {
     [Serializable]
-    public class CompositeTranslateResult
+    public class CompositeTranslateResult : Entity<string>
     {
         public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate)
         {

@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.ViewModel.Constants
+﻿namespace DynamicTranslator.Constants
 {
     public enum TranslatorType
     {

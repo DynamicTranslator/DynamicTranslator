@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Dependency.Markers;
+using Abp.Dependency;
+
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.ViewModel;
 using DynamicTranslator.ViewModel.Interfaces;

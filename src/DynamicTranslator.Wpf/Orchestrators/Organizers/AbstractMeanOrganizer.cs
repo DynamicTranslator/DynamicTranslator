@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
+using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Orchestrators.Organizer;
-using DynamicTranslator.ViewModel.Constants;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Result;
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Orchestrators.Organizer;
-using DynamicTranslator.Service.Result;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using System.Web;
 
-using DynamicTranslator.Config;
-using DynamicTranslator.Dependency.Markers;
+using Abp.Dependency;
+
+using DynamicTranslator.Configuration;
 using DynamicTranslator.Orchestrators.Detector;
 
 using Newtonsoft.Json;

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
-using DynamicTranslator.Config;
-using DynamicTranslator.Dependency.Manager;
+using Abp.Dependency;
+
+using DynamicTranslator.Configuration;
+using DynamicTranslator.Constants;
+using DynamicTranslator.Extensions;
 using DynamicTranslator.Orchestrators;
-using DynamicTranslator.ViewModel.Constants;
 using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.ViewModel

@@ -1,9 +1,10 @@
-﻿using DynamicTranslator.Dependency.Markers;
-using DynamicTranslator.ViewModel.Constants;
+﻿using Abp.Dependency;
+
+using DynamicTranslator.Constants;
 
 namespace DynamicTranslator.Orchestrators
 {
-    public interface IOrchestrator : ITransientDependency
+    public interface IOrchestrator
     {
         TranslatorType TranslatorType { get; }
     }

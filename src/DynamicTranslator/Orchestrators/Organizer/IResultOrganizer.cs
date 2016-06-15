@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Dependency.Markers;
+using Abp.Dependency;
+
 using DynamicTranslator.Orchestrators.Model;
 
 namespace DynamicTranslator.Orchestrators.Organizer

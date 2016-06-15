@@ -2,9 +2,9 @@
 using System.Text;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.Orchestrators.Model;
-using DynamicTranslator.ViewModel.Constants;
 
 using HtmlAgilityPack;
 

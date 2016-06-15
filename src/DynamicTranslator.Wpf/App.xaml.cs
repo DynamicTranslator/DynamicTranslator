@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows;
 
-using DynamicTranslator.Config;
-using DynamicTranslator.Dependency;
-using DynamicTranslator.Dependency.Installer;
-using DynamicTranslator.Dependency.Manager;
-using DynamicTranslator.Optimizers.Runtime.Caching;
+using Abp;
+using Abp.Dependency;
+using Abp.Runtime.Caching.Configuration;
+
+using Castle.Facilities.Logging;
+
+using DynamicTranslator.Configuration;
 using DynamicTranslator.ViewModel.Interfaces;
 using DynamicTranslator.Wpf.ViewModel;
 
 namespace DynamicTranslator.Wpf
 {
-    /// <summary>
-    ///     The app root class.
-    /// </summary>
     public partial class App
     {
-        /// <summary>
-        ///     First place of program start.
-        /// </summary>
-        /// <param name="eventArgs">
-        ///     Bootstrap of program.
-        /// </param>
+        private readonly AbpBootstrapper bootstrapper;
+
+        public App()
+        {
+            bootstrapper = new AbpBootstrapper();
+            bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
+        }
+
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            IocManager.Instance.AddConventionalRegistrar(new BasicConventionalRegistrar());
-            UnitOfWorkRegistrar.Initialize(IocManager.Instance);
-
-            IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("DynamicTranslator"));
-            IocManager.Instance.RegisterAssemblyByConvention(Assembly.Load("DynamicTranslator.Wpf"));
+            bootstrapper.Initialize();
 
             IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>();
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                var exp = args.ExceptionObject;
+            };
 
             var defaultSlidingExpireTime = TimeSpan.FromHours(24);
             IocManager.Instance.Resolve<ICachingConfiguration>().ConfigureAll(cache => { cache.DefaultSlidingExpireTime = defaultSlidingExpireTime; });

@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Wpf", "Dy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator", "DynamicTranslator\DynamicTranslator.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.DbReeze", "DynamicTranslator.DbReeze\DynamicTranslator.DbReeze.csproj", "{28594610-055B-4849-9426-560344B4C777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application", "DynamicTranslator.Application\DynamicTranslator.Application.csproj", "{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-Core", "00-Core", "{EC26994B-B373-41E6-B657-214E8C7EC1EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Domain", "02-Domain", "{AC8515DF-4F4E-4065-8E73-52EAC5984D3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Application", "03-Application", "{2D654F9C-CD45-4348-A0AF-7DD4192F08A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Wpf", "04-Wpf", "{F8CC5A1A-68B5-436F-81C8-A1F62CA001F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +33,22 @@ Global
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0D66D6A-2A41-4532-AB6E-6443874946E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28594610-055B-4849-9426-560344B4C777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28594610-055B-4849-9426-560344B4C777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28594610-055B-4849-9426-560344B4C777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28594610-055B-4849-9426-560344B4C777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6995ABFD-720F-41E7-BE8B-38F23BA4BB57} = {F8CC5A1A-68B5-436F-81C8-A1F62CA001F1}
+		{A0D66D6A-2A41-4532-AB6E-6443874946E6} = {EC26994B-B373-41E6-B657-214E8C7EC1EE}
+		{28594610-055B-4849-9426-560344B4C777} = {AC8515DF-4F4E-4065-8E73-52EAC5984D3C}
+		{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF} = {2D654F9C-CD45-4348-A0AF-7DD4192F08A3}
 	EndGlobalSection
 EndGlobal

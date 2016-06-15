@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 
-using DynamicTranslator.Dependency.Markers;
+using Abp.Dependency;
+
 using DynamicTranslator.Extensions;
 using DynamicTranslator.ViewModel.Interfaces;
 

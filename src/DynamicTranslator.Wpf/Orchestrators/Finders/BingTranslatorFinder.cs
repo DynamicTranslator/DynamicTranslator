@@ -4,11 +4,13 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Config;
+using Abp.Dependency;
+
+using DynamicTranslator.Configuration;
+using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators.Finder;
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Orchestrators.Organizer;
-using DynamicTranslator.ViewModel.Constants;
 
 using Newtonsoft.Json;
 
@@ -16,7 +18,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
-    public class BingTranslatorFinder : IMeanFinder
+    public class BingTranslatorFinder : IMeanFinder , ITransientDependency
     {
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;

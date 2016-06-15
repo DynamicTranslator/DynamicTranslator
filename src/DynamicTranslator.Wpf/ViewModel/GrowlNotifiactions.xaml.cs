@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using DynamicTranslator.Config;
+using DynamicTranslator.Configuration;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.ViewModel;
 using DynamicTranslator.ViewModel.Interfaces;

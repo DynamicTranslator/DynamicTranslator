@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 using Castle.DynamicProxy;
 
+using DynamicTranslator.Constants;
 using DynamicTranslator.Exception;
 using DynamicTranslator.Helper;
 using DynamicTranslator.Orchestrators;
 using DynamicTranslator.Service.GoogleAnalytics;
-using DynamicTranslator.ViewModel.Constants;
 
 namespace DynamicTranslator.Dependency.Interceptors
 {
