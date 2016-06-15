@@ -101,7 +101,6 @@
     <Compile Include="Dependency\Installer\UnitOfWorkRegistrar.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
-    <Compile Include="Dependency\Installer\CoreInstaller.cs" />
     <Compile Include="DynamicTranslatorCoreModule.cs" />
     <Compile Include="Exception\ApiKeyNullException.cs" />
     <Compile Include="Exception\BusinessException.cs" />

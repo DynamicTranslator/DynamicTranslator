@@ -4,6 +4,8 @@ using Abp.Modules;
 
 using Castle.Facilities.TypedFactory;
 
+using DynamicTranslator.Dependency.Installer;
+
 namespace DynamicTranslator
 {
     public class DynamicTranslatorCoreModule : AbpModule
@@ -16,6 +18,7 @@ namespace DynamicTranslator
         public override void PreInitialize()
         {
             IocManager.IocContainer.AddFacility<TypedFactoryFacility>();
+            IocManager.IocContainer.AddFacility<InterceptorFacility>();
         }
     }
 }
