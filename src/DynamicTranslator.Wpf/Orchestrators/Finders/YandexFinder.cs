@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application;
+using DynamicTranslator.Application.Model;
+using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Orchestrators.Finder;
-using DynamicTranslator.Orchestrators.Model;
-using DynamicTranslator.Orchestrators.Organizer;
+using DynamicTranslator.Domain.Model;
 
 using RestSharp;
 

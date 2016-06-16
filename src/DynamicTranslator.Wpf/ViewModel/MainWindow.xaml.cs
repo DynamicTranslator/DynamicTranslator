@@ -11,7 +11,7 @@ using Abp.Dependency;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Orchestrators;
+using DynamicTranslator.Wpf.Orchestrators;
 using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.ViewModel

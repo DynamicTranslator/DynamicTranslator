@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 using Abp.Dependency;
 
-using DynamicTranslator.Orchestrators;
-using DynamicTranslator.ViewModel;
-using DynamicTranslator.ViewModel.Interfaces;
+using DynamicTranslator.Application;
+using DynamicTranslator.Application.Orchestrators;
+using DynamicTranslator.Wpf.ViewModel;
 
 namespace DynamicTranslator.Wpf.Orchestrators
 {

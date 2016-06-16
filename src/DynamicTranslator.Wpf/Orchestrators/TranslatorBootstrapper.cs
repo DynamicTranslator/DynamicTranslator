@@ -11,12 +11,12 @@ using System.Windows.Threading;
 using Abp.Dependency;
 using Abp.Runtime.Caching;
 
+using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
+using DynamicTranslator.Domain.Events;
+using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Orchestrators;
-using DynamicTranslator.Orchestrators.Event;
-using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Wpf.Orchestrators.Observers;
 using DynamicTranslator.Wpf.Utility;
 using DynamicTranslator.Wpf.ViewModel;

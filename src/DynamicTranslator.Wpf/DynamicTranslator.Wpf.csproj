@@ -194,14 +194,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DynamicTranslatorWpfModule.cs" />
+    <Compile Include="ViewModel\IGrowlNotifications.cs" />
+    <Compile Include="InterceptorFacility.cs" />
+    <Compile Include="ViewModel\Notification.cs" />
+    <Compile Include="ViewModel\Notifications.cs" />
+    <Compile Include="Orchestrators\Detector\ILanguageDetector.cs" />
+    <Compile Include="Orchestrators\Detector\ILanguageDetectorFactory.cs" />
     <Compile Include="Orchestrators\Detector\YandexLanguageDetector.cs" />
     <Compile Include="Orchestrators\Finders\BingTranslatorFinder.cs" />
     <Compile Include="Orchestrators\Finders\GoogleTranslateFinder.cs" />
+    <Compile Include="Orchestrators\Finders\IMeanFinder.cs" />
+    <Compile Include="Orchestrators\Finders\IMeanFinderFactory.cs" />
     <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
     <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
     <Compile Include="Orchestrators\Finders\YandexFinder.cs" />
     <Compile Include="Orchestrators\Detector\GoogleLanguageDetector.cs" />
     <Compile Include="Orchestrators\Finders\ZarganFinder.cs" />
+    <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
     <Compile Include="Orchestrators\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Feeder.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
@@ -318,6 +327,10 @@
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">
       <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
       <Name>DynamicTranslator.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
+      <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
+      <Name>DynamicTranslator.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>

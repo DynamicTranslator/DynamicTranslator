@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Orchestrators.Model;
+using DynamicTranslator.Domain.Model;
+using DynamicTranslator.Domain.Repository;
 
 namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository.TranslateResultRepository
 {

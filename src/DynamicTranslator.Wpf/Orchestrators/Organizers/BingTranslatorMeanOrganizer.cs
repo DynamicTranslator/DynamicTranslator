@@ -2,9 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Bing;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Orchestrators.Model;
-using DynamicTranslator.Orchestrators.Model.Bing;
 
 using Newtonsoft.Json;
 

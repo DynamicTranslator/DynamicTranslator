@@ -55,7 +55,6 @@
     <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
-    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\ITranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\TranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeDatabaseProvider.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
@@ -67,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
+      <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
+      <Name>DynamicTranslator.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{a0d66d6a-2a41-4532-ab6e-6443874946e6}</Project>
       <Name>DynamicTranslator</Name>

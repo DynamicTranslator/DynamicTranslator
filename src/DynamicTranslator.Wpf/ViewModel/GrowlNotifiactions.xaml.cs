@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.ViewModel;
-using DynamicTranslator.ViewModel.Interfaces;
 
 namespace DynamicTranslator.Wpf.ViewModel
 {

@@ -2,8 +2,8 @@
 
 using Abp.Domain.Uow;
 
-using DynamicTranslator.DbReeze.DBReezeNoSQL.Repository.TranslateResultRepository;
-using DynamicTranslator.Orchestrators.Model;
+using DynamicTranslator.Domain.Model;
+using DynamicTranslator.Domain.Repository;
 
 namespace DynamicTranslator.Application.Result
 {

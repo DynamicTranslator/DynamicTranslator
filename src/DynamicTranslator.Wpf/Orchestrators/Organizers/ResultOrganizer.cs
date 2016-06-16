@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 using Abp.Dependency;
 
+using DynamicTranslator.Application;
+using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Result;
-using DynamicTranslator.Orchestrators.Model;
-using DynamicTranslator.Orchestrators.Organizer;
+using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

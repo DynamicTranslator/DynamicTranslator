@@ -7,8 +7,8 @@ using Abp.Runtime.Caching.Configuration;
 
 using Castle.Facilities.Logging;
 
+using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
-using DynamicTranslator.ViewModel.Interfaces;
 using DynamicTranslator.Wpf.ViewModel;
 
 namespace DynamicTranslator.Wpf

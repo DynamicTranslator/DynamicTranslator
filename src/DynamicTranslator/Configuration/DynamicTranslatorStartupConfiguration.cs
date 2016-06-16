@@ -15,56 +15,6 @@ namespace DynamicTranslator.Configuration
             IocManager = iocManager;
         }
 
-        public IIocManager IocManager { get; }
-
-        public HashSet<TranslatorType> ActiveTranslators { get; private set; }
-
-        public string ApiKey => Get<string>(nameof(ApiKey));
-
-        public string BingTranslatorUrl => Get<string>(nameof(BingTranslatorUrl));
-
-        public string ClientId => Get<string>(nameof(ClientId));
-
-        public string FromLanguage => Get<string>(nameof(FromLanguage));
-
-        public string FromLanguageExtension => LanguageMap[FromLanguage];
-
-        public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
-
-        public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
-
-        public bool IsToLanguageTurkish => ToLanguageExtension == "tr";
-
-        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
-
-        public int LeftOffset => Get<int>(nameof(LeftOffset));
-
-        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
-
-        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
-
-        public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
-
-        public string ToLanguage => Get<string>(nameof(ToLanguage));
-
-        public string ToLanguageExtension => LanguageMap[ToLanguage];
-
-        public int TopOffset => Get<int>(nameof(TopOffset));
-
-        public string TrackingId => Get<string>(nameof(TrackingId));
-
-        public string TurengUrl => Get<string>(nameof(TurengUrl));
-
-        public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
-
-        public Dictionary<string, string> YandexLanguageMap => Get<Dictionary<string, string>>(nameof(YandexLanguageMap));
-
-        public IList<string> YandexLanguageMapExtensions => YandexLanguageMap.Select(x => x.Value).ToList();
-
-        public string YandexUrl => Get<string>(nameof(YandexUrl));
-
-        public string ZarganTranslateUrl => Get<string>(nameof(ZarganTranslateUrl));
-
         public void AddTranslator(TranslatorType translatorType)
         {
             ActiveTranslators.Add(translatorType);
@@ -125,6 +75,56 @@ namespace DynamicTranslator.Configuration
         {
             ActiveTranslators.Remove(translatorType);
         }
+
+        public HashSet<TranslatorType> ActiveTranslators { get; private set; }
+
+        public string ApiKey => Get<string>(nameof(ApiKey));
+
+        public string BingTranslatorUrl => Get<string>(nameof(BingTranslatorUrl));
+
+        public string ClientId => Get<string>(nameof(ClientId));
+
+        public string FromLanguage => Get<string>(nameof(FromLanguage));
+
+        public string FromLanguageExtension => LanguageMap[FromLanguage];
+
+        public string GoogleAnalyticsUrl => Get<string>(nameof(GoogleAnalyticsUrl));
+
+        public string GoogleTranslateUrl => Get<string>(nameof(GoogleTranslateUrl));
+
+        public IIocManager IocManager { get; }
+
+        public bool IsToLanguageTurkish => ToLanguageExtension == "tr";
+
+        public Dictionary<string, string> LanguageMap => Get<Dictionary<string, string>>(nameof(LanguageMap));
+
+        public int LeftOffset => Get<int>(nameof(LeftOffset));
+
+        public byte MaxNotifications => Get<byte>(nameof(MaxNotifications));
+
+        public int SearchableCharacterLimit => Get<int>(nameof(SearchableCharacterLimit));
+
+        public string SesliSozlukUrl => Get<string>(nameof(SesliSozlukUrl));
+
+        public string ToLanguage => Get<string>(nameof(ToLanguage));
+
+        public string ToLanguageExtension => LanguageMap[ToLanguage];
+
+        public int TopOffset => Get<int>(nameof(TopOffset));
+
+        public string TrackingId => Get<string>(nameof(TrackingId));
+
+        public string TurengUrl => Get<string>(nameof(TurengUrl));
+
+        public string YandexDetectTextUrl => Get<string>(nameof(YandexDetectTextUrl));
+
+        public Dictionary<string, string> YandexLanguageMap => Get<Dictionary<string, string>>(nameof(YandexLanguageMap));
+
+        public IList<string> YandexLanguageMapExtensions => YandexLanguageMap.Select(x => x.Value).ToList();
+
+        public string YandexUrl => Get<string>(nameof(YandexUrl));
+
+        public string ZarganTranslateUrl => Get<string>(nameof(ZarganTranslateUrl));
 
         private void InitializeClientIdIfAbsent()
         {

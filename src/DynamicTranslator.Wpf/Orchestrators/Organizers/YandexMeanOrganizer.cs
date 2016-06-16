@@ -2,7 +2,6 @@
 using System.Xml;
 
 using DynamicTranslator.Constants;
-using DynamicTranslator.Orchestrators.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {

@@ -1,5 +1,4 @@
-﻿<viewModel1:Notifications
-    xmlns:viewModel1="clr-namespace:DynamicTranslator.ViewModel;assembly=DynamicTranslator">
+﻿<viewModel1:Notifications>
     <viewModel1:Notification Id="1" Title="Notification #1"
                              ImageUrl="pack://application:,,,/Resources/notification-icon.png"
                              Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />

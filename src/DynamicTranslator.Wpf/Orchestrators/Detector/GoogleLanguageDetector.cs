@@ -5,7 +5,6 @@ using System.Web;
 using Abp.Dependency;
 
 using DynamicTranslator.Configuration;
-using DynamicTranslator.Orchestrators.Detector;
 
 using Newtonsoft.Json;
 

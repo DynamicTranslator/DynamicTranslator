@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Runtime.Caching;
 
+using DynamicTranslator.Application;
+using DynamicTranslator.Application.Model;
+using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Orchestrators;
-using DynamicTranslator.Orchestrators.Detector;
-using DynamicTranslator.Orchestrators.Event;
-using DynamicTranslator.Orchestrators.Finder;
-using DynamicTranslator.Orchestrators.Model;
-using DynamicTranslator.Orchestrators.Organizer;
+using DynamicTranslator.Domain.Events;
+using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
+using DynamicTranslator.Wpf.Orchestrators.Detector;
+using DynamicTranslator.Wpf.Orchestrators.Finders;
 using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers

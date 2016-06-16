@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Constants;
-using DynamicTranslator.Orchestrators.Model;
 
 using HtmlAgilityPack;
 

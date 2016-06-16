@@ -3,9 +3,8 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Configuration;
-using DynamicTranslator.Orchestrators.Detector;
-using DynamicTranslator.Orchestrators.Model.Yandex;
 
 using Newtonsoft.Json;
 

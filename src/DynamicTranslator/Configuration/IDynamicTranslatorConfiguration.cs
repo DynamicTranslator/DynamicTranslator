@@ -7,6 +7,5 @@ namespace DynamicTranslator.Configuration
         bool IsNoSqlDatabaseEnabled { get; set; }
 
         IAbpStartupConfiguration AbpConfiguration { get; }
-
     }
 }

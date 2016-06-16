@@ -2,7 +2,7 @@
 
 using Abp.Application.Services;
 
-using DynamicTranslator.Orchestrators.Model;
+using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application.Result
 {

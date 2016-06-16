@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Orchestrators.Model;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

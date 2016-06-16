@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 using Castle.DynamicProxy;
 
-using DynamicTranslator.Constants;
 using DynamicTranslator.Exception;
 using DynamicTranslator.Helper;
-using DynamicTranslator.Orchestrators;
 using DynamicTranslator.Service.GoogleAnalytics;
 
 namespace DynamicTranslator.Dependency.Interceptors
@@ -15,11 +13,9 @@ namespace DynamicTranslator.Dependency.Interceptors
     public class ExceptionInterceptor : IInterceptor
     {
         private readonly IGoogleAnalyticsService googleAnalytics;
-        private readonly INotifier notifier;
 
-        public ExceptionInterceptor(INotifier notifier, IGoogleAnalyticsService googleAnalytics)
+        public ExceptionInterceptor(IGoogleAnalyticsService googleAnalytics)
         {
-            this.notifier = notifier;
             this.googleAnalytics = googleAnalytics;
         }
 
@@ -66,8 +62,6 @@ namespace DynamicTranslator.Dependency.Interceptors
                 .AppendLine(ex.InnerException?.Message ?? string.Empty)
                 .AppendLine(ex.StackTrace)
                 .ToString();
-
-            notifier.AddNotificationAsync(Titles.Exception, ImageUrls.NotificationUrl, exceptionText);
 
             SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }
