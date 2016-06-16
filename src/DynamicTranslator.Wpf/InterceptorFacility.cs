@@ -4,7 +4,6 @@ using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Dependency.Interceptors;
 using DynamicTranslator.Wpf.Orchestrators.Detector;

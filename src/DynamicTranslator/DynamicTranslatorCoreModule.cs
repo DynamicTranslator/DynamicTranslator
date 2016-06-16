@@ -12,15 +12,16 @@ namespace DynamicTranslator
     {
         public override void Initialize()
         {
-            var configuration = IocManager.Resolve<IDynamicTranslatorConfiguration>();
-            configuration.IsNoSqlDatabaseEnabled = true;
-
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
 
         public override void PreInitialize()
         {
             IocManager.Register<IDynamicTranslatorConfiguration, DynamicTranslatorConfiguration>();
+
+            var configuration = IocManager.Resolve<IDynamicTranslatorConfiguration>();
+            configuration.IsNoSqlDatabaseEnabled = true;
+
             IocManager.IocContainer.AddFacility<TypedFactoryFacility>();
         }
     }
