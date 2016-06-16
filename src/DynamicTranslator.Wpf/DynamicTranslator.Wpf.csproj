@@ -193,8 +193,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DynamicTranslatorWpfModule.cs" />
+    <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
     <Compile Include="InterceptorFacility.cs" />
+    <Compile Include="ViewModel\INotification.cs" />
     <Compile Include="ViewModel\Notification.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
     <Compile Include="Orchestrators\Detector\ILanguageDetector.cs" />

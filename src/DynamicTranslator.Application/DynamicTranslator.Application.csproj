@@ -49,9 +49,6 @@
     <Compile Include="Bing\WordDetail.cs" />
     <Compile Include="DynamicTranslatorApplicationModule.cs" />
     <Compile Include="Orchestrators\ICustomHttpHeader.cs" />
-    <Compile Include="Orchestrators\IMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\IMeanOrganizerFactory.cs" />
-    <Compile Include="Orchestrators\INotification.cs" />
     <Compile Include="Orchestrators\INotifier.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
     <Compile Include="Orchestrators\IResultOrganizer.cs" />

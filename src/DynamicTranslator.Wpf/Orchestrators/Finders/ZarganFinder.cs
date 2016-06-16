@@ -9,6 +9,7 @@ using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
+using DynamicTranslator.Wpf.Orchestrators.Organizers;
 
 using RestSharp;
 

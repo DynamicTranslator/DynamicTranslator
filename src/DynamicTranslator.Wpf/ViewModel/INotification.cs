@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Application.Orchestrators
+﻿namespace DynamicTranslator.Wpf.ViewModel
 {
     public interface INotification
     {

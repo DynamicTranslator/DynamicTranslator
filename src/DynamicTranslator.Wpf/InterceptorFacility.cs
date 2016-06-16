@@ -8,6 +8,7 @@ using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Dependency.Interceptors;
 using DynamicTranslator.Wpf.Orchestrators.Detector;
 using DynamicTranslator.Wpf.Orchestrators.Finders;
+using DynamicTranslator.Wpf.Orchestrators.Organizers;
 
 namespace DynamicTranslator.Wpf
 {

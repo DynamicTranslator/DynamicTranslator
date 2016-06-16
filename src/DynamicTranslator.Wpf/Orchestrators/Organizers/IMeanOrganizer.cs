@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace DynamicTranslator.Application.Orchestrators
+using DynamicTranslator.Application.Orchestrators;
+
+namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {
     public interface IMeanOrganizer : IOrchestrator
     {

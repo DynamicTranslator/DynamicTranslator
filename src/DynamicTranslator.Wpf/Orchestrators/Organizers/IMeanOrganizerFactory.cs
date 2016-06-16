@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DynamicTranslator.Application.Orchestrators
+namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {
     public interface IMeanOrganizerFactory
     {
