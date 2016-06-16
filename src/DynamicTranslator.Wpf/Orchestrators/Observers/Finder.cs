@@ -83,19 +83,12 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
 
                 var fromLanguageExtension = await languageDetector.DetectLanguage(currentString);
 
-                //var results = await cache.GetAsync(currentString,
-                //    async () => await Task.WhenAll(
-                //        meanFinderFactory
-                //            .GetFinders()
-                //            .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))
-                //            )
-                //        )
-                //    );
-
-                var results = await Task.WhenAll(
-                    meanFinderFactory
-                        .GetFinders()
-                        .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))
+                var results = await cache.GetAsync(currentString,
+                    async () => await Task.WhenAll(
+                        meanFinderFactory
+                            .GetFinders()
+                            .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))
+                            )
                         )
                     );
 

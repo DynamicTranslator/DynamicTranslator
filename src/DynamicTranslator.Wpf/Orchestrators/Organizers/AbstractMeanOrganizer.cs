@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 
-using DynamicTranslator.Application;
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Constants;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
