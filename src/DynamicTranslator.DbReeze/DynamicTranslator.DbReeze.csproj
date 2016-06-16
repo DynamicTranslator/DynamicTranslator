@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Abp">
-      <HintPath>..\packages\Abp.0.9.3.0\lib\net452\Abp.dll</HintPath>
+    <Reference Include="Abp, Version=0.9.3.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\aspnetboilerplate\src\Abp\bin\Debug\net452\Abp.dll</HintPath>
     </Reference>
     <Reference Include="DBreeze, Version=1.74.2016.329, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
       <HintPath>..\packages\DBreeze.1.74.0\lib\net45\DBreeze.dll</HintPath>

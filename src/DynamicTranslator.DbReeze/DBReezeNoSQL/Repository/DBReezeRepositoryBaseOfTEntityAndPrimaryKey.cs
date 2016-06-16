@@ -1,10 +1,12 @@
-using System.Collections.Generic;
 using System.Linq;
 
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 
 using DBreeze.Transactions;
+
+using DynamicTranslator.DbReeze.DBReezeNoSQL.Extensions;
+using DynamicTranslator.Helper;
 
 namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 {
@@ -28,14 +30,12 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 
         public override IQueryable<TEntity> GetAll()
         {
-            var a = Transaction.SelectForward<TKey, TEntity>(typeof(TEntity).Name).AsQueryable();
-
-            return new EnumerableQuery<TEntity>(new List<TEntity>());
+            return Transaction.SelectForward<TKey, TEntity>(typeof(TEntity).Name).AsQueryable();
         }
 
         public override TEntity Insert(TEntity entity)
         {
-            Transaction.Insert(typeof(TEntity).Name, entity.Id, entity);
+            Transaction.Insert(typeof(TEntity).Name, entity.Id, ObjectHelper.ObjectToByteArray(entity));
             return entity;
         }
 
