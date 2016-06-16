@@ -14,40 +14,37 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
     {
         public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;
 
-        public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
+        public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            return await Task.Run(() =>
+            var output = new StringBuilder();
+
+            var document = new HtmlDocument();
+            document.LoadHtml(text);
+
+            (from x in document.DocumentNode.Descendants()
+             where x.Name == "pre"
+             from y in x.Descendants()
+             where y.Name == "ol"
+             from z in y.Descendants()
+             where z.Name == "li"
+             select z.InnerHtml)
+                .AsParallel()
+                .ToList()
+                .ForEach(mean => output.AppendLine(mean));
+
+            if (string.IsNullOrEmpty(output.ToString()))
             {
-                var output = new StringBuilder();
-
-                var document = new HtmlDocument();
-                document.LoadHtml(text);
-
                 (from x in document.DocumentNode.Descendants()
                  where x.Name == "pre"
                  from y in x.Descendants()
-                 where y.Name == "ol"
-                 from z in y.Descendants()
-                 where z.Name == "li"
-                 select z.InnerHtml)
+                 where y.Name == "span"
+                 select y.InnerHtml)
                     .AsParallel()
                     .ToList()
-                    .ForEach(mean => output.AppendLine(mean));
+                    .ForEach(mean => output.AppendLine(mean.StripTagsCharArray()));
+            }
 
-                if (string.IsNullOrEmpty(output.ToString()))
-                {
-                    (from x in document.DocumentNode.Descendants()
-                     where x.Name == "pre"
-                     from y in x.Descendants()
-                     where y.Name == "span"
-                     select y.InnerHtml)
-                        .AsParallel()
-                        .ToList()
-                        .ForEach(mean => output.AppendLine(mean.StripTagsCharArray()));
-                }
-
-                return new Maybe<string>(output.ToString());
-            });
+            return Task.FromResult(new Maybe<string>(output.ToString()));
         }
     }
 }

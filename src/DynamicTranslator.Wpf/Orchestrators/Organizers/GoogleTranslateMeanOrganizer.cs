@@ -14,15 +14,12 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
     {
         public override TranslatorType TranslatorType => TranslatorType.Google;
 
-        public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
+        public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            return await Task.Run(() =>
-            {
-                var result = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
-                var arrayTree = result["sentences"] as JArray;
-                var output = arrayTree.GetFirstValueInArrayGraph<string>();
-                return new Maybe<string>(output);
-            });
+            var result = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+            var arrayTree = result["sentences"] as JArray;
+            var output = arrayTree.GetFirstValueInArrayGraph<string>();
+            return Task.FromResult(new Maybe<string>(output));
         }
     }
 }

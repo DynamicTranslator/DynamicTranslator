@@ -4,8 +4,6 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators.Finder;
@@ -16,7 +14,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
-    public class SesliSozlukFinder : IMeanFinder , ITransientDependency
+    public class SesliSozlukFinder : IMeanFinder
     {
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;

@@ -3,9 +3,8 @@ using System.Reflection;
 
 using Abp.Modules;
 
-using DBreeze;
-
-using DynamicTranslator.Extensions;
+using DynamicTranslator.DbReeze.Configuration.Startup;
+using DynamicTranslator.DbReeze.DBReezeNoSQL.Configuration;
 
 namespace DynamicTranslator.DbReeze
 {
@@ -14,14 +13,16 @@ namespace DynamicTranslator.DbReeze
     {
         public override void Initialize()
         {
+            var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
+
+            Configuration.Modules.UseDbReeze().WithConfiguration(dbreeze => { dbreeze.Configuration.DBreezeDataFolderName = noSqlDBPath; });
+
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
 
-        public override void PostInitialize()
+        public override void PreInitialize()
         {
-            var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
-
-            IocManager.Register<DBreezeEngine>(new DBreezeEngine(noSqlDBPath));
+            IocManager.Register<IDbReezeModuleConfiguration, DbReezeModuleConfiguration>();
         }
     }
 }

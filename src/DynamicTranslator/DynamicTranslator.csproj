@@ -91,7 +91,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DynamicTranslatorConfiguration.cs" />
     <Compile Include="Configuration\DynamicTranslatorDictionayBasedConfig.cs" />
+    <Compile Include="Configuration\IDynamicTranslatorConfiguration.cs" />
     <Compile Include="Configuration\IDynamicTranslatorDictionayBasedConfig.cs" />
     <Compile Include="Configuration\IDynamicTranslatorStartupConfiguration.cs" />
     <Compile Include="Configuration\DynamicTranslatorStartupConfiguration.cs" />

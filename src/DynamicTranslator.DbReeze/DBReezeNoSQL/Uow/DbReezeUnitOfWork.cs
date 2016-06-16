@@ -51,8 +51,6 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
                 Transaction.Dispose();
                 Transaction = null;
             }
-
-            DBreezeEngine.Dispose();
         }
     }
 }

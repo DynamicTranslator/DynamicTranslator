@@ -4,8 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators.Finder;
@@ -16,7 +14,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
-    public class GoogleTranslateFinder : IMeanFinder , ITransientDependency
+    public class GoogleTranslateFinder : IMeanFinder
     {
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;

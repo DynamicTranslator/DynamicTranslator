@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Dependency;
+
 using DynamicTranslator.Application.Result;
 using DynamicTranslator.Orchestrators.Model;
 using DynamicTranslator.Orchestrators.Organizer;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {
-    public class ResultOrganizer : IResultOrganizer
+    public class ResultOrganizer : IResultOrganizer, ITransientDependency
     {
         private readonly IResultService resultService;
 
@@ -22,7 +24,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
             this.resultService = resultService;
         }
 
-        public async Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
+        public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
             var mean = new StringBuilder();
             foreach (var result in findedMeans.Where(result => result.IsSucess))
@@ -40,11 +42,11 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 
                 mean.Clear();
                 means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                await resultService.SaveAndUpdateFrequencyAsync(currentString, new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
-                return new Maybe<string>(mean.ToString());
+                resultService.SaveAndUpdateFrequencyAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                return Task.FromResult(new Maybe<string>(mean.ToString()));
             }
 
-            return new Maybe<string>();
+            return Task.FromResult(new Maybe<string>());
         }
     }
 }

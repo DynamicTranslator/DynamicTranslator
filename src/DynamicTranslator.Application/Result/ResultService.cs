@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using Abp.Domain.Uow;
+
 using DynamicTranslator.DbReeze.DBReezeNoSQL.Repository.TranslateResultRepository;
 using DynamicTranslator.Orchestrators.Model;
 
@@ -14,32 +16,38 @@ namespace DynamicTranslator.Application.Result
             this.resultRepository = resultRepository;
         }
 
+        [UnitOfWork]
         public CompositeTranslateResult Get(string key)
         {
             return resultRepository.GetTranslateResult(key);
         }
 
+        [UnitOfWork]
         public async Task<CompositeTranslateResult> GetAsync(string key)
         {
             return await resultRepository.GetTranslateResultAsync(key);
         }
 
-        public CompositeTranslateResult Save(string key, CompositeTranslateResult translateResult)
+        [UnitOfWork]
+        public CompositeTranslateResult Save(CompositeTranslateResult translateResult)
         {
             return resultRepository.SetTranslateResult(translateResult);
         }
 
-        public CompositeTranslateResult SaveAndUpdateFrequency(string key, CompositeTranslateResult translateResult)
+        [UnitOfWork]
+        public CompositeTranslateResult SaveAndUpdateFrequency(CompositeTranslateResult translateResult)
         {
             return resultRepository.SetTranslateResultAndUpdateFrequency(translateResult);
         }
 
-        public async Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(string key, CompositeTranslateResult translateResult)
+        [UnitOfWork]
+        public async Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(CompositeTranslateResult translateResult)
         {
             return await resultRepository.SetTranslateResultAndUpdateFrequencyAsync(translateResult);
         }
 
-        public async Task<CompositeTranslateResult> SaveAsync(string key, CompositeTranslateResult translateResult)
+        [UnitOfWork]
+        public async Task<CompositeTranslateResult> SaveAsync(CompositeTranslateResult translateResult)
         {
             return await resultRepository.SetTranslateResultAsync(translateResult);
         }

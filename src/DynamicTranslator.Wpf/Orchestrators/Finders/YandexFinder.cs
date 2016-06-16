@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Orchestrators.Finder;
@@ -14,7 +12,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
-    public class YandexFinder : IMeanFinder, ITransientDependency
+    public class YandexFinder : IMeanFinder
     {
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;

@@ -7,6 +7,7 @@ using Castle.MicroKernel.Facilities;
 using DynamicTranslator.Dependency.Interceptors;
 using DynamicTranslator.Orchestrators.Detector;
 using DynamicTranslator.Orchestrators.Finder;
+using DynamicTranslator.Orchestrators.Organizer;
 
 namespace DynamicTranslator.Dependency.Installer
 {
@@ -17,7 +18,16 @@ namespace DynamicTranslator.Dependency.Installer
             Kernel.ComponentRegistered += KernelOnComponentRegistered;
         }
 
-        private void KernelOnComponentRegistered(string key, IHandler handler)
+        private static void ApplyForDetector(IHandler handler)
+        {
+            var isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
+            if (isDetector)
+            {
+                handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
+            }
+        }
+
+        private static void ApplyForMeanFinder(IHandler handler)
         {
             var isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanFinder));
             if (isMeanFinder)
@@ -25,12 +35,22 @@ namespace DynamicTranslator.Dependency.Installer
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
                 handler.ComponentModel.Interceptors.Add(new InterceptorReference(typeof(TextGuardInterceptor)));
             }
+        }
 
-            var isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
-            if (isDetector)
+        private static void ApplyForMeanOrganizer(IHandler handler)
+        {
+            var isMeanOrganizer = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanOrganizer));
+            if (isMeanOrganizer)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
             }
+        }
+
+        private void KernelOnComponentRegistered(string key, IHandler handler)
+        {
+            ApplyForMeanFinder(handler);
+            ApplyForMeanOrganizer(handler);
+            ApplyForDetector(handler);
         }
     }
 }

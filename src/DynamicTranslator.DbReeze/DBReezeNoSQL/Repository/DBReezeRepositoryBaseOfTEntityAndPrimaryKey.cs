@@ -1,36 +1,47 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 
+using DBreeze.Transactions;
+
 namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 {
     public class DBReezeRepositoryBase<TEntity, TKey> : AbpRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
-        public override void Delete(TEntity entity)
+        private readonly ITransactionProvider transactionProvider;
+
+        public DBReezeRepositoryBase(ITransactionProvider transactionProvider)
         {
-            throw new NotImplementedException();
+            this.transactionProvider = transactionProvider;
         }
+
+        public Transaction Transaction => transactionProvider.Transaction;
+
+        public override void Delete(TEntity entity) {}
 
         public override void Delete(TKey id)
         {
-            throw new NotImplementedException();
+            Transaction.RemoveKey(typeof(TEntity).Name, id);
         }
 
         public override IQueryable<TEntity> GetAll()
         {
-            throw new NotImplementedException();
+            var a = Transaction.SelectForward<TKey, TEntity>(typeof(TEntity).Name).AsQueryable();
+
+            return new EnumerableQuery<TEntity>(new List<TEntity>());
         }
 
         public override TEntity Insert(TEntity entity)
         {
-            throw new NotImplementedException();
+            Transaction.Insert(typeof(TEntity).Name, entity.Id, entity);
+            return entity;
         }
 
         public override TEntity Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            return Insert(entity);
         }
     }
 }

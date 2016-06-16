@@ -7,7 +7,7 @@ using Abp.Domain.Entities;
 namespace DynamicTranslator.Orchestrators.Model
 {
     [Serializable]
-    public class CompositeTranslateResult : Entity<string>
+    public sealed class CompositeTranslateResult : Entity<string>
     {
         public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate)
         {
@@ -15,6 +15,7 @@ namespace DynamicTranslator.Orchestrators.Model
             SearchText = searchText;
             CreateDate = createDate;
             Frequency = frequency;
+            Id = searchText;
         }
 
         [DataMember]

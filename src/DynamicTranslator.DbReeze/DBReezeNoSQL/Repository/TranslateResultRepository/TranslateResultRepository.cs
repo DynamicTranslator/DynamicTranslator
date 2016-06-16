@@ -7,14 +7,16 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository.TranslateResultRepos
 {
     public class TranslateResultRepository : DBReezeRepositoryBase<CompositeTranslateResult, string>, ITranslateResultRepository
     {
+        public TranslateResultRepository(ITransactionProvider transactionProvider) : base(transactionProvider) {}
+
         public CompositeTranslateResult GetTranslateResult(string key)
         {
             return Get(key);
         }
 
-        public async Task<CompositeTranslateResult> GetTranslateResultAsync(string key)
+        public Task<CompositeTranslateResult> GetTranslateResultAsync(string key)
         {
-            return await GetAsync(key);
+            return GetAsync(key);
         }
 
         public CompositeTranslateResult SetTranslateResult(CompositeTranslateResult result)
@@ -60,9 +62,9 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository.TranslateResultRepos
             return await InsertAsync(translateResult);
         }
 
-        public async Task<CompositeTranslateResult> SetTranslateResultAsync(CompositeTranslateResult result)
+        public Task<CompositeTranslateResult> SetTranslateResultAsync(CompositeTranslateResult result)
         {
-            return await InsertAsync(result);
+            return InsertAsync(result);
         }
     }
 }

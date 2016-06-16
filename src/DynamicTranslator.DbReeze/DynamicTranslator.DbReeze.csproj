@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Startup\DbReezeConfigurationExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\Configuration\DbReezeModuleConfiguration.cs" />
+    <Compile Include="DBReezeNoSQL\Configuration\IDbReezeModuleConfiguration.cs" />
     <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
     <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
     <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />

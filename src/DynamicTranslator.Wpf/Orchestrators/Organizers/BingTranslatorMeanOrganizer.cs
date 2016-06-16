@@ -14,21 +14,18 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
     {
         public override TranslatorType TranslatorType => TranslatorType.Bing;
 
-        public override async Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
+        public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            return await Task.Run(() =>
+            var means = new StringBuilder();
+
+            var response = JsonConvert.DeserializeObject<BingTranslatorResponse>(text);
+            if (response.Translations.Any())
             {
-                var means = new StringBuilder();
+                if (response.Translations.ContainsKey("Bing"))
+                    means.AppendLine(response.Translations["Bing"]);
+            }
 
-                var response = JsonConvert.DeserializeObject<BingTranslatorResponse>(text);
-                if (response.Translations.Any())
-                {
-                    if (response.Translations.ContainsKey("Bing"))
-                        means.AppendLine(response.Translations["Bing"]);
-                }
-
-                return new Maybe<string>(means.ToString());
-            });
+            return Task.FromResult(new Maybe<string>(means.ToString()));
         }
     }
 }
