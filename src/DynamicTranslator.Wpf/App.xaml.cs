@@ -7,8 +7,8 @@ using Abp.Runtime.Caching.Configuration;
 
 using Castle.Facilities.Logging;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel;
 
 namespace DynamicTranslator.Wpf
@@ -31,7 +31,10 @@ namespace DynamicTranslator.Wpf
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
-                var exp = args.ExceptionObject;
+                using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                {
+                    googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                }
             };
 
             var defaultSlidingExpireTime = TimeSpan.FromHours(24);
