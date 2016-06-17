@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Runtime.Caching;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Constants;

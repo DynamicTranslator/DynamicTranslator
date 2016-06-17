@@ -11,7 +11,6 @@ using System.Windows.Threading;
 using Abp.Dependency;
 using Abp.Runtime.Caching;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Events;

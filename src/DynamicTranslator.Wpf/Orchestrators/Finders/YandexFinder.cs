@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;

@@ -2,7 +2,6 @@
 
 using Abp.Dependency;
 
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.ViewModel
@@ -18,6 +17,8 @@ namespace DynamicTranslator.Wpf.ViewModel
         {
             PropertyChanged += (sender, args) => OnPropertyChanged(sender, args.PropertyName);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public int Id
         {
@@ -75,8 +76,6 @@ namespace DynamicTranslator.Wpf.ViewModel
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Title)));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(object sender, string propertyName) {}
     }

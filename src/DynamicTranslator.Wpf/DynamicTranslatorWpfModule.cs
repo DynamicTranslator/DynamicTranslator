@@ -7,7 +7,6 @@ using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
 using DynamicTranslator.Application;
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Wpf.Orchestrators.Detector;
 using DynamicTranslator.Wpf.Orchestrators.Finders;
 using DynamicTranslator.Wpf.Orchestrators.Organizers;
@@ -17,11 +16,6 @@ namespace DynamicTranslator.Wpf
     [DependsOn(typeof(DynamicTranslatorApplicationModule))]
     public class DynamicTranslatorWpfModule : AbpModule
     {
-        public override void PreInitialize()
-        {
-            IocManager.IocContainer.AddFacility<InterceptorFacility>();
-        }
-
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
@@ -46,6 +40,11 @@ namespace DynamicTranslator.Wpf
                 Component.For<IMeanOrganizerFactory>().AsFactory(),
                 Component.For<ILanguageDetectorFactory>().AsFactory()
                 );
+        }
+
+        public override void PreInitialize()
+        {
+            IocManager.IocContainer.AddFacility<InterceptorFacility>();
         }
     }
 }

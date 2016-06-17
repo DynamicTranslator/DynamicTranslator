@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using Abp.Dependency;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Wpf.ViewModel;
 

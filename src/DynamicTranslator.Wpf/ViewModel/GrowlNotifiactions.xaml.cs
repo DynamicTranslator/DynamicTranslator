@@ -6,9 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Configuration;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.ViewModel
