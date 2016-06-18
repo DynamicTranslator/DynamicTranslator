@@ -13,9 +13,9 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
         public DbReezeUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions)
             : base(connectionStringResolver, defaultOptions) {}
 
-        public Transaction Transaction { get; private set; }
-
         public DBreezeEngine DBreezeEngine { get; set; }
+
+        public Transaction Transaction { get; private set; }
 
         public override void SaveChanges()
         {
@@ -24,7 +24,7 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
 
         public override Task SaveChangesAsync()
         {
-            Transaction.Commit();
+            SaveChanges();
             return Task.FromResult(0);
         }
 
@@ -40,7 +40,7 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
 
         protected override Task CompleteUowAsync()
         {
-            Transaction.Commit();
+            CompleteUow();
             return Task.FromResult(0);
         }
 
