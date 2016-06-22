@@ -19,12 +19,6 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 
         public YandexFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
-            if (meanOrganizerFactory == null)
-                throw new ArgumentNullException(nameof(meanOrganizerFactory));
-
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
         }

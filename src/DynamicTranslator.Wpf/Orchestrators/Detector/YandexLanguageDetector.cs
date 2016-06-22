@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Configuration;
-
-using Newtonsoft.Json;
+using DynamicTranslator.Extensions;
 
 using RestSharp;
 
@@ -36,7 +35,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
                 .AddHeader("accept", "*/*")
                 .AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"));
 
-            var result = JsonConvert.DeserializeObject<YandexDetectResponse>(response.Content);
+            var result = response.Content.DeserializeAs<YandexDetectResponse>();
             if (result != null && string.IsNullOrEmpty(result.Lang))
                 return result.Lang;
 

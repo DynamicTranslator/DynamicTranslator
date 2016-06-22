@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Bing;
 using DynamicTranslator.Constants;
-
-using Newtonsoft.Json;
+using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 {
@@ -17,7 +16,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
         {
             var means = new StringBuilder();
 
-            var response = JsonConvert.DeserializeObject<BingTranslatorResponse>(text);
+            var response = text.DeserializeAs<BingTranslatorResponse>();
             if (response.Translations.Any())
             {
                 if (response.Translations.ContainsKey("Bing"))

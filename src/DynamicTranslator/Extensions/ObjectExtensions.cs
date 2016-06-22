@@ -1,31 +1,48 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.IO;
+using System.Text;
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace DynamicTranslator.Extensions
 {
     public static class ObjectExtensions
     {
+        public static T DeserializeAs<T>(this string @this) where T : class
+        {
+            return DeserializeFromStream<T>(new MemoryStream(Encoding.UTF8.GetBytes(@this)));
+        }
+
+        public static T DeserializeFromStream<T>(Stream jsonStream) where T : class
+        {
+            if (jsonStream == null)
+            {
+                throw new ArgumentNullException(nameof(jsonStream));
+            }
+
+            if (jsonStream.CanRead == false)
+            {
+                throw new ArgumentException("Json stream must support reading", nameof(jsonStream));
+            }
+
+            T deserializedObj;
+
+            using (var sr = new StreamReader(jsonStream))
+            {
+                using (JsonReader reader = new JsonTextReader(sr))
+                {
+                    var serializer = new JsonSerializer();
+                    deserializedObj = serializer.Deserialize<T>(reader);
+                }
+            }
+
+            return deserializedObj;
+        }
+
         public static T GetFirstValueInArrayGraph<T>(this JArray jarray)
         {
             return jarray.ForwardToken().Value<T>();
-        }
-
-        public static string ToJsonString(this object obj, bool camelCase = false, bool indented = false)
-        {
-            var options = new JsonSerializerSettings();
-
-            if (camelCase)
-            {
-                options.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            }
-
-            if (indented)
-            {
-                options.Formatting = Formatting.Indented;
-            }
-
-            return JsonConvert.SerializeObject(obj, options);
         }
 
         internal static JToken ForwardToken(this JToken token)

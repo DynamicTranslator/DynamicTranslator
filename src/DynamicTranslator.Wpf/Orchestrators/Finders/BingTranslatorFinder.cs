@@ -4,6 +4,8 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Json;
+
 using DynamicTranslator.Application.Model;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
@@ -23,12 +25,6 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 
         public BingTranslatorFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            if (meanOrganizerFactory == null)
-                throw new ArgumentNullException(nameof(meanOrganizerFactory));
-
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
@@ -52,7 +48,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
             }.ExecutePostTaskAsync(new RestRequest(Method.POST)
                 .AddHeader("content-type", "application/json;Charset=UTF-8")
                 .AddParameter("application/json;Charset=UTF-8",
-                    JsonConvert.SerializeObject(requestObject),
+                    requestObject.ToJsonString(),
                     ParameterType.RequestBody));
 
             var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
