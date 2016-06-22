@@ -1,15 +1,12 @@
-﻿using System;
-using System.Windows;
-
-using Abp;
+﻿using Abp;
 using Abp.Dependency;
 using Abp.Runtime.Caching.Configuration;
-
 using Castle.Facilities.Logging;
-
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel;
+using System;
+using System.Windows;
 
 namespace DynamicTranslator.Wpf
 {

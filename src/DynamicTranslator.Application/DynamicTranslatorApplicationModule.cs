@@ -1,8 +1,6 @@
-﻿using System.Reflection;
-
-using Abp.Modules;
-
+﻿using Abp.Modules;
 using DynamicTranslator.DbReeze;
+using System.Reflection;
 
 namespace DynamicTranslator.Application
 {
