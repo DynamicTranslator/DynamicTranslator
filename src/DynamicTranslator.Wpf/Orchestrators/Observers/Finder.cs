@@ -8,6 +8,7 @@ using Abp.Runtime.Caching;
 
 using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators;
+using DynamicTranslator.Configuration;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Events;
 using DynamicTranslator.Domain.Model;
@@ -22,6 +23,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
     {
         private readonly ITypedCache<string, TranslateResult[]> cache;
         private readonly ICacheManager cacheManager;
+        private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IGoogleAnalyticsService googleAnalytics;
         private readonly ILanguageDetector languageDetector;
         private readonly IMeanFinderFactory meanFinderFactory;
@@ -35,33 +37,16 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
             IResultOrganizer resultOrganizer,
             ICacheManager cacheManager,
             IGoogleAnalyticsService googleAnalytics,
-            ILanguageDetector languageDetector
-            )
+            ILanguageDetector languageDetector,
+            IDynamicTranslatorStartupConfiguration configuration)
         {
-            if (notifier == null)
-                throw new ArgumentNullException(nameof(notifier));
-
-            if (meanFinderFactory == null)
-                throw new ArgumentNullException(nameof(meanFinderFactory));
-
-            if (resultOrganizer == null)
-                throw new ArgumentNullException(nameof(resultOrganizer));
-
-            if (cacheManager == null)
-                throw new ArgumentNullException(nameof(cacheManager));
-
-            if (languageDetector == null)
-                throw new ArgumentNullException(nameof(languageDetector));
-
-            if (googleAnalytics == null)
-                throw new ArgumentNullException(nameof(googleAnalytics));
-
             this.notifier = notifier;
             this.meanFinderFactory = meanFinderFactory;
             this.resultOrganizer = resultOrganizer;
             this.cacheManager = cacheManager;
             this.googleAnalytics = googleAnalytics;
             this.languageDetector = languageDetector;
+            this.configuration = configuration;
             cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
@@ -95,7 +80,11 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
 
                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
 
-                await googleAnalytics.TrackEventAsync("DynamicTranslator", "Translate", currentString, null).ConfigureAwait(false);
+                await
+                    googleAnalytics.TrackEventAsync("DynamicTranslator",
+                        "Translate",
+                        $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ToLanguageExtension} ",
+                        null).ConfigureAwait(false);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
