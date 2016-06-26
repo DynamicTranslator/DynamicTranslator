@@ -18,6 +18,8 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class BingTranslatorFinder : IMeanFinder
     {
+        private const string ContentType = "application/json;Charset=UTF-8";
+
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
@@ -50,8 +52,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecutePostTaskAsync(new RestRequest(Method.POST)
-                .AddHeader("content-type", "application/json;Charset=UTF-8")
-                .AddParameter("application/json;Charset=UTF-8",
+                .AddParameter(ContentType,
                     JsonConvert.SerializeObject(requestObject),
                     ParameterType.RequestBody));
 

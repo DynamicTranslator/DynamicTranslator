@@ -16,6 +16,8 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class TurengFinder : IMeanFinder
     {
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+        private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
@@ -44,8 +46,8 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(
                 new RestRequest(Method.GET)
-                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36")
-                    .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6"));
+                    .AddHeader(Headers.UserAgent, UserAgent)
+                    .AddHeader(Headers.AcceptLanguage, AcceptLanguage));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await organizer.OrganizeMean(compositeMean.Content, translateRequest.FromLanguageExtension);

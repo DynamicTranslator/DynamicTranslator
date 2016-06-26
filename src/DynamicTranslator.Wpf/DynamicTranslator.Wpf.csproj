@@ -193,7 +193,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClipboardManager.cs" />
     <Compile Include="DynamicTranslatorWpfModule.cs" />
+    <Compile Include="IClipboardManager.cs" />
     <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
@@ -232,7 +234,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </DesignData>
-    <Page Include="ViewModel\GrowlNotifiactions.xaml">
+    <Page Include="ViewModel\GrowlNotifications.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,8 +247,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Model\ApplicationVersion.cs" />
-    <Compile Include="ViewModel\GrowlNotifiactions.xaml.cs">
-      <DependentUpon>GrowlNotifiactions.xaml</DependentUpon>
+    <Compile Include="ViewModel\GrowlNotifications.xaml.cs">
+      <DependentUpon>GrowlNotifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Model\Language.cs" />
     <Compile Include="ViewModel\Model\Languages.cs" />

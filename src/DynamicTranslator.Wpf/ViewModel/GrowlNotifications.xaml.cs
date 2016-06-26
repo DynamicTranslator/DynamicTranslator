@@ -11,7 +11,7 @@ using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.ViewModel
 {
-    public partial class GrowlNotifiactions : IGrowlNotifications
+    public partial class GrowlNotifications : IGrowlNotifications
     {
         private readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
@@ -19,7 +19,7 @@ namespace DynamicTranslator.Wpf.ViewModel
         private int count;
         public bool IsDisposed;
 
-        public GrowlNotifiactions(IDynamicTranslatorStartupConfiguration startupConfiguration, Notifications notifications)
+        public GrowlNotifications(IDynamicTranslatorStartupConfiguration startupConfiguration, Notifications notifications)
         {
             InitializeComponent();
             this.startupConfiguration = startupConfiguration;

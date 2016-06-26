@@ -16,6 +16,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class GoogleTranslateFinder : IMeanFinder
     {
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+        private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+        private const string AcceptEncoding = "gzip, deflate, sdch";
+        private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
         private readonly IDynamicTranslatorStartupConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
@@ -45,10 +49,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
             var compositeMean = await new RestClient(uri) {Encoding = Encoding.UTF8}
                 .ExecuteGetTaskAsync(
                     new RestRequest(Method.GET)
-                        .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
-                        .AddHeader("Accept-Encoding", "gzip, deflate, sdch")
-                        .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
-                        .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
+                        .AddHeader(Headers.AcceptLanguage, AcceptLanguage)
+                        .AddHeader(Headers.AcceptEncoding, AcceptEncoding)
+                        .AddHeader(Headers.UserAgent, UserAgent)
+                        .AddHeader(Headers.Accept, Accept));
 
             var organizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await organizer.OrganizeMean(compositeMean.Content);

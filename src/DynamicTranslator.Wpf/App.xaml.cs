@@ -27,7 +27,7 @@ namespace DynamicTranslator.Wpf
         {
             bootstrapper.Initialize();
 
-            IocManager.Instance.Register<IGrowlNotifications, GrowlNotifiactions>();
+            IocManager.Instance.Register<IGrowlNotifications, GrowlNotifications>();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {

@@ -34,7 +34,9 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
             if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
                 return new TranslateResult(false, new Maybe<string>());
 
-            var address = new Uri(string.Format(configuration.YandexUrl +
+            var address = new Uri(
+                string.Format(
+                configuration.YandexUrl +
                 $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{configuration.ToLanguageExtension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
 
             var compositeMean = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));

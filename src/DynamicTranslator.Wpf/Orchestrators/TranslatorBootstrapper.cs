@@ -22,7 +22,6 @@ using DynamicTranslator.Wpf.ViewModel;
 
 using Gma.System.MouseKeyHook;
 
-using Clipboard = System.Windows.Clipboard;
 using Point = System.Drawing.Point;
 
 namespace DynamicTranslator.Wpf.Orchestrators
@@ -31,7 +30,8 @@ namespace DynamicTranslator.Wpf.Orchestrators
     {
         private readonly ITypedCache<string, TranslateResult[]> cache;
         private readonly ICacheManager cacheManager;
-        private readonly GrowlNotifiactions growlNotifications;
+        private readonly IClipboardManager clipboardManager;
+        private readonly GrowlNotifications growlNotifications;
         private readonly MainWindow mainWindow;
         private readonly IDynamicTranslatorStartupConfiguration startupConfiguration;
         private CancellationTokenSource cancellationTokenSource;
@@ -45,45 +45,53 @@ namespace DynamicTranslator.Wpf.Orchestrators
         private IDisposable syncObserver;
 
         public TranslatorBootstrapper(MainWindow mainWindow,
-            GrowlNotifiactions growlNotifications,
+            GrowlNotifications growlNotifications,
             IDynamicTranslatorStartupConfiguration startupConfiguration,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            IClipboardManager clipboardManager)
         {
-            if (mainWindow == null)
-                throw new ArgumentNullException(nameof(mainWindow));
-
-            if (growlNotifications == null)
-                throw new ArgumentNullException(nameof(growlNotifications));
-
-            if (startupConfiguration == null)
-                throw new ArgumentNullException(nameof(startupConfiguration));
-
-            if (cacheManager == null)
-                throw new ArgumentNullException(nameof(cacheManager));
-
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
             this.startupConfiguration = startupConfiguration;
             this.cacheManager = cacheManager;
+            this.clipboardManager = clipboardManager;
             cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
-        public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
-
         public void Dispose()
         {
-            DecomposeRoot();
+            if (IsInitialized)
+            {
+                if (cancellationTokenSource.Token.CanBeCanceled)
+                {
+                    cancellationTokenSource.Cancel(false);
+                }
+
+                DisposeHooks();
+                Task.Run(() => SendKeys.Flush());
+                UnsubscribeLocalEvents();
+                growlNotifications.Dispose();
+                finderObservable.Dispose();
+                syncObserver.Dispose();
+                cache.Clear();
+                IsInitialized = false;
+            }
         }
+
+        public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
         public void Initialize()
         {
             CompositionRoot();
         }
 
-        public async Task InitializeAsync()
+        public Task InitializeAsync()
         {
-            await CompositionRootAsync();
+            Initialize();
+            return Task.FromResult(0);
         }
+
+        public bool IsInitialized { get; private set; }
 
         public void SubscribeShutdownEvents()
         {
@@ -97,7 +105,12 @@ namespace DynamicTranslator.Wpf.Orchestrators
             };
         }
 
-        public bool IsInitialized { get; private set; }
+        private static Task SendCopyCommandAsync()
+        {
+            SendKeys.SendWait("^c");
+            SendKeys.Flush();
+            return Task.FromResult(0);
+        }
 
         private void CompositionRoot()
         {
@@ -105,49 +118,15 @@ namespace DynamicTranslator.Wpf.Orchestrators
             StartHooks();
             ConfigureNotificationMeasurements();
             SubscribeLocalevents();
-            Task.Run(FlushCopyCommandAsync);
+            Task.Run(() => SendKeys.Flush());
             StartObservers();
             IsInitialized = true;
-        }
-
-        private async Task CompositionRootAsync()
-        {
-            await mainWindow.Dispatcher.InvokeAsync(async () =>
-            {
-                cancellationTokenSource = new CancellationTokenSource();
-                StartHooks();
-                ConfigureNotificationMeasurements();
-                SubscribeLocalevents();
-                await FlushCopyCommandAsync();
-                await StartObserversAsync();
-                IsInitialized = true;
-            });
         }
 
         private void ConfigureNotificationMeasurements()
         {
             growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
             growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - startupConfiguration.LeftOffset;
-        }
-
-        private void DecomposeRoot()
-        {
-            if (IsInitialized)
-            {
-                if (cancellationTokenSource.Token.CanBeCanceled)
-                {
-                    cancellationTokenSource.Cancel(false);
-                }
-
-                DisposeHooks();
-                Task.Run(FlushCopyCommandAsync);
-                UnsubscribeLocalEvents();
-                growlNotifications.Dispose();
-                finderObservable.Dispose();
-                syncObserver.Dispose();
-                cache.Clear();
-                IsInitialized = false;
-            }
         }
 
         private void DisposeHooks()
@@ -158,62 +137,57 @@ namespace DynamicTranslator.Wpf.Orchestrators
             globalMouseHook.Dispose();
         }
 
-        private void FlushCopyCommand()
+        private void HandleTextCaptured(int msg, IntPtr wParam, IntPtr lParam)
         {
-            SendKeys.Flush();
-        }
+            Task.Run(async () =>
+            {
+                await mainWindow.Dispatcher.InvokeAsync(async () =>
+                {
+                    Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
 
-        private Task FlushCopyCommandAsync()
-        {
-            SendKeys.Flush();
-            return Task.FromResult(0);
+                    if (clipboardManager.IsContainsText())
+                    {
+                        var currentText = clipboardManager.GetCurrentText();
+
+                        if (!string.IsNullOrEmpty(currentText))
+                        {
+                            await TriggerTextCaptured(currentText);
+                        }
+                    }
+                }, DispatcherPriority.Background);
+            });
         }
 
         private async void MouseDoubleClicked(object sender, MouseEventArgs e)
         {
-            await Task.Run(async () =>
-            {
-                isMouseDown = false;
-                if (cancellationTokenSource.Token.IsCancellationRequested)
-                    return;
+            isMouseDown = false;
+            if (cancellationTokenSource.Token.IsCancellationRequested)
+                return;
 
-                await SendCopyCommandAsync();
-            });
+            await SendCopyCommandAsync();
         }
 
         private async void MouseDown(object sender, MouseEventArgs e)
         {
-            await Task.Run(() =>
-            {
-                if (cancellationTokenSource.Token.IsCancellationRequested)
-                    return;
+            if (cancellationTokenSource.Token.IsCancellationRequested)
+                return;
 
-                mouseFirstPoint = e.Location;
-                isMouseDown = true;
-            });
+            mouseFirstPoint = e.Location;
+            isMouseDown = true;
+            await Task.FromResult(0);
         }
 
         private async void MouseUp(object sender, MouseEventArgs e)
         {
-            await Task.Run(async () =>
+            if (isMouseDown && !mouseSecondPoint.Equals(mouseFirstPoint))
             {
-                if (isMouseDown && !mouseSecondPoint.Equals(mouseFirstPoint))
-                {
-                    mouseSecondPoint = e.Location;
-                    if (cancellationTokenSource.Token.IsCancellationRequested)
-                        return;
+                mouseSecondPoint = e.Location;
+                if (cancellationTokenSource.Token.IsCancellationRequested)
+                    return;
 
-                    await SendCopyCommandAsync();
-                    isMouseDown = false;
-                }
-            });
-        }
-
-        private Task SendCopyCommandAsync()
-        {
-            SendKeys.SendWait("^c");
-            SendKeys.Flush();
-            return Task.FromResult(0);
+                await SendCopyCommandAsync();
+                isMouseDown = false;
+            }
         }
 
         private void StartHooks()
@@ -243,17 +217,26 @@ namespace DynamicTranslator.Wpf.Orchestrators
                 .Subscribe(IocManager.Instance.Resolve<Feeder>());
         }
 
-        private Task StartObserversAsync()
-        {
-            StartObservers();
-            return Task.FromResult(0);
-        }
-
         private void SubscribeLocalevents()
         {
             globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
             globalMouseHook.MouseDown += MouseDown;
             globalMouseHook.MouseUp += MouseUp;
+        }
+
+        private Task TriggerTextCaptured(string currentText)
+        {
+            return Task.Run(async () =>
+            {
+                if (cancellationTokenSource.Token.IsCancellationRequested)
+                    return;
+
+                await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
+                    new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
+                    );
+
+                SendKeys.Flush();
+            });
         }
 
         private void UnsubscribeLocalEvents()
@@ -272,37 +255,9 @@ namespace DynamicTranslator.Wpf.Orchestrators
                         hWndNextViewer = lParam; //clipboard viewer chain changed, need to fix it.
                     else if (hWndNextViewer != IntPtr.Zero)
                         Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
-
                     break;
                 case Win32.WmDrawclipboard:
-                    Task.Run(async () =>
-                    {
-                        await mainWindow.Dispatcher.InvokeAsync(async () =>
-                        {
-                            Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
-                            if (Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim()))
-                            {
-                                var currentText = Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();
-
-                                if (!string.IsNullOrEmpty(currentText))
-                                {
-                                    await Task.Run(async () =>
-                                    {
-                                        if (cancellationTokenSource.Token.IsCancellationRequested)
-                                            return;
-
-                                        await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                                            new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
-                                            );
-
-                                        await FlushCopyCommandAsync();
-                                    });
-                                }
-                            }
-                        },
-                            DispatcherPriority.Background);
-                    });
-
+                    HandleTextCaptured(msg, wParam, lParam);
                     break;
             }
 

@@ -98,6 +98,7 @@
     <Compile Include="Configuration\IDynamicTranslatorStartupConfiguration.cs" />
     <Compile Include="Configuration\DynamicTranslatorStartupConfiguration.cs" />
     <Compile Include="Constants\CacheNames.cs" />
+    <Compile Include="Constants\Headers.cs" />
     <Compile Include="Extensions\IocExtensions.cs" />
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
