@@ -23,12 +23,6 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 
         public TurengFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorStartupConfiguration configuration)
         {
-            if (meanOrganizerFactory == null)
-                throw new ArgumentNullException(nameof(meanOrganizerFactory));
-
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
             this.meanOrganizerFactory = meanOrganizerFactory;
             this.configuration = configuration;
         }

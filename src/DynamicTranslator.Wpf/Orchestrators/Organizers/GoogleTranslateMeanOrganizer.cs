@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Organizers
@@ -15,7 +14,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            var result = JsonConvert.DeserializeObject<Dictionary<string, object>>(text);
+            var result = text.DeserializeAs<Dictionary<string, object>>();
             var arrayTree = result["sentences"] as JArray;
             var output = arrayTree.GetFirstValueInArrayGraph<string>();
             return Task.FromResult(new Maybe<string>(output));

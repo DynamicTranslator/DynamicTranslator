@@ -18,9 +18,6 @@ namespace DynamicTranslator.Wpf.Orchestrators.Organizers
 
         public ResultOrganizer(IResultService resultService)
         {
-            if (resultService == null)
-                throw new ArgumentNullException(nameof(resultService));
-
             this.resultService = resultService;
         }
 

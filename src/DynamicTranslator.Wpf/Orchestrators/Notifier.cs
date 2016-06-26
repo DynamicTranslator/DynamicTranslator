@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Abp.Dependency;
 
@@ -14,9 +13,6 @@ namespace DynamicTranslator.Wpf.Orchestrators
 
         public Notifier(IGrowlNotifications growlNotifiactions)
         {
-            if (growlNotifiactions == null)
-                throw new ArgumentNullException(nameof(growlNotifiactions));
-
             this.growlNotifiactions = growlNotifiactions;
         }
 

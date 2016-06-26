@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Abp.Dependency;
+using DynamicTranslator.Configuration;
+using DynamicTranslator.Extensions;
+using RestSharp;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
-
-using Abp.Dependency;
-
-using DynamicTranslator.Configuration;
-
-using Newtonsoft.Json;
-
-using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
@@ -36,7 +32,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
                     .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
                     .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 
-            var result = await Task.Run(() => JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content));
+            var result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
             return result?["src"]?.ToString() ?? configuration.FromLanguageExtension;
         }
     }
