@@ -30,12 +30,6 @@ namespace DynamicTranslator.Configuration.Startup
             Translators.ForEach(t => t.Passivate());
         }
 
-        public void RemoveTranslator(TranslatorType translatorType)
-        {
-            var translatorToDelete = ActiveTranslators.FirstOrDefault(x => x.Type == translatorType);
-            ActiveTranslators.Remove(translatorToDelete);
-        }
-
         public IList<ITranslator> ActiveTranslators => Translators.Where(x => x.IsActive).ToImmutableList();
 
         public IList<ITranslator> Translators { get; }

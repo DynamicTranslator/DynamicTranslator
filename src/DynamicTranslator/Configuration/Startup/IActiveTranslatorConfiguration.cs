@@ -15,7 +15,5 @@ namespace DynamicTranslator.Configuration.Startup
         void AddTranslator(TranslatorType translatorType);
 
         void PassivateAll();
-
-        void RemoveTranslator(TranslatorType translatorType);
     }
 }

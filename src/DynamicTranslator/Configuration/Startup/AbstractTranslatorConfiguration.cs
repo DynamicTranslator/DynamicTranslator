@@ -8,7 +8,12 @@ namespace DynamicTranslator.Configuration.Startup
 {
     public abstract class AbstractTranslatorConfiguration : ITranslatorConfiguration
     {
+        /// <summary>
+        ///     Property injection for activated translator types.
+        /// </summary>
         public IActiveTranslatorConfiguration ActiveTranslatorConfiguration { get; set; }
+
+        public IApplicationConfiguration ApplicationConfiguration { get; set; }
 
         public virtual bool IsAppropriateForTranslation(string fromLanguageExtension)
         {

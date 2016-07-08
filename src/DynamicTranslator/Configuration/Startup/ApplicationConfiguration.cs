@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-
-using DynamicTranslator.LanguageManagement;
+﻿using DynamicTranslator.LanguageManagement;
 
 namespace DynamicTranslator.Configuration.Startup
 {
     public class ApplicationConfiguration : IApplicationConfiguration
     {
+        public string TrackingId { get; set; }
+
         public IClient Client { get; set; }
 
         public Language FromLanguage { get; set; }
@@ -14,9 +14,7 @@ namespace DynamicTranslator.Configuration.Startup
 
         public bool IsNoSqlDatabaseEnabled { get; set; }
 
-        public bool IsToLanguageTurkish { get; set; }
-
-        public IDictionary<string, string> LanguageMap { get; set; }
+        public bool IsToLanguageTurkish => ToLanguage.Extension == "tr";
 
         public int LeftOffset { get; set; }
 
@@ -27,7 +25,5 @@ namespace DynamicTranslator.Configuration.Startup
         public Language ToLanguage { get; set; }
 
         public int TopOffset { get; set; }
-
-        public string TrackingId { get; set; }
     }
 }

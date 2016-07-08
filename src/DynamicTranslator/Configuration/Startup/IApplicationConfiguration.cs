@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-using DynamicTranslator.LanguageManagement;
+﻿using DynamicTranslator.LanguageManagement;
 
 namespace DynamicTranslator.Configuration.Startup
 {
@@ -14,9 +12,7 @@ namespace DynamicTranslator.Configuration.Startup
 
         bool IsNoSqlDatabaseEnabled { get; set; }
 
-        bool IsToLanguageTurkish { get; set; }
-
-        IDictionary<string, string> LanguageMap { get; set; }
+        bool IsToLanguageTurkish { get; }
 
         int LeftOffset { get; set; }
 
