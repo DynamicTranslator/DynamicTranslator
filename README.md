@@ -7,10 +7,9 @@
 
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
-While you are reading a pdf or something, DynamicTranslator detects selected texts instantly, translates them according to your language choice.
+DynamicTranslator detects selected texts instantly while you are reading a pdf or something and then translates them according to your language choice.
 
 ###Latest News
-DynamicTranslator detects your selected text where the current window/application you on and translates including words/sentences immediately.
 
 #### *Instantly detect text implemented.
 #### *Google Translate added.
@@ -18,9 +17,9 @@ DynamicTranslator detects your selected text where the current window/applicatio
 #### *Bing Translate added (2016-02-29)
 #### *Text to speech added (2016-03-03)
 
-
 ###In Turkish
-Bilindiği gibi bazı sözlükler bize api sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır. Bulunduğunuz pencere/pdf veya herhangi birşeyde gezinirken mouse ile seçtiğiniz text'i algılayıp sonrasında, sırasıyla Google Translate, Tureng, Yandex, SesliSozluk'e gidip bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
+Bilindiği gibi bazı sözlükler bize API sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
+Bulunduğunuz yerde pencere/pdf/browser vb. mouse ile gezinirken seçtiğiniz text'i/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSozluk, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
 
 Seçilen metnin dilini algılar.
 
@@ -34,7 +33,7 @@ Seçilen metnin dilini algılar.
         
 
 ### Project Information and The Goal
-This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while PDF Ebook reading mostly.Project is small but very useful (at least me :)) I hope this useful for you.
+This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while reading PDF Ebook mostly.Project is small but very useful (at least me :)) I hope this useful for you.
 
 C# , WPF
 
