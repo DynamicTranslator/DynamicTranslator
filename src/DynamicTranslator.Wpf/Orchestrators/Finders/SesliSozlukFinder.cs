@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Wpf.Orchestrators.Organizers;
@@ -21,24 +21,28 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
         private const string AcceptEncoding = "gzip, deflate";
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
         private const string ContentType = "application/x-www-form-urlencoded";
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorStartupConfiguration configuration)
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+        private readonly ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration;
+
+        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration,
+            IApplicationConfiguration applicationConfiguration)
         {
             this.meanOrganizerFactory = meanOrganizerFactory;
-            this.configuration = configuration;
+            this.sesliSozlukConfiguration = sesliSozlukConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
+            if (!sesliSozlukConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
                 return new TranslateResult(false, new Maybe<string>());
 
             var parameter =
-                $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={configuration.ToLanguageExtension}";
+                $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={applicationConfiguration.ToLanguage.Extension}";
 
-            var response = await new RestClient(configuration.SesliSozlukUrl)
+            var response = await new RestClient(sesliSozlukConfiguration.Url)
             {
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))

@@ -5,7 +5,7 @@ using System.Reflection;
 namespace DynamicTranslator.Application
 {
     [DependsOn(typeof(DynamicTranslatorDataModule))]
-    public class DynamicTranslatorApplicationModule : AbpModule
+    public class DynamicTranslatorApplicationModule : DynamicTranslatorModule
     {
         public override void Initialize()
         {

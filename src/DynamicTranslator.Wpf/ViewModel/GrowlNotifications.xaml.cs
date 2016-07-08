@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.ViewModel
@@ -15,14 +16,14 @@ namespace DynamicTranslator.Wpf.ViewModel
     {
         private readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
-        private readonly IDynamicTranslatorStartupConfiguration startupConfiguration;
+        private readonly IApplicationConfiguration applicationConfiguration;
         private int count;
         public bool IsDisposed;
 
-        public GrowlNotifications(IDynamicTranslatorStartupConfiguration startupConfiguration, Notifications notifications)
+        public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
-            this.startupConfiguration = startupConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
             Notifications = notifications;
             NotificationsControl.DataContext = Notifications;
         }
@@ -35,7 +36,7 @@ namespace DynamicTranslator.Wpf.ViewModel
                 () =>
                 {
                     notification.Id = count++;
-                    if (Notifications.Count + 1 > startupConfiguration.MaxNotifications)
+                    if (Notifications.Count + 1 > applicationConfiguration.MaxNotifications)
                         buffer.Add(notification);
                     else
                         Notifications.Add(notification);

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 
 namespace DynamicTranslator.Service.GoogleAnalytics
 {
@@ -11,10 +12,10 @@ namespace DynamicTranslator.Service.GoogleAnalytics
     {
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IApplicationConfiguration configuration;
         private readonly string googleVersion = "1";
 
-        public GoogleAnalyticsService(IDynamicTranslatorStartupConfiguration configuration)
+        public GoogleAnalyticsService(IApplicationConfiguration configuration)
         {
             this.configuration = configuration;
         }
@@ -94,7 +95,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
             var ht = new Hashtable();
             ht.Add("v", googleVersion); // Version.
             ht.Add("tid", TrackingId); // Tracking ID / Web property / Property ID.
-            ht.Add("cid", configuration.ClientId); // Anonymous Client ID.
+            ht.Add("cid", configuration.Client.Id); // Anonymous Client ID.
             return ht;
         }
 

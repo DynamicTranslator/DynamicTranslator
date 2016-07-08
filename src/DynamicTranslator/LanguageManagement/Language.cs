@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Wpf.ViewModel.Model
+﻿namespace DynamicTranslator.LanguageManagement
 {
     public class Language
     {

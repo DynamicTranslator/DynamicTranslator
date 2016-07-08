@@ -9,13 +9,13 @@ using Abp.Runtime.Caching;
 using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Events;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.Orchestrators.Detector;
 using DynamicTranslator.Wpf.Orchestrators.Finders;
-using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers
 {
@@ -23,7 +23,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
     {
         private readonly ITypedCache<string, TranslateResult[]> cache;
         private readonly ICacheManager cacheManager;
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IDynamicTranslatorConfiguration configuration;
         private readonly IGoogleAnalyticsService googleAnalytics;
         private readonly ILanguageDetector languageDetector;
         private readonly IMeanFinderFactory meanFinderFactory;
@@ -38,7 +38,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
             ICacheManager cacheManager,
             IGoogleAnalyticsService googleAnalytics,
             ILanguageDetector languageDetector,
-            IDynamicTranslatorStartupConfiguration configuration)
+            IDynamicTranslatorConfiguration configuration)
         {
             this.notifier = notifier;
             this.meanFinderFactory = meanFinderFactory;
@@ -83,7 +83,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
                 await
                     googleAnalytics.TrackEventAsync("DynamicTranslator",
                         "Translate",
-                        $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ToLanguageExtension} ",
+                        $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ApplicationConfiguration.ToLanguage.Extension} ",
                         null).ConfigureAwait(false);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",

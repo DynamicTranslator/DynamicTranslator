@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Wpf.Orchestrators.Organizers;
@@ -19,24 +19,27 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate, sdch";
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IGoogleTranslatorConfiguration googleConfiguration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IDynamicTranslatorStartupConfiguration configuration)
+        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IGoogleTranslatorConfiguration googleConfiguration,
+            IApplicationConfiguration applicationConfiguration)
         {
             this.meanOrganizerFactory = meanOrganizerFactory;
-            this.configuration = configuration;
+            this.googleConfiguration = googleConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
+            if (!googleConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
                 return new TranslateResult(false, new Maybe<string>());
 
             var uri = string.Format(
-                configuration.GoogleTranslateUrl,
-                configuration.ToLanguageExtension,
-                configuration.ToLanguageExtension,
+                googleConfiguration.Url,
+                applicationConfiguration.ToLanguage.Extension,
+                applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
             var compositeMean = await new RestClient(uri) {Encoding = Encoding.UTF8}

@@ -9,7 +9,7 @@ using DynamicTranslator.DbReeze.DBReezeNoSQL.Configuration;
 namespace DynamicTranslator.DbReeze
 {
     [DependsOn(typeof(DynamicTranslatorCoreModule))]
-    public class DynamicTranslatorDataModule : AbpModule
+    public class DynamicTranslatorDataModule : DynamicTranslatorModule
     {
         public override void Initialize()
         {

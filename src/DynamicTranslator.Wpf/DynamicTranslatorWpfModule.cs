@@ -14,7 +14,7 @@ using DynamicTranslator.Wpf.Orchestrators.Organizers;
 namespace DynamicTranslator.Wpf
 {
     [DependsOn(typeof(DynamicTranslatorApplicationModule))]
-    public class DynamicTranslatorWpfModule : AbpModule
+    public class DynamicTranslatorWpfModule : DynamicTranslatorModule
     {
         public override void Initialize()
         {

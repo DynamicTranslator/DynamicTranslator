@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Extensions;
 
 using RestSharp;
@@ -13,16 +14,18 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
     public class YandexLanguageDetector : ILanguageDetector
     {
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IYandexDetectorConfiguration configuration;
+        private readonly IApplicationConfiguration applicationConfiguration;
 
-        public YandexLanguageDetector(IDynamicTranslatorStartupConfiguration configuration)
+        public YandexLanguageDetector(IYandexDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<string> DetectLanguage(string text)
         {
-            var uri = string.Format(configuration.YandexDetectTextUrl, text);
+            var uri = string.Format(configuration.Url, text);
 
             var response = await new RestClient(uri)
             {
@@ -39,7 +42,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
             if (result != null && string.IsNullOrEmpty(result.Lang))
                 return result.Lang;
 
-            return configuration.ToLanguageExtension;
+            return applicationConfiguration.ToLanguage.Extension;
         }
     }
 }

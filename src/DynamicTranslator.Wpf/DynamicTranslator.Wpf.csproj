@@ -247,12 +247,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\Model\ApplicationVersion.cs" />
     <Compile Include="ViewModel\GrowlNotifications.xaml.cs">
       <DependentUpon>GrowlNotifications.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Model\Language.cs" />
-    <Compile Include="ViewModel\Model\Languages.cs" />
     <Compile Include="ViewModel\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -351,6 +348,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\texToSpeech.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

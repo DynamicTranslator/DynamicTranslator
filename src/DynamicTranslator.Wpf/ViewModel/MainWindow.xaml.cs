@@ -8,17 +8,17 @@ using System.Windows.Threading;
 
 using Abp.Dependency;
 
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
+using DynamicTranslator.LanguageManagement;
 using DynamicTranslator.Wpf.Orchestrators;
-using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class MainWindow
     {
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IDynamicTranslatorConfiguration configurations;
         private readonly ITranslatorBootstrapper translator;
         private bool isRunning;
 
@@ -28,13 +28,14 @@ namespace DynamicTranslator.Wpf.ViewModel
             IocManager.Instance.Register(typeof(MainWindow), this);
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
-            configuration = IocManager.Instance.Resolve<IDynamicTranslatorStartupConfiguration>();
-            foreach (var language in configuration.LanguageMap)
+            configurations = IocManager.Instance.Resolve<IDynamicTranslatorConfiguration>();
+
+            foreach (var language in LanguageMapping.All.ToLanguages())
             {
-                ComboBoxLanguages.Items.Add(new Language(language.Key, language.Value));
+                ComboBoxLanguages.Items.Add(language);
             }
 
-            ComboBoxLanguages.SelectedValue = configuration.ToLanguageExtension;
+            ComboBoxLanguages.SelectedValue = configurations.ApplicationConfiguration.ToLanguage.Extension;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -59,9 +60,9 @@ namespace DynamicTranslator.Wpf.ViewModel
             {
                 BtnSwitch.Content = "Stop Translator";
 
-                configuration.SetAndPersistConfigurationManager(
-                    nameof(configuration.ToLanguage),
-                    ((Language)ComboBoxLanguages.SelectedItem).Name);
+                var selectedLanguageName = ((Language)ComboBoxLanguages.SelectedItem).Name;
+                configurations.AppConfigManager.SaveOrUpdate("ToLanguage", selectedLanguageName);
+                configurations.ApplicationConfiguration.ToLanguage = new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
 
                 PrepareTranslators();
                 LockUiElements();
@@ -79,11 +80,6 @@ namespace DynamicTranslator.Wpf.ViewModel
 
                 isRunning = true;
             }
-        }
-
-        private void DonateButton_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6U2T5SPVDZ7TW");
         }
 
         private void GithubButton_Click(object sender, RoutedEventArgs e)
@@ -105,24 +101,24 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void PrepareTranslators()
         {
-            configuration.ClearActiveTranslators();
+            configurations.ActiveTranslatorConfiguration.PassivateAll();
 
             if (CheckBoxGoogleTranslate.IsChecked != null && CheckBoxGoogleTranslate.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Google);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Google);
             if (CheckBoxYandexTranslate.IsChecked != null && CheckBoxYandexTranslate.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Yandex);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Yandex);
             if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Tureng);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Tureng);
             if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Seslisozluk);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Seslisozluk);
             if (CheckBoxBing.IsChecked != null && CheckBoxBing.IsChecked.Value)
-                configuration.AddTranslator(TranslatorType.Bing);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
 
-            if (!configuration.ActiveTranslators.Any())
+            if (!configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
             {
                 foreach (var value in Enum.GetValues(typeof(TranslatorType)))
                 {
-                    configuration.AddTranslator((TranslatorType)value);
+                    configurations.ActiveTranslatorConfiguration.Activate((TranslatorType)value);
                 }
             }
         }

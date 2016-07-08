@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Wpf.Orchestrators.Organizers;
@@ -20,34 +20,31 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
     {
         private const string ContentType = "application/json;Charset=UTF-8";
 
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IBingTranslatorConfiguration bingConfiguration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public BingTranslatorFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public BingTranslatorFinder(IBingTranslatorConfiguration bingConfiguration, IMeanOrganizerFactory meanOrganizerFactory,
+            IApplicationConfiguration applicationConfiguration)
         {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            if (meanOrganizerFactory == null)
-                throw new ArgumentNullException(nameof(meanOrganizerFactory));
-
-            this.configuration = configuration;
+            this.bingConfiguration = bingConfiguration;
             this.meanOrganizerFactory = meanOrganizerFactory;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
+            if (!bingConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
                 return new TranslateResult(false, new Maybe<string>());
 
             var requestObject = new
             {
-                from = configuration.FromLanguage.ToLower(),
-                to = configuration.ToLanguage.ToLower(),
+                from = applicationConfiguration.FromLanguage.Extension.ToLower(),
+                to = applicationConfiguration.ToLanguage.Extension.ToLower(),
                 text = translateRequest.CurrentText
             };
 
-            var response = await new RestClient(configuration.BingTranslatorUrl)
+            var response = await new RestClient(bingConfiguration.Url)
             {
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))

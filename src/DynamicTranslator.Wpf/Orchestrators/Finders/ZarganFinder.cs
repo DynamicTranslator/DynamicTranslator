@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Wpf.Orchestrators.Organizers;
@@ -15,10 +15,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 {
     public class ZarganFinder : IMeanFinder
     {
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IZarganTranslatorConfiguration configuration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
-        public ZarganFinder(IDynamicTranslatorStartupConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public ZarganFinder(IZarganTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
@@ -26,10 +26,10 @@ namespace DynamicTranslator.Wpf.Orchestrators.Finders
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(TranslatorType, translateRequest.FromLanguageExtension))
+            if (!configuration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
                 return new TranslateResult(false, new Maybe<string>());
 
-            var uri = string.Format(configuration.ZarganTranslateUrl, HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
+            var uri = string.Format(configuration.Url, HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
             var compositeMean = await new RestClient(uri) {Encoding = Encoding.UTF8}
                 .ExecuteGetTaskAsync(

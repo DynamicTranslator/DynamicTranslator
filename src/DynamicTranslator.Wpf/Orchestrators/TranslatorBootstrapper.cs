@@ -12,6 +12,7 @@ using Abp.Dependency;
 using Abp.Runtime.Caching;
 
 using DynamicTranslator.Configuration;
+using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Events;
 using DynamicTranslator.Domain.Model;
@@ -32,8 +33,8 @@ namespace DynamicTranslator.Wpf.Orchestrators
         private readonly ICacheManager cacheManager;
         private readonly IClipboardManager clipboardManager;
         private readonly GrowlNotifications growlNotifications;
-        private readonly MainWindow mainWindow;
-        private readonly IDynamicTranslatorStartupConfiguration startupConfiguration;
+        private readonly ViewModel.MainWindow mainWindow;
+        private readonly IApplicationConfiguration applicationConfiguration;
         private CancellationTokenSource cancellationTokenSource;
         private IDisposable finderObservable;
         private IKeyboardMouseEvents globalMouseHook;
@@ -44,15 +45,15 @@ namespace DynamicTranslator.Wpf.Orchestrators
         private Point mouseSecondPoint;
         private IDisposable syncObserver;
 
-        public TranslatorBootstrapper(MainWindow mainWindow,
+        public TranslatorBootstrapper(ViewModel.MainWindow mainWindow,
             GrowlNotifications growlNotifications,
-            IDynamicTranslatorStartupConfiguration startupConfiguration,
+            IApplicationConfiguration applicationConfiguration,
             ICacheManager cacheManager,
             IClipboardManager clipboardManager)
         {
             this.mainWindow = mainWindow;
             this.growlNotifications = growlNotifications;
-            this.startupConfiguration = startupConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
             this.cacheManager = cacheManager;
             this.clipboardManager = clipboardManager;
             cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
@@ -125,8 +126,8 @@ namespace DynamicTranslator.Wpf.Orchestrators
 
         private void ConfigureNotificationMeasurements()
         {
-            growlNotifications.Top = SystemParameters.WorkArea.Top + startupConfiguration.TopOffset;
-            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - startupConfiguration.LeftOffset;
+            growlNotifications.Top = SystemParameters.WorkArea.Top + applicationConfiguration.TopOffset;
+            growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - applicationConfiguration.LeftOffset;
         }
 
         private void DisposeHooks()

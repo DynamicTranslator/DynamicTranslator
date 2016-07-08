@@ -4,7 +4,7 @@ using Abp.Modules;
 
 namespace DynamicTranslator.Domain
 {
-    public class DynamicTranslatorDomainModule : AbpModule
+    public class DynamicTranslatorDomainModule : DynamicTranslatorModule
     {
         public override void Initialize()
         {

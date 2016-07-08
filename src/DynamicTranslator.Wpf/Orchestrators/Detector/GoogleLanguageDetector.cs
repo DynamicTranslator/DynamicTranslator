@@ -1,28 +1,33 @@
-﻿using Abp.Dependency;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
-using RestSharp;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
+
+using Abp.Dependency;
+
+using DynamicTranslator.Configuration.Startup;
+using DynamicTranslator.Extensions;
+
+using RestSharp;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Detector
 {
     public class GoogleLanguageDetector : ILanguageDetector, ISingletonDependency
     {
-        private readonly IDynamicTranslatorStartupConfiguration configuration;
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IGoogleDetectorConfiguration configuration;
 
-        public GoogleLanguageDetector(IDynamicTranslatorStartupConfiguration configuration)
+        public GoogleLanguageDetector(IGoogleDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<string> DetectLanguage(string text)
         {
             var uri = string.Format(
-                configuration.GoogleTranslateUrl,
-                configuration.ToLanguageExtension,
-                configuration.ToLanguageExtension,
+                configuration.Url,
+                applicationConfiguration.ToLanguage.Extension,
+                applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(text));
 
             var response = await new RestClient(uri)
@@ -33,7 +38,7 @@ namespace DynamicTranslator.Wpf.Orchestrators.Detector
                     .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 
             var result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
-            return result?["src"]?.ToString() ?? configuration.FromLanguageExtension;
+            return result?["src"]?.ToString() ?? applicationConfiguration.FromLanguage.Extension;
         }
     }
 }

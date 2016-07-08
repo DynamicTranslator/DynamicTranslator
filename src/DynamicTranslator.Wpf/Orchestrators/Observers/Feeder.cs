@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Abp.Dependency;
 
 using DynamicTranslator.Service.GoogleAnalytics;
-using DynamicTranslator.Wpf.ViewModel.Model;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers
 {
@@ -14,9 +13,6 @@ namespace DynamicTranslator.Wpf.Orchestrators.Observers
 
         public Feeder(IGoogleAnalyticsService googleAnalyticsService)
         {
-            if (googleAnalyticsService == null)
-                throw new ArgumentNullException(nameof(googleAnalyticsService));
-
             this.googleAnalyticsService = googleAnalyticsService;
         }
 

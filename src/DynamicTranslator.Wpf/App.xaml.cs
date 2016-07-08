@@ -1,12 +1,14 @@
-﻿using Abp;
+﻿using System;
+using System.Windows;
+
+using Abp;
 using Abp.Dependency;
 using Abp.Runtime.Caching.Configuration;
+
 using Castle.Facilities.Logging;
-using DynamicTranslator.Configuration;
+
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel;
-using System;
-using System.Windows;
 
 namespace DynamicTranslator.Wpf
 {
@@ -37,8 +39,6 @@ namespace DynamicTranslator.Wpf
             var defaultSlidingExpireTime = TimeSpan.FromHours(24);
             IocManager.Instance.Resolve<ICachingConfiguration>().ConfigureAll(cache => { cache.DefaultSlidingExpireTime = defaultSlidingExpireTime; });
 
-            var configurations = IocManager.Instance.Resolve<IDynamicTranslatorStartupConfiguration>();
-            configurations.Initialize();
             base.OnStartup(eventArgs);
         }
     }
