@@ -26,11 +26,11 @@ Seçilen metnin dilini algılar.
 
 ###Başvurulan sözlükler
         
-##### Tureng
-##### Yandex
-##### Sesli Sozluk
-##### Google Translate
-##### Microsoft Bing Translate
+##### Tureng (http://tureng.com/en/turkish-english)
+##### Yandex (https://translate.yandex.com)
+##### Sesli Sozluk (https://www.seslisozluk.net/)
+##### Google Translate (https://translate.google.com/)
+##### Microsoft Bing Translate (https://www.bing.com/translator)
         
 
 ### Project Information and The Goal
