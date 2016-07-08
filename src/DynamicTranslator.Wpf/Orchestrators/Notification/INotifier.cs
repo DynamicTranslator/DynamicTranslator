@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DynamicTranslator.Application.Orchestrators
+namespace DynamicTranslator.Wpf.Orchestrators.Notification
 {
     public interface INotifier
     {

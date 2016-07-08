@@ -197,6 +197,7 @@
     <Compile Include="ClipboardManager.cs" />
     <Compile Include="DynamicTranslatorWpfModule.cs" />
     <Compile Include="IClipboardManager.cs" />
+    <Compile Include="Orchestrators\Notification\INotifier.cs" />
     <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
     <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
@@ -217,7 +218,7 @@
     <Compile Include="Orchestrators\Detector\GoogleLanguageDetector.cs" />
     <Compile Include="Orchestrators\Finders\ZarganFinder.cs" />
     <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
-    <Compile Include="Orchestrators\Notifier.cs" />
+    <Compile Include="Orchestrators\Notification\Notifier.cs" />
     <Compile Include="Orchestrators\Observers\Feeder.cs" />
     <Compile Include="Orchestrators\Observers\Finder.cs" />
     <Compile Include="Orchestrators\Organizers\AbstractMeanOrganizer.cs" />

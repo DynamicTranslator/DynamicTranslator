@@ -86,8 +86,6 @@
     <Compile Include="Bing\BingTranslatorResponse.cs" />
     <Compile Include="Bing\WordDetail.cs" />
     <Compile Include="DynamicTranslatorApplicationModule.cs" />
-    <Compile Include="Orchestrators\ICustomHttpHeader.cs" />
-    <Compile Include="Orchestrators\INotifier.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
     <Compile Include="Orchestrators\IResultOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

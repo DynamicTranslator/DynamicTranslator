@@ -16,6 +16,7 @@ using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.Orchestrators.Detector;
 using DynamicTranslator.Wpf.Orchestrators.Finders;
+using DynamicTranslator.Wpf.Orchestrators.Notification;
 
 namespace DynamicTranslator.Wpf.Orchestrators.Observers
 {
