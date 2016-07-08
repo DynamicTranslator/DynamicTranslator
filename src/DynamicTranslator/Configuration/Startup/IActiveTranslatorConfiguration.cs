@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 using DynamicTranslator.Constants;
 
@@ -6,7 +7,7 @@ namespace DynamicTranslator.Configuration.Startup
 {
     public interface IActiveTranslatorConfiguration : IConfiguration
     {
-        IList<ITranslator> ActiveTranslators { get; }
+        IImmutableList<ITranslator> ActiveTranslators { get; }
 
         IList<ITranslator> Translators { get; }
 

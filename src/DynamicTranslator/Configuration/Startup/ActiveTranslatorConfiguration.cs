@@ -30,7 +30,7 @@ namespace DynamicTranslator.Configuration.Startup
             Translators.ForEach(t => t.Passivate());
         }
 
-        public IList<ITranslator> ActiveTranslators => Translators.Where(x => x.IsActive).ToImmutableList();
+        public IImmutableList<ITranslator> ActiveTranslators => Translators.Where(x => x.IsActive).ToImmutableList();
 
         public IList<ITranslator> Translators { get; }
     }
