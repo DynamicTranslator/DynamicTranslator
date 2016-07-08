@@ -19,8 +19,8 @@ namespace DynamicTranslator
 
             IocManager.Resolve<DynamicTranslatorConfiguration>().Initialize();
 
-            var existingToLanguage = Configurations.AppConfigManager.Get("ToLanguage");
-            var existingFromLanguage = Configurations.AppConfigManager.Get("FromLanguage");
+            var existingToLanguage = AppConfigManager.Get("ToLanguage");
+            var existingFromLanguage = AppConfigManager.Get("FromLanguage");
 
             Configurations.ApplicationConfiguration.IsLanguageDetectionEnabled = true;
 
@@ -39,7 +39,7 @@ namespace DynamicTranslator
             Configurations.ApplicationConfiguration.ToLanguage = new Language(existingToLanguage, LanguageMapping.All[existingToLanguage]);
             Configurations.ApplicationConfiguration.FromLanguage = new Language(existingFromLanguage, LanguageMapping.All[existingFromLanguage]);
 
-            Configurations.YandexTranslatorConfiguration.ApiKey = "trnsl.1.1.20151026T185243Z.d28328f8729b953b.97a7993c798cd401dbe95ff429ae8429903e3df9";
+            Configurations.YandexTranslatorConfiguration.ApiKey = AppConfigManager.Get("ApiKey");
             Configurations.YandexTranslatorConfiguration.Url = "https://translate.yandex.net/api/v1.5/tr/translate?";
             Configurations.YandexTranslatorConfiguration.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
 
