@@ -13,9 +13,9 @@ namespace DynamicTranslator.DbReeze
     {
         public override void Initialize()
         {
-            var noSqlDBPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
+            var noSqlDbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
-            Configuration.Modules.UseDbReeze().WithConfiguration(dbreeze => { dbreeze.Configuration.DBreezeDataFolderName = noSqlDBPath; });
+            Configuration.Modules.UseDbReeze().WithConfiguration(dbreeze => { dbreeze.Configuration.DBreezeDataFolderName = noSqlDbPath; });
 
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
