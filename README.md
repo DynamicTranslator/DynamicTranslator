@@ -31,7 +31,6 @@ Seçilen metnin dilini algılar.
 ##### Sesli Sozluk
 ##### Google Translate
 ##### Microsoft Bing Translate
-##### Zargan Sozluk Translate
         
 
 ### Project Information and The Goal
