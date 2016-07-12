@@ -9,15 +9,6 @@ namespace DynamicTranslator.Domain.Model
     [Serializable]
     public sealed class CompositeTranslateResult : Entity<string>
     {
-        public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate)
-        {
-            Results = result;
-            SearchText = searchText;
-            CreateDate = createDate;
-            Frequency = frequency;
-            Id = searchText;
-        }
-
         [DataMember]
         public DateTime CreateDate { get; protected set; }
 
@@ -29,6 +20,15 @@ namespace DynamicTranslator.Domain.Model
 
         [DataMember]
         public string SearchText { get; protected set; }
+
+        public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate)
+        {
+            Results = result;
+            SearchText = searchText;
+            CreateDate = createDate;
+            Frequency = frequency;
+            Id = searchText;
+        }
 
         public CompositeTranslateResult IncreaseFrequency()
         {

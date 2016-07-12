@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:DynamicTranslator.Wpf.ViewModel"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="Transparent"
@@ -14,7 +15,7 @@
         <Storyboard x:Key="CollapseStoryboard">
             <DoubleAnimation From="100" To="0" Storyboard.TargetProperty="Height" Duration="0:0:1" />
         </Storyboard>
-        <DataTemplate x:Key="MessageTemplate" DataType="viewModel1:Notification">
+        <DataTemplate x:Key="MessageTemplate" DataType="viewModel:Notification">
             <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
                   SizeChanged="NotificationWindowSizeChanged">
                 <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10"

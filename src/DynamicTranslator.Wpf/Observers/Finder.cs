@@ -20,6 +20,16 @@ namespace DynamicTranslator.Wpf.Observers
 {
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, ISingletonDependency
     {
+        private readonly ICacheManager cacheManager;
+        private readonly IDynamicTranslatorConfiguration configuration;
+        private readonly IGoogleAnalyticsService googleAnalytics;
+        private readonly ILanguageDetector languageDetector;
+        private readonly IMeanFinderFactory meanFinderFactory;
+        private readonly INotifier notifier;
+        private readonly IResultOrganizer resultOrganizer;
+
+        private string previousString;
+
         public Finder(INotifier notifier,
             IMeanFinderFactory meanFinderFactory,
             IResultOrganizer resultOrganizer,
@@ -35,19 +45,7 @@ namespace DynamicTranslator.Wpf.Observers
             this.googleAnalytics = googleAnalytics;
             this.languageDetector = languageDetector;
             this.configuration = configuration;
-            cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
-
-        private readonly ITypedCache<string, TranslateResult[]> cache;
-        private readonly ICacheManager cacheManager;
-        private readonly IDynamicTranslatorConfiguration configuration;
-        private readonly IGoogleAnalyticsService googleAnalytics;
-        private readonly ILanguageDetector languageDetector;
-        private readonly IMeanFinderFactory meanFinderFactory;
-        private readonly INotifier notifier;
-        private readonly IResultOrganizer resultOrganizer;
-
-        private string previousString;
 
         public void OnCompleted() {}
 
@@ -65,25 +63,14 @@ namespace DynamicTranslator.Wpf.Observers
                 previousString = currentString;
 
                 var fromLanguageExtension = await languageDetector.DetectLanguage(currentString);
-
-                var results = await cache.GetAsync(currentString,
-                    async () => await Task.WhenAll(
-                        meanFinderFactory
-                            .GetFinders()
-                            .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))
-                            )
-                        )
-                    );
-
+                var results = await GetMeansFromCache(currentString, fromLanguageExtension);
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
-
                 await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
 
-                await
-                    googleAnalytics.TrackEventAsync("DynamicTranslator",
-                        "Translate",
-                        $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ApplicationConfiguration.ToLanguage.Extension} ",
-                        null).ConfigureAwait(false);
+                await googleAnalytics.TrackEventAsync("DynamicTranslator",
+                    "Translate",
+                    $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ApplicationConfiguration.ToLanguage.Extension} ",
+                    null).ConfigureAwait(false);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
@@ -91,6 +78,14 @@ namespace DynamicTranslator.Wpf.Observers
                     "dynamictranslator",
                     "notification").ConfigureAwait(false);
             });
+        }
+
+        private Task<TranslateResult[]> GetMeansFromCache(string currentString, string fromLanguageExtension)
+        {
+            return cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache)
+                               .GetAsync(currentString,
+                                   async () => await Task.WhenAll(meanFinderFactory.GetFinders()
+                                                                                   .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension)))));
         }
     }
 }

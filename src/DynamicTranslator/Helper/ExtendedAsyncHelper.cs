@@ -111,10 +111,7 @@ namespace DynamicTranslator.Helper
             }
             finally
             {
-                if (finalAction != null)
-                {
-                    finalAction(exception);
-                }
+                finalAction?.Invoke(exception);
             }
         }
 
@@ -146,10 +143,7 @@ namespace DynamicTranslator.Helper
             }
             finally
             {
-                if (finalAction != null)
-                {
-                    finalAction(exception);
-                }
+                finalAction?.Invoke(exception);
             }
         }
 

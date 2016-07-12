@@ -6,7 +6,7 @@ namespace DynamicTranslator.Extensions
 {
     public static class StringExtension
     {
-        private static readonly Regex _htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
+        private static readonly Regex HtmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
         public static string GenerateSlug(this string phrase)
         {
@@ -113,7 +113,7 @@ namespace DynamicTranslator.Extensions
 
         public static string StripTagsRegexCompiled(this string source)
         {
-            return _htmlRegex.Replace(source, string.Empty);
+            return HtmlRegex.Replace(source, string.Empty);
         }
 
         private static string RemoveAccent(this string txt)

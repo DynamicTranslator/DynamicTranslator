@@ -91,10 +91,16 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable BaseValues()
         {
-            var ht = new Hashtable();
-            ht.Add("v", googleVersion); // Version.
-            ht.Add("tid", TrackingId); // Tracking ID / Web property / Property ID.
-            ht.Add("cid", configuration.Client.Id); // Anonymous Client ID.
+            var ht = new Hashtable
+            {
+                {"v", googleVersion},
+                { "tid", TrackingId},
+                { "cid", configuration.Client.Id}
+            };
+
+            // Version.
+            // Tracking ID / Web property / Property ID.
+            // Anonymous Client ID.
             return ht;
         }
 
@@ -109,7 +115,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
             using (var client = new WebClient())
             {
-                var result = client.UploadString(GoogleAnalyticsUrl, "POST", data);
+                client.UploadString(GoogleAnalyticsUrl, "POST", data);
             }
         }
 

@@ -10,14 +10,14 @@
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Icon="/Resources/dynamic-link-library 16.png" Height="325.404" Width="393.014">
-    <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,0,2">
+    <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,4,9">
         <Grid Height="285">
             <Label x:Name="LabelCurrentLanguage" Width="Auto" Height="40" Content="To Language:" Margin="10,25,273,220" />
             <ComboBox x:Name="ComboBoxLanguages"
                       Style="{DynamicResource ResourceKey={x:Type ComboBox}}"
                       DisplayMemberPath="Name"
                       SelectedValuePath="Extension"
-                      VerticalAlignment="Center" Width="Auto" Height="22" Margin="149,19,46,234" />
+                      VerticalAlignment="Center" Width="Auto" Height="32" Margin="149,24,46,229" />
             <Button x:Name="BtnSwitch" Height="Auto" Content="Start Translator" Padding="2"
                     Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04"
                     BorderBrush="#FF040404" Foreground="White" FontFamily="Showcard Gothic" FontSize="16"
@@ -36,7 +36,7 @@
                     Margin="141,225,169,10">
                 <Image Source="../Resources/github_100x150.png" />
             </Button>
-            <Grid x:Name="languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
+            <Grid x:Name="LanguagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
                   VerticalAlignment="Top">
                 <CheckBox x:Name="CheckBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
                           Margin="23,10,0,0" VerticalAlignment="Top" IsChecked="True" />
