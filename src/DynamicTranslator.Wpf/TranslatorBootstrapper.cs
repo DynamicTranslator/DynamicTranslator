@@ -29,7 +29,6 @@ namespace DynamicTranslator.Wpf
     {
         private readonly IApplicationConfiguration applicationConfiguration;
 
-        private readonly ITypedCache<string, TranslateResult[]> cache;
         private readonly ICacheManager cacheManager;
         private readonly IClipboardManager clipboardManager;
         private readonly GrowlNotifications growlNotifications;
@@ -55,7 +54,6 @@ namespace DynamicTranslator.Wpf
             this.applicationConfiguration = applicationConfiguration;
             this.cacheManager = cacheManager;
             this.clipboardManager = clipboardManager;
-            cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
@@ -75,7 +73,7 @@ namespace DynamicTranslator.Wpf
                 growlNotifications.Dispose();
                 finderObservable.Dispose();
                 syncObserver.Dispose();
-                cache.Clear();
+                cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache).Clear();
                 IsInitialized = false;
             }
         }
