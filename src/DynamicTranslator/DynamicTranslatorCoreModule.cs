@@ -22,6 +22,7 @@ namespace DynamicTranslator
             var existingFromLanguage = AppConfigManager.Get("FromLanguage");
 
             Configurations.ApplicationConfiguration.IsLanguageDetectionEnabled = true;
+            Configurations.ApplicationConfiguration.IsExtraLoggingEnabled = true;
 
             Configurations.ApplicationConfiguration.Client.CreateOrConsolidate(client =>
             {

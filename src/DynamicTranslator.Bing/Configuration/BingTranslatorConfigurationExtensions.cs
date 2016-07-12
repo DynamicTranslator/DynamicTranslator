@@ -11,7 +11,7 @@ namespace DynamicTranslator.Bing.Configuration
         {
             moduleConfigurations.Configurations.ActiveTranslatorConfiguration.AddTranslator(TranslatorType.Bing);
 
-            return moduleConfigurations.Configurations.GetOrCreate("DynamicTranslator.Bing.Translator",() => moduleConfigurations.Configurations.IocManager.Resolve<IBingTranslatorConfiguration>());
+            return moduleConfigurations.Configurations.GetOrCreate("DynamicTranslator.Bing.Translator", () => moduleConfigurations.Configurations.IocManager.Resolve<IBingTranslatorConfiguration>());
         }
 
         public static void WithConfigurations(this IBingTranslatorConfiguration configuration, Action<IBingTranslatorConfiguration> creator)

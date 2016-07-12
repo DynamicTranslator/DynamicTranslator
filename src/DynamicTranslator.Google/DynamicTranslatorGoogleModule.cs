@@ -22,10 +22,7 @@ namespace DynamicTranslator.Google
                 configuration.SupportedLanguages = LanguageMapping.All.ToLanguages();
             });
 
-            Configurations.ModuleConfigurations.UseGoogleDetector().WithConfigurations(configuration =>
-            {
-                configuration.Url = GoogleTranslateUrl;
-            });
+            Configurations.ModuleConfigurations.UseGoogleDetector().WithConfigurations(configuration => { configuration.Url = GoogleTranslateUrl; });
 
             IocManager.Register<IMeanFinder, GoogleTranslateFinder>(DependencyLifeStyle.Transient);
             IocManager.Register<IMeanOrganizer, GoogleTranslateMeanOrganizer>(DependencyLifeStyle.Transient);

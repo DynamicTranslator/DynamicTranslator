@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Tureng.Configuration;
@@ -17,18 +16,16 @@ namespace DynamicTranslator.Tureng
 {
     public class TurengFinder : IMeanFinder
     {
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+        private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+        private readonly ITurengTranslatorConfiguration turengConfiguration;
+
         public TurengFinder(IMeanOrganizerFactory meanOrganizerFactory, ITurengTranslatorConfiguration turengConfiguration)
         {
             this.meanOrganizerFactory = meanOrganizerFactory;
             this.turengConfiguration = turengConfiguration;
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Tureng;
-
-        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
-        private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
-        private readonly ITurengTranslatorConfiguration turengConfiguration;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -51,5 +48,7 @@ namespace DynamicTranslator.Tureng
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Tureng;
     }
 }

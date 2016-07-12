@@ -14,12 +14,12 @@ namespace DynamicTranslator.Application
 {
     public class ResultOrganizer : IResultOrganizer, ITransientDependency
     {
+        private readonly IResultService resultService;
+
         public ResultOrganizer(IResultService resultService)
         {
             this.resultService = resultService;
         }
-
-        private readonly IResultService resultService;
 
         public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {

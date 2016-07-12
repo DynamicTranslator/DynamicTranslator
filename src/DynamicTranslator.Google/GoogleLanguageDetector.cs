@@ -15,14 +15,14 @@ namespace DynamicTranslator.Google
 {
     public class GoogleLanguageDetector : ILanguageDetector, ISingletonDependency
     {
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IGoogleDetectorConfiguration configuration;
+
         public GoogleLanguageDetector(IGoogleDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
             this.applicationConfiguration = applicationConfiguration;
         }
-
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private readonly IGoogleDetectorConfiguration configuration;
 
         public async Task<string> DetectLanguage(string text)
         {

@@ -27,6 +27,7 @@ namespace DynamicTranslator.ObservableUtil
                             DispatcherPriority.DataBind);
                         continue;
                     }
+
                     nh.Invoke(this, e);
                 }
             }

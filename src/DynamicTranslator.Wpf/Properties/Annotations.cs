@@ -27,7 +27,7 @@ namespace DynamicTranslator.Wpf.Properties
     /// </example>
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-            AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
+        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
     public sealed class CanBeNullAttribute : Attribute {}
 
     /// <summary>
@@ -42,7 +42,7 @@ namespace DynamicTranslator.Wpf.Properties
     /// </example>
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-            AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
+        AttributeTargets.Delegate | AttributeTargets.Field | AttributeTargets.Event)]
     public sealed class NotNullAttribute : Attribute {}
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace DynamicTranslator.Wpf.Properties
     /// </summary>
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-            AttributeTargets.Delegate | AttributeTargets.Field)]
+        AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemNotNullAttribute : Attribute {}
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace DynamicTranslator.Wpf.Properties
     /// </summary>
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property |
-            AttributeTargets.Delegate | AttributeTargets.Field)]
+        AttributeTargets.Delegate | AttributeTargets.Field)]
     public sealed class ItemCanBeNullAttribute : Attribute {}
 
     /// <summary>
@@ -82,9 +82,11 @@ namespace DynamicTranslator.Wpf.Properties
     /// </example>
     [AttributeUsage(
         AttributeTargets.Constructor | AttributeTargets.Method |
-            AttributeTargets.Property | AttributeTargets.Delegate)]
+        AttributeTargets.Property | AttributeTargets.Delegate)]
     public sealed class StringFormatMethodAttribute : Attribute
     {
+        public string FormatParameterName { get; private set; }
+
         /// <param name="formatParameterName">
         ///     Specifies which parameter of an annotated method should be treated as format-string
         /// </param>
@@ -92,8 +94,6 @@ namespace DynamicTranslator.Wpf.Properties
         {
             FormatParameterName = formatParameterName;
         }
-
-        public string FormatParameterName { get; private set; }
     }
 
     /// <summary>
@@ -103,13 +103,13 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class ValueProviderAttribute : Attribute
     {
+        [NotNull]
+        public string Name { get; private set; }
+
         public ValueProviderAttribute(string name)
         {
             Name = name;
         }
-
-        [NotNull]
-        public string Name { get; private set; }
     }
 
     /// <summary>
@@ -188,14 +188,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
+        public string ParameterName { get; private set; }
+
         public NotifyPropertyChangedInvocatorAttribute() {}
 
         public NotifyPropertyChangedInvocatorAttribute(string parameterName)
         {
             ParameterName = parameterName;
         }
-
-        public string ParameterName { get; private set; }
     }
 
     /// <summary>
@@ -256,6 +256,10 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class ContractAnnotationAttribute : Attribute
     {
+        public string Contract { get; private set; }
+
+        public bool ForceFullStates { get; private set; }
+
         public ContractAnnotationAttribute([NotNull] string contract)
             : this(contract, false) {}
 
@@ -264,10 +268,6 @@ namespace DynamicTranslator.Wpf.Properties
             Contract = contract;
             ForceFullStates = forceFullStates;
         }
-
-        public string Contract { get; private set; }
-
-        public bool ForceFullStates { get; private set; }
     }
 
     /// <summary>
@@ -284,14 +284,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.All)]
     public sealed class LocalizationRequiredAttribute : Attribute
     {
+        public bool Required { get; private set; }
+
         public LocalizationRequiredAttribute() : this(true) {}
 
         public LocalizationRequiredAttribute(bool required)
         {
             Required = required;
         }
-
-        public bool Required { get; private set; }
     }
 
     /// <summary>
@@ -336,13 +336,13 @@ namespace DynamicTranslator.Wpf.Properties
     [BaseTypeRequired(typeof(Attribute))]
     public sealed class BaseTypeRequiredAttribute : Attribute
     {
+        [NotNull]
+        public Type BaseType { get; private set; }
+
         public BaseTypeRequiredAttribute([NotNull] Type baseType)
         {
             BaseType = baseType;
         }
-
-        [NotNull]
-        public Type BaseType { get; private set; }
     }
 
     /// <summary>
@@ -352,6 +352,10 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.All)]
     public sealed class UsedImplicitlyAttribute : Attribute
     {
+        public ImplicitUseTargetFlags TargetFlags { get; private set; }
+
+        public ImplicitUseKindFlags UseKindFlags { get; private set; }
+
         public UsedImplicitlyAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default) {}
 
@@ -366,10 +370,6 @@ namespace DynamicTranslator.Wpf.Properties
             UseKindFlags = useKindFlags;
             TargetFlags = targetFlags;
         }
-
-        public ImplicitUseTargetFlags TargetFlags { get; private set; }
-
-        public ImplicitUseKindFlags UseKindFlags { get; private set; }
     }
 
     /// <summary>
@@ -379,6 +379,12 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.GenericParameter)]
     public sealed class MeansImplicitUseAttribute : Attribute
     {
+        [UsedImplicitly]
+        public ImplicitUseTargetFlags TargetFlags { get; private set; }
+
+        [UsedImplicitly]
+        public ImplicitUseKindFlags UseKindFlags { get; private set; }
+
         public MeansImplicitUseAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default) {}
 
@@ -393,12 +399,6 @@ namespace DynamicTranslator.Wpf.Properties
             UseKindFlags = useKindFlags;
             TargetFlags = targetFlags;
         }
-
-        [UsedImplicitly]
-        public ImplicitUseTargetFlags TargetFlags { get; private set; }
-
-        [UsedImplicitly]
-        public ImplicitUseKindFlags UseKindFlags { get; private set; }
     }
 
     [Flags]
@@ -446,14 +446,14 @@ namespace DynamicTranslator.Wpf.Properties
     [MeansImplicitUse(ImplicitUseTargetFlags.WithMembers)]
     public sealed class PublicAPIAttribute : Attribute
     {
+        public string Comment { get; private set; }
+
         public PublicAPIAttribute() {}
 
         public PublicAPIAttribute([NotNull] string comment)
         {
             Comment = comment;
         }
-
-        public string Comment { get; private set; }
     }
 
     /// <summary>
@@ -486,14 +486,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class MustUseReturnValueAttribute : Attribute
     {
+        public string Justification { get; private set; }
+
         public MustUseReturnValueAttribute() {}
 
         public MustUseReturnValueAttribute([NotNull] string justification)
         {
             Justification = justification;
         }
-
-        public string Justification { get; private set; }
     }
 
     /// <summary>
@@ -515,7 +515,7 @@ namespace DynamicTranslator.Wpf.Properties
     /// </example>
     [AttributeUsage(
         AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter |
-            AttributeTargets.Method)]
+        AttributeTargets.Method)]
     public sealed class ProvidesContextAttribute : Attribute {}
 
     /// <summary>
@@ -525,14 +525,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class PathReferenceAttribute : Attribute
     {
+        public string BasePath { get; private set; }
+
         public PathReferenceAttribute() {}
 
         public PathReferenceAttribute([PathReference] string basePath)
         {
             BasePath = basePath;
         }
-
-        public string BasePath { get; private set; }
     }
 
     /// <summary>
@@ -619,67 +619,67 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcAreaMasterLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcAreaPartialViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcAreaViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcMasterLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcPartialViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
+        public string Format { get; private set; }
+
         public AspMvcViewLocationFormatAttribute(string format)
         {
             Format = format;
         }
-
-        public string Format { get; private set; }
     }
 
     /// <summary>
@@ -691,14 +691,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     public sealed class AspMvcActionAttribute : Attribute
     {
+        public string AnonymousProperty { get; private set; }
+
         public AspMvcActionAttribute() {}
 
         public AspMvcActionAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
-
-        public string AnonymousProperty { get; private set; }
     }
 
     /// <summary>
@@ -709,14 +709,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class AspMvcAreaAttribute : Attribute
     {
+        public string AnonymousProperty { get; private set; }
+
         public AspMvcAreaAttribute() {}
 
         public AspMvcAreaAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
-
-        public string AnonymousProperty { get; private set; }
     }
 
     /// <summary>
@@ -728,14 +728,14 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
     public sealed class AspMvcControllerAttribute : Attribute
     {
+        public string AnonymousProperty { get; private set; }
+
         public AspMvcControllerAttribute() {}
 
         public AspMvcControllerAttribute(string anonymousProperty)
         {
             AnonymousProperty = anonymousProperty;
         }
-
-        public string AnonymousProperty { get; private set; }
     }
 
     /// <summary>
@@ -833,26 +833,26 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class HtmlElementAttributesAttribute : Attribute
     {
+        public string Name { get; private set; }
+
         public HtmlElementAttributesAttribute() {}
 
         public HtmlElementAttributesAttribute(string name)
         {
             Name = name;
         }
-
-        public string Name { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class HtmlAttributeValueAttribute : Attribute
     {
+        [NotNull]
+        public string Name { get; private set; }
+
         public HtmlAttributeValueAttribute([NotNull] string name)
         {
             Name = name;
         }
-
-        [NotNull]
-        public string Name { get; private set; }
     }
 
     /// <summary>
@@ -870,12 +870,12 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
     public sealed class CollectionAccessAttribute : Attribute
     {
+        public CollectionAccessType CollectionAccessType { get; private set; }
+
         public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
         {
             CollectionAccessType = collectionAccessType;
         }
-
-        public CollectionAccessType CollectionAccessType { get; private set; }
     }
 
     [Flags]
@@ -910,12 +910,12 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class AssertionConditionAttribute : Attribute
     {
+        public AssertionConditionType ConditionType { get; private set; }
+
         public AssertionConditionAttribute(AssertionConditionType conditionType)
         {
             ConditionType = conditionType;
         }
-
-        public AssertionConditionType ConditionType { get; private set; }
     }
 
     /// <summary>
@@ -987,15 +987,15 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class AspChildControlTypeAttribute : Attribute
     {
+        public Type ControlType { get; private set; }
+
+        public string TagName { get; private set; }
+
         public AspChildControlTypeAttribute(string tagName, Type controlType)
         {
             TagName = tagName;
             ControlType = controlType;
         }
-
-        public Type ControlType { get; private set; }
-
-        public string TagName { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
@@ -1010,48 +1010,48 @@ namespace DynamicTranslator.Wpf.Properties
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class AspRequiredAttributeAttribute : Attribute
     {
+        public string Attribute { get; private set; }
+
         public AspRequiredAttributeAttribute([NotNull] string attribute)
         {
             Attribute = attribute;
         }
-
-        public string Attribute { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class AspTypePropertyAttribute : Attribute
     {
+        public bool CreateConstructorReferences { get; private set; }
+
         public AspTypePropertyAttribute(bool createConstructorReferences)
         {
             CreateConstructorReferences = createConstructorReferences;
         }
-
-        public bool CreateConstructorReferences { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorImportNamespaceAttribute : Attribute
     {
+        public string Name { get; private set; }
+
         public RazorImportNamespaceAttribute(string name)
         {
             Name = name;
         }
-
-        public string Name { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorInjectionAttribute : Attribute
     {
+        public string FieldName { get; private set; }
+
+        public string Type { get; private set; }
+
         public RazorInjectionAttribute(string type, string fieldName)
         {
             Type = type;
             FieldName = fieldName;
         }
-
-        public string FieldName { get; private set; }
-
-        public string Type { get; private set; }
     }
 
     [AttributeUsage(AttributeTargets.Method)]

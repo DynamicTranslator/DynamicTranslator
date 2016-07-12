@@ -16,12 +16,16 @@ namespace DynamicTranslator.Application
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
-
             IocManager.IocContainer.Register(
                 Component.For<IMeanFinderFactory>().AsFactory(),
                 Component.For<IMeanOrganizerFactory>().AsFactory(),
                 Component.For<ILanguageDetectorFactory>().AsFactory()
                 );
+        }
+
+        public override void PreInitialize()
+        {
+            IocManager.IocContainer.AddFacility<InterceptorFacility>();
         }
     }
 }

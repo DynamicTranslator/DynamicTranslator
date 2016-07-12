@@ -10,12 +10,12 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
 {
     public class DbReezeUnitOfWork : UnitOfWorkBase, ITransientDependency
     {
-        public DbReezeUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions)
-            : base(connectionStringResolver, defaultOptions) {}
-
         public DBreezeEngine DBreezeEngine { get; set; }
 
         public Transaction Transaction { get; private set; }
+
+        public DbReezeUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions)
+            : base(connectionStringResolver, defaultOptions) {}
 
         public override void SaveChanges()
         {

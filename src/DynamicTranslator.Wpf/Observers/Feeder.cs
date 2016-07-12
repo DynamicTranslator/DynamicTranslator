@@ -9,12 +9,12 @@ namespace DynamicTranslator.Wpf.Observers
 {
     public class Feeder : IObserver<long>, ISingletonDependency
     {
+        private readonly IGoogleAnalyticsService googleAnalyticsService;
+
         public Feeder(IGoogleAnalyticsService googleAnalyticsService)
         {
             this.googleAnalyticsService = googleAnalyticsService;
         }
-
-        private readonly IGoogleAnalyticsService googleAnalyticsService;
 
         public void OnCompleted() {}
 

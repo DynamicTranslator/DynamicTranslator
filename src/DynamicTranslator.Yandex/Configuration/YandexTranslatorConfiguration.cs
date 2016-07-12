@@ -8,12 +8,12 @@ namespace DynamicTranslator.Yandex.Configuration
 {
     public class YandexTranslatorConfiguration : AbstractTranslatorConfiguration, IYandexTranslatorConfiguration
     {
-        public string ApiKey { get; set; }
-
         public override IList<Language> SupportedLanguages { get; set; }
+
+        public override string Url { get; set; }
 
         public override TranslatorType TranslatorType => TranslatorType.Yandex;
 
-        public override string Url { get; set; }
+        public string ApiKey { get; set; }
     }
 }

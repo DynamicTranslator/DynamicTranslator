@@ -17,16 +17,6 @@ namespace DynamicTranslator.SesliSozluk
 {
     public class SesliSozlukFinder : IMeanFinder
     {
-        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration,
-            IApplicationConfiguration applicationConfiguration)
-        {
-            this.meanOrganizerFactory = meanOrganizerFactory;
-            this.sesliSozlukConfiguration = sesliSozlukConfiguration;
-            this.applicationConfiguration = applicationConfiguration;
-        }
-
-        public TranslatorType TranslatorType => TranslatorType.Seslisozluk;
-
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate";
@@ -36,6 +26,14 @@ namespace DynamicTranslator.SesliSozluk
         private readonly IApplicationConfiguration applicationConfiguration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
         private readonly ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration;
+
+        public SesliSozlukFinder(IMeanOrganizerFactory meanOrganizerFactory, ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration,
+            IApplicationConfiguration applicationConfiguration)
+        {
+            this.meanOrganizerFactory = meanOrganizerFactory;
+            this.sesliSozlukConfiguration = sesliSozlukConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
+        }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -63,5 +61,7 @@ namespace DynamicTranslator.SesliSozluk
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Seslisozluk;
     }
 }

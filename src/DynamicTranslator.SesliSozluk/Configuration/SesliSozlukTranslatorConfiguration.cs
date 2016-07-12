@@ -10,8 +10,8 @@ namespace DynamicTranslator.SesliSozluk.Configuration
     {
         public override IList<Language> SupportedLanguages { get; set; }
 
-        public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;
-
         public override string Url { get; set; }
+
+        public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;
     }
 }

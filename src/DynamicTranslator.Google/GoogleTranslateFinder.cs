@@ -16,16 +16,6 @@ namespace DynamicTranslator.Google
 {
     public class GoogleTranslateFinder : IMeanFinder
     {
-        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IGoogleTranslatorConfiguration googleConfiguration,
-            IApplicationConfiguration applicationConfiguration)
-        {
-            this.meanOrganizerFactory = meanOrganizerFactory;
-            this.googleConfiguration = googleConfiguration;
-            this.applicationConfiguration = applicationConfiguration;
-        }
-
-        public TranslatorType TranslatorType => TranslatorType.Google;
-
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate, sdch";
@@ -33,6 +23,14 @@ namespace DynamicTranslator.Google
         private readonly IApplicationConfiguration applicationConfiguration;
         private readonly IGoogleTranslatorConfiguration googleConfiguration;
         private readonly IMeanOrganizerFactory meanOrganizerFactory;
+
+        public GoogleTranslateFinder(IMeanOrganizerFactory meanOrganizerFactory, IGoogleTranslatorConfiguration googleConfiguration,
+            IApplicationConfiguration applicationConfiguration)
+        {
+            this.meanOrganizerFactory = meanOrganizerFactory;
+            this.googleConfiguration = googleConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
+        }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -58,5 +56,7 @@ namespace DynamicTranslator.Google
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Google;
     }
 }

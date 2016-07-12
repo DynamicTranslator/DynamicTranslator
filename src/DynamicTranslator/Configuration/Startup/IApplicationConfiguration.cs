@@ -8,6 +8,8 @@ namespace DynamicTranslator.Configuration.Startup
 
         Language FromLanguage { get; set; }
 
+        bool IsExtraLoggingEnabled { get; set; }
+
         bool IsLanguageDetectionEnabled { get; set; }
 
         bool IsNoSqlDatabaseEnabled { get; set; }

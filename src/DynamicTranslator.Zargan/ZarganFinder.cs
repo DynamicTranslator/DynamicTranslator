@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Zargan.Configuration;
@@ -16,16 +15,14 @@ namespace DynamicTranslator.Zargan
 {
     public class ZarganFinder : IMeanFinder
     {
+        private readonly IZarganTranslatorConfiguration configuration;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+
         public ZarganFinder(IZarganTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
         {
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Zargan;
-
-        private readonly IZarganTranslatorConfiguration configuration;
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -47,5 +44,7 @@ namespace DynamicTranslator.Zargan
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Zargan;
     }
 }

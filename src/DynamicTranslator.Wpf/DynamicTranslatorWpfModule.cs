@@ -24,10 +24,5 @@ namespace DynamicTranslator.Wpf
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
         }
-
-        public override void PreInitialize()
-        {
-            IocManager.IocContainer.AddFacility<InterceptorFacility>();
-        }
     }
 }

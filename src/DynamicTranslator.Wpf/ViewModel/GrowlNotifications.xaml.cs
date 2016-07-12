@@ -13,6 +13,12 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class GrowlNotifications : IGrowlNotifications
     {
+        public readonly Notifications Notifications;
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly Notifications buffer = new Notifications();
+        public bool IsDisposed;
+        private int count;
+
         public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
@@ -21,13 +27,21 @@ namespace DynamicTranslator.Wpf.ViewModel
             NotificationsControl.DataContext = Notifications;
         }
 
-        public readonly Notifications Notifications;
-        public bool IsDisposed;
-        private readonly Notifications buffer = new Notifications();
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private int count;
-
         public event EventHandler OnDispose;
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+
+            Notifications.Clear();
+            buffer.Clear();
+
+            OnDispose.InvokeSafely(this, new EventArgs());
+
+            IsDisposed = true;
+            GC.SuppressFinalize(this);
+        }
 
         public void AddNotification(Notification notification)
         {
@@ -49,20 +63,6 @@ namespace DynamicTranslator.Wpf.ViewModel
         public async Task AddNotificationAsync(Notification notification)
         {
             await Task.Run(() => AddNotification(notification));
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-
-            Notifications.Clear();
-            buffer.Clear();
-
-            OnDispose.InvokeSafely(this, new EventArgs());
-
-            IsDisposed = true;
-            GC.SuppressFinalize(this);
         }
 
         public void RemoveNotification(Notification notification)

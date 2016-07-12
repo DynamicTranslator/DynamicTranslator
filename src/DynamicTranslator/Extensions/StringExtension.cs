@@ -92,17 +92,20 @@ namespace DynamicTranslator.Extensions
                     inside = true;
                     continue;
                 }
+
                 if (let == '>')
                 {
                     inside = false;
                     continue;
                 }
+
                 if (!inside)
                 {
                     array[arrayIndex] = let;
                     arrayIndex++;
                 }
             }
+
             return new string(array, 0, arrayIndex);
         }
 

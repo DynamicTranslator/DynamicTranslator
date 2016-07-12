@@ -199,7 +199,6 @@
     <Compile Include="IClipboardManager.cs" />
     <Compile Include="Notification\INotifier.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
-    <Compile Include="InterceptorFacility.cs" />
     <Compile Include="ViewModel\INotification.cs" />
     <Compile Include="ViewModel\Notification.cs" />
     <Compile Include="ViewModel\Notifications.cs" />

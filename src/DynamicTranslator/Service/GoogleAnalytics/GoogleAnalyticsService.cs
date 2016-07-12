@@ -9,15 +9,15 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 {
     public class GoogleAnalyticsService : IGoogleAnalyticsService
     {
-        public GoogleAnalyticsService(IApplicationConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
-
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
         private readonly IApplicationConfiguration configuration;
         private readonly string googleVersion = "1";
+
+        public GoogleAnalyticsService(IApplicationConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
 
         public void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
         {
@@ -94,8 +94,8 @@ namespace DynamicTranslator.Service.GoogleAnalytics
             var ht = new Hashtable
             {
                 {"v", googleVersion},
-                { "tid", TrackingId},
-                { "cid", configuration.Client.Id}
+                {"tid", TrackingId},
+                {"cid", configuration.Client.Id}
             };
 
             // Version.

@@ -91,6 +91,7 @@
     <Compile Include="IMeanFinderFactory.cs" />
     <Compile Include="IMeanOrganizer.cs" />
     <Compile Include="IMeanOrganizerFactory.cs" />
+    <Compile Include="InterceptorFacility.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
     <Compile Include="Orchestrators\IResultOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

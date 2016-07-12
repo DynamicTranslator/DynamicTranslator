@@ -17,6 +17,10 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class MainWindow
     {
+        private readonly IDynamicTranslatorConfiguration configurations;
+        private readonly ITranslatorBootstrapper translator;
+        private bool isRunning;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,10 +36,6 @@ namespace DynamicTranslator.Wpf.ViewModel
 
             ComboBoxLanguages.SelectedValue = configurations.ApplicationConfiguration.ToLanguage.Extension;
         }
-
-        private readonly IDynamicTranslatorConfiguration configurations;
-        private readonly ITranslatorBootstrapper translator;
-        private bool isRunning;
 
         protected override void OnClosing(CancelEventArgs e)
         {

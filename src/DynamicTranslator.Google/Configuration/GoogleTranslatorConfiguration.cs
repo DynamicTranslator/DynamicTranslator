@@ -10,8 +10,8 @@ namespace DynamicTranslator.Google.Configuration
     {
         public override IList<Language> SupportedLanguages { get; set; }
 
-        public override TranslatorType TranslatorType => TranslatorType.Google;
-
         public override string Url { get; set; }
+
+        public override TranslatorType TranslatorType => TranslatorType.Google;
     }
 }

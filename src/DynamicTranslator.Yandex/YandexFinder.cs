@@ -15,18 +15,16 @@ namespace DynamicTranslator.Yandex
 {
     public class YandexFinder : IMeanFinder
     {
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IYandexTranslatorConfiguration configuration;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+
         public YandexFinder(IYandexTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory, IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
             this.meanOrganizerFactory = meanOrganizerFactory;
             this.applicationConfiguration = applicationConfiguration;
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Yandex;
-
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private readonly IYandexTranslatorConfiguration configuration;
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -36,7 +34,7 @@ namespace DynamicTranslator.Yandex
             var address = new Uri(
                 string.Format(
                     configuration.Url +
-                        $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{applicationConfiguration.ToLanguage.Extension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
+                    $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{applicationConfiguration.ToLanguage.Extension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
 
             var compositeMean = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));
 
@@ -45,5 +43,7 @@ namespace DynamicTranslator.Yandex
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Yandex;
     }
 }

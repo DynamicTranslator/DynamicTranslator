@@ -7,12 +7,12 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
 {
     public class UowTransactionProvider : ITransactionProvider, ITransientDependency
     {
+        private readonly ICurrentUnitOfWorkProvider currentUnitOfWorkProvider;
+
         public UowTransactionProvider(ICurrentUnitOfWorkProvider currentUnitOfWorkProvider)
         {
             this.currentUnitOfWorkProvider = currentUnitOfWorkProvider;
         }
-
-        private readonly ICurrentUnitOfWorkProvider currentUnitOfWorkProvider;
 
         public Transaction Transaction => currentUnitOfWorkProvider.Current.GetTransaction();
     }

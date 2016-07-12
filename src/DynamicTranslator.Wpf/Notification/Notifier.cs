@@ -8,12 +8,12 @@ namespace DynamicTranslator.Wpf.Notification
 {
     public class Notifier : INotifier, ITransientDependency
     {
+        private readonly IGrowlNotifications growlNotifiactions;
+
         public Notifier(IGrowlNotifications growlNotifiactions)
         {
             this.growlNotifiactions = growlNotifiactions;
         }
-
-        private readonly IGrowlNotifications growlNotifiactions;
 
         public void AddNotification(string title, string imageUrl, string text)
         {

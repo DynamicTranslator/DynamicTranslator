@@ -155,7 +155,8 @@ namespace DynamicTranslator.Helper
                 .Invoke(null, new[] {actualReturnValue, finalAction});
         }
 
-        public static object CallAwaitTaskWithPostActionAndFinallyAndGetResult(Type taskReturnType, object actualReturnValue, Func<Task> action, Action<System.Exception> finalAction)
+        public static object CallAwaitTaskWithPostActionAndFinallyAndGetResult(Type taskReturnType, object actualReturnValue, Func<Task> action,
+            Action<System.Exception> finalAction)
         {
             return typeof(ExtendedAsyncHelper)
                 .GetMethod("AwaitTaskWithPostActionAndFinallyAndGetResult", BindingFlags.Public | BindingFlags.Static)

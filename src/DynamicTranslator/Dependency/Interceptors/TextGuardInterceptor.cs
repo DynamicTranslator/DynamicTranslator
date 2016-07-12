@@ -9,13 +9,13 @@ namespace DynamicTranslator.Dependency.Interceptors
 {
     public class TextGuardInterceptor : IInterceptor
     {
+        private readonly IApplicationConfiguration configuration;
+        private string currentString;
+
         public TextGuardInterceptor(IApplicationConfiguration configuration)
         {
             this.configuration = configuration;
         }
-
-        private readonly IApplicationConfiguration configuration;
-        private string currentString;
 
         public void Intercept(IInvocation invocation)
         {

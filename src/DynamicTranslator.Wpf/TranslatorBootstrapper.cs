@@ -27,6 +27,23 @@ namespace DynamicTranslator.Wpf
 {
     public class TranslatorBootstrapper : ITranslatorBootstrapper, ISingletonDependency
     {
+        private readonly IApplicationConfiguration applicationConfiguration;
+
+        private readonly ITypedCache<string, TranslateResult[]> cache;
+        private readonly ICacheManager cacheManager;
+        private readonly IClipboardManager clipboardManager;
+        private readonly GrowlNotifications growlNotifications;
+        private readonly MainWindow mainWindow;
+        private CancellationTokenSource cancellationTokenSource;
+        private IDisposable finderObservable;
+        private IKeyboardMouseEvents globalMouseHook;
+        private IntPtr hWndNextViewer;
+        private HwndSource hWndSource;
+        private bool isMouseDown;
+        private Point mouseFirstPoint;
+        private Point mouseSecondPoint;
+        private IDisposable syncObserver;
+
         public TranslatorBootstrapper(MainWindow mainWindow,
             GrowlNotifications growlNotifications,
             IApplicationConfiguration applicationConfiguration,
@@ -40,22 +57,6 @@ namespace DynamicTranslator.Wpf
             this.clipboardManager = clipboardManager;
             cache = this.cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache);
         }
-
-        private readonly ITypedCache<string, TranslateResult[]> cache;
-        private readonly ICacheManager cacheManager;
-        private readonly IClipboardManager clipboardManager;
-        private readonly GrowlNotifications growlNotifications;
-        private readonly MainWindow mainWindow;
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private CancellationTokenSource cancellationTokenSource;
-        private IDisposable finderObservable;
-        private IKeyboardMouseEvents globalMouseHook;
-        private IntPtr hWndNextViewer;
-        private HwndSource hWndSource;
-        private bool isMouseDown;
-        private Point mouseFirstPoint;
-        private Point mouseSecondPoint;
-        private IDisposable syncObserver;
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
 
@@ -103,6 +104,13 @@ namespace DynamicTranslator.Wpf
         }
 
         public bool IsInitialized { get; private set; }
+
+        private static Task SendCopyCommandAsync()
+        {
+            SendKeys.SendWait("^c");
+            SendKeys.Flush();
+            return Task.FromResult(0);
+        }
 
         private void CompositionRoot()
         {
@@ -181,13 +189,6 @@ namespace DynamicTranslator.Wpf
                 await SendCopyCommandAsync();
                 isMouseDown = false;
             }
-        }
-
-        private static Task SendCopyCommandAsync()
-        {
-            SendKeys.SendWait("^c");
-            SendKeys.Flush();
-            return Task.FromResult(0);
         }
 
         private void StartHooks()

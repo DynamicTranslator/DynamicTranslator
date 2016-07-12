@@ -19,6 +19,12 @@ namespace DynamicTranslator.Bing
 {
     public class BingTranslatorFinder : IMeanFinder
     {
+        private const string ContentType = "application/json;Charset=UTF-8";
+
+        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IBingTranslatorConfiguration bingConfiguration;
+        private readonly IMeanOrganizerFactory meanOrganizerFactory;
+
         public BingTranslatorFinder(IBingTranslatorConfiguration bingConfiguration, IMeanOrganizerFactory meanOrganizerFactory,
             IApplicationConfiguration applicationConfiguration)
         {
@@ -26,14 +32,6 @@ namespace DynamicTranslator.Bing
             this.meanOrganizerFactory = meanOrganizerFactory;
             this.applicationConfiguration = applicationConfiguration;
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Bing;
-
-        private const string ContentType = "application/json;Charset=UTF-8";
-
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private readonly IBingTranslatorConfiguration bingConfiguration;
-        private readonly IMeanOrganizerFactory meanOrganizerFactory;
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
@@ -61,5 +59,7 @@ namespace DynamicTranslator.Bing
 
             return new TranslateResult(true, mean);
         }
+
+        public TranslatorType TranslatorType => TranslatorType.Bing;
     }
 }

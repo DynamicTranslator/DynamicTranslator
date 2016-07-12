@@ -14,14 +14,15 @@ namespace DynamicTranslator.Yandex
 {
     public class YandexLanguageDetector : ILanguageDetector
     {
+        private readonly IApplicationConfiguration applicationConfiguration;
+
+        private readonly IYandexDetectorConfiguration configuration;
+
         public YandexLanguageDetector(IYandexDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
             this.applicationConfiguration = applicationConfiguration;
         }
-
-        private readonly IYandexDetectorConfiguration configuration;
-        private readonly IApplicationConfiguration applicationConfiguration;
 
         public async Task<string> DetectLanguage(string text)
         {

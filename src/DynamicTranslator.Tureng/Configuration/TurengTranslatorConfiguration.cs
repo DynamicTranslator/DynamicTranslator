@@ -15,8 +15,8 @@ namespace DynamicTranslator.Tureng.Configuration
 
         public override IList<Language> SupportedLanguages { get; set; }
 
-        public override TranslatorType TranslatorType => TranslatorType.Tureng;
-
         public override string Url { get; set; }
+
+        public override TranslatorType TranslatorType => TranslatorType.Tureng;
     }
 }

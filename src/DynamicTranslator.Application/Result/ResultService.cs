@@ -9,12 +9,12 @@ namespace DynamicTranslator.Application.Result
 {
     public class ResultService : IResultService
     {
+        private readonly ITranslateResultRepository resultRepository;
+
         public ResultService(ITranslateResultRepository resultRepository)
         {
             this.resultRepository = resultRepository;
         }
-
-        private readonly ITranslateResultRepository resultRepository;
 
         [UnitOfWork]
         public CompositeTranslateResult Get(string key)

@@ -10,8 +10,8 @@ namespace DynamicTranslator.Bing.Configuration
     {
         public override IList<Language> SupportedLanguages { get; set; }
 
-        public override TranslatorType TranslatorType => TranslatorType.Bing;
-
         public override string Url { get; set; }
+
+        public override TranslatorType TranslatorType => TranslatorType.Bing;
     }
 }

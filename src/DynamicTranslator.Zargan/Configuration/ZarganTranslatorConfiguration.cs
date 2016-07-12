@@ -10,8 +10,8 @@ namespace DynamicTranslator.Zargan.Configuration
     {
         public override IList<Language> SupportedLanguages { get; set; }
 
-        public override TranslatorType TranslatorType => TranslatorType.Zargan;
-
         public override string Url { get; set; }
+
+        public override TranslatorType TranslatorType => TranslatorType.Zargan;
     }
 }

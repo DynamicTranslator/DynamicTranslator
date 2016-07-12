@@ -18,16 +18,16 @@ namespace DynamicTranslator.Configuration.Startup
         public virtual bool IsAppropriateForTranslation(string fromLanguageExtension)
         {
             return SupportedLanguages.Any(x => x.Extension == fromLanguageExtension)
-                && ActiveTranslatorConfiguration.ActiveTranslators
-                                                .Any(x => x.Type == TranslatorType
-                                                    && x.IsActive
-                                                    && x.IsEnabled);
+                   && ActiveTranslatorConfiguration.ActiveTranslators
+                                                   .Any(x => x.Type == TranslatorType
+                                                             && x.IsActive
+                                                             && x.IsEnabled);
         }
 
         public abstract IList<Language> SupportedLanguages { get; set; }
 
-        public abstract TranslatorType TranslatorType { get; }
-
         public abstract string Url { get; set; }
+
+        public abstract TranslatorType TranslatorType { get; }
     }
 }

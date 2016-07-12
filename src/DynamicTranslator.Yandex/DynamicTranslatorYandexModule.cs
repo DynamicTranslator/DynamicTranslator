@@ -19,10 +19,7 @@ namespace DynamicTranslator.Yandex
             IocManager.Register<IMeanOrganizer, YandexMeanOrganizer>(DependencyLifeStyle.Transient);
             IocManager.Register<IMeanFinder, YandexFinder>(DependencyLifeStyle.Transient);
 
-            Configurations.ModuleConfigurations.UseYandexDetector().WithConfigurations(configuration =>
-            {
-                configuration.Url = Url;
-            });
+            Configurations.ModuleConfigurations.UseYandexDetector().WithConfigurations(configuration => { configuration.Url = Url; });
 
             Configurations.ModuleConfigurations.UseYandexTranslate().WithConfigurations(configuration =>
             {
