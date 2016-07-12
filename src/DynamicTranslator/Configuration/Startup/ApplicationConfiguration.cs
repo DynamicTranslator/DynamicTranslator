@@ -6,7 +6,7 @@ namespace DynamicTranslator.Configuration.Startup
     {
         public string TrackingId { get; set; }
 
-        public IClient Client { get; set; }
+        public IClientConfiguration ClientConfiguration { get; set; }
 
         public Language FromLanguage { get; set; }
 

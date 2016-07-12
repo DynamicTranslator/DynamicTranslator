@@ -4,7 +4,7 @@ namespace DynamicTranslator.Configuration.Startup
 {
     public interface IApplicationConfiguration : IConfiguration
     {
-        IClient Client { get; set; }
+        IClientConfiguration ClientConfiguration { get; set; }
 
         Language FromLanguage { get; set; }
 

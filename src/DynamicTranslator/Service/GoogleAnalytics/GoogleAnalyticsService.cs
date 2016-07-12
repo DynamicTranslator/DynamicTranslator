@@ -95,7 +95,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
             {
                 {"v", googleVersion},
                 {"tid", TrackingId},
-                {"cid", configuration.Client.Id}
+                {"cid", configuration.ClientConfiguration.Id}
             };
 
             // Version.

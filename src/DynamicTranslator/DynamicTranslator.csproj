@@ -93,9 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationVersion.cs" />
-    <Compile Include="Client.cs" />
+    <Compile Include="Configuration\ClientConfiguration.cs" />
     <Compile Include="Configuration\AppConfigManager.cs" />
-    <Compile Include="Configuration\ClientExtensions.cs" />
+    <Compile Include="Configuration\ClientConfigurationExtensions.cs" />
     <Compile Include="Configuration\IAppConfigManager.cs" />
     <Compile Include="Configuration\Startup\AbstractTranslatorConfiguration.cs" />
     <Compile Include="Configuration\Startup\ActiveTranslatorConfiguration.cs" />
@@ -114,7 +114,7 @@
     <Compile Include="Configuration\Startup\ITranslatorModuleConfigurations.cs" />
     <Compile Include="Configuration\Startup\TranslatorModuleConfigurations.cs" />
     <Compile Include="DynamicTranslatorModule.cs" />
-    <Compile Include="IClient.cs" />
+    <Compile Include="Configuration\IClientConfiguration.cs" />
     <Compile Include="ITranslator.cs" />
     <Compile Include="Configuration\Startup\LocalPersistenceConfiguration.cs" />
     <Compile Include="LanguageManagement\Language.cs" />

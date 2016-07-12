@@ -24,10 +24,10 @@ namespace DynamicTranslator
             Configurations.ApplicationConfiguration.IsLanguageDetectionEnabled = true;
             Configurations.ApplicationConfiguration.IsExtraLoggingEnabled = true;
 
-            Configurations.ApplicationConfiguration.Client.CreateOrConsolidate(client =>
+            Configurations.ApplicationConfiguration.ClientConfiguration.CreateOrConsolidate(client =>
             {
                 client.AppVersion = ApplicationVersion.GetCurrentVersion();
-                client.Id = Guid.NewGuid().ToString();
+                client.Id = string.IsNullOrEmpty(AppConfigManager.Get("ClientId")) ? Guid.NewGuid().ToString() : AppConfigManager.Get("ClientId");
                 client.MachineName = Environment.MachineName.Normalize();
             });
 
