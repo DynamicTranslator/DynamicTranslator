@@ -1,31 +1,22 @@
-﻿namespace DynamicTranslator.Configuration.Startup
+﻿using Abp.Configuration;
+using Abp.Dependency;
+
+namespace DynamicTranslator.Configuration.Startup
 {
-    public interface IDynamicTranslatorConfiguration : IConfiguration
+    public interface IDynamicTranslatorConfiguration : IConfiguration, IDictionaryBasedConfig
     {
         IActiveTranslatorConfiguration ActiveTranslatorConfiguration { get; }
 
-        IApplicationConfiguration ApplicationConfiguration { get; }
+        IAppConfigManager AppConfigManager { get; }
 
-        IBingTranslatorConfiguration BingTranslatorConfiguration { get; }
+        IApplicationConfiguration ApplicationConfiguration { get; }
 
         IGoogleAnalyticsConfiguration GoogleAnalyticsConfiguration { get; }
 
-        IGoogleDetectorConfiguration GoogleDetectorConfiguration { get; }
-
-        IGoogleTranslatorConfiguration GoogleTranslatorConfiguration { get; }
+        IIocManager IocManager { get; }
 
         ILocalPersistenceConfiguration LocalConfigurationPersistence { get; }
 
-        ISesliSozlukTranslatorConfiguration SesliSozlukTranslatorConfiguration { get; }
-
-        ITurengTranslatorConfiguration TurengTranslatorConfiguration { get; }
-
-        IYandexDetectorConfiguration YandexDetectorConfiguration { get; }
-
-        IYandexTranslatorConfiguration YandexTranslatorConfiguration { get; }
-
-        IZarganTranslatorConfiguration ZarganTranslatorConfiguration { get; }
-
-        IAppConfigManager AppConfigManager { get; }
+        ITranslatorModuleConfigurations ModuleConfigurations { get; }
     }
 }

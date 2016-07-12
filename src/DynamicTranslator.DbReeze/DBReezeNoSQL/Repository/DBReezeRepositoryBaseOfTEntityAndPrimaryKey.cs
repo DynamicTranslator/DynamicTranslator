@@ -12,14 +12,14 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 {
     public class DBReezeRepositoryBase<TEntity, TKey> : AbpRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
-        private readonly ITransactionProvider transactionProvider;
-
         public DBReezeRepositoryBase(ITransactionProvider transactionProvider)
         {
             this.transactionProvider = transactionProvider;
         }
 
         public Transaction Transaction => transactionProvider.Transaction;
+
+        private readonly ITransactionProvider transactionProvider;
 
         public override void Delete(TEntity entity) {}
 

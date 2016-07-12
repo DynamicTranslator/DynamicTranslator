@@ -8,15 +8,15 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public class Notification : INotifyPropertyChanged, INotification, ITransientDependency
     {
-        private int id;
-        private string imageUrl;
-        private string message;
-        private string title;
-
         public Notification()
         {
             PropertyChanged += (sender, args) => OnPropertyChanged(sender, args.PropertyName);
         }
+
+        private int id;
+        private string imageUrl;
+        private string message;
+        private string title;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

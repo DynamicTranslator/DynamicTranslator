@@ -197,41 +197,19 @@
     <Compile Include="ClipboardManager.cs" />
     <Compile Include="DynamicTranslatorWpfModule.cs" />
     <Compile Include="IClipboardManager.cs" />
-    <Compile Include="Orchestrators\Notification\INotifier.cs" />
-    <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
+    <Compile Include="Notification\INotifier.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
     <Compile Include="InterceptorFacility.cs" />
     <Compile Include="ViewModel\INotification.cs" />
     <Compile Include="ViewModel\Notification.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
-    <Compile Include="Orchestrators\Detector\ILanguageDetector.cs" />
-    <Compile Include="Orchestrators\Detector\ILanguageDetectorFactory.cs" />
-    <Compile Include="Orchestrators\Detector\YandexLanguageDetector.cs" />
-    <Compile Include="Orchestrators\Finders\BingTranslatorFinder.cs" />
-    <Compile Include="Orchestrators\Finders\GoogleTranslateFinder.cs" />
-    <Compile Include="Orchestrators\Finders\IMeanFinder.cs" />
-    <Compile Include="Orchestrators\Finders\IMeanFinderFactory.cs" />
-    <Compile Include="Orchestrators\Finders\SesliSozlukFinder.cs" />
-    <Compile Include="Orchestrators\Finders\TurengFinder.cs" />
-    <Compile Include="Orchestrators\Finders\YandexFinder.cs" />
-    <Compile Include="Orchestrators\Detector\GoogleLanguageDetector.cs" />
-    <Compile Include="Orchestrators\Finders\ZarganFinder.cs" />
-    <Compile Include="Orchestrators\ITranslatorBootstrapper.cs" />
-    <Compile Include="Orchestrators\Notification\Notifier.cs" />
-    <Compile Include="Orchestrators\Observers\Feeder.cs" />
-    <Compile Include="Orchestrators\Observers\Finder.cs" />
-    <Compile Include="Orchestrators\Organizers\AbstractMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\BingTranslatorMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\GoogleTranslateMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\SesliSozlukMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\TurengMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\YandexMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\ZarganMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\TranslatorBootstrapper.cs" />
+    <Compile Include="ITranslatorBootstrapper.cs" />
+    <Compile Include="Notification\Notifier.cs" />
+    <Compile Include="Observers\Feeder.cs" />
+    <Compile Include="Observers\Finder.cs" />
+    <Compile Include="TranslatorBootstrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Utility\Win32.cs" />
+    <Compile Include="Win32.cs" />
     <DesignData Include="ViewModel\DesignTimeNotificationData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -332,9 +310,29 @@
       <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
       <Name>DynamicTranslator.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Bing\DynamicTranslator.Bing.csproj">
+      <Project>{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}</Project>
+      <Name>DynamicTranslator.Bing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
       <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
       <Name>DynamicTranslator.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Google\DynamicTranslator.Google.csproj">
+      <Project>{8A97DD07-0E11-499C-80EB-481C041CDAB0}</Project>
+      <Name>DynamicTranslator.Google</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.SesliSozluk\DynamicTranslator.SesliSozluk.csproj">
+      <Project>{F0794B80-904C-40EB-93DC-CA7E7EC02459}</Project>
+      <Name>DynamicTranslator.SesliSozluk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Tureng\DynamicTranslator.Tureng.csproj">
+      <Project>{084D07AF-B50A-473E-BDD7-D99413834436}</Project>
+      <Name>DynamicTranslator.Tureng</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Yandex\DynamicTranslator.Yandex.csproj">
+      <Project>{63D9C150-E83E-4CB5-AA0A-DD1BC65A79B2}</Project>
+      <Name>DynamicTranslator.Yandex</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>

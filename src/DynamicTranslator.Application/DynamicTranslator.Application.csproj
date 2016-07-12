@@ -83,16 +83,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bing\BingTranslatorResponse.cs" />
-    <Compile Include="Bing\WordDetail.cs" />
+    <Compile Include="AbstractMeanOrganizer.cs" />
     <Compile Include="DynamicTranslatorApplicationModule.cs" />
+    <Compile Include="ILanguageDetector.cs" />
+    <Compile Include="ILanguageDetectorFactory.cs" />
+    <Compile Include="IMeanFinder.cs" />
+    <Compile Include="IMeanFinderFactory.cs" />
+    <Compile Include="IMeanOrganizer.cs" />
+    <Compile Include="IMeanOrganizerFactory.cs" />
     <Compile Include="Orchestrators\IOrchestrator.cs" />
     <Compile Include="Orchestrators\IResultOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultOrganizer.cs" />
     <Compile Include="Result\IResultService.cs" />
     <Compile Include="Result\ResultService.cs" />
     <Compile Include="Model\TranslateRequest.cs" />
-    <Compile Include="Yandex\YandexDetectResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.DbReeze\DynamicTranslator.DbReeze.csproj">
@@ -111,6 +116,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

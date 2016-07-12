@@ -14,13 +14,13 @@ namespace DynamicTranslator.Wpf
 {
     public partial class App
     {
-        private readonly AbpBootstrapper bootstrapper;
-
         public App()
         {
             bootstrapper = new AbpBootstrapper();
             bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
         }
+
+        private readonly AbpBootstrapper bootstrapper;
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {

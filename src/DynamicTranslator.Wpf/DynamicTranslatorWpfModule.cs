@@ -1,45 +1,28 @@
 ﻿using System.Reflection;
 
-using Abp.Dependency;
 using Abp.Modules;
 
-using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel.Registration;
-
 using DynamicTranslator.Application;
-using DynamicTranslator.Wpf.Orchestrators.Detector;
-using DynamicTranslator.Wpf.Orchestrators.Finders;
-using DynamicTranslator.Wpf.Orchestrators.Organizers;
+using DynamicTranslator.Bing;
+using DynamicTranslator.Google;
+using DynamicTranslator.SesliSozluk;
+using DynamicTranslator.Tureng;
+using DynamicTranslator.Yandex;
 
 namespace DynamicTranslator.Wpf
 {
-    [DependsOn(typeof(DynamicTranslatorApplicationModule))]
+    [DependsOn(typeof(DynamicTranslatorApplicationModule),
+        typeof(DynamicTranslatorGoogleModule),
+        typeof(DynamicTranslatorYandexModule),
+        typeof(DynamicTranslatorBingModule),
+        typeof(DynamicTranslatorTurengModule),
+        typeof(DynamicTranslatorSesliSozlukModule)
+        )]
     public class DynamicTranslatorWpfModule : DynamicTranslatorModule
     {
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-
-            IocManager.Register<IMeanFinder, GoogleTranslateFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, YandexFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, TurengFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, BingTranslatorFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, SesliSozlukFinder>(DependencyLifeStyle.Transient);
-
-            IocManager.Register<IMeanOrganizer, GoogleTranslateMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, YandexMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, TurengMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, BingTranslatorMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, SesliSozlukMeanOrganizer>(DependencyLifeStyle.Transient);
-        }
-
-        public override void PostInitialize()
-        {
-            IocManager.IocContainer.Register(
-                Component.For<IMeanFinderFactory>().AsFactory(),
-                Component.For<IMeanOrganizerFactory>().AsFactory(),
-                Component.For<ILanguageDetectorFactory>().AsFactory()
-                );
         }
 
         public override void PreInitialize()

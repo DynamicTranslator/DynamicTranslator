@@ -4,10 +4,8 @@ using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
 
+using DynamicTranslator.Application;
 using DynamicTranslator.Dependency.Interceptors;
-using DynamicTranslator.Wpf.Orchestrators.Detector;
-using DynamicTranslator.Wpf.Orchestrators.Finders;
-using DynamicTranslator.Wpf.Orchestrators.Organizers;
 
 namespace DynamicTranslator.Wpf
 {

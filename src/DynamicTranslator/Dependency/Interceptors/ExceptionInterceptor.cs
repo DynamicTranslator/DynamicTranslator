@@ -12,12 +12,12 @@ namespace DynamicTranslator.Dependency.Interceptors
 {
     public class ExceptionInterceptor : IInterceptor
     {
-        private readonly IGoogleAnalyticsService googleAnalytics;
-
         public ExceptionInterceptor(IGoogleAnalyticsService googleAnalytics)
         {
             this.googleAnalytics = googleAnalytics;
         }
+
+        private readonly IGoogleAnalyticsService googleAnalytics;
 
         public void Intercept(IInvocation invocation)
         {

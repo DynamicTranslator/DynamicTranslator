@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 
-using Abp.Modules;
-
 namespace DynamicTranslator.Domain
 {
     public class DynamicTranslatorDomainModule : DynamicTranslatorModule

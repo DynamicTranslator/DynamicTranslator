@@ -1,6 +1,11 @@
-﻿using Abp.Modules;
+﻿using System.Reflection;
+
+using Abp.Modules;
+
+using Castle.Facilities.TypedFactory;
+using Castle.MicroKernel.Registration;
+
 using DynamicTranslator.DbReeze;
-using System.Reflection;
 
 namespace DynamicTranslator.Application
 {
@@ -10,6 +15,13 @@ namespace DynamicTranslator.Application
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+
+
+            IocManager.IocContainer.Register(
+                Component.For<IMeanFinderFactory>().AsFactory(),
+                Component.For<IMeanOrganizerFactory>().AsFactory(),
+                Component.For<ILanguageDetectorFactory>().AsFactory()
+                );
         }
     }
 }
