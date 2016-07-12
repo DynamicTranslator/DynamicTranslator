@@ -3,7 +3,7 @@
 using Castle.DynamicProxy;
 
 using DynamicTranslator.Configuration.Startup;
-using DynamicTranslator.Exception;
+using DynamicTranslator.Exceptions;
 
 namespace DynamicTranslator.Dependency.Interceptors
 {

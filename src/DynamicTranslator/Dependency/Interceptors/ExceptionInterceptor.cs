@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using Castle.DynamicProxy;
 
-using DynamicTranslator.Exception;
+using DynamicTranslator.Exceptions;
 using DynamicTranslator.Helper;
 using DynamicTranslator.Service.GoogleAnalytics;
 

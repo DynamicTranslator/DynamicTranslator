@@ -127,9 +127,9 @@
     <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
     <Compile Include="DynamicTranslatorCoreModule.cs" />
-    <Compile Include="Exception\ApiKeyNullException.cs" />
-    <Compile Include="Exception\BusinessException.cs" />
-    <Compile Include="Exception\MaximumCharacterLimitException.cs" />
+    <Compile Include="Exceptions\ApiKeyNullException.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Exceptions\MaximumCharacterLimitException.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\EventHandlerExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />

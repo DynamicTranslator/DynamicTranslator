@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Exception
+﻿namespace DynamicTranslator.Exceptions
 {
     public class BusinessException : System.Exception
     {

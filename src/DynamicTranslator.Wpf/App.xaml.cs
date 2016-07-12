@@ -3,6 +3,7 @@ using System.Windows;
 
 using Abp;
 using Abp.Dependency;
+using Abp.Extensions;
 using Abp.Runtime.Caching.Configuration;
 
 using Castle.Core.Logging;
