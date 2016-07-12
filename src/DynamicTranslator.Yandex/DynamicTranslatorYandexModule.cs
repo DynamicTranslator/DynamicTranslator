@@ -27,7 +27,7 @@ namespace DynamicTranslator.Yandex
             Configurations.ModuleConfigurations.UseYandexTranslate().WithConfigurations(configuration =>
             {
                 configuration.Url = Url;
-                configuration.ApiKey = AppConfigManager.Get("ApiKey");
+                configuration.ApiKey = AppConfigManager.Get("YandexApiKey");
                 configuration.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
             });
         }
