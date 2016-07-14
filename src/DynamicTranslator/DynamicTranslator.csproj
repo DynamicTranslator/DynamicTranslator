@@ -115,6 +115,7 @@
     <Compile Include="Configuration\Startup\TranslatorModuleConfigurations.cs" />
     <Compile Include="DynamicTranslatorModule.cs" />
     <Compile Include="Configuration\IClientConfiguration.cs" />
+    <Compile Include="GoogleAnalyticsTracker.cs" />
     <Compile Include="ITranslator.cs" />
     <Compile Include="Configuration\Startup\LocalPersistenceConfiguration.cs" />
     <Compile Include="LanguageManagement\Language.cs" />

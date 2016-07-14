@@ -5,20 +5,20 @@ using Abp.Dependency;
 
 using DynamicTranslator.Service.GoogleAnalytics;
 
-namespace DynamicTranslator.Wpf.Observers
+namespace DynamicTranslator
 {
-    public class Feeder : IObserver<long>, ISingletonDependency
+    public class GoogleAnalyticsTracker : IObserver<long>, ISingletonDependency
     {
         private readonly IGoogleAnalyticsService googleAnalyticsService;
 
-        public Feeder(IGoogleAnalyticsService googleAnalyticsService)
+        public GoogleAnalyticsTracker(IGoogleAnalyticsService googleAnalyticsService)
         {
             this.googleAnalyticsService = googleAnalyticsService;
         }
 
         public void OnCompleted() {}
 
-        public void OnError(System.Exception error) {}
+        public void OnError(Exception error) {}
 
         public async void OnNext(long value)
         {

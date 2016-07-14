@@ -1,7 +1,6 @@
-﻿using DynamicTranslator.Configuration;
-using DynamicTranslator.Configuration.Startup;
+﻿using DynamicTranslator.Configuration.Startup;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Configuration
 {
     public class ClientConfiguration : IClientConfiguration
     {

@@ -48,30 +48,36 @@ namespace DynamicTranslator.Wpf
         {
             using (var applicationConfiguration = bootstrapper.IocManager.ResolveAsDisposable<IApplicationConfiguration>())
             {
-                if (applicationConfiguration.Object.IsExtraLoggingEnabled)
+                var isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
+
+                AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
                 {
-                    AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                    using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                     {
-                        using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                        if (isExtraLoggingEnabled)
                         {
                             logger.Object.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
-
-                            googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
                         }
-                    };
 
-                    AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
+                        googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                    }
+                };
+
+                AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
+                {
+                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                    using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                     {
-                        using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                        if (isExtraLoggingEnabled)
                         {
                             logger.Object.Error($"First Chance Exception: {args.Exception.ToString()}");
-
-                            googleClient.Object.TrackException(args.Exception.ToString(), false);
                         }
-                    };
-                }
+
+                        googleClient.Object.TrackException(args.Exception.ToString(), false);
+                    }
+                };
+
             }
         }
     }

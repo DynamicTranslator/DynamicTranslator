@@ -204,7 +204,6 @@
     <Compile Include="ViewModel\Notifications.cs" />
     <Compile Include="ITranslatorBootstrapper.cs" />
     <Compile Include="Notification\Notifier.cs" />
-    <Compile Include="Observers\Feeder.cs" />
     <Compile Include="Observers\Finder.cs" />
     <Compile Include="TranslatorBootstrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -347,9 +346,7 @@
   <ItemGroup>
     <Resource Include="Resources\texToSpeech.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

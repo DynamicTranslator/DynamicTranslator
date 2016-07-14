@@ -103,13 +103,6 @@ namespace DynamicTranslator.Wpf
 
         public bool IsInitialized { get; private set; }
 
-        private static Task SendCopyCommandAsync()
-        {
-            SendKeys.SendWait("^c");
-            SendKeys.Flush();
-            return Task.FromResult(0);
-        }
-
         private void CompositionRoot()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -189,6 +182,13 @@ namespace DynamicTranslator.Wpf
             }
         }
 
+        private static Task SendCopyCommandAsync()
+        {
+            SendKeys.SendWait("^c");
+            SendKeys.Flush();
+            return Task.FromResult(0);
+        }
+
         private void StartHooks()
         {
             var wih = new WindowInteropHelper(mainWindow);
@@ -213,7 +213,7 @@ namespace DynamicTranslator.Wpf
             syncObserver = Observable
                 .Interval(TimeSpan.FromSeconds(7.0), TaskPoolScheduler.Default)
                 .StartWith(-1L)
-                .Subscribe(IocManager.Instance.Resolve<Feeder>());
+                .Subscribe(IocManager.Instance.Resolve<GoogleAnalyticsTracker>());
         }
 
         private void SubscribeLocalevents()
