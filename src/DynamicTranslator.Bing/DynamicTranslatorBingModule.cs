@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using Abp.Dependency;
+using Abp.Modules;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.Bing.Configuration;
@@ -8,6 +9,7 @@ using DynamicTranslator.LanguageManagement;
 
 namespace DynamicTranslator.Bing
 {
+    [DependsOn(typeof(DynamicTranslatorApplicationModule))]
     public class DynamicTranslatorBingModule : DynamicTranslatorModule
     {
         public override void Initialize()

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using Abp.Dependency;
+using Abp.Modules;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.LanguageManagement;
@@ -8,6 +9,7 @@ using DynamicTranslator.Tureng.Configuration;
 
 namespace DynamicTranslator.Tureng
 {
+    [DependsOn(typeof(DynamicTranslatorApplicationModule))]
     public class DynamicTranslatorTurengModule : DynamicTranslatorModule
     {
         public override void Initialize()

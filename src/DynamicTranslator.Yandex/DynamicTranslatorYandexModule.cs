@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using Abp.Dependency;
+using Abp.Modules;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.LanguageManagement;
@@ -8,6 +9,7 @@ using DynamicTranslator.Yandex.Configuration;
 
 namespace DynamicTranslator.Yandex
 {
+    [DependsOn(typeof(DynamicTranslatorApplicationModule))]
     public class DynamicTranslatorYandexModule : DynamicTranslatorModule
     {
         private const string Url = "https://translate.yandex.net/api/v1.5/tr/translate?";

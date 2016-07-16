@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 using Abp.Dependency;
+using Abp.Modules;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.LanguageManagement;
@@ -8,6 +9,7 @@ using DynamicTranslator.Zargan.Configuration;
 
 namespace DynamicTranslator.Zargan
 {
+    [DependsOn(typeof(DynamicTranslatorApplicationModule))]
     public class DynamicTranslatorZarganModule : DynamicTranslatorModule
     {
         public override void Initialize()

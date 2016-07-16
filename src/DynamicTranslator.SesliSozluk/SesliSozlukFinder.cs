@@ -37,7 +37,7 @@ namespace DynamicTranslator.SesliSozluk
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!sesliSozlukConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!sesliSozlukConfiguration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var parameter =

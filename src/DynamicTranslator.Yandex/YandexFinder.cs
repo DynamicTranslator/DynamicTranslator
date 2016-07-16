@@ -28,7 +28,7 @@ namespace DynamicTranslator.Yandex
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!configuration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var address = new Uri(

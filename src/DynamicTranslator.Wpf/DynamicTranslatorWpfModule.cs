@@ -2,7 +2,6 @@
 
 using Abp.Modules;
 
-using DynamicTranslator.Application;
 using DynamicTranslator.Bing;
 using DynamicTranslator.Google;
 using DynamicTranslator.SesliSozluk;
@@ -11,7 +10,7 @@ using DynamicTranslator.Yandex;
 
 namespace DynamicTranslator.Wpf
 {
-    [DependsOn(typeof(DynamicTranslatorApplicationModule),
+    [DependsOn(
         typeof(DynamicTranslatorGoogleModule),
         typeof(DynamicTranslatorYandexModule),
         typeof(DynamicTranslatorBingModule),

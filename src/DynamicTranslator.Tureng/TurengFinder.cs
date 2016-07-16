@@ -29,7 +29,7 @@ namespace DynamicTranslator.Tureng
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!turengConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!turengConfiguration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var uri = new Uri(turengConfiguration.Url + translateRequest.CurrentText);

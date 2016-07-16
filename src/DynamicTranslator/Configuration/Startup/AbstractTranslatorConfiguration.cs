@@ -15,9 +15,9 @@ namespace DynamicTranslator.Configuration.Startup
 
         public IApplicationConfiguration ApplicationConfiguration { get; set; }
 
-        public virtual bool IsAppropriateForTranslation(string fromLanguageExtension)
+        public virtual bool CanBeTranslated()
         {
-            return SupportedLanguages.Any(x => x.Extension == fromLanguageExtension)
+            return SupportedLanguages.Any(x => x.Extension == ApplicationConfiguration.ToLanguage.Extension)
                    && ActiveTranslatorConfiguration.ActiveTranslators
                                                    .Any(x => x.Type == TranslatorType
                                                              && x.IsActive

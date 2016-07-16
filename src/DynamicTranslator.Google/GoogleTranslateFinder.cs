@@ -34,7 +34,7 @@ namespace DynamicTranslator.Google
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!googleConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!googleConfiguration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var uri = string.Format(

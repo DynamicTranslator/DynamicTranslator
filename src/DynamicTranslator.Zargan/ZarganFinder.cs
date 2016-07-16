@@ -26,7 +26,7 @@ namespace DynamicTranslator.Zargan
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!configuration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!configuration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var uri = string.Format(configuration.Url, HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));

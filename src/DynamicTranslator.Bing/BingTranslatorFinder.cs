@@ -35,7 +35,7 @@ namespace DynamicTranslator.Bing
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!bingConfiguration.IsAppropriateForTranslation(translateRequest.FromLanguageExtension))
+            if (!bingConfiguration.CanBeTranslated())
                 return new TranslateResult(false, new Maybe<string>());
 
             var requestObject = new
