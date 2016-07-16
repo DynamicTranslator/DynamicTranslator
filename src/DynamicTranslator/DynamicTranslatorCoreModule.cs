@@ -23,14 +23,6 @@ namespace DynamicTranslator
 
             Configurations.ApplicationConfiguration.IsLanguageDetectionEnabled = true;
             Configurations.ApplicationConfiguration.IsExtraLoggingEnabled = true;
-
-            Configurations.ApplicationConfiguration.ClientConfiguration.CreateOrConsolidate(client =>
-            {
-                client.AppVersion = ApplicationVersion.GetCurrentVersion();
-                client.Id = string.IsNullOrEmpty(AppConfigManager.Get("ClientId")) ? Guid.NewGuid().ToString() : AppConfigManager.Get("ClientId");
-                client.MachineName = Environment.MachineName.Normalize();
-            });
-
             Configurations.ApplicationConfiguration.LeftOffset = 500;
             Configurations.ApplicationConfiguration.TopOffset = 15;
             Configurations.ApplicationConfiguration.SearchableCharacterLimit = 200;
@@ -39,8 +31,17 @@ namespace DynamicTranslator
             Configurations.ApplicationConfiguration.ToLanguage = new Language(existingToLanguage, LanguageMapping.All[existingToLanguage]);
             Configurations.ApplicationConfiguration.FromLanguage = new Language(existingFromLanguage, LanguageMapping.All[existingFromLanguage]);
 
+            Configurations.ApplicationConfiguration.ClientConfiguration.CreateOrConsolidate(client =>
+            {
+                client.AppVersion = ApplicationVersion.GetCurrentVersion();
+                client.Id = string.IsNullOrEmpty(AppConfigManager.Get("ClientId")) ? Guid.NewGuid().ToString() : AppConfigManager.Get("ClientId");
+                client.MachineName = Environment.MachineName.Normalize();
+            });
+
             Configurations.GoogleAnalyticsConfiguration.Url = "http://www.google-analytics.com/collect";
             Configurations.GoogleAnalyticsConfiguration.TrackingId = "UA-70082243-2";
+
+            Configuration.BackgroundJobs.IsJobExecutionEnabled = false;
         }
     }
 }
