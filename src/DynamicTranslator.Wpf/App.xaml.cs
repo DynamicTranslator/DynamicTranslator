@@ -21,7 +21,7 @@ namespace DynamicTranslator.Wpf
 
         public App()
         {
-            bootstrapper = new AbpBootstrapper();
+            bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
             bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
         }
 
