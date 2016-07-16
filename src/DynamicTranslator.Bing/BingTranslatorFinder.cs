@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Net.Cache;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
+using Abp.Json;
 
 using DynamicTranslator.Application;
 using DynamicTranslator.Application.Model;
@@ -20,6 +19,7 @@ namespace DynamicTranslator.Bing
     public class BingTranslatorFinder : IMeanFinder
     {
         private const string ContentType = "application/json;Charset=UTF-8";
+        private const string ContentTypeName = "Content-Type";
 
         private readonly IApplicationConfiguration applicationConfiguration;
         private readonly IBingTranslatorConfiguration bingConfiguration;
@@ -40,19 +40,17 @@ namespace DynamicTranslator.Bing
 
             var requestObject = new
             {
-                from = applicationConfiguration.FromLanguage.Extension.ToLower(),
-                to = applicationConfiguration.ToLanguage.Extension.ToLower(),
+                from = applicationConfiguration.FromLanguage.Name.ToLower(),
+                to = applicationConfiguration.ToLanguage.Name.ToLower(),
                 text = translateRequest.CurrentText
             };
 
             var response = await new RestClient(bingConfiguration.Url)
-            {
-                Encoding = Encoding.UTF8,
-                CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
-            }.ExecutePostTaskAsync(new RestRequest(Method.POST)
-                .AddParameter(ContentType,
-                    JsonConvert.SerializeObject(requestObject),
-                    ParameterType.RequestBody));
+                .ExecutePostTaskAsync(new RestRequest(Method.POST)
+                    .AddHeader(ContentTypeName, ContentType)
+                    .AddParameter(ContentType,
+                        requestObject.ToJsonString(true),
+                        ParameterType.RequestBody));
 
             var meanOrganizer = meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
             var mean = await meanOrganizer.OrganizeMean(response.Content);
