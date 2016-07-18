@@ -1,11 +1,13 @@
 ﻿using System.Reflection;
 
 using Abp.Modules;
+using Abp.Runtime.Validation.Interception;
 
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
 using DynamicTranslator.DbReeze;
+using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application
 {
@@ -21,6 +23,8 @@ namespace DynamicTranslator.Application
                 Component.For<IMeanOrganizerFactory>().AsFactory(),
                 Component.For<ILanguageDetectorFactory>().AsFactory()
                 );
+
+            MethodInvocationValidator.IgnoredTypesForRecursiveValidation.Add(typeof(CompositeTranslateResult));
         }
 
         public override void PreInitialize()
