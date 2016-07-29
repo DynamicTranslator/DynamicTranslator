@@ -1,7 +1,7 @@
 # DynamicTranslator 
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
-DynamicTranslator detects selected texts instantly while you are reading a pdf or something and then translates them according to your language choice.
+Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary.The Design patterns which it contains Observer Pattern, SOLID, Dependency Inversion with Castle Windsor, Event Oriented Arhitecture, Aspect Oriented Architecture, Asyncronous Programming, DBReeze NoSQL,Unit Of Work Pattern, aspnetboilerplate.
 
 ###Latest News
 
