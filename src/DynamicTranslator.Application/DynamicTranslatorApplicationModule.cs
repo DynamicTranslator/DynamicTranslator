@@ -6,12 +6,15 @@ using Abp.Runtime.Validation.Interception;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
-using DynamicTranslator.DbReeze;
 using DynamicTranslator.Domain.Model;
+using DynamicTranslator.LiteDb;
 
 namespace DynamicTranslator.Application
 {
-    [DependsOn(typeof(DynamicTranslatorDataModule))]
+    [DependsOn(
+        //typeof(DynamicTranslatorDbReezeModule)
+        typeof(DynamicTranslatorLiteDbModule)
+        )]
     public class DynamicTranslatorApplicationModule : DynamicTranslatorModule
     {
         public override void Initialize()

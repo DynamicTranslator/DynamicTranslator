@@ -30,6 +30,8 @@ namespace DynamicTranslator.Domain.Model
             Id = searchText;
         }
 
+        public CompositeTranslateResult() {}
+
         public CompositeTranslateResult IncreaseFrequency()
         {
             Frequency += 1;

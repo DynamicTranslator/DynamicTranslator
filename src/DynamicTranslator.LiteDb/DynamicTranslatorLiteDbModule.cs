@@ -3,21 +3,21 @@ using System.Reflection;
 
 using Abp.Modules;
 
-using DynamicTranslator.DbReeze.Configuration.Startup;
-using DynamicTranslator.DbReeze.DBReezeNoSQL.Configuration;
+using DynamicTranslator.LiteDb.Configuration.Startup;
+using DynamicTranslator.LiteDb.LiteDb.Configuration;
 
-namespace DynamicTranslator.DbReeze
+namespace DynamicTranslator.LiteDb
 {
     [DependsOn(typeof(DynamicTranslatorCoreModule))]
-    public class DynamicTranslatorDataModule : DynamicTranslatorModule
+    public class DynamicTranslatorLiteDbModule : AbpModule
     {
         public override void Initialize()
         {
             var noSqlDbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
-            Configuration.Modules.UseDbReeze().WithConfiguration(dbreeze =>
+            Configuration.Modules.UseLiteDb().WithConfiguration(cfg =>
             {
-                dbreeze.Configuration.DBreezeDataFolderName = noSqlDbPath;
+                cfg.Path = noSqlDbPath;
             });
 
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
@@ -25,7 +25,7 @@ namespace DynamicTranslator.DbReeze
 
         public override void PreInitialize()
         {
-            IocManager.Register<IDbReezeModuleConfiguration, DbReezeModuleConfiguration>();
+            IocManager.Register<ILiteDbModuleConfiguration, LiteDbModuleConfiguration>();
         }
     }
 }

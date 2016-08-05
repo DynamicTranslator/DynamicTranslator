@@ -5,11 +5,11 @@ using DBreeze.Transactions;
 
 namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Uow
 {
-    public class UowTransactionProvider : ITransactionProvider, ITransientDependency
+    public class DbReezeUowTransactionProvider : ITransactionProvider, ITransientDependency
     {
         private readonly ICurrentUnitOfWorkProvider currentUnitOfWorkProvider;
 
-        public UowTransactionProvider(ICurrentUnitOfWorkProvider currentUnitOfWorkProvider)
+        public DbReezeUowTransactionProvider(ICurrentUnitOfWorkProvider currentUnitOfWorkProvider)
         {
             this.currentUnitOfWorkProvider = currentUnitOfWorkProvider;
         }

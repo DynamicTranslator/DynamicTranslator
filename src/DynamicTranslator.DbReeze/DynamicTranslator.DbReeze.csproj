@@ -95,8 +95,8 @@
     <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\TranslateResultRepository.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeDatabaseProvider.cs" />
     <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
-    <Compile Include="DBReezeNoSQL\Uow\UowTransactionProvider.cs" />
-    <Compile Include="DynamicTranslatorDataModule.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeUowTransactionProvider.cs" />
+    <Compile Include="DynamicTranslatorDbReezeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
