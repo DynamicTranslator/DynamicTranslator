@@ -14,7 +14,7 @@ namespace DynamicTranslator.DbReeze.Configuration.Startup
     {
         public static IDbReezeModuleConfiguration UseDbReeze(this IModuleConfigurations configurations)
         {
-            return configurations.AbpConfiguration.GetOrCreate("Modules.DynamicTranslator.DbReeze", () => configurations.AbpConfiguration.IocManager.Resolve<IDbReezeModuleConfiguration>());
+            return configurations.AbpConfiguration.Get<IDbReezeModuleConfiguration>();
         }
 
         public static void WithConfiguration(this IDbReezeModuleConfiguration dbReezeModuleConfiguration, Action<IDbReezeModuleConfiguration> configuration)
