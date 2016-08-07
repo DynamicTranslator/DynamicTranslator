@@ -114,7 +114,7 @@ namespace DynamicTranslator.Application
                 var translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
                 if (translateResultType != null)
                 {
-                    var returnObj = Task.FromResult(Activator.CreateInstance(translateResultType).As<TranslateResult>());
+                    var returnObj = Task.FromResult(Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>());
                     invocation.ReturnValue = returnObj;
                 }
             }
