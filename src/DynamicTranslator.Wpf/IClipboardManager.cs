@@ -5,5 +5,7 @@
         string GetCurrentText();
 
         bool IsContainsText();
+
+        void Clear();
     }
 }

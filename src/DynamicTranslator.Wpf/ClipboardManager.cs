@@ -8,6 +8,11 @@ namespace DynamicTranslator.Wpf
 {
     public class ClipboardManager : IClipboardManager, ITransientDependency
     {
+        public void Clear()
+        {
+            Clipboard.Clear();
+        }
+
         public string GetCurrentText()
         {
             return Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();

@@ -103,6 +103,20 @@ namespace DynamicTranslator.Wpf
 
         public bool IsInitialized { get; private set; }
 
+        private static Task SendCopyCommandAsync()
+        {
+            var thread = new Thread(() =>
+            {
+                SendKeys.SendWait("^c");
+                SendKeys.Flush();
+            });
+            thread.SetApartmentState(ApartmentState.MTA);
+            thread.Start();
+            thread.Join();
+
+            return Task.FromResult(0);
+        }
+
         private void CompositionRoot()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -143,6 +157,7 @@ namespace DynamicTranslator.Wpf
                         if (!string.IsNullOrEmpty(currentText))
                         {
                             await TriggerTextCaptured(currentText);
+                            clipboardManager.Clear();
                         }
                     }
                 },
@@ -180,13 +195,6 @@ namespace DynamicTranslator.Wpf
                 await SendCopyCommandAsync();
                 isMouseDown = false;
             }
-        }
-
-        private static Task SendCopyCommandAsync()
-        {
-            SendKeys.SendWait("^c");
-            SendKeys.Flush();
-            return Task.FromResult(0);
         }
 
         private void StartHooks()
@@ -233,8 +241,6 @@ namespace DynamicTranslator.Wpf
                 await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
                     new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
                     );
-
-                SendKeys.Flush();
             });
         }
 

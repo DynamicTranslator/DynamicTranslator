@@ -49,7 +49,7 @@ namespace DynamicTranslator.Wpf.Observers
 
         public void OnCompleted() {}
 
-        public void OnError(System.Exception error) {}
+        public void OnError(Exception error) {}
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
@@ -65,7 +65,11 @@ namespace DynamicTranslator.Wpf.Observers
                 var fromLanguageExtension = await languageDetector.DetectLanguage(currentString);
                 var results = await GetMeansFromCache(currentString, fromLanguageExtension);
                 var findedMeans = await resultOrganizer.OrganizeResult(results, currentString).ConfigureAwait(false);
-                await notifier.AddNotificationAsync(currentString, ImageUrls.NotificationUrl, findedMeans.DefaultIfEmpty(string.Empty).First()).ConfigureAwait(false);
+
+                await notifier.AddNotificationAsync(currentString,
+                    ImageUrls.NotificationUrl,
+                    findedMeans.DefaultIfEmpty(string.Empty).First()
+                    ).ConfigureAwait(false);
 
                 await googleAnalytics.TrackEventAsync("DynamicTranslator",
                     "Translate",
