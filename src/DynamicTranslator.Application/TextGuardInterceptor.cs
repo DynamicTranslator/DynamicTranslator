@@ -1,16 +1,18 @@
 ﻿using System.Linq;
 
+using Abp.Extensions;
+
 using Castle.DynamicProxy;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Exceptions;
 
-namespace DynamicTranslator.Dependency.Interceptors
+namespace DynamicTranslator.Application
 {
     public class TextGuardInterceptor : IInterceptor
     {
         private readonly IApplicationConfiguration configuration;
-        private string currentString;
 
         public TextGuardInterceptor(IApplicationConfiguration configuration)
         {
@@ -21,9 +23,9 @@ namespace DynamicTranslator.Dependency.Interceptors
         {
             if (invocation.Arguments.Any())
             {
-                currentString = invocation.Arguments[0].ToString();
+                var request = invocation.Arguments[0].As<TranslateRequest>();
 
-                if (currentString.Length > configuration.SearchableCharacterLimit)
+                if (request.CurrentText.Length > configuration.SearchableCharacterLimit)
                     throw new MaximumCharacterLimitException("You have exceed maximum character limit");
 
                 invocation.Proceed();

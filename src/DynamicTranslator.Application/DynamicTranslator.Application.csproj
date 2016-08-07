@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="AbstractMeanOrganizer.cs" />
     <Compile Include="DynamicTranslatorApplicationModule.cs" />
+    <Compile Include="ExceptionInterceptor.cs" />
     <Compile Include="ILanguageDetector.cs" />
     <Compile Include="ILanguageDetectorFactory.cs" />
     <Compile Include="IMeanFinder.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Result\IResultService.cs" />
     <Compile Include="Result\ResultService.cs" />
     <Compile Include="Model\TranslateRequest.cs" />
+    <Compile Include="TextGuardInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.DbReeze\DynamicTranslator.DbReeze.csproj">

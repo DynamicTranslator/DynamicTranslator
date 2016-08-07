@@ -1,16 +1,21 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Extensions;
+
 using Castle.DynamicProxy;
 
+using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Exceptions;
 using DynamicTranslator.Helper;
 using DynamicTranslator.Service.GoogleAnalytics;
 
 using Newtonsoft.Json;
 
-namespace DynamicTranslator.Dependency.Interceptors
+namespace DynamicTranslator.Application
 {
     public class ExceptionInterceptor : IInterceptor
     {
@@ -79,7 +84,7 @@ namespace DynamicTranslator.Dependency.Interceptors
                     HandleException(invocation, ex);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
                 {
@@ -92,7 +97,7 @@ namespace DynamicTranslator.Dependency.Interceptors
             }
         }
 
-        private static string ExtractExceptionMessage(IInvocation invocation, System.Exception ex)
+        private static string ExtractExceptionMessage(IInvocation invocation, Exception ex)
         {
             return new StringBuilder()
                 .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
@@ -102,22 +107,39 @@ namespace DynamicTranslator.Dependency.Interceptors
                 .ToString();
         }
 
-        private void HandleException(IInvocation invocation, System.Exception ex)
+        private static void HandleReturnValueForCharacterLimitException(IInvocation invocation)
+        {
+            if (typeof(IMeanFinder).IsAssignableFrom(invocation.TargetType))
+            {
+                var translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
+                if (translateResultType != null)
+                {
+                    var returnObj = Task.FromResult(Activator.CreateInstance(translateResultType).As<TranslateResult>());
+                    invocation.ReturnValue = returnObj;
+                }
+            }
+        }
+
+        private void HandleException(IInvocation invocation, Exception ex)
         {
             if (ex == null)
                 return;
 
             var exceptionText = ExtractExceptionMessage(invocation, ex);
 
+            HandleReturnValueForCharacterLimitException(invocation);
+
             SendExceptionGoogleAnalytics(exceptionText, false);
         }
 
-        private Task HandleExceptionAsync(IInvocation invocation, System.Exception ex)
+        private Task HandleExceptionAsync(IInvocation invocation, Exception ex)
         {
             if (ex == null)
                 return Task.FromResult(0);
 
             var exceptionText = ExtractExceptionMessage(invocation, ex);
+
+            HandleReturnValueForCharacterLimitException(invocation);
 
             return SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }

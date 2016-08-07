@@ -125,8 +125,6 @@
     <Compile Include="Constants\CacheNames.cs" />
     <Compile Include="Constants\Headers.cs" />
     <Compile Include="Extensions\IocExtensions.cs" />
-    <Compile Include="Dependency\Interceptors\ExceptionInterceptor.cs" />
-    <Compile Include="Dependency\Interceptors\TextGuardInterceptor.cs" />
     <Compile Include="DynamicTranslatorCoreModule.cs" />
     <Compile Include="Exceptions\ApiKeyNullException.cs" />
     <Compile Include="Exceptions\BusinessException.cs" />

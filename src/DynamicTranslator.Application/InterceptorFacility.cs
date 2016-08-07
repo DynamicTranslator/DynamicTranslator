@@ -4,8 +4,6 @@ using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
 
-using DynamicTranslator.Dependency.Interceptors;
-
 namespace DynamicTranslator.Application
 {
     public class InterceptorFacility : AbstractFacility

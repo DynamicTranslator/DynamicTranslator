@@ -18,7 +18,7 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 
         public override void Delete(TEntity entity)
         {
-            Database.DropCollection(typeof(TEntity).Name);
+            Delete(entity.Id);
         }
 
         public override void Delete(TKey id)
@@ -42,7 +42,10 @@ namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
 
         public override TEntity Update(TEntity entity)
         {
-            return Insert(entity);
+            Database.GetCollection<TEntity>(typeof(TEntity).Name)
+                    .Update(entity);
+
+            return entity;
         }
     }
 }
