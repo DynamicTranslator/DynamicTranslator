@@ -3,7 +3,7 @@
 
 Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary.The Design patterns which it contains Observer Pattern, SOLID, Dependency Inversion with Castle Windsor, Event Oriented Arhitecture, Aspect Oriented Architecture, Asyncronous Programming, DBReeze NoSQL,LiteDB NoSQL, Unit Of Work Pattern, aspnetboilerplate.
 
-## [Download!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.0/v3.4.0.rar)
+## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.0/v3.4.0.rar)
 
 ###Latest News
 
