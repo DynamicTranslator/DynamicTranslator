@@ -88,6 +88,7 @@
     <Compile Include="DynamicTranslatorLiteDbModule.cs" />
     <Compile Include="LiteDb\Configuration\ILiteDbModuleConfiguration.cs" />
     <Compile Include="LiteDb\Configuration\LiteDbModuleConfiguration.cs" />
+    <Compile Include="LiteDb\Mapper\LiteDbMap.cs" />
     <Compile Include="LiteDb\Repository\LiteDbRepositoryBaseOfTEntityAndPrimaryKey.cs" />
     <Compile Include="LiteDb\Repository\TranslateResultRepository.cs" />
     <Compile Include="LiteDb\Uow\ITransactionProvider.cs" />

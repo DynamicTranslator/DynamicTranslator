@@ -5,7 +5,7 @@ using Abp.Domain.Repositories;
 
 using LiteDB;
 
-namespace DynamicTranslator.DbReeze.DBReezeNoSQL.Repository
+namespace DynamicTranslator.LiteDb.LiteDb.Repository
 {
     public class LiteDbRepositoryBase<TEntity, TKey> : AbpRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {

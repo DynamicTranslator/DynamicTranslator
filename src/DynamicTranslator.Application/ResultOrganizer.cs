@@ -39,7 +39,7 @@ namespace DynamicTranslator.Application
 
                 mean.Clear();
                 means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                resultService.SaveAndUpdateFrequencyAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                resultService.SaveOrUpdateAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                 return Task.FromResult(new Maybe<string>(mean.ToString()));
             }
 

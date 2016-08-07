@@ -5,6 +5,7 @@ using Abp.Modules;
 
 using DynamicTranslator.LiteDb.Configuration.Startup;
 using DynamicTranslator.LiteDb.LiteDb.Configuration;
+using DynamicTranslator.LiteDb.LiteDb.Mapper;
 
 namespace DynamicTranslator.LiteDb
 {
@@ -13,14 +14,13 @@ namespace DynamicTranslator.LiteDb
     {
         public override void Initialize()
         {
+            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+
             var noSqlDbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
-            Configuration.Modules.UseLiteDb().WithConfiguration(cfg =>
-            {
-                cfg.Path = noSqlDbPath;
-            });
+            Configuration.Modules.UseLiteDb().WithConfiguration(cfg => { cfg.Path = noSqlDbPath; });
 
-            IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
+            LiteDbMap.Initialize();
         }
 
         public override void PreInitialize()

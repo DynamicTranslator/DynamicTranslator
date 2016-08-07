@@ -142,9 +142,9 @@ namespace DynamicTranslator.Wpf
             globalMouseHook.Dispose();
         }
 
-        private void HandleTextCaptured(int msg, IntPtr wParam, IntPtr lParam)
+        private Task HandleTextCaptured(int msg, IntPtr wParam, IntPtr lParam)
         {
-            Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 await mainWindow.Dispatcher.InvokeAsync(async () =>
                 {
@@ -262,7 +262,7 @@ namespace DynamicTranslator.Wpf
                         Win32.SendMessage(hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
                     break;
                 case Win32.WmDrawclipboard:
-                    HandleTextCaptured(msg, wParam, lParam);
+                    HandleTextCaptured(msg, wParam, lParam).ConfigureAwait(false);
                     break;
             }
 

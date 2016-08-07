@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Abp.Application.Services;
 using Abp.Domain.Uow;
@@ -18,39 +19,29 @@ namespace DynamicTranslator.Application.Result
         }
 
         [UnitOfWork]
-        public CompositeTranslateResult Get(string key)
+        public Task<CompositeTranslateResult> GetAsync(string key)
         {
-            return resultRepository.GetTranslateResult(key);
+            return resultRepository.GetAsync(key);
         }
 
         [UnitOfWork]
-        public async Task<CompositeTranslateResult> GetAsync(string key)
+        public Task<CompositeTranslateResult> SaveOrUpdateAsync(CompositeTranslateResult translateResult)
         {
-            return await resultRepository.GetTranslateResultAsync(key);
-        }
+            var lastResult = resultRepository.FirstOrDefault(translateResult.Id);
 
-        [UnitOfWork]
-        public CompositeTranslateResult Save(CompositeTranslateResult translateResult)
-        {
-            return resultRepository.SetTranslateResult(translateResult);
-        }
+            if (lastResult != null)
+            {
+                lastResult = translateResult
+                    .SetResults(translateResult.Results)
+                    .SetCreateDate(DateTime.Now)
+                    .IncreaseFrequency();
+            }
+            else
+            {
+                lastResult = translateResult;
+            }
 
-        [UnitOfWork]
-        public CompositeTranslateResult SaveAndUpdateFrequency(CompositeTranslateResult translateResult)
-        {
-            return resultRepository.SetTranslateResultAndUpdateFrequency(translateResult);
-        }
-
-        [UnitOfWork]
-        public async Task<CompositeTranslateResult> SaveAndUpdateFrequencyAsync(CompositeTranslateResult translateResult)
-        {
-            return await resultRepository.SetTranslateResultAndUpdateFrequencyAsync(translateResult);
-        }
-
-        [UnitOfWork]
-        public async Task<CompositeTranslateResult> SaveAsync(CompositeTranslateResult translateResult)
-        {
-            return await resultRepository.SetTranslateResultAsync(translateResult);
+            return resultRepository.InsertOrUpdateAsync(lastResult);
         }
     }
 }
