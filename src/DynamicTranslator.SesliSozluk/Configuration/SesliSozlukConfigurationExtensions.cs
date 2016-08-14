@@ -9,7 +9,7 @@ namespace DynamicTranslator.SesliSozluk.Configuration
     {
         public static ISesliSozlukTranslatorConfiguration UseSesliSozlukTranslate(this ITranslatorModuleConfigurations moduleConfigurations)
         {
-            moduleConfigurations.Configurations.ActiveTranslatorConfiguration.AddTranslator(TranslatorType.Seslisozluk);
+            moduleConfigurations.Configurations.ActiveTranslatorConfiguration.AddTranslator(TranslatorType.SesliSozluk);
 
             return moduleConfigurations.Configurations.GetOrCreate("DynamicTranslator.SesliSozluk.Translator", () => moduleConfigurations.Configurations.IocManager.Resolve<ISesliSozlukTranslatorConfiguration>());
         }

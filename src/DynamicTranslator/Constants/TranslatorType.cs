@@ -4,7 +4,7 @@
     {
         Tureng,
         Yandex,
-        Seslisozluk,
+        SesliSozluk,
         Google,
         Bing,
         Zargan

@@ -100,7 +100,7 @@ namespace DynamicTranslator.Application
         private static string ExtractExceptionMessage(IInvocation invocation, Exception ex)
         {
             return new StringBuilder()
-                .AppendLine("Exception Occured on:" + invocation.TargetType.Name)
+                .AppendLine("Exception Occurred on:" + invocation.TargetType.Name)
                 .AppendLine(ex.Message)
                 .AppendLine(ex.InnerException?.Message ?? string.Empty)
                 .AppendLine(ex.StackTrace)

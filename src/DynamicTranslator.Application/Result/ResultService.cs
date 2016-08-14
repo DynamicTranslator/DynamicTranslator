@@ -35,13 +35,12 @@ namespace DynamicTranslator.Application.Result
                     .SetResults(translateResult.Results)
                     .SetCreateDate(DateTime.Now)
                     .IncreaseFrequency();
-            }
-            else
-            {
-                lastResult = translateResult;
+
+                return resultRepository.UpdateAsync(lastResult);
             }
 
-            return resultRepository.InsertOrUpdateAsync(lastResult);
+            lastResult = translateResult;
+            return resultRepository.InsertAsync(lastResult);
         }
     }
 }

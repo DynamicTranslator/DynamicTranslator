@@ -18,7 +18,7 @@ namespace DynamicTranslator.Yandex
             var doc = new XmlDocument();
             doc.LoadXml(text);
             var node = doc.SelectSingleNode("//Translation/text");
-            var output = node?.InnerText ?? "!!! An error occured";
+            var output = node?.InnerText ?? "!!! An error occurred";
 
             return Task.FromResult(new Maybe<string>(output.ToLower().Trim()));
         }

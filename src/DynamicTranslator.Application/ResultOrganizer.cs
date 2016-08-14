@@ -24,7 +24,7 @@ namespace DynamicTranslator.Application
         public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
             var mean = new StringBuilder();
-            foreach (var result in findedMeans.Where(result => result.IsSucess))
+            foreach (var result in findedMeans.Where(result => result.IsSuccess))
             {
                 mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
             }

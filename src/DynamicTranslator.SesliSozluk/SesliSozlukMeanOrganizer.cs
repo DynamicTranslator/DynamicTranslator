@@ -12,7 +12,7 @@ namespace DynamicTranslator.SesliSozluk
 {
     public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.Seslisozluk;
+        public override TranslatorType TranslatorType => TranslatorType.SesliSozluk;
 
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {

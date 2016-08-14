@@ -62,6 +62,6 @@ namespace DynamicTranslator.SesliSozluk
             return new TranslateResult(true, mean);
         }
 
-        public TranslatorType TranslatorType => TranslatorType.Seslisozluk;
+        public TranslatorType TranslatorType => TranslatorType.SesliSozluk;
     }
 }

@@ -7,7 +7,7 @@ namespace DynamicTranslator.Domain.Model
     public class TranslateResult
     {
         [DataMember]
-        public bool IsSucess { get; set; }
+        public bool IsSuccess { get; set; }
 
         [DataMember]
         public Maybe<string> ResultMessage { get; set; }
@@ -16,7 +16,7 @@ namespace DynamicTranslator.Domain.Model
 
         public TranslateResult(bool isSucess, Maybe<string> resultMessage)
         {
-            IsSucess = isSucess;
+            IsSuccess = isSucess;
             ResultMessage = resultMessage;
         }
     }

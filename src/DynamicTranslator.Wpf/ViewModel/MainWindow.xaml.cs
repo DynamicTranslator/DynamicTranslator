@@ -109,7 +109,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
                 configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Tureng);
             if (CheckBoxSesliSozluk.IsChecked != null && CheckBoxSesliSozluk.IsChecked.Value)
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Seslisozluk);
+                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.SesliSozluk);
             if (CheckBoxBing.IsChecked != null && CheckBoxBing.IsChecked.Value)
                 configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
 
