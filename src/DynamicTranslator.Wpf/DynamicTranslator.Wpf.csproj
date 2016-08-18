@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/publish/</InstallUrl>
-    <UpdateUrl>https://raw.githubusercontent.com/osoykan/DynamicTranslator/blob/master/publish/</UpdateUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/publish/</UpdateUrl>
     <SupportUrl>https://github.com/osoykan/DynamicTranslator</SupportUrl>
     <ErrorReportUrl>https://github.com/osoykan/DynamicTranslator</ErrorReportUrl>
     <ProductName>DynamicTranslator</ProductName>
