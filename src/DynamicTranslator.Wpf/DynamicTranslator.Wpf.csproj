@@ -25,8 +25,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://cdn.rawgit.com/osoykan/DynamicTranslator/publish/</InstallUrl>
-    <UpdateUrl>https://cdn.rawgit.com/osoykan/DynamicTranslator/tree/master/publish/</UpdateUrl>
+    <InstallUrl>https://cdn.rawgit.com/osoykan/DynamicTranslator/blob/master/publish/</InstallUrl>
+    <UpdateUrl>https://cdn.rawgit.com/osoykan/DynamicTranslator/blob/master/publish/</UpdateUrl>
     <SupportUrl>https://github.com/osoykan/DynamicTranslator</SupportUrl>
     <ErrorReportUrl>https://github.com/osoykan/DynamicTranslator</ErrorReportUrl>
     <ProductName>DynamicTranslator</ProductName>
@@ -34,7 +34,7 @@
     <SuiteName>DynamicTranslator</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>3.4.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
