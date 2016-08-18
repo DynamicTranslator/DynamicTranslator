@@ -10,6 +10,10 @@ namespace DynamicTranslator.Configuration.Startup
 
         public Language FromLanguage { get; set; }
 
+        public string GitHubRepositoryName => nameof(DynamicTranslator);
+
+        public string GitHubRepositoryOwnerName => "osoykan";
+
         public bool IsExtraLoggingEnabled { get; set; }
 
         public bool IsLanguageDetectionEnabled { get; set; }
@@ -27,5 +31,7 @@ namespace DynamicTranslator.Configuration.Startup
         public Language ToLanguage { get; set; }
 
         public int TopOffset { get; set; }
+
+        public string UpdateLink { get; set; }
     }
 }

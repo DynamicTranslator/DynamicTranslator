@@ -10,19 +10,27 @@
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Icon="/Resources/dynamic-link-library 16.png" Height="325.404" Width="393.014">
-    <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,4,9">
-        <Grid Height="285">
-            <Label x:Name="LabelCurrentLanguage" Width="Auto" Height="40" Content="To Language:" Margin="10,25,273,220" />
-            <ComboBox x:Name="ComboBoxLanguages"
-                      Style="{DynamicResource ResourceKey={x:Type ComboBox}}"
-                      DisplayMemberPath="Name"
-                      SelectedValuePath="Extension"
-                      VerticalAlignment="Center" Width="Auto" Height="32" Margin="149,24,46,229" />
+    <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,4,1">
+        <Grid Height="288">
+            <WrapPanel Margin="21,10,25,234" Orientation="Horizontal">
+                <Grid Height="41" Width="100">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="LabelCurrentLanguage" Content="To Language:" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Margin="0,11,0,0" Grid.RowSpan="2" />
+                </Grid>
+                <ComboBox x:Name="ComboBoxLanguages"
+                          Style="{DynamicResource ResourceKey={x:Type ComboBox}}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Extension"
+                          VerticalAlignment="Center" Width="188" Height="32" />
+            </WrapPanel>
             <Button x:Name="BtnSwitch" Height="Auto" Content="Start Translator" Padding="2"
                     Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04"
                     BorderBrush="#FF040404" Foreground="White" FontFamily="Showcard Gothic" FontSize="16"
                     FontWeight="Bold"
-                    Opacity="0.9" Margin="0,70,0,166">
+                    Opacity="0.9" Margin="0,72,0,164">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox"
                                          StartPoint="0.5,0">
@@ -33,7 +41,7 @@
                 </Button.Background>
             </Button>
             <Button Click="GithubButton_Click" Height="Auto" Width="Auto" Background="Transparent"
-                    Margin="141,225,169,10">
+                    Margin="158,243,159,5">
                 <Image Source="../Resources/github_100x150.png" />
             </Button>
             <Grid x:Name="LanguagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
@@ -49,6 +57,8 @@
                 <CheckBox x:Name="CheckBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
                           Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
             </Grid>
+            <Button x:Name="NewVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,211,0,0"
+                    VerticalAlignment="Top" Width="363" Height="27" Click="NewVersionButton_Click" />
 
         </Grid>
 

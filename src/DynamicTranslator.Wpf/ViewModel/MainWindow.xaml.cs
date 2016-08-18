@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -12,6 +12,11 @@ using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.LanguageManagement;
+using DynamicTranslator.Wpf.Extensions;
+
+using Octokit;
+
+using Language = DynamicTranslator.LanguageManagement.Language;
 
 namespace DynamicTranslator.Wpf.ViewModel
 {
@@ -20,25 +25,24 @@ namespace DynamicTranslator.Wpf.ViewModel
         private readonly IDynamicTranslatorConfiguration configurations;
         private readonly ITranslatorBootstrapper translator;
         private bool isRunning;
+        private IDisposable versionObserver;
 
         public MainWindow()
         {
             InitializeComponent();
+
             IocManager.Instance.Register(typeof(MainWindow), this);
+            configurations = IocManager.Instance.Resolve<IDynamicTranslatorConfiguration>();
             translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
             translator.SubscribeShutdownEvents();
-            configurations = IocManager.Instance.Resolve<IDynamicTranslatorConfiguration>();
 
-            foreach (var language in LanguageMapping.All.ToLanguages())
-            {
-                ComboBoxLanguages.Items.Add(language);
-            }
-
-            ComboBoxLanguages.SelectedValue = configurations.ApplicationConfiguration.ToLanguage.Extension;
+            FillLanguageCombobox();
+            InitializeVersionChecker();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            versionObserver.Dispose();
             Dispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
             base.OnClosing(e);
         }
@@ -66,24 +70,59 @@ namespace DynamicTranslator.Wpf.ViewModel
                 PrepareTranslators();
                 LockUiElements();
 
-                Task.Run(
-                    async () =>
-                    {
-                        await Dispatcher.InvokeAsync(
-                            async () =>
-                            {
-                                if (!translator.IsInitialized)
-                                    await translator.InitializeAsync();
-                            });
-                    });
+                this.DispatchingAsync(async () =>
+                {
+                    if (!translator.IsInitialized)
+                        await translator.InitializeAsync();
+                });
 
                 isRunning = true;
             }
         }
 
+        private void FillLanguageCombobox()
+        {
+            foreach (var language in LanguageMapping.All.ToLanguages())
+            {
+                ComboBoxLanguages.Items.Add(language);
+            }
+
+            ComboBoxLanguages.SelectedValue = configurations.ApplicationConfiguration.ToLanguage.Extension;
+        }
+
         private void GithubButton_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/osoykan/DynamicTranslator");
+        }
+
+        private void InitializeVersionChecker()
+        {
+            NewVersionButton.Visibility = Visibility.Hidden;
+
+            versionObserver = Observable.Interval(TimeSpan.FromMinutes(1))
+                                        .Subscribe(async x =>
+                                        {
+                                            using (var gitHubClient = IocManager.Instance.ResolveAsDisposable<GitHubClient>())
+                                            {
+                                                var release = await gitHubClient.Object
+                                                                                .Repository
+                                                                                .Release
+                                                                                .GetLatest(configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
+                                                                                    configurations.ApplicationConfiguration.GitHubRepositoryName);
+
+                                                var version = release.TagName;
+
+                                                if (!ApplicationVersion.Is(version))
+                                                {
+                                                    await this.DispatchingAsync(() =>
+                                                    {
+                                                        NewVersionButton.Visibility = Visibility.Visible;
+                                                        NewVersionButton.Content = $"A new version {version} released, update now!";
+                                                        configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
+                                                    });
+                                                }
+                                            }
+                                        });
         }
 
         private void LockUiElements()
@@ -96,6 +135,15 @@ namespace DynamicTranslator.Wpf.ViewModel
             CheckBoxSesliSozluk.IsHitTestVisible = false;
 
             CheckBoxBing.IsHitTestVisible = false;
+        }
+
+        private void NewVersionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var updateLink = configurations.ApplicationConfiguration.UpdateLink;
+            if (!string.IsNullOrEmpty(updateLink))
+            {
+                Process.Start(updateLink);
+            }
         }
 
         private void PrepareTranslators()

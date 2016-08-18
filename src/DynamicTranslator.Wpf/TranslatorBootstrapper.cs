@@ -28,7 +28,6 @@ namespace DynamicTranslator.Wpf
     public class TranslatorBootstrapper : ITranslatorBootstrapper, ISingletonDependency
     {
         private readonly IApplicationConfiguration applicationConfiguration;
-
         private readonly ICacheManager cacheManager;
         private readonly IClipboardManager clipboardManager;
         private readonly GrowlNotifications growlNotifications;
@@ -239,7 +238,7 @@ namespace DynamicTranslator.Wpf
                     return;
 
                 await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
-                    new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
+                    new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
                     );
             });
         }

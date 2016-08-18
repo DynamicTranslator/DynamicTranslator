@@ -8,6 +8,12 @@ namespace DynamicTranslator.Configuration.Startup
 
         Language FromLanguage { get; set; }
 
+        string GitHubRepositoryName { get; }
+
+        string UpdateLink { get; set; }
+
+        string GitHubRepositoryOwnerName { get; }
+
         bool IsExtraLoggingEnabled { get; set; }
 
         bool IsLanguageDetectionEnabled { get; set; }

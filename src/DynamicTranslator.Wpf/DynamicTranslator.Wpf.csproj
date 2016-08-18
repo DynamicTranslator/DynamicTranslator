@@ -141,6 +141,14 @@
       <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Octokit, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.21.1\lib\net45\Octokit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Octokit.Reactive, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.Reactive.0.21.1\lib\net45\Octokit.Reactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -155,6 +163,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -196,6 +205,7 @@
     </ApplicationDefinition>
     <Compile Include="ClipboardManager.cs" />
     <Compile Include="DynamicTranslatorWpfModule.cs" />
+    <Compile Include="Extensions\MultithreadUiExtensions.cs" />
     <Compile Include="IClipboardManager.cs" />
     <Compile Include="Notification\INotifier.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
