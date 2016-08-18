@@ -47,9 +47,9 @@ namespace DynamicTranslator.Wpf.Observers
             this.configuration = configuration;
         }
 
-        public void OnCompleted() {}
+        public void OnCompleted() { }
 
-        public void OnError(Exception error) {}
+        public void OnError(Exception error) { }
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
@@ -73,7 +73,7 @@ namespace DynamicTranslator.Wpf.Observers
 
                 await googleAnalytics.TrackEventAsync("DynamicTranslator",
                     "Translate",
-                    $"{currentString} | from:{fromLanguageExtension} | to:{configuration.ApplicationConfiguration.ToLanguage.Extension} ",
+                    $"{currentString} | {fromLanguageExtension} - {configuration.ApplicationConfiguration.ToLanguage.Extension} | v{ApplicationVersion.GetCurrentVersion()} ",
                     null).ConfigureAwait(false);
 
                 await googleAnalytics.TrackAppScreenAsync("DynamicTranslator",

@@ -133,7 +133,6 @@ namespace DynamicTranslator.Wpf.ViewModel
             CheckBoxTureng.IsHitTestVisible = false;
             CheckBoxYandexTranslate.IsHitTestVisible = false;
             CheckBoxSesliSozluk.IsHitTestVisible = false;
-
             CheckBoxBing.IsHitTestVisible = false;
         }
 
