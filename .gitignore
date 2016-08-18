@@ -16,6 +16,9 @@ local.properties
 .settings/
 .loadpath
 packages/
+*.manifest binary
+*.application binary
+*.deploy binary
 
 # External tool builders
 .externalToolBuilders/
