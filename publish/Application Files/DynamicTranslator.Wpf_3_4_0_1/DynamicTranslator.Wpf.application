@@ -8,7 +8,7 @@
         <beforeApplicationStartup />
       </update>
     </subscription>
-    <deploymentProvider codebase="https://cdn.rawgit.com/osoykan/DynamicTranslator/blob/master/publish/DynamicTranslator.Wpf.application" />
+    <deploymentProvider codebase="https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/publish/DynamicTranslator.Wpf.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
     <framework targetVersion="4.6" profile="Full" supportedRuntime="4.0.30319" />
@@ -21,7 +21,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rQhJIysTPUW1ZnK//F7n+SdAZMStT1LLCCoznoNCSHg=</dsig:DigestValue>
+        <dsig:DigestValue>FAt+NsrZJhRIMqxzP/UG8MrVHI+pg1nddg1plTF95J0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
