@@ -84,6 +84,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
@@ -113,8 +114,12 @@
     <Compile Include="Configuration\Startup\ITranslatorConfiguration.cs" />
     <Compile Include="Configuration\Startup\ITranslatorModuleConfigurations.cs" />
     <Compile Include="Configuration\Startup\TranslatorModuleConfigurations.cs" />
+    <Compile Include="Configuration\UniqueIdentifier\CpuBasedIdentifierProvider.cs" />
+    <Compile Include="Configuration\UniqueIdentifier\HddBasedIdentifierProvider.cs" />
+    <Compile Include="Configuration\UniqueIdentifier\IUniqueIdentifierProvider.cs" />
     <Compile Include="DynamicTranslatorModule.cs" />
     <Compile Include="Configuration\IClientConfiguration.cs" />
+    <Compile Include="Extensions\UniqueIdProviderExtensions.cs" />
     <Compile Include="GoogleAnalyticsTracker.cs" />
     <Compile Include="ITranslator.cs" />
     <Compile Include="Configuration\Startup\LocalPersistenceConfiguration.cs" />
