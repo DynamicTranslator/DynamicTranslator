@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
   <asmv1:assemblyIdentity name="DynamicTranslator.Wpf.exe" version="3.4.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
-  <description asmv2:iconFile="Resources\translator.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <description asmv2:iconFile="Resources\translator.ico" asmv2:publisher="Oğuzhan Soykan" co.v1:suiteName="DynamicTranslator" asmv2:product="DynamicTranslator" asmv2:supportUrl="https://github.com/osoykan/DynamicTranslator" co.v1:errorReportUrl="https://github.com/osoykan/DynamicTranslator" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
     <assemblyIdentity name="DynamicTranslator.Wpf" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="DynamicTranslator.Wpf.exe" parameters="" />
   </entryPoint>
+  <co.v1:useManifestForTrust xmlns="urn:schemas-microsoft-com:asm.v1" />
   <trustInfo>
     <security>
       <applicationRequestMinimum>
@@ -110,7 +111,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qECNx85NiUbuE521PSCb9wN9VxDvP3lWO/gVi9+Btbo=</dsig:DigestValue>
+        <dsig:DigestValue>tY3M3JhFHwqc0Z8iuGe55Sa7YPCkCZVI3KtivCUJEGw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -122,7 +123,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VdtLWEkv/yqRL7aUiO18aY5f2hqqODclig1qb9XJdoM=</dsig:DigestValue>
+        <dsig:DigestValue>kxwIigAiuh7sWqhC1EsGei32nxtNMzEQ187HMt8DiJc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -134,7 +135,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+c7F8HKYcH7ORKLfE0Jq3+cSPx91naAiaLHe248pngo=</dsig:DigestValue>
+        <dsig:DigestValue>kyeKkErnl8wH9OVuba5wDNOuIstXjpUklbqg9g99QvU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -146,7 +147,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iYd5zxPp3meDeAINKN9mHzqlyz9M/ld92/tsraVzn0w=</dsig:DigestValue>
+        <dsig:DigestValue>dirhJmo23HR5Q4zbWEzO3xmZXWkVytvPEYyBU6ZqikY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -158,7 +159,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>93bnSVgVyVmSGJbyeQtFZnec9z/Yu+CJgBJ9u2ds8Og=</dsig:DigestValue>
+        <dsig:DigestValue>KoDxd6izpvcdNHnhPSRh3hrhqjar7hIsbLUg2vvzrmQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -170,7 +171,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>yOoKQ5zyT0apYaTSAtggqfVh5JqJ6AzflPVZJxm16yc=</dsig:DigestValue>
+        <dsig:DigestValue>sPCrmZFx/jnie7ZioDO5fz5F2WIuqM1mG3ePY1a6Rjs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -182,7 +183,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zzNBxqlTSng1c22zdoFYFbNtyVCTy7LeCOLIyNYJWEE=</dsig:DigestValue>
+        <dsig:DigestValue>NbanAXBY68xZTWn8r+xO+bg2GTyqO5VjjokGmrQJBOw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,7 +195,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZaerlGLUC8++Wy5uqEi2kC31v4zHeY+EzN8+TCYPspA=</dsig:DigestValue>
+        <dsig:DigestValue>EBooNODlusi8FeXuqEX3nyE0qcpbJ2JWpNGdVyVoiRI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -206,7 +207,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5uYBjHy4Hf7T5wRmsR+5nWgJAYDIArj65plQHkmRYa0=</dsig:DigestValue>
+        <dsig:DigestValue>8JRJxQxpQrQ2+A/UqTnFVV93/jwg19par1Et2xPBC4Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -218,7 +219,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3PjtTxD7eVhFL8770JKdu0zwX3kcADq9SON/IjafbYw=</dsig:DigestValue>
+        <dsig:DigestValue>D348H7LqEXU8KDluqA8taSsyLmJAV/Qsdta4wOc4Ts8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
