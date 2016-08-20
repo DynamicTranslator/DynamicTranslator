@@ -3,13 +3,13 @@ using System.Windows;
 
 using Abp;
 using Abp.Dependency;
-using Abp.Extensions;
 using Abp.Runtime.Caching.Configuration;
 
 using Castle.Core.Logging;
 using Castle.Facilities.Logging;
 
 using DynamicTranslator.Configuration.Startup;
+using DynamicTranslator.Constants;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel;
 
@@ -40,8 +40,17 @@ namespace DynamicTranslator.Wpf
 
         private void ConfigureMemoryCache()
         {
-            var defaultSlidingExpireTime = TimeSpan.FromHours(24);
-            bootstrapper.IocManager.Resolve<ICachingConfiguration>().ConfigureAll(cache => { cache.DefaultSlidingExpireTime = defaultSlidingExpireTime; });
+            var cacheConfiguration = bootstrapper.IocManager.Resolve<ICachingConfiguration>();
+
+            cacheConfiguration.Configure(CacheNames.MeanCache, cache =>
+            {
+                cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24);
+            });
+
+            cacheConfiguration.Configure(CacheNames.ReleaseCache, cache =>
+            {
+                cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10);
+            });
         }
 
         private void HandleExceptionsOrNothing()
@@ -53,31 +62,34 @@ namespace DynamicTranslator.Wpf
                 AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
                 {
                     using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                    using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                     {
-                        if (isExtraLoggingEnabled)
+                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                         {
-                            logger.Object.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
-                        }
+                            if (isExtraLoggingEnabled)
+                            {
+                                logger.Object.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
+                            }
 
-                        googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                            googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                        }
                     }
                 };
 
                 AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
                 {
                     using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                    using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                     {
-                        if (isExtraLoggingEnabled)
+                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                         {
-                            logger.Object.Error($"First Chance Exception: {args.Exception.ToString()}");
-                        }
+                            if (isExtraLoggingEnabled)
+                            {
+                                logger.Object.Error($"First Chance Exception: {args.Exception.ToString()}");
+                            }
 
-                        googleClient.Object.TrackException(args.Exception.ToString(), false);
+                            googleClient.Object.TrackException(args.Exception.ToString(), false);
+                        }
                     }
                 };
-
             }
         }
     }
