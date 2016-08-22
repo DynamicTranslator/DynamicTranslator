@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</ProjectGuid>
+    <ProjectGuid>{28594610-055B-4849-9426-560344B4C777}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DynamicTranslator.Application</RootNamespace>
-    <AssemblyName>DynamicTranslator.Application</AssemblyName>
+    <RootNamespace>DynamicTranslator.Domain.DbReeze</RootNamespace>
+    <AssemblyName>DynamicTranslator.Domain.DbReeze</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -47,6 +47,10 @@
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DBreeze, Version=1.75.2016.628, Culture=neutral, PublicKeyToken=174b57f1c155f3c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\DBreeze.1.75.1\lib\net45\DBreeze.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -73,7 +77,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -83,47 +86,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractMeanOrganizer.cs" />
-    <Compile Include="DynamicTranslatorApplicationModule.cs" />
-    <Compile Include="ExceptionInterceptor.cs" />
-    <Compile Include="ILanguageDetector.cs" />
-    <Compile Include="ILanguageDetectorFactory.cs" />
-    <Compile Include="IMeanFinder.cs" />
-    <Compile Include="IMeanFinderFactory.cs" />
-    <Compile Include="IMeanOrganizer.cs" />
-    <Compile Include="IMeanOrganizerFactory.cs" />
-    <Compile Include="InterceptorFacility.cs" />
-    <Compile Include="Orchestrators\IOrchestrator.cs" />
-    <Compile Include="Orchestrators\IResultOrganizer.cs" />
+    <Compile Include="Configuration\Startup\DbReezeConfigurationExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\Configuration\DbReezeModuleConfiguration.cs" />
+    <Compile Include="DBReezeNoSQL\Configuration\IDbReezeModuleConfiguration.cs" />
+    <Compile Include="DBReezeNoSQL\Extensions\DBReezeExtensions.cs" />
+    <Compile Include="DBReezeNoSQL\ITransactionProvider.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\DBReezeRepositoryBaseOfTEntityAndPrimaryKey.cs" />
+    <Compile Include="DBReezeNoSQL\Repository\TranslateResultRepository\TranslateResultRepository.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeDatabaseProvider.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeUnitOfWork.cs" />
+    <Compile Include="DBReezeNoSQL\Uow\DbReezeUowTransactionProvider.cs" />
+    <Compile Include="DynamicTranslatorDbReezeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultOrganizer.cs" />
-    <Compile Include="Result\IResultService.cs" />
-    <Compile Include="Result\ResultService.cs" />
-    <Compile Include="Model\TranslateRequest.cs" />
-    <Compile Include="TextGuardInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator.Domain.DbReeze\DynamicTranslator.Domain.DbReeze.csproj">
-      <Project>{28594610-055B-4849-9426-560344B4C777}</Project>
-      <Name>DynamicTranslator.Domain.DbReeze</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
       <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
       <Name>DynamicTranslator.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Domain.LiteDb\DynamicTranslator.Domain.LiteDb.csproj">
-      <Project>{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}</Project>
-      <Name>DynamicTranslator.Domain.LiteDb</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{a0d66d6a-2a41-4532-ab6e-6443874946e6}</Project>
       <Name>DynamicTranslator</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

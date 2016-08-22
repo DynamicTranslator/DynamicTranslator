@@ -3,12 +3,12 @@
 using Abp.Dependency;
 using Abp.Modules;
 
-using DynamicTranslator.Bing;
+using DynamicTranslator.Application.Bing;
+using DynamicTranslator.Application.Google;
+using DynamicTranslator.Application.SesliSozluk;
+using DynamicTranslator.Application.Tureng;
+using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Google;
-using DynamicTranslator.SesliSozluk;
-using DynamicTranslator.Tureng;
-using DynamicTranslator.Yandex;
 
 using Octokit;
 

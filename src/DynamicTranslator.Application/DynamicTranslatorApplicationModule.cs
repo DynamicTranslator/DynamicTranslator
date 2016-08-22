@@ -6,8 +6,8 @@ using Abp.Runtime.Validation.Interception;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
+using DynamicTranslator.Domain.LiteDb;
 using DynamicTranslator.Domain.Model;
-using DynamicTranslator.LiteDb;
 
 namespace DynamicTranslator.Application
 {

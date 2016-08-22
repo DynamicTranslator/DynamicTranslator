@@ -327,29 +327,29 @@
       <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
       <Name>DynamicTranslator.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Bing\DynamicTranslator.Bing.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj">
       <Project>{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}</Project>
-      <Name>DynamicTranslator.Bing</Name>
+      <Name>DynamicTranslator.Application.Bing</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
       <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
       <Name>DynamicTranslator.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Google\DynamicTranslator.Google.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Application.Google\DynamicTranslator.Application.Google.csproj">
       <Project>{8A97DD07-0E11-499C-80EB-481C041CDAB0}</Project>
-      <Name>DynamicTranslator.Google</Name>
+      <Name>DynamicTranslator.Application.Google</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.SesliSozluk\DynamicTranslator.SesliSozluk.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Application.SesliSozluk\DynamicTranslator.Application.SesliSozluk.csproj">
       <Project>{F0794B80-904C-40EB-93DC-CA7E7EC02459}</Project>
-      <Name>DynamicTranslator.SesliSozluk</Name>
+      <Name>DynamicTranslator.Application.SesliSozluk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Tureng\DynamicTranslator.Tureng.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Application.Tureng\DynamicTranslator.Application.Tureng.csproj">
       <Project>{084D07AF-B50A-473E-BDD7-D99413834436}</Project>
-      <Name>DynamicTranslator.Tureng</Name>
+      <Name>DynamicTranslator.Application.Tureng</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Yandex\DynamicTranslator.Yandex.csproj">
+    <ProjectReference Include="..\DynamicTranslator.Application.Yandex\DynamicTranslator.Application.Yandex.csproj">
       <Project>{63D9C150-E83E-4CB5-AA0A-DD1BC65A79B2}</Project>
-      <Name>DynamicTranslator.Yandex</Name>
+      <Name>DynamicTranslator.Application.Yandex</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>

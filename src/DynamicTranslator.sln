@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Wpf", "Dy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator", "DynamicTranslator\DynamicTranslator.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.DbReeze", "DynamicTranslator.DbReeze\DynamicTranslator.DbReeze.csproj", "{28594610-055B-4849-9426-560344B4C777}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Domain.DbReeze", "DynamicTranslator.Domain.DbReeze\DynamicTranslator.Domain.DbReeze.csproj", "{28594610-055B-4849-9426-560344B4C777}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application", "DynamicTranslator.Application\DynamicTranslator.Application.csproj", "{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}"
 EndProject
@@ -30,19 +30,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Wpf", "03-Wpf", "{F8CC5A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Domain", "DynamicTranslator.Domain\DynamicTranslator.Domain.csproj", "{9205050A-26A4-4047-A691-D6524EEF8F1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Google", "DynamicTranslator.Google\DynamicTranslator.Google.csproj", "{8A97DD07-0E11-499C-80EB-481C041CDAB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Google", "DynamicTranslator.Application.Google\DynamicTranslator.Application.Google.csproj", "{8A97DD07-0E11-499C-80EB-481C041CDAB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Yandex", "DynamicTranslator.Yandex\DynamicTranslator.Yandex.csproj", "{63D9C150-E83E-4CB5-AA0A-DD1BC65A79B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Yandex", "DynamicTranslator.Application.Yandex\DynamicTranslator.Application.Yandex.csproj", "{63D9C150-E83E-4CB5-AA0A-DD1BC65A79B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Tureng", "DynamicTranslator.Tureng\DynamicTranslator.Tureng.csproj", "{084D07AF-B50A-473E-BDD7-D99413834436}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Tureng", "DynamicTranslator.Application.Tureng\DynamicTranslator.Application.Tureng.csproj", "{084D07AF-B50A-473E-BDD7-D99413834436}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.SesliSozluk", "DynamicTranslator.SesliSozluk\DynamicTranslator.SesliSozluk.csproj", "{F0794B80-904C-40EB-93DC-CA7E7EC02459}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.SesliSozluk", "DynamicTranslator.Application.SesliSozluk\DynamicTranslator.Application.SesliSozluk.csproj", "{F0794B80-904C-40EB-93DC-CA7E7EC02459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Bing", "DynamicTranslator.Bing\DynamicTranslator.Bing.csproj", "{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Bing", "DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj", "{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Zargan", "DynamicTranslator.Zargan\DynamicTranslator.Zargan.csproj", "{90EC92E1-0E3C-40D7-80C8-E79B143B04E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Zargan", "DynamicTranslator.Application.Zargan\DynamicTranslator.Application.Zargan.csproj", "{90EC92E1-0E3C-40D7-80C8-E79B143B04E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.LiteDb", "DynamicTranslator.LiteDb\DynamicTranslator.LiteDb.csproj", "{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Domain.LiteDb", "DynamicTranslator.Domain.LiteDb\DynamicTranslator.Domain.LiteDb.csproj", "{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
