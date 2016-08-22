@@ -1,4 +1,4 @@
-# DynamicTranslator 
+# DynamicTranslator | An Instant Translation Application For Windows in .NET
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
 Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary.The Design patterns which it contains Observer Pattern, SOLID, Dependency Inversion with Castle Windsor, Event Oriented Arhitecture, Aspect Oriented Architecture, Asyncronous Programming, DBReeze NoSQL,LiteDB NoSQL, Unit Of Work Pattern, aspnetboilerplate.
