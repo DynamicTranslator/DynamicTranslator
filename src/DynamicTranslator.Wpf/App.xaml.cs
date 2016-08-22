@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 
 using Abp;
 using Abp.Dependency;
@@ -38,19 +39,18 @@ namespace DynamicTranslator.Wpf
             base.OnStartup(eventArgs);
         }
 
+        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         private void ConfigureMemoryCache()
         {
             var cacheConfiguration = bootstrapper.IocManager.Resolve<ICachingConfiguration>();
 
-            cacheConfiguration.Configure(CacheNames.MeanCache, cache =>
-            {
-                cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24);
-            });
+            cacheConfiguration.Configure(CacheNames.MeanCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24); });
 
-            cacheConfiguration.Configure(CacheNames.ReleaseCache, cache =>
-            {
-                cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10);
-            });
+            cacheConfiguration.Configure(CacheNames.ReleaseCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10); });
         }
 
         private void HandleExceptionsOrNothing()

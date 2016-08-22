@@ -16,7 +16,7 @@ namespace DynamicTranslator.Application.Bing
             var means = new StringBuilder();
 
             var response = text.DeserializeAs<BingTranslatorResponse>();
-            if (response.Translations.Any())
+            if ((response.Translations != null) && response.Translations.Any())
             {
                 if (response.Translations.ContainsKey("Bing"))
                 {
