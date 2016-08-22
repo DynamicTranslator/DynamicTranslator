@@ -20,7 +20,9 @@ namespace DynamicTranslator.Bing
             if (response.Translations.Any())
             {
                 if (response.Translations.ContainsKey("Bing"))
+                {
                     means.AppendLine(response.Translations["Bing"]);
+                }
             }
 
             return Task.FromResult(new Maybe<string>(means.ToString()));

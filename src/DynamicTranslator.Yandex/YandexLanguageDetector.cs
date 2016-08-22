@@ -18,7 +18,8 @@ namespace DynamicTranslator.Yandex
 
         private readonly IYandexDetectorConfiguration configuration;
 
-        public YandexLanguageDetector(IYandexDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
+        public YandexLanguageDetector(IYandexDetectorConfiguration configuration,
+            IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
             this.applicationConfiguration = applicationConfiguration;
@@ -34,14 +35,22 @@ namespace DynamicTranslator.Yandex
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(new RestRequest(Method.GET)
                 .AddHeader("cache-control", "no-cache")
-                .AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6")
-                .AddHeader("accept-encoding", "gzip, deflate, sdch")
-                .AddHeader("accept", "*/*")
-                .AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"));
+                 .AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6")
+                 .AddHeader("accept-encoding", "gzip, deflate, sdch")
+                 .AddHeader("accept", "*/*")
+                 .AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"));
 
-            var result = response.Content.DeserializeAs<YandexDetectResponse>();
-            if (result != null && string.IsNullOrEmpty(result.Lang))
+            var result = new YandexDetectResponse();
+
+            if (response.Ok())
+            {
+                result = response.Content.DeserializeAs<YandexDetectResponse>();
+            }
+
+            if ((result != null) && string.IsNullOrEmpty(result.Lang))
+            {
                 return result.Lang;
+            }
 
             return applicationConfiguration.ToLanguage.Extension;
         }

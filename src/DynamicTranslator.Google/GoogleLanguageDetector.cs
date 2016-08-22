@@ -18,7 +18,8 @@ namespace DynamicTranslator.Google
         private readonly IApplicationConfiguration applicationConfiguration;
         private readonly IGoogleDetectorConfiguration configuration;
 
-        public GoogleLanguageDetector(IGoogleDetectorConfiguration configuration, IApplicationConfiguration applicationConfiguration)
+        public GoogleLanguageDetector(IGoogleDetectorConfiguration configuration,
+            IApplicationConfiguration applicationConfiguration)
         {
             this.configuration = configuration;
             this.applicationConfiguration = applicationConfiguration;
@@ -35,12 +36,18 @@ namespace DynamicTranslator.Google
             var response = await new RestClient(uri)
                 .ExecuteGetTaskAsync(new RestRequest(Method.GET)
                     .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
-                    .AddHeader("Accept-Encoding", "gzip, deflate, sdch")
-                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
-                    .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
+                     .AddHeader("Accept-Encoding", "gzip, deflate, sdch")
+                     .AddHeader("User-Agent",
+                         "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36")
+                     .AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"));
 
-            var result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
-            return result?["src"]?.ToString() ?? applicationConfiguration.FromLanguage.Extension;
+            if (response.Ok())
+            {
+                var result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
+                return result?["src"]?.ToString();
+            }
+
+            return applicationConfiguration.FromLanguage.Extension;
         }
     }
 }
