@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Yandex.Configuration;
 using DynamicTranslator.Configuration.Startup;
+using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
 using RestSharp;
@@ -33,11 +34,11 @@ namespace DynamicTranslator.Application.Yandex
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(new RestRequest(Method.GET)
-                .AddHeader("cache-control", "no-cache")
-                 .AddHeader("accept-language", "en-US,en;q=0.8,tr;q=0.6")
-                 .AddHeader("accept-encoding", "gzip, deflate, sdch")
-                 .AddHeader("accept", "*/*")
-                 .AddHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"));
+                .AddHeader(Headers.CacheControl, Headers.NoCache)
+                 .AddHeader(Headers.AcceptLanguage, Headers.AcceptLanguageDefinition)
+                 .AddHeader(Headers.AcceptEncoding, Headers.AcceptEncodingDefinition)
+                 .AddHeader(Headers.Accept, "*/*")
+                 .AddHeader(Headers.UserAgent, Headers.UserAgentDefinition));
 
             var result = new YandexDetectResponse();
 

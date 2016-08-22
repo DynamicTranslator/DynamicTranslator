@@ -12,7 +12,9 @@ namespace DynamicTranslator.Application.Yandex
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
             if (text == null)
+            {
                 return Task.FromResult(new Maybe<string>());
+            }
 
             var doc = new XmlDocument();
             doc.LoadXml(text);

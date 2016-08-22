@@ -30,9 +30,7 @@ namespace DynamicTranslator.Application.SesliSozluk
             this.applicationConfiguration = applicationConfiguration;
         }
 
-        private const string UserAgent =
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
-
+        private const string UserAgent ="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate";
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";

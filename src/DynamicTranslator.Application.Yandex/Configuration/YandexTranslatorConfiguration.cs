@@ -15,5 +15,7 @@ namespace DynamicTranslator.Application.Yandex.Configuration
         public override TranslatorType TranslatorType => TranslatorType.Yandex;
 
         public string ApiKey { get; set; }
+
+        public bool ShouldBeAnonymous { get; set; }
     }
 }

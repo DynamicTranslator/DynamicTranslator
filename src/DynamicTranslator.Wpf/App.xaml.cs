@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -84,6 +85,22 @@ namespace DynamicTranslator.Wpf
                             if (isExtraLoggingEnabled)
                             {
                                 logger.Object.Error($"First Chance Exception: {args.Exception.ToString()}");
+                            }
+
+                            googleClient.Object.TrackException(args.Exception.ToString(), false);
+                        }
+                    }
+                };
+
+                TaskScheduler.UnobservedTaskException += (sender, args) =>
+                {
+                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                    {
+                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                        {
+                            if (isExtraLoggingEnabled)
+                            {
+                                logger.Object.Error($"Unhandled Exception occured: {args.Exception.ToString()}");
                             }
 
                             googleClient.Object.TrackException(args.Exception.ToString(), false);
