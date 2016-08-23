@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Model;
@@ -34,12 +35,36 @@ namespace DynamicTranslator.Application.Yandex
                 return new TranslateResult(false, new Maybe<string>());
             }
 
-            var address = new Uri(
-                string.Format(
-                    configuration.Url +
-                    $"key={configuration.ApiKey}&lang={translateRequest.FromLanguageExtension}-{applicationConfiguration.ToLanguage.Extension}&text={Uri.EscapeUriString(translateRequest.CurrentText)}"));
+            Uri address;
+            IRestResponse response;
+            if (configuration.ShouldBeAnonymous)
+            {
+                address = new Uri(string.Format(configuration.Url +
+                                                new StringBuilder()
+                                                    .Append($"id={configuration.SId}")
+                                                     .Append(Headers.Ampersand)
+                                                     .Append("srv=tr-text")
+                                                     .Append(Headers.Ampersand)
+                                                     .Append($"lang={translateRequest.FromLanguageExtension}-{applicationConfiguration.ToLanguage.Extension}")
+                                                     .Append(Headers.Ampersand)
+                                                     .Append($"text={Uri.EscapeUriString(translateRequest.CurrentText)}")));
 
-            var response = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));
+                response = await new RestClient(address)
+                    .ExecutePostTaskAsync(new RestRequest(Method.POST)
+                        .AddParameter(Headers.ContentTypeDefinition, $"text={translateRequest.CurrentText}"));
+            }
+            else
+            {
+                address = new Uri(string.Format(configuration.Url +
+                                                new StringBuilder()
+                                                    .Append($"key={configuration.ApiKey}")
+                                                     .Append(Headers.Ampersand)
+                                                     .Append($"lang={translateRequest.FromLanguageExtension}-{applicationConfiguration.ToLanguage.Extension}")
+                                                     .Append(Headers.Ampersand)
+                                                     .Append($"text={Uri.EscapeUriString(translateRequest.CurrentText)}")));
+
+                response = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));
+            }
 
             var mean = new Maybe<string>();
 

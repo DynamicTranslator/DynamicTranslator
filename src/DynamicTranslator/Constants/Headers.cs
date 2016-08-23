@@ -14,5 +14,6 @@
         public const string NoCache = "no-cache";
         public const string AcceptDefinition = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         public const string ContentTypeDefinition = "application/x-www-form-urlencoded";
+        public const string Ampersand = "&";
     }
 }

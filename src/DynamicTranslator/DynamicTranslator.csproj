@@ -94,6 +94,8 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +127,7 @@
     <Compile Include="Configuration\IClientConfiguration.cs" />
     <Compile Include="Extensions\RestSharpExtensions.cs" />
     <Compile Include="Extensions\UniqueIdProviderExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="GoogleAnalyticsTracker.cs" />
     <Compile Include="ITranslator.cs" />
     <Compile Include="Configuration\Startup\LocalPersistenceConfiguration.cs" />

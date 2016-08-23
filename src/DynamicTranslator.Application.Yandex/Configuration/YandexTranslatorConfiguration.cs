@@ -16,6 +16,10 @@ namespace DynamicTranslator.Application.Yandex.Configuration
 
         public string ApiKey { get; set; }
 
+        public string BaseUrl { get; set; }
+
         public bool ShouldBeAnonymous { get; set; }
+
+        public string SId { get; set; }
     }
 }

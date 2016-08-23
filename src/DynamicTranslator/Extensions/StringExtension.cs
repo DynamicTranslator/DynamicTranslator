@@ -8,6 +8,11 @@ namespace DynamicTranslator.Extensions
     {
         private static readonly Regex HtmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
+        public static string ExtractByRegex(this string @this, Regex pattern)
+        {
+            return pattern.Match(@this, 0).Value;
+        }
+
         public static string GenerateSlug(this string phrase)
         {
             var str = phrase.RemoveAccent().ToLower();

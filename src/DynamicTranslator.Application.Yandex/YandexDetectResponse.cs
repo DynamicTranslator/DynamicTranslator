@@ -1,9 +1,13 @@
-﻿namespace DynamicTranslator.Application.Yandex
+﻿using System.Collections.Generic;
+
+namespace DynamicTranslator.Application.Yandex
 {
     public class YandexDetectResponse
     {
         public string Code { get; set; }
 
         public string Lang { get; set; }
+
+        public IList<string> Text { get; set; }
     }
 }
