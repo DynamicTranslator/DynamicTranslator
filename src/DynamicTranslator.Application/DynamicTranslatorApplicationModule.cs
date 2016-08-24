@@ -26,8 +26,6 @@ namespace DynamicTranslator.Application
                 Component.For<IMeanOrganizerFactory>().AsFactory(),
                 Component.For<ILanguageDetectorFactory>().AsFactory()
                 );
-
-            MethodInvocationValidator.IgnoredTypesForRecursiveValidation.Add(typeof(CompositeTranslateResult));
         }
 
         public override void PreInitialize()
