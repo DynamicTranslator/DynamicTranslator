@@ -24,7 +24,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override void Delete(TKey id)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                    .Delete(LiteDB.Query.EQ(nameof(id), new BsonValue(id)));
+                     .Delete(LiteDB.Query.EQ(nameof(id), new BsonValue(id)));
         }
 
         public override IQueryable<TEntity> GetAll()
@@ -35,7 +35,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override TEntity Insert(TEntity entity)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                    .Insert(entity);
+                     .Insert(entity);
 
             return entity;
         }
@@ -43,7 +43,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override TEntity Update(TEntity entity)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                    .Update(entity);
+                     .Update(new BsonValue(entity.Id), entity);
 
             return entity;
         }
