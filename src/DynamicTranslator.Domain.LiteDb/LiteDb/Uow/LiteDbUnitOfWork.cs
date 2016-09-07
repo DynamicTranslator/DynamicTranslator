@@ -13,8 +13,8 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Uow
 
         public LiteTransaction Transaction { get; private set; }
 
-        public LiteDbUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions)
-            : base(connectionStringResolver, defaultOptions) {}
+        public LiteDbUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions, IUnitOfWorkFilterExecuter filterExecuter)
+            : base(connectionStringResolver, defaultOptions, filterExecuter) {}
 
         public override void SaveChanges()
         {

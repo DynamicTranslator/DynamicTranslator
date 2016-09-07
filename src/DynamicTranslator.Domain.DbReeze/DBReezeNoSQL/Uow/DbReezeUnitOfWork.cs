@@ -14,8 +14,8 @@ namespace DynamicTranslator.Domain.DbReeze.DBReezeNoSQL.Uow
 
         public Transaction Transaction { get; private set; }
 
-        public DbReezeUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions)
-            : base(connectionStringResolver, defaultOptions) {}
+        public DbReezeUnitOfWork(IConnectionStringResolver connectionStringResolver, IUnitOfWorkDefaultOptions defaultOptions, IUnitOfWorkFilterExecuter filterExecuter)
+            : base(connectionStringResolver, defaultOptions, filterExecuter) {}
 
         public override void SaveChanges()
         {

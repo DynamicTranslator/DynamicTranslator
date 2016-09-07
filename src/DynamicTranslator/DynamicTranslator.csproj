@@ -31,8 +31,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Abp, Version=0.11.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Abp.0.11.2.0\lib\net452\Abp.dll</HintPath>
+    <Reference Include="Abp, Version=0.11.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Abp.0.11.3.0\lib\net452\Abp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AjaxMin, Version=5.14.5506.26196, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
