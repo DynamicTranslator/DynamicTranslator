@@ -11,6 +11,7 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 | From | News |
 |:---------:|:--------:|
 | <a href="#" > <img src="http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Hungary-Flag-icon.png" height="50" width="50"> <img src="https://pbs.twimg.com/profile_images/721846144788094976/YCrswAJy.jpg" height="50" width="50"> </a> | [Hungarian post about DynamicTranslator](http://hvg.hu/tudomany/20160930_dynamic_translator_ingyenes_fordito_program) |
+|<a href="#" > <img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/Spain-Flag.png" height="50" width="50"> <img src="https://pbs.twimg.com/profile_images/629583296725430272/MwkPjX5o.png" height="50" width="50"> </a>|  [Spanish post about DynamicTranslator](http://www.neoteo.com/dynamictranslator-traducir-texto-cualquier-programa) |
 
 ## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.1/v3.4.1.rar)
 
