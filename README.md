@@ -5,10 +5,10 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 
 <a href="http://www.ilovefreesoftware.com/08/windows/free-translation-software-translate-text-application.html" title="FREE TRANSLATION SOFTWARE TO TRANSLATE TEXT IN ANY APPLICATION"><img border="0" src="http://cdn.ilovefreesoftware.com/wp-content/uploads/2011/03/ilovefreesoftware_reviewed_5Star.png"/></a>
 
+## <a href="_blank"> <img src="http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Hungary-Flag-icon.png" height="50" width="50"></a> [Hungarian post about DynamicTranslator](http://hvg.hu/tudomany/20160930_dynamic_translator_ingyenes_fordito_program)
+
+
 ## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.1/v3.4.1.rar)
-
-## <a href="_blank"> <img src="http://icons.iconarchive.com/icons/custom-icon-design/all-country-flag/256/Hungary-Flag-icon.png" height="50" width="50"></a> [Hungarian Post](http://hvg.hu/tudomany/20160930_dynamic_translator_ingyenes_fordito_program?utm_expid=1324304-9.jvgk46vjq96pbmqcdwwplq.0&utm_referrer=http%3a%2f%2fhvg.hu%2ftudomany#)
-
 
 ###Latest News
 
