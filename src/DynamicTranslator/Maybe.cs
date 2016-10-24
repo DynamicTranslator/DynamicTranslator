@@ -7,16 +7,16 @@ namespace DynamicTranslator
     [Serializable]
     public class Maybe<T> : IEnumerable<T>
     {
-        private readonly IEnumerable<T> values;
+        private readonly IEnumerable<T> _values;
 
         public Maybe()
         {
-            values = new T[0];
+            _values = new T[0];
         }
 
         public Maybe(T value)
         {
-            values = new[] {value};
+            _values = new[] { value };
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -26,7 +26,7 @@ namespace DynamicTranslator
 
         public IEnumerator<T> GetEnumerator()
         {
-            return values.GetEnumerator();
+            return _values.GetEnumerator();
         }
     }
 }

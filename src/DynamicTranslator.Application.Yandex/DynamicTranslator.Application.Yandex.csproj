@@ -75,8 +75,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
@@ -97,7 +97,7 @@
     <Compile Include="DynamicTranslatorYandexModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YandexDetectResponse.cs" />
-    <Compile Include="YandexFinder.cs" />
+    <Compile Include="YandexMeanFinder.cs" />
     <Compile Include="YandexLanguageDetector.cs" />
     <Compile Include="YandexMeanOrganizer.cs" />
   </ItemGroup>

@@ -4,6 +4,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Dependency;
+
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
@@ -11,35 +13,48 @@ using HtmlAgilityPack;
 
 namespace DynamicTranslator.Application.Zargan
 {
-    public class ZarganMeanOrganizer : AbstractMeanOrganizer
+    public class ZarganMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
     {
         public override TranslatorType TranslatorType => TranslatorType.Zargan;
 
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            if (text == null) return Task.FromResult(new Maybe<string>());
+            if (text == null)
+            {
+                return Task.FromResult(new Maybe<string>());
+            }
 
-            var result = text;
+            string result = text;
             var output = new StringBuilder();
             var doc = new HtmlDocument();
-            var decoded = WebUtility.HtmlDecode(result);
+            string decoded = WebUtility.HtmlDecode(result);
             doc.LoadHtml(decoded);
 
             var nodesToDelete = new List<HtmlNode>();
             if (doc.DocumentNode.SelectSingleNode("//div[@class='read-more-content']") != null)
+            {
                 nodesToDelete.AddRange(doc.DocumentNode.SelectNodes("//div[@class='read-more-content']").ToList());
+            }
 
             if (doc.DocumentNode.SelectSingleNode("//span[@class='red']") != null)
+            {
                 nodesToDelete.AddRange(doc.DocumentNode.SelectNodes("//span[@class='red']").ToList());
+            }
 
             if (doc.DocumentNode.SelectSingleNode("//a[@class='soundButton']") != null)
+            {
                 nodesToDelete.AddRange(doc.DocumentNode.SelectNodes("//a[@class='soundButton']").ToList());
+            }
 
             if (doc.DocumentNode.SelectSingleNode("//i") != null)
+            {
                 nodesToDelete.AddRange(doc.DocumentNode.SelectNodes("//i").ToList());
+            }
 
             if (doc.DocumentNode.SelectSingleNode("//b") != null)
+            {
                 nodesToDelete.AddRange(doc.DocumentNode.SelectNodes("//b").ToList());
+            }
 
             nodesToDelete.AsParallel().ToList().ForEach(node => node.Remove());
 

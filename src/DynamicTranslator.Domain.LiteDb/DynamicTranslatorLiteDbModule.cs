@@ -16,9 +16,9 @@ namespace DynamicTranslator.Domain.LiteDb
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
-            var noSqlDbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
+            string noSqlDbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DynamicTranslatorDb");
 
-            Configuration.Modules.UseLiteDb().WithConfiguration(cfg => { cfg.Path = noSqlDbPath; });
+            Configuration.Modules.UseLiteDb().WithConfigurations(cfg => { cfg.Path = noSqlDbPath; });
 
             LiteDbMap.Initialize();
         }

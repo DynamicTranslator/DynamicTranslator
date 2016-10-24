@@ -12,11 +12,11 @@ namespace DynamicTranslator.Application
 {
     public class TextGuardInterceptor : IInterceptor
     {
-        private readonly IApplicationConfiguration configuration;
+        private readonly IApplicationConfiguration _configuration;
 
         public TextGuardInterceptor(IApplicationConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         public void Intercept(IInvocation invocation)
@@ -25,8 +25,10 @@ namespace DynamicTranslator.Application
             {
                 var request = invocation.Arguments[0].As<TranslateRequest>();
 
-                if (request.CurrentText.Length > configuration.SearchableCharacterLimit)
+                if (request.CurrentText.Length > _configuration.SearchableCharacterLimit)
+                {
                     throw new MaximumCharacterLimitException("You have exceed maximum character limit");
+                }
 
                 invocation.Proceed();
             }

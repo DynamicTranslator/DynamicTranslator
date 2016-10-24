@@ -13,7 +13,7 @@ namespace DynamicTranslator.Domain.DbReeze.DBReezeNoSQL.Extensions
         {
             ICollection<TEntity> values = new List<TEntity>();
 
-            foreach (var row in rows)
+            foreach (Row<TKey, TEntity> row in rows)
             {
                 values.Add((TEntity)ObjectHelper.ByteArrayToObject(row.GetValuePart(0)));
             }

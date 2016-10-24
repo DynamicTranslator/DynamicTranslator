@@ -16,13 +16,10 @@ namespace DynamicTranslator.Application.SesliSozluk
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseSesliSozlukTranslate().WithConfigurations(configuration =>
-            {
-                configuration.Url = "http://www.seslisozluk.net/c%C3%BCmle-%C3%A7eviri/";
-                configuration.SupportedLanguages = LanguageMapping.SesliSozluk.ToLanguages();
-            });
-
-            IocManager.Register<IMeanFinder, SesliSozlukFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, SesliSozlukMeanOrganizer>(DependencyLifeStyle.Transient);
+                          {
+                              configuration.Url = "http://www.seslisozluk.net/c%C3%BCmle-%C3%A7eviri/";
+                              configuration.SupportedLanguages = LanguageMapping.SesliSozluk.ToLanguages();
+                          });
         }
     }
 }

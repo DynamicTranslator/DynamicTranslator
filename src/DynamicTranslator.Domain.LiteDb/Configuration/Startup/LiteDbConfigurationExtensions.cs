@@ -17,7 +17,7 @@ namespace DynamicTranslator.Domain.LiteDb.Configuration.Startup
             return configurations.AbpConfiguration.Get<ILiteDbModuleConfiguration>();
         }
 
-        public static void WithConfiguration(this ILiteDbModuleConfiguration dbReezeModuleConfiguration, Action<ILiteDbModuleConfiguration> configuration)
+        public static void WithConfigurations(this ILiteDbModuleConfiguration dbReezeModuleConfiguration, Action<ILiteDbModuleConfiguration> configuration)
         {
             configuration(dbReezeModuleConfiguration);
             IocManager.Instance.Register<LiteDatabase>(new LiteDatabase(dbReezeModuleConfiguration.Path));

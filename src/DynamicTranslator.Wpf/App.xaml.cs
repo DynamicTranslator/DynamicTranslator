@@ -19,19 +19,19 @@ namespace DynamicTranslator.Wpf
 {
     public partial class App
     {
-        private readonly AbpBootstrapper bootstrapper;
+        private readonly AbpBootstrapper _bootstrapper;
 
         public App()
         {
-            bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
-            bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
+            _bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
+            _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
         }
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            bootstrapper.Initialize();
+            _bootstrapper.Initialize();
 
-            bootstrapper.IocManager.Register<IGrowlNotifications, GrowlNotifications>();
+            _bootstrapper.IocManager.Register<IGrowlNotifications, GrowlNotifications>();
 
             HandleExceptionsOrNothing();
 
@@ -47,7 +47,7 @@ namespace DynamicTranslator.Wpf
 
         private void ConfigureMemoryCache()
         {
-            var cacheConfiguration = bootstrapper.IocManager.Resolve<ICachingConfiguration>();
+            var cacheConfiguration = _bootstrapper.IocManager.Resolve<ICachingConfiguration>();
 
             cacheConfiguration.Configure(CacheNames.MeanCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24); });
 
@@ -56,15 +56,15 @@ namespace DynamicTranslator.Wpf
 
         private void HandleExceptionsOrNothing()
         {
-            using (var applicationConfiguration = bootstrapper.IocManager.ResolveAsDisposable<IApplicationConfiguration>())
+            using (var applicationConfiguration = _bootstrapper.IocManager.ResolveAsDisposable<IApplicationConfiguration>())
             {
-                var isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
+                bool isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
                 {
-                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                    using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
                     {
-                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                        using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                         {
                             if (isExtraLoggingEnabled)
                             {
@@ -76,27 +76,11 @@ namespace DynamicTranslator.Wpf
                     }
                 };
 
-                AppDomain.CurrentDomain.FirstChanceException += (sender, args) =>
-                {
-                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                    {
-                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
-                        {
-                            if (isExtraLoggingEnabled)
-                            {
-                                logger.Object.Error($"First Chance Exception: {args.Exception.ToString()}");
-                            }
-
-                            googleClient.Object.TrackException(args.Exception.ToString(), false);
-                        }
-                    }
-                };
-
                 TaskScheduler.UnobservedTaskException += (sender, args) =>
                 {
-                    using (var googleClient = bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
+                    using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
                     {
-                        using (var logger = bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                        using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
                         {
                             if (isExtraLoggingEnabled)
                             {

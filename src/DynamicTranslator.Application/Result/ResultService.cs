@@ -11,23 +11,23 @@ namespace DynamicTranslator.Application.Result
 {
     public class ResultService : ApplicationService, IResultService
     {
-        private readonly ITranslateResultRepository resultRepository;
+        private readonly ITranslateResultRepository _resultRepository;
 
         public ResultService(ITranslateResultRepository resultRepository)
         {
-            this.resultRepository = resultRepository;
+            _resultRepository = resultRepository;
         }
 
         [UnitOfWork]
         public Task<CompositeTranslateResult> GetAsync(string key)
         {
-            return resultRepository.GetAsync(key);
+            return _resultRepository.GetAsync(key);
         }
 
         [UnitOfWork]
         public Task<CompositeTranslateResult> SaveOrUpdateAsync(CompositeTranslateResult translateResult)
         {
-            var lastResult = resultRepository.FirstOrDefault(translateResult.Id);
+            CompositeTranslateResult lastResult = _resultRepository.FirstOrDefault(translateResult.Id);
 
             if (lastResult != null)
             {
@@ -36,11 +36,11 @@ namespace DynamicTranslator.Application.Result
                     .SetCreateDate(DateTime.Now)
                     .IncreaseFrequency();
 
-                return resultRepository.UpdateAsync(lastResult);
+                return _resultRepository.UpdateAsync(lastResult);
             }
 
             lastResult = translateResult;
-            return resultRepository.InsertAsync(lastResult);
+            return _resultRepository.InsertAsync(lastResult);
         }
     }
 }

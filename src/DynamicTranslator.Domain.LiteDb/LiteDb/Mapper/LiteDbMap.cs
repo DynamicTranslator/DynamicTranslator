@@ -8,7 +8,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Mapper
     {
         public static void Initialize()
         {
-            var mapper = BsonMapper.Global;
+            BsonMapper mapper = BsonMapper.Global;
             mapper.TrimWhitespace = true;
             mapper.SerializeNullValues = true;
             mapper.EmptyStringToNull = true;

@@ -11,7 +11,7 @@ namespace DynamicTranslator.Application.SesliSozluk.Configuration
         {
             moduleConfigurations.Configurations.ActiveTranslatorConfiguration.AddTranslator(TranslatorType.SesliSozluk);
 
-            return moduleConfigurations.Configurations.GetOrCreate("DynamicTranslator.SesliSozluk.Translator", () => moduleConfigurations.Configurations.IocManager.Resolve<ISesliSozlukTranslatorConfiguration>());
+            return moduleConfigurations.Configurations.Get<ISesliSozlukTranslatorConfiguration>();
         }
 
         public static void WithConfigurations(this ISesliSozlukTranslatorConfiguration configuration, Action<ISesliSozlukTranslatorConfiguration> creator)

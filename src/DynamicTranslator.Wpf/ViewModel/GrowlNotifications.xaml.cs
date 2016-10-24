@@ -14,17 +14,17 @@ namespace DynamicTranslator.Wpf.ViewModel
     public partial class GrowlNotifications : IGrowlNotifications
     {
         public readonly Notifications Notifications;
-        private readonly IApplicationConfiguration applicationConfiguration;
-        private readonly Notifications buffer = new Notifications();
+        private readonly IApplicationConfiguration _applicationConfiguration;
+        private readonly Notifications _buffer = new Notifications();
         public bool IsDisposed;
-        private int count;
+        private int _count;
 
         public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
-            this.applicationConfiguration = applicationConfiguration;
+            this._applicationConfiguration = applicationConfiguration;
             Notifications = notifications;
-            NotificationsControl.DataContext = Notifications;
+            _notificationsControl.DataContext = Notifications;
         }
 
         public event EventHandler OnDispose;
@@ -35,7 +35,7 @@ namespace DynamicTranslator.Wpf.ViewModel
                 return;
 
             Notifications.Clear();
-            buffer.Clear();
+            _buffer.Clear();
 
             OnDispose.InvokeSafely(this, new EventArgs());
 
@@ -48,9 +48,9 @@ namespace DynamicTranslator.Wpf.ViewModel
             Dispatcher.InvokeAsync(
                 () =>
                 {
-                    notification.Id = count++;
-                    if (Notifications.Count + 1 > applicationConfiguration.MaxNotifications)
-                        buffer.Add(notification);
+                    notification.Id = _count++;
+                    if (Notifications.Count + 1 > _applicationConfiguration.MaxNotifications)
+                        _buffer.Add(notification);
                     else
                         Notifications.Add(notification);
 
@@ -73,10 +73,10 @@ namespace DynamicTranslator.Wpf.ViewModel
                     if (Notifications.Contains(notification))
                         Notifications.Remove(notification);
 
-                    if (buffer.Count > 0)
+                    if (_buffer.Count > 0)
                     {
-                        Notifications.Add(buffer[0]);
-                        buffer.RemoveAt(0);
+                        Notifications.Add(_buffer[0]);
+                        _buffer.RemoveAt(0);
                     }
 
                     if (Notifications.Count < 1)

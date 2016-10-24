@@ -18,15 +18,15 @@ namespace DynamicTranslator.Application.Google
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseGoogleTranslate().WithConfigurations(configuration =>
-            {
-                configuration.Url = GoogleTranslateUrl;
-                configuration.SupportedLanguages = LanguageMapping.All.ToLanguages();
-            });
+                          {
+                              configuration.Url = GoogleTranslateUrl;
+                              configuration.SupportedLanguages = LanguageMapping.All.ToLanguages();
+                          });
 
-            Configurations.ModuleConfigurations.UseGoogleDetector().WithConfigurations(configuration => { configuration.Url = GoogleTranslateUrl; });
-
-            IocManager.Register<IMeanFinder, GoogleTranslateFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, GoogleTranslateMeanOrganizer>(DependencyLifeStyle.Transient);
+            Configurations.ModuleConfigurations.UseGoogleDetector().WithConfigurations(configuration =>
+                          {
+                              configuration.Url = GoogleTranslateUrl;
+                          });
         }
     }
 }

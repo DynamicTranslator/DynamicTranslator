@@ -17,7 +17,7 @@ namespace DynamicTranslator.Domain.DbReeze.Configuration.Startup
             return configurations.AbpConfiguration.Get<IDbReezeModuleConfiguration>();
         }
 
-        public static void WithConfiguration(this IDbReezeModuleConfiguration dbReezeModuleConfiguration, Action<IDbReezeModuleConfiguration> configuration)
+        public static void WithConfigurations(this IDbReezeModuleConfiguration dbReezeModuleConfiguration, Action<IDbReezeModuleConfiguration> configuration)
         {
             configuration(dbReezeModuleConfiguration);
             IocManager.Instance.Register<DBreezeEngine>(new DBreezeEngine(dbReezeModuleConfiguration.Configuration));

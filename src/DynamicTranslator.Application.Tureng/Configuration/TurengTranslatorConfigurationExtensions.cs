@@ -11,7 +11,7 @@ namespace DynamicTranslator.Application.Tureng.Configuration
         {
             moduleConfigurations.Configurations.ActiveTranslatorConfiguration.AddTranslator(TranslatorType.Tureng);
 
-            return moduleConfigurations.Configurations.GetOrCreate("DynamicTranslator.Tureng.Translator", () => moduleConfigurations.Configurations.IocManager.Resolve<ITurengTranslatorConfiguration>());
+            return moduleConfigurations.Configurations.Get<ITurengTranslatorConfiguration>();
         }
 
         public static void WithConfigurations(this ITurengTranslatorConfiguration configuration, Action<ITurengTranslatorConfiguration> creator)

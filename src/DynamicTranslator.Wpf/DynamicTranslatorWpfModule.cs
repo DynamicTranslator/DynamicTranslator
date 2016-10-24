@@ -26,8 +26,7 @@ namespace DynamicTranslator.Wpf
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
-            IocManager.Register<GitHubClient>(new GitHubClient(new ProductHeaderValue(Configurations.ApplicationConfiguration.GitHubRepositoryName)),
-                DependencyLifeStyle.Transient);
+            IocManager.Register<GitHubClient>(new GitHubClient(new ProductHeaderValue(Configurations.ApplicationConfiguration.GitHubRepositoryName)), DependencyLifeStyle.Transient);
         }
     }
 }

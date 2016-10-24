@@ -27,7 +27,7 @@ namespace DynamicTranslator.Domain.DbReeze.DBReezeNoSQL.Repository.TranslateResu
 
         public CompositeTranslateResult SetTranslateResultAndUpdateFrequency(CompositeTranslateResult result)
         {
-            var translateResult = FirstOrDefault(result.Id);
+            CompositeTranslateResult translateResult = FirstOrDefault(result.Id);
 
             if (translateResult != null)
             {
@@ -46,7 +46,7 @@ namespace DynamicTranslator.Domain.DbReeze.DBReezeNoSQL.Repository.TranslateResu
 
         public async Task<CompositeTranslateResult> SetTranslateResultAndUpdateFrequencyAsync(CompositeTranslateResult result)
         {
-            var translateResult = await FirstOrDefaultAsync(result.Id);
+            CompositeTranslateResult translateResult = await FirstOrDefaultAsync(result.Id);
 
             if (translateResult != null)
             {

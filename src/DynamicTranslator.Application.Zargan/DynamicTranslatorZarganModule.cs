@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 
-using Abp.Dependency;
 using Abp.Modules;
 
 using DynamicTranslator.Application.Zargan.Configuration;
@@ -16,13 +15,10 @@ namespace DynamicTranslator.Application.Zargan
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseZarganTranslate().WithConfigurations(configuration =>
-            {
-                configuration.Url = "";
-                configuration.SupportedLanguages = LanguageMapping.All.ToLanguages();
-            });
-
-            IocManager.Register<IMeanOrganizer, ZarganMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, ZarganFinder>(DependencyLifeStyle.Transient);
+                          {
+                              configuration.Url = "";
+                              configuration.SupportedLanguages = LanguageMapping.All.ToLanguages();
+                          });
         }
     }
 }

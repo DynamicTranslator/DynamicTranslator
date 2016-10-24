@@ -19,7 +19,7 @@ namespace DynamicTranslator.Configuration
 
         public IAppConfigManager SaveOrUpdate(string key, string value)
         {
-            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            System.Configuration.Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             configuration.AppSettings.Settings[key].Value = value;
             configuration.Save();
             ConfigurationManager.RefreshSection("appSettings");

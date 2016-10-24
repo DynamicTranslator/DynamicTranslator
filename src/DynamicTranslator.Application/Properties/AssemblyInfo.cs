@@ -37,6 +37,5 @@ using DynamicTranslator;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-
 [assembly: AssemblyVersion(ApplicationVersion.CurrentVersion)]
 [assembly: AssemblyFileVersion(ApplicationVersion.CurrentVersion)]

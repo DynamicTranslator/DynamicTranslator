@@ -24,21 +24,21 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class MainWindow
     {
-        private readonly ICacheManager cacheManager;
-        private readonly IDynamicTranslatorConfiguration configurations;
-        private readonly ITranslatorBootstrapper translator;
-        private bool isRunning;
-        private IDisposable versionObserver;
+        private readonly ICacheManager _cacheManager;
+        private readonly IDynamicTranslatorConfiguration _configurations;
+        private readonly ITranslatorBootstrapper _translator;
+        private bool _isRunning;
+        private IDisposable _versionObserver;
 
         public MainWindow()
         {
             InitializeComponent();
 
             IocManager.Instance.Register(typeof(MainWindow), this);
-            configurations = IocManager.Instance.Resolve<IDynamicTranslatorConfiguration>();
-            translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
-            translator.SubscribeShutdownEvents();
-            cacheManager = IocManager.Instance.Resolve<ICacheManager>();
+            _configurations = IocManager.Instance.Resolve<IDynamicTranslatorConfiguration>();
+            _translator = IocManager.Instance.Resolve<ITranslatorBootstrapper>();
+            _translator.SubscribeShutdownEvents();
+            _cacheManager = IocManager.Instance.Resolve<ICacheManager>();
 
             FillLanguageCombobox();
             InitializeVersionChecker();
@@ -46,93 +46,94 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            versionObserver.Dispose();
+            _versionObserver.Dispose();
             Dispatcher.BeginInvokeShutdown(DispatcherPriority.Background);
             base.OnClosing(e);
         }
 
-        private void btnSwitch_Click(object sender, RoutedEventArgs e)
+        private void BtnSwitchClick(object sender, RoutedEventArgs e)
         {
-            if (isRunning)
+            if (_isRunning)
             {
-                BtnSwitch.Content = "Start Translator";
+                _btnSwitch.Content = "Start Translator";
 
-                isRunning = false;
+                _isRunning = false;
 
                 UnlockUiElements();
 
-                translator.Dispose();
+                _translator.Dispose();
             }
             else
             {
-                BtnSwitch.Content = "Stop Translator";
+                _btnSwitch.Content = "Stop Translator";
 
-                var selectedLanguageName = ((Language)ComboBoxLanguages.SelectedItem).Name;
-                configurations.AppConfigManager.SaveOrUpdate("ToLanguage", selectedLanguageName);
-                configurations.ApplicationConfiguration.ToLanguage = new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
+                string selectedLanguageName = ((Language)_comboBoxLanguages.SelectedItem).Name;
+                _configurations.AppConfigManager.SaveOrUpdate("ToLanguage", selectedLanguageName);
+                _configurations.ApplicationConfiguration.ToLanguage = new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
 
                 PrepareTranslators();
                 LockUiElements();
 
                 this.DispatchingAsync(async () =>
                 {
-                    if (!translator.IsInitialized)
+                    if (!_translator.IsInitialized)
                     {
-                        await translator.InitializeAsync();
+                        await _translator.InitializeAsync();
                     }
                 });
 
-                isRunning = true;
+                _isRunning = true;
             }
         }
 
         private void FillLanguageCombobox()
         {
-            foreach (var language in LanguageMapping.All.ToLanguages())
+            foreach (Language language in LanguageMapping.All.ToLanguages())
             {
-                ComboBoxLanguages.Items.Add(language);
+                _comboBoxLanguages.Items.Add(language);
             }
 
-            ComboBoxLanguages.SelectedValue = configurations.ApplicationConfiguration.ToLanguage.Extension;
+            _comboBoxLanguages.SelectedValue = _configurations.ApplicationConfiguration.ToLanguage.Extension;
         }
 
         private Task<Release> GetReleaseFromCache(IDisposableDependencyObjectWrapper<GitHubClient> gitHubClient)
         {
-            return cacheManager.GetCache(CacheNames.ReleaseCache)
+            return _cacheManager.GetCache(CacheNames.ReleaseCache)
                                 .GetAsync(CacheNames.ReleaseCache,
                                     async () => await gitHubClient.Object
-                                        .Repository
-                                        .Release
-                                        .GetLatest(
-                                            configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
-                                            configurations.ApplicationConfiguration.GitHubRepositoryName));
+                                                                  .Repository
+                                                                  .Release
+                                                                  .GetLatest(
+                                                                      _configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
+                                                                      _configurations.ApplicationConfiguration.GitHubRepositoryName));
         }
 
-        private void GithubButton_Click(object sender, RoutedEventArgs e)
+        private void GithubButtonClick(object sender, RoutedEventArgs e)
         {
             Process.Start("https://github.com/osoykan/DynamicTranslator");
         }
 
         private void InitializeVersionChecker()
         {
-            NewVersionButton.Visibility = Visibility.Hidden;
+            _newVersionButton.Visibility = Visibility.Hidden;
 
-            versionObserver = Observable.Interval(TimeSpan.FromMinutes(1))
+            _versionObserver = Observable.Interval(TimeSpan.FromMinutes(1))
                                          .Subscribe(async x =>
                                          {
                                              using (var gitHubClient = IocManager.Instance.ResolveAsDisposable<GitHubClient>())
                                              {
-                                                 var release = await GetReleaseFromCache(gitHubClient);
+                                                 Release release = await GetReleaseFromCache(gitHubClient);
 
-                                                 var version = release.TagName;
+                                                 string version = release.TagName;
 
                                                  if (!ApplicationVersion.Is(version))
                                                  {
                                                      await this.DispatchingAsync(() =>
                                                      {
-                                                         NewVersionButton.Visibility = Visibility.Visible;
-                                                         NewVersionButton.Content = $"A new version {version} released, update now!";
-                                                         configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
+                                                         _newVersionButton.Visibility = Visibility.Visible;
+                                                         _newVersionButton.Content = $"A new version {version} released, update now!";
+                                                         _configurations.ApplicationConfiguration.UpdateLink =
+                                                             release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
                                                      });
                                                  }
                                              }
@@ -141,18 +142,18 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void LockUiElements()
         {
-            ComboBoxLanguages.Focusable = false;
-            ComboBoxLanguages.IsHitTestVisible = false;
-            CheckBoxGoogleTranslate.IsHitTestVisible = false;
-            CheckBoxTureng.IsHitTestVisible = false;
-            CheckBoxYandexTranslate.IsHitTestVisible = false;
-            CheckBoxSesliSozluk.IsHitTestVisible = false;
-            CheckBoxBing.IsHitTestVisible = false;
+            _comboBoxLanguages.Focusable = false;
+            _comboBoxLanguages.IsHitTestVisible = false;
+            _checkBoxGoogleTranslate.IsHitTestVisible = false;
+            _checkBoxTureng.IsHitTestVisible = false;
+            _checkBoxYandexTranslate.IsHitTestVisible = false;
+            _checkBoxSesliSozluk.IsHitTestVisible = false;
+            _checkBoxBing.IsHitTestVisible = false;
         }
 
-        private void NewVersionButton_Click(object sender, RoutedEventArgs e)
+        private void NewVersionButtonClick(object sender, RoutedEventArgs e)
         {
-            var updateLink = configurations.ApplicationConfiguration.UpdateLink;
+            string updateLink = _configurations.ApplicationConfiguration.UpdateLink;
             if (!string.IsNullOrEmpty(updateLink))
             {
                 Process.Start(updateLink);
@@ -161,47 +162,47 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void PrepareTranslators()
         {
-            configurations.ActiveTranslatorConfiguration.PassivateAll();
+            _configurations.ActiveTranslatorConfiguration.PassivateAll();
 
-            if ((CheckBoxGoogleTranslate.IsChecked != null) && CheckBoxGoogleTranslate.IsChecked.Value)
+            if ((_checkBoxGoogleTranslate.IsChecked != null) && _checkBoxGoogleTranslate.IsChecked.Value)
             {
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Google);
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Google);
             }
-            if ((CheckBoxYandexTranslate.IsChecked != null) && CheckBoxYandexTranslate.IsChecked.Value)
+            if ((_checkBoxYandexTranslate.IsChecked != null) && _checkBoxYandexTranslate.IsChecked.Value)
             {
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Yandex);
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Yandex);
             }
-            if ((CheckBoxTureng.IsChecked != null) && CheckBoxTureng.IsChecked.Value)
+            if ((_checkBoxTureng.IsChecked != null) && _checkBoxTureng.IsChecked.Value)
             {
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Tureng);
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Tureng);
             }
-            if ((CheckBoxSesliSozluk.IsChecked != null) && CheckBoxSesliSozluk.IsChecked.Value)
+            if ((_checkBoxSesliSozluk.IsChecked != null) && _checkBoxSesliSozluk.IsChecked.Value)
             {
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.SesliSozluk);
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.SesliSozluk);
             }
-            if ((CheckBoxBing.IsChecked != null) && CheckBoxBing.IsChecked.Value)
+            if ((_checkBoxBing.IsChecked != null) && _checkBoxBing.IsChecked.Value)
             {
-                configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
             }
 
-            if (!configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
+            if (!_configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
             {
-                foreach (var value in Enum.GetValues(typeof(TranslatorType)))
+                foreach (object value in Enum.GetValues(typeof(TranslatorType)))
                 {
-                    configurations.ActiveTranslatorConfiguration.Activate((TranslatorType)value);
+                    _configurations.ActiveTranslatorConfiguration.Activate((TranslatorType)value);
                 }
             }
         }
 
         private void UnlockUiElements()
         {
-            ComboBoxLanguages.Focusable = true;
-            ComboBoxLanguages.IsHitTestVisible = true;
-            CheckBoxGoogleTranslate.IsHitTestVisible = true;
-            CheckBoxTureng.IsHitTestVisible = true;
-            CheckBoxYandexTranslate.IsHitTestVisible = true;
-            CheckBoxSesliSozluk.IsHitTestVisible = true;
-            CheckBoxBing.IsHitTestVisible = true;
+            _comboBoxLanguages.Focusable = true;
+            _comboBoxLanguages.IsHitTestVisible = true;
+            _checkBoxGoogleTranslate.IsHitTestVisible = true;
+            _checkBoxTureng.IsHitTestVisible = true;
+            _checkBoxYandexTranslate.IsHitTestVisible = true;
+            _checkBoxSesliSozluk.IsHitTestVisible = true;
+            _checkBoxBing.IsHitTestVisible = true;
         }
     }
 }

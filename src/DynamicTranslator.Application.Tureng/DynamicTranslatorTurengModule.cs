@@ -16,12 +16,10 @@ namespace DynamicTranslator.Application.Tureng
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseSesliSozlukTranslate().WithConfigurations(configuration =>
-            {
-                configuration.Url = "http://tureng.com/search/";
-                configuration.SupportedLanguages = LanguageMapping.Tureng.ToLanguages();
-            });
-            IocManager.Register<IMeanFinder, TurengFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, TurengMeanOrganizer>(DependencyLifeStyle.Transient);
+                          {
+                              configuration.Url = "http://tureng.com/search/";
+                              configuration.SupportedLanguages = LanguageMapping.Tureng.ToLanguages();
+                          });
         }
     }
 }

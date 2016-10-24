@@ -14,32 +14,32 @@ namespace DynamicTranslator.Application
 {
     public class ResultOrganizer : IResultOrganizer, ITransientDependency
     {
-        private readonly IResultService resultService;
+        private readonly IResultService _resultService;
 
         public ResultOrganizer(IResultService resultService)
         {
-            this.resultService = resultService;
+            _resultService = resultService;
         }
 
         public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
         {
             var mean = new StringBuilder();
-            foreach (var result in findedMeans.Where(result => result.IsSuccess))
+            foreach (TranslateResult result in findedMeans.Where(result => result.IsSuccess))
             {
                 mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
             }
 
             if (!string.IsNullOrEmpty(mean.ToString()))
             {
-                var means = mean.ToString().Split('\r')
-                                .Select(x => x.Trim().ToLower())
-                                .Where(s => s != string.Empty && s != currentString.Trim() && s != "Translation")
-                                .Distinct()
-                                .ToList();
+                List<string> means = mean.ToString().Split('\r')
+                                         .Select(x => x.Trim().ToLower())
+                                         .Where(s => (s != string.Empty) && (s != currentString.Trim()) && (s != "Translation"))
+                                         .Distinct()
+                                         .ToList();
 
                 mean.Clear();
                 means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                resultService.SaveOrUpdateAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                _resultService.SaveOrUpdateAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
                 return Task.FromResult(new Maybe<string>(mean.ToString()));
             }
 

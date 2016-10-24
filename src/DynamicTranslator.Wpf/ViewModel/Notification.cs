@@ -8,10 +8,10 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public class Notification : INotifyPropertyChanged, INotification, ITransientDependency
     {
-        private int id;
-        private string imageUrl;
-        private string message;
-        private string title;
+        private int _id;
+        private string _imageUrl;
+        private string _message;
+        private string _title;
 
         public Notification()
         {
@@ -22,56 +22,56 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         public int Id
         {
-            get { return id; }
+            get { return _id; }
 
             set
             {
-                if (id == value)
+                if (_id == value)
                     return;
 
-                id = value;
+                _id = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Id)));
             }
         }
 
         public string ImageUrl
         {
-            get { return imageUrl; }
+            get { return _imageUrl; }
 
             set
             {
-                if (imageUrl == value)
+                if (_imageUrl == value)
                     return;
 
-                imageUrl = value;
+                _imageUrl = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(ImageUrl)));
             }
         }
 
         public string Message
         {
-            get { return message; }
+            get { return _message; }
 
             set
             {
-                if (message == value)
+                if (_message == value)
                     return;
 
-                message = value;
+                _message = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Message)));
             }
         }
 
         public string Title
         {
-            get { return title; }
+            get { return _title; }
 
             set
             {
-                if (title == value)
+                if (_title == value)
                     return;
 
-                title = value;
+                _title = value;
 
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Title)));
             }

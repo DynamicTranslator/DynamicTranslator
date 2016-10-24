@@ -19,11 +19,11 @@ namespace DynamicTranslator.Application
 {
     public class ExceptionInterceptor : IInterceptor
     {
-        private readonly IGoogleAnalyticsService googleAnalytics;
+        private readonly IGoogleAnalyticsService _googleAnalytics;
 
         public ExceptionInterceptor(IGoogleAnalyticsService googleAnalytics)
         {
-            this.googleAnalytics = googleAnalytics;
+            _googleAnalytics = googleAnalytics;
         }
 
         public void Intercept(IInvocation invocation)
@@ -111,10 +111,11 @@ namespace DynamicTranslator.Application
         {
             if (typeof(IMeanFinder).IsAssignableFrom(invocation.TargetType))
             {
-                var translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
+                Type translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
                 if (translateResultType != null)
                 {
-                    var returnObj = Task.FromResult(Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>());
+                    Task<TranslateResult> returnObj =
+                        Task.FromResult(Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>());
                     invocation.ReturnValue = returnObj;
                 }
             }
@@ -123,9 +124,11 @@ namespace DynamicTranslator.Application
         private void HandleException(IInvocation invocation, Exception ex)
         {
             if (ex == null)
+            {
                 return;
+            }
 
-            var exceptionText = ExtractExceptionMessage(invocation, ex);
+            string exceptionText = ExtractExceptionMessage(invocation, ex);
 
             HandleReturnValueForCharacterLimitException(invocation);
 
@@ -135,9 +138,11 @@ namespace DynamicTranslator.Application
         private Task HandleExceptionAsync(IInvocation invocation, Exception ex)
         {
             if (ex == null)
+            {
                 return Task.FromResult(0);
+            }
 
-            var exceptionText = ExtractExceptionMessage(invocation, ex);
+            string exceptionText = ExtractExceptionMessage(invocation, ex);
 
             HandleReturnValueForCharacterLimitException(invocation);
 
@@ -146,12 +151,12 @@ namespace DynamicTranslator.Application
 
         private void SendExceptionGoogleAnalytics(string text, bool isFatal)
         {
-            googleAnalytics.TrackException(text, isFatal);
+            _googleAnalytics.TrackException(text, isFatal);
         }
 
         private Task SendExceptionGoogleAnalyticsAsync(string text, bool isFatal)
         {
-            return googleAnalytics.TrackExceptionAsync(text, isFatal);
+            return _googleAnalytics.TrackExceptionAsync(text, isFatal);
         }
     }
 }

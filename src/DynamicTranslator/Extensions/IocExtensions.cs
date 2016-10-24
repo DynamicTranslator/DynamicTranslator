@@ -13,11 +13,12 @@ namespace DynamicTranslator.Extensions
             Register(iocManager, typeof(TType), instance, lifeStyle);
         }
 
-        public static void Register(this IIocManager iocManager, Type serviceType, object instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public static void Register(this IIocManager iocManager, Type serviceType, object instance,
+            DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
             iocManager.IocContainer.Register(
-                Component.For(serviceType).Instance(instance).ApplyLifestyle(lifeStyle)
-                );
+                          Component.For(serviceType).Instance(instance).ApplyLifestyle(lifeStyle)
+                      );
         }
 
         private static ComponentRegistration<T> ApplyLifestyle<T>(this ComponentRegistration<T> registration, DependencyLifeStyle lifeStyle)

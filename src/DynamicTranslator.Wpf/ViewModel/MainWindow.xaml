@@ -1,8 +1,8 @@
 ﻿<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:D="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Mc:Ignorable="D"
     x:Class="DynamicTranslator.Wpf.ViewModel.MainWindow"
     Title="DynamicTranslator || Oğuzhan Soykan"
     ResizeMode="CanMinimize"
@@ -18,16 +18,16 @@
                         <RowDefinition Height="0*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label x:Name="LabelCurrentLanguage" Content="To Language:" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Margin="0,11,0,0" Grid.RowSpan="2" />
+                    <Label x:Name="_labelCurrentLanguage" Content="To Language:" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Margin="0,11,0,0" Grid.RowSpan="2" />
                 </Grid>
-                <ComboBox x:Name="ComboBoxLanguages"
+                <ComboBox x:Name="_comboBoxLanguages"
                           Style="{DynamicResource ResourceKey={x:Type ComboBox}}"
                           DisplayMemberPath="Name"
                           SelectedValuePath="Extension"
                           VerticalAlignment="Center" Width="188" Height="32" />
             </WrapPanel>
-            <Button x:Name="BtnSwitch" Height="Auto" Content="Start Translator" Padding="2"
-                    Click="btnSwitch_Click" RenderTransformOrigin="1.753,4.04"
+            <Button x:Name="_btnSwitch" Height="Auto" Content="Start Translator" Padding="2"
+                    Click="BtnSwitchClick" RenderTransformOrigin="1.753,4.04"
                     BorderBrush="#FF040404" Foreground="White" FontFamily="Showcard Gothic" FontSize="16"
                     FontWeight="Bold"
                     Opacity="0.9" Margin="0,72,0,164">
@@ -40,25 +40,25 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Click="GithubButton_Click" Height="Auto" Width="Auto" Background="Transparent"
+            <Button Click="GithubButtonClick" Height="Auto" Width="Auto" Background="Transparent"
                     Margin="158,243,159,5">
                 <Image Source="../Resources/github_100x150.png" />
             </Button>
-            <Grid x:Name="LanguagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
+            <Grid x:Name="_languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
                   VerticalAlignment="Top">
-                <CheckBox x:Name="CheckBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
+                <CheckBox x:Name="_checkBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
                           Margin="23,10,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxYandexTranslate" Content="Yandex Translate" HorizontalAlignment="Left"
+                <CheckBox x:Name="_checkBoxYandexTranslate" Content="Yandex Translate" HorizontalAlignment="Left"
                           Margin="205,10,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxSesliSozluk" Content="Sesli Sozluk Translate" HorizontalAlignment="Left"
+                <CheckBox x:Name="_checkBoxSesliSozluk" Content="Sesli Sozluk Translate" HorizontalAlignment="Left"
                           Margin="205,33,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
+                <CheckBox x:Name="_checkBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
                           Margin="23,33,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
+                <CheckBox x:Name="_checkBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
                           Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
             </Grid>
-            <Button x:Name="NewVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,211,0,0"
-                    VerticalAlignment="Top" Width="363" Height="27" Click="NewVersionButton_Click" />
+            <Button x:Name="_newVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,211,0,0"
+                    VerticalAlignment="Top" Width="363" Height="27" Click="NewVersionButtonClick" />
 
         </Grid>
 

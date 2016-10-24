@@ -2,19 +2,20 @@
 using System.Xml;
 
 using Abp.Collections.Extensions;
+using Abp.Dependency;
 
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Application.Yandex
 {
-    public class YandexMeanOrganizer : AbstractMeanOrganizer
+    public class YandexMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
     {
         public override TranslatorType TranslatorType => TranslatorType.Yandex;
 
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
-            var output = string.Empty;
+            string output;
 
             if (text == null)
             {
@@ -25,7 +26,7 @@ namespace DynamicTranslator.Application.Yandex
             {
                 var doc = new XmlDocument();
                 doc.LoadXml(text);
-                var node = doc.SelectSingleNode("//Translation/text");
+                XmlNode node = doc.SelectSingleNode("//Translation/text");
                 output = node?.InnerText ?? "!!! An error occurred";
             }
             else

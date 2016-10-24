@@ -9,11 +9,11 @@ namespace DynamicTranslator
 {
     public class GoogleAnalyticsTracker : IObserver<long>, ISingletonDependency
     {
-        private readonly IGoogleAnalyticsService googleAnalyticsService;
+        private readonly IGoogleAnalyticsService _googleAnalyticsService;
 
         public GoogleAnalyticsTracker(IGoogleAnalyticsService googleAnalyticsService)
         {
-            this.googleAnalyticsService = googleAnalyticsService;
+            _googleAnalyticsService = googleAnalyticsService;
         }
 
         public void OnCompleted() {}
@@ -24,7 +24,7 @@ namespace DynamicTranslator
         {
             await Task.Run(async () =>
             {
-                await googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
+                await _googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
                     "dynamictranslator",

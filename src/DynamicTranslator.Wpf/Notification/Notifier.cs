@@ -8,21 +8,21 @@ namespace DynamicTranslator.Wpf.Notification
 {
     public class Notifier : INotifier, ITransientDependency
     {
-        private readonly IGrowlNotifications growlNotifiactions;
+        private readonly IGrowlNotifications _growlNotifiactions;
 
         public Notifier(IGrowlNotifications growlNotifiactions)
         {
-            this.growlNotifiactions = growlNotifiactions;
+            _growlNotifiactions = growlNotifiactions;
         }
 
         public void AddNotification(string title, string imageUrl, string text)
         {
-            growlNotifiactions.AddNotification(new ViewModel.Notification {ImageUrl = imageUrl, Message = text, Title = title});
+            _growlNotifiactions.AddNotification(new ViewModel.Notification { ImageUrl = imageUrl, Message = text, Title = title });
         }
 
         public Task AddNotificationAsync(string title, string imageUrl, string text)
         {
-            return growlNotifiactions.AddNotificationAsync(new ViewModel.Notification {ImageUrl = imageUrl, Message = text, Title = title});
+            return _growlNotifiactions.AddNotificationAsync(new ViewModel.Notification { ImageUrl = imageUrl, Message = text, Title = title });
         }
     }
 }

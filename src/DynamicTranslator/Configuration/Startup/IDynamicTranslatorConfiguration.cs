@@ -18,5 +18,7 @@ namespace DynamicTranslator.Configuration.Startup
         ILocalPersistenceConfiguration LocalConfigurationPersistence { get; }
 
         ITranslatorModuleConfigurations ModuleConfigurations { get; }
+
+        T Get<T>();
     }
 }

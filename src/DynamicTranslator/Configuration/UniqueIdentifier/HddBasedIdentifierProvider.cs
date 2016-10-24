@@ -6,10 +6,10 @@ namespace DynamicTranslator.Configuration.UniqueIdentifier
     {
         public string Get()
         {
-            const string Drive = "C";
-            var dsk = new ManagementObject(@"win32_logicaldisk.deviceid=""" + Drive + @":""");
+            const string drive = "C";
+            var dsk = new ManagementObject(@"win32_logicaldisk.deviceid=""" + drive + @":""");
             dsk.Get();
-            var volumeSerial = dsk["VolumeSerialNumber"].ToString();
+            string volumeSerial = dsk["VolumeSerialNumber"].ToString();
 
             return volumeSerial;
         }

@@ -24,6 +24,11 @@ namespace DynamicTranslator.Configuration.Startup
 
         public ITranslatorModuleConfigurations ModuleConfigurations { get; private set; }
 
+        public T Get<T>()
+        {
+            return GetOrCreate(typeof(T).FullName, () => IocManager.Resolve<T>());
+        }
+
         public void Initialize()
         {
             ApplicationConfiguration = IocManager.Resolve<IApplicationConfiguration>();

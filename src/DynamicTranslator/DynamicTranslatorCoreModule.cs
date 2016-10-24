@@ -21,8 +21,8 @@ namespace DynamicTranslator
             IocManager.Register<IUniqueIdentifierProvider, CpuBasedIdentifierProvider>();
             IocManager.Resolve<DynamicTranslatorConfiguration>().Initialize();
 
-            var existingToLanguage = AppConfigManager.Get("ToLanguage");
-            var existingFromLanguage = AppConfigManager.Get("FromLanguage");
+            string existingToLanguage = AppConfigManager.Get("ToLanguage");
+            string existingFromLanguage = AppConfigManager.Get("FromLanguage");
 
             Configurations.ApplicationConfiguration.IsLanguageDetectionEnabled = true;
             Configurations.ApplicationConfiguration.IsExtraLoggingEnabled = true;
@@ -35,11 +35,11 @@ namespace DynamicTranslator
             Configurations.ApplicationConfiguration.FromLanguage = new Language(existingFromLanguage, LanguageMapping.All[existingFromLanguage]);
 
             Configurations.ApplicationConfiguration.ClientConfiguration.CreateOrConsolidate(client =>
-            {
-                client.AppVersion = ApplicationVersion.GetCurrentVersion();
-                client.Id = string.IsNullOrEmpty(AppConfigManager.Get("ClientId")) ? GenerateUniqueClientId() : AppConfigManager.Get("ClientId");
-                client.MachineName = Environment.MachineName.Normalize();
-            });
+                          {
+                              client.AppVersion = ApplicationVersion.GetCurrentVersion();
+                              client.Id = string.IsNullOrEmpty(AppConfigManager.Get("ClientId")) ? GenerateUniqueClientId() : AppConfigManager.Get("ClientId");
+                              client.MachineName = Environment.MachineName.Normalize();
+                          });
 
             Configurations.GoogleAnalyticsConfiguration.Url = "http://www.google-analytics.com/collect";
             Configurations.GoogleAnalyticsConfiguration.TrackingId = "UA-70082243-2";

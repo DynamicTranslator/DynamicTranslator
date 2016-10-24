@@ -16,13 +16,10 @@ namespace DynamicTranslator.Application.Bing
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseBingTranslate().WithConfigurations(configuration =>
-            {
-                configuration.Url = "http://dictionary.cambridge.org/translate/ajax";
-                configuration.SupportedLanguages = LanguageMapping.Bing.ToLanguages();
-            });
-
-            IocManager.Register<IMeanFinder, BingTranslatorFinder>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanOrganizer, BingTranslatorMeanOrganizer>(DependencyLifeStyle.Transient);
+                          {
+                              configuration.Url = "http://dictionary.cambridge.org/translate/ajax";
+                              configuration.SupportedLanguages = LanguageMapping.Bing.ToLanguages();
+                          });
         }
     }
 }

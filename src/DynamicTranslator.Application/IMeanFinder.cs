@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Model;
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application
 {
-    public interface IMeanFinder : IOrchestrator
+    public interface IMeanFinder
     {
         Task<TranslateResult> Find(TranslateRequest translateRequest);
     }

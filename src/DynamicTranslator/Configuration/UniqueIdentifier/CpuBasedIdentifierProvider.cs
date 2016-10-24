@@ -8,11 +8,11 @@ namespace DynamicTranslator.Configuration.UniqueIdentifier
     {
         public string Get()
         {
-            var cpuInfo = string.Empty;
+            string cpuInfo = string.Empty;
             var mc = new ManagementClass("win32_processor");
-            var moc = mc.GetInstances();
+            ManagementObjectCollection moc = mc.GetInstances();
 
-            foreach (var o in moc)
+            foreach (ManagementBaseObject o in moc)
             {
                 var mo = o.As<ManagementObject>();
                 cpuInfo = mo.Properties["processorID"].Value.ToString();

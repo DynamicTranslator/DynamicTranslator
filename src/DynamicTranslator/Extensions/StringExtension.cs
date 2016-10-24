@@ -6,7 +6,7 @@ namespace DynamicTranslator.Extensions
 {
     public static class StringExtension
     {
-        private static readonly Regex HtmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
+        private static readonly Regex htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
         public static string ExtractByRegex(this string @this, Regex pattern)
         {
@@ -15,7 +15,7 @@ namespace DynamicTranslator.Extensions
 
         public static string GenerateSlug(this string phrase)
         {
-            var str = phrase.RemoveAccent().ToLower();
+            string str = phrase.RemoveAccent().ToLower();
 
             // invalid chars           
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
@@ -31,7 +31,7 @@ namespace DynamicTranslator.Extensions
 
         public static string GetEncodedUrlForTurkishCharacters(this string textToEncode)
         {
-            var temp = textToEncode;
+            string temp = textToEncode;
 
             for (var i = 0; i < temp.Length; i++)
             {
@@ -90,7 +90,7 @@ namespace DynamicTranslator.Extensions
             var arrayIndex = 0;
             var inside = false;
 
-            foreach (var let in source)
+            foreach (char let in source)
             {
                 if (let == '<')
                 {
@@ -121,12 +121,12 @@ namespace DynamicTranslator.Extensions
 
         public static string StripTagsRegexCompiled(this string source)
         {
-            return HtmlRegex.Replace(source, string.Empty);
+            return htmlRegex.Replace(source, string.Empty);
         }
 
         private static string RemoveAccent(this string txt)
         {
-            var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
+            byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return Encoding.ASCII.GetString(bytes);
         }
     }

@@ -15,7 +15,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForDetector(IHandler handler)
         {
-            var isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
+            bool isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
             if (isDetector)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
@@ -24,7 +24,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForMeanFinder(IHandler handler)
         {
-            var isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanFinder));
+            bool isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanFinder));
             if (isMeanFinder)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
@@ -34,7 +34,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForMeanOrganizer(IHandler handler)
         {
-            var isMeanOrganizer = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanOrganizer));
+            bool isMeanOrganizer = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanOrganizer));
             if (isMeanOrganizer)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));

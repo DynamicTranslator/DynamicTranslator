@@ -14,31 +14,31 @@ namespace DynamicTranslator.Application.Yandex
 {
     public class YandexLanguageDetector : ILanguageDetector
     {
-        private readonly IApplicationConfiguration applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
 
-        private readonly IYandexDetectorConfiguration configuration;
+        private readonly IYandexDetectorConfiguration _configuration;
 
         public YandexLanguageDetector(IYandexDetectorConfiguration configuration,
             IApplicationConfiguration applicationConfiguration)
         {
-            this.configuration = configuration;
-            this.applicationConfiguration = applicationConfiguration;
+            _configuration = configuration;
+            _applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<string> DetectLanguage(string text)
         {
-            var uri = string.Format(configuration.Url, text);
+            string uri = string.Format(_configuration.Url, text);
 
-            var response = await new RestClient(uri)
+            IRestResponse response = await new RestClient(uri)
             {
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
             }.ExecuteGetTaskAsync(new RestRequest(Method.GET)
                 .AddHeader(Headers.CacheControl, Headers.NoCache)
-                 .AddHeader(Headers.AcceptLanguage, Headers.AcceptLanguageDefinition)
-                 .AddHeader(Headers.AcceptEncoding, Headers.AcceptEncodingDefinition)
-                 .AddHeader(Headers.Accept, "*/*")
-                 .AddHeader(Headers.UserAgent, Headers.UserAgentDefinition));
+                .AddHeader(Headers.AcceptLanguage, Headers.AcceptLanguageDefinition)
+                .AddHeader(Headers.AcceptEncoding, Headers.AcceptEncodingDefinition)
+                .AddHeader(Headers.Accept, "*/*")
+                .AddHeader(Headers.UserAgent, Headers.UserAgentDefinition));
 
             var result = new YandexDetectResponse();
 
@@ -52,7 +52,7 @@ namespace DynamicTranslator.Application.Yandex
                 return result.Lang;
             }
 
-            return applicationConfiguration.ToLanguage.Extension;
+            return _applicationConfiguration.ToLanguage.Extension;
         }
     }
 }

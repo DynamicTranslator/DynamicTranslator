@@ -7,13 +7,13 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Uow
 {
     public class LiteDbUowTransactionProvider : ITransactionProvider, ITransientDependency
     {
-        private readonly ICurrentUnitOfWorkProvider currentUnitOfWorkProvider;
+        private readonly ICurrentUnitOfWorkProvider _currentUnitOfWorkProvider;
 
         public LiteDbUowTransactionProvider(ICurrentUnitOfWorkProvider currentUnitOfWorkProvider)
         {
-            this.currentUnitOfWorkProvider = currentUnitOfWorkProvider;
+            _currentUnitOfWorkProvider = currentUnitOfWorkProvider;
         }
 
-        public LiteTransaction Transaction => currentUnitOfWorkProvider.Current.GetTransaction();
+        public LiteTransaction Transaction => _currentUnitOfWorkProvider.Current.GetTransaction();
     }
 }

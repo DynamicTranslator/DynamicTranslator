@@ -75,8 +75,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
@@ -93,7 +93,7 @@
     <Compile Include="Configuration\BingTranslatorConfigurationExtensions.cs" />
     <Compile Include="Configuration\IBingTranslatorConfiguration.cs" />
     <Compile Include="DynamicTranslatorBingModule.cs" />
-    <Compile Include="BingTranslatorFinder.cs" />
+    <Compile Include="BingTranslatorMeanFinder.cs" />
     <Compile Include="BingTranslatorMeanOrganizer.cs" />
     <Compile Include="BingTranslatorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

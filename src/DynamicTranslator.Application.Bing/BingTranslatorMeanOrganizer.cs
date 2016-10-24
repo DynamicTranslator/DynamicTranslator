@@ -2,12 +2,14 @@
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Dependency;
+
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Application.Bing
 {
-    public class BingTranslatorMeanOrganizer : AbstractMeanOrganizer
+    public class BingTranslatorMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
     {
         public override TranslatorType TranslatorType => TranslatorType.Bing;
 

@@ -11,15 +11,15 @@ namespace DynamicTranslator.ObservableUtil
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            var collectionChanged = CollectionChanged;
+            NotifyCollectionChangedEventHandler collectionChanged = CollectionChanged;
             if (collectionChanged != null)
             {
-                foreach (var @delegate in collectionChanged.GetInvocationList())
+                foreach (Delegate @delegate in collectionChanged.GetInvocationList())
                 {
                     var nh = (NotifyCollectionChangedEventHandler)@delegate;
                     var dispObj = nh.Target as DispatcherObject;
-                    var dispatcher = dispObj?.Dispatcher;
-                    if (dispatcher != null && !dispatcher.CheckAccess())
+                    Dispatcher dispatcher = dispObj?.Dispatcher;
+                    if ((dispatcher != null) && !dispatcher.CheckAccess())
                     {
                         dispatcher.BeginInvoke(
                             (Action)(() => nh.Invoke(this,

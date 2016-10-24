@@ -19,7 +19,7 @@ namespace DynamicTranslator.Configuration.Startup
         {
             return SupportedLanguages.Any(x => x.Extension == ApplicationConfiguration.ToLanguage.Extension)
                    && ActiveTranslatorConfiguration.ActiveTranslators
-                                                   .Any(x => x.Type == TranslatorType
+                                                   .Any(x => (x.Type == TranslatorType)
                                                              && x.IsActive
                                                              && x.IsEnabled);
         }

@@ -2,6 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 
+using Abp.Dependency;
+
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
@@ -9,7 +11,7 @@ using HtmlAgilityPack;
 
 namespace DynamicTranslator.Application.SesliSozluk
 {
-    public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer
+    public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
     {
         public override TranslatorType TranslatorType => TranslatorType.SesliSozluk;
 

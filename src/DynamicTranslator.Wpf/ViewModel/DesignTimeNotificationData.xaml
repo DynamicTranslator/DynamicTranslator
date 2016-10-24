@@ -1,14 +1,14 @@
-﻿<viewModel:Notifications xmlns:viewModel="clr-namespace:DynamicTranslator.Wpf.ViewModel">
-    <viewModel:Notification Id="1" Title="Notification #1"
+﻿<ViewModel:Notifications xmlns:ViewModel="clr-namespace:DynamicTranslator.Wpf.ViewModel">
+    <ViewModel:Notification Id="1" Title="Notification #1"
                             ImageUrl="pack://application:,,,/Resources/notification-icon.png"
                             Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="2" Title="Notification #2"
+    <ViewModel:Notification Id="2" Title="Notification #2"
                             ImageUrl="pack://application:,,,/Resources/microsoft-windows-8-logo.png"
                             Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="3" Title="Notification #3"
+    <ViewModel:Notification Id="3" Title="Notification #3"
                             ImageUrl="pack://application:,,,/Resources/facebook-button.png"
                             Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="4" Title="Notification #4"
+    <ViewModel:Notification Id="4" Title="Notification #4"
                             ImageUrl="pack://application:,,,/Resources/Radiation_warning_symbol.png"
                             Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-</viewModel:Notifications>
+</ViewModel:Notifications>

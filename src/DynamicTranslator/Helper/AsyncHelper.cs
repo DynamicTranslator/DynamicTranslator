@@ -14,7 +14,7 @@ namespace DynamicTranslator.Helper
         /// <param name="method">A method to check</param>
         public static bool IsAsyncMethod(MethodInfo method)
         {
-            return method.ReturnType == typeof(Task) || (method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>));
+            return (method.ReturnType == typeof(Task)) || (method.ReturnType.IsGenericType && (method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>)));
         }
 
         /// <summary>

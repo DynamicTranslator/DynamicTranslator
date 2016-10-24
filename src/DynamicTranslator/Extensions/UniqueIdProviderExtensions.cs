@@ -10,7 +10,7 @@ namespace DynamicTranslator.Extensions
     {
         public static string BuildForAll(this IEnumerable<IUniqueIdentifierProvider> providers)
         {
-            var uniqueId = string.Empty;
+            string uniqueId = string.Empty;
 
             providers.ForEach(provider => { uniqueId += provider.Get(); });
 

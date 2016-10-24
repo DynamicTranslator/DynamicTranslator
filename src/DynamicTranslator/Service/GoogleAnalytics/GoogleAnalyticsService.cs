@@ -11,12 +11,12 @@ namespace DynamicTranslator.Service.GoogleAnalytics
     {
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
-        private readonly IApplicationConfiguration configuration;
-        private readonly string googleVersion = "1";
+        private readonly IApplicationConfiguration _configuration;
+        private readonly string _googleVersion = "1";
 
         public GoogleAnalyticsService(IApplicationConfiguration configuration)
         {
-            this.configuration = configuration;
+            _configuration = configuration;
         }
 
         public void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
@@ -93,9 +93,9 @@ namespace DynamicTranslator.Service.GoogleAnalytics
         {
             var ht = new Hashtable
             {
-                {"v", googleVersion},
-                {"tid", TrackingId},
-                {"cid", configuration.ClientConfiguration.Id}
+                { "v", _googleVersion },
+                { "tid", TrackingId },
+                { "cid", _configuration.ClientConfiguration.Id }
             };
 
             // Version.
@@ -107,10 +107,16 @@ namespace DynamicTranslator.Service.GoogleAnalytics
         private void PostData(IDictionary values)
         {
             var data = "";
-            foreach (var key in values.Keys)
+            foreach (object key in values.Keys)
             {
-                if (data != "") data += "&";
-                if (values[key] != null) data += key + "=" + HttpUtility.UrlEncode(values[key].ToString());
+                if (data != "")
+                {
+                    data += "&";
+                }
+                if (values[key] != null)
+                {
+                    data += key + "=" + HttpUtility.UrlEncode(values[key].ToString());
+                }
             }
 
             using (var client = new WebClient())
@@ -122,10 +128,16 @@ namespace DynamicTranslator.Service.GoogleAnalytics
         private async Task PostDataAsync(IDictionary values)
         {
             var data = "";
-            foreach (var key in values.Keys)
+            foreach (object key in values.Keys)
             {
-                if (data != "") data += "&";
-                if (values[key] != null) data += key + "=" + HttpUtility.UrlEncode(values[key].ToString());
+                if (data != "")
+                {
+                    data += "&";
+                }
+                if (values[key] != null)
+                {
+                    data += key + "=" + HttpUtility.UrlEncode(values[key].ToString());
+                }
             }
 
             using (var client = new WebClient())
@@ -136,7 +148,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareEcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "item"); // Item hit type.
             ht.Add("ti", id); // transaction ID.            Required.
@@ -152,7 +164,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareEcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "transaction"); // Transaction hit type.
             ht.Add("ti", id); // transaction ID.            Required.
@@ -167,7 +179,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareTrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "screenview"); // Pageview hit type.
             ht.Add("an", appName); //App Name
@@ -181,20 +193,26 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareTrackEvent(string category, string action, string label, string value)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "event"); // Event hit type
             ht.Add("ec", category); // Event Category. Required.
             ht.Add("ea", action); // Event Action. Required.
-            if (label != null) ht.Add("el", label); // Event label.
-            if (value != null) ht.Add("ev", value); // Event value.
+            if (label != null)
+            {
+                ht.Add("el", label); // Event label.
+            }
+            if (value != null)
+            {
+                ht.Add("ev", value); // Event value.
+            }
 
             return ht;
         }
 
         private Hashtable PrepareTrackException(string description, bool fatal)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "exception"); // Exception hit type.
             ht.Add("exd", description); // Exception description.         Required.
@@ -205,7 +223,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareTrackPage(string hostname, string page, string title)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "pageview"); // Pageview hit type.
             ht.Add("dh", hostname); // Document hostname.
@@ -217,7 +235,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 
         private Hashtable PrepareTrackSocial(string action, string network, string target)
         {
-            var ht = BaseValues();
+            Hashtable ht = BaseValues();
 
             ht.Add("t", "social"); // Social hit type.
             ht.Add("dh", action); // Social Action.         Required.

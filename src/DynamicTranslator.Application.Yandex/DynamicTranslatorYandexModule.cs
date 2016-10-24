@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Abp.Dependency;
 using Abp.Modules;
 
 using DynamicTranslator.Application.Yandex.Configuration;
@@ -26,20 +25,17 @@ namespace DynamicTranslator.Application.Yandex
         {
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
-            IocManager.Register<IMeanOrganizer, YandexMeanOrganizer>(DependencyLifeStyle.Transient);
-            IocManager.Register<IMeanFinder, YandexFinder>(DependencyLifeStyle.Transient);
-
             Configurations.ModuleConfigurations.UseYandexDetector().WithConfigurations(configuration => { configuration.Url = Url; });
 
             Configurations.ModuleConfigurations.UseYandexTranslate().WithConfigurations(configuration =>
-                           {
-                               configuration.ShouldBeAnonymous = false;
-                               configuration.BaseUrl = BaseUrl;
-                               configuration.SId = InternalSId;
-                               configuration.Url = configuration.ShouldBeAnonymous ? AnonymousUrl : Url;
-                               configuration.ApiKey = AppConfigManager.Get("YandexApiKey");
-                               configuration.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
-                           });
+                          {
+                              configuration.ShouldBeAnonymous = false;
+                              configuration.BaseUrl = BaseUrl;
+                              configuration.SId = InternalSId;
+                              configuration.Url = configuration.ShouldBeAnonymous ? AnonymousUrl : Url;
+                              configuration.ApiKey = AppConfigManager.Get("YandexApiKey");
+                              configuration.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
+                          });
         }
 
         private static string FindSid()
@@ -47,18 +43,14 @@ namespace DynamicTranslator.Application.Yandex
             try
             {
                 var getAdd = new Uri(BaseUrl);
-                var res = new RestClient(getAdd).ExecuteGetTaskAsync(new RestRequest(Method.GET)).Result;
+                IRestResponse res = new RestClient(getAdd).ExecuteGetTaskAsync(new RestRequest(Method.GET)).Result;
                 if (res.Ok())
                 {
                     return new StringBuilder(res.Content
-                            .ExtractByRegex(new Regex("SID:.*"))
-                            .TrimEnd(',')
-                            .Replace("SID:", string.Empty)
-                            .Replace("'", string.Empty))
-                        .Append("-1")
-                         .Append("-0")
-                         .ToString()
-                         .Trim();
+                                                .ExtractByRegex(new Regex("SID:.*"))
+                                                .TrimEnd(',')
+                                                .Replace("SID:", string.Empty)
+                                                .Replace("'", string.Empty)).Append("-1").Append("-0").ToString().Trim();
                 }
 
                 return InternalSId;

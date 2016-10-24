@@ -9,12 +9,12 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
 {
     public class LiteDbRepositoryBase<TEntity, TKey> : AbpRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {
-        public LiteDatabase Database { get; }
-
         public LiteDbRepositoryBase(LiteDatabase database)
         {
             Database = database;
         }
+
+        public LiteDatabase Database { get; }
 
         public override void Delete(TEntity entity)
         {
@@ -24,7 +24,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override void Delete(TKey id)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                     .Delete(LiteDB.Query.EQ(nameof(id), new BsonValue(id)));
+                    .Delete(LiteDB.Query.EQ(nameof(id), new BsonValue(id)));
         }
 
         public override IQueryable<TEntity> GetAll()
@@ -35,7 +35,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override TEntity Insert(TEntity entity)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                     .Insert(entity);
+                    .Insert(entity);
 
             return entity;
         }
@@ -43,7 +43,7 @@ namespace DynamicTranslator.Domain.LiteDb.LiteDb.Repository
         public override TEntity Update(TEntity entity)
         {
             Database.GetCollection<TEntity>(typeof(TEntity).Name)
-                     .Update(new BsonValue(entity.Id), entity);
+                    .Update(new BsonValue(entity.Id), entity);
 
             return entity;
         }
