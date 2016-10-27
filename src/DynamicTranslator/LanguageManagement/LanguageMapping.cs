@@ -220,5 +220,24 @@ namespace DynamicTranslator.LanguageManagement
             { "Estonian", "et" },
             { "Japanese", "ja" }
         };
+
+        public static IDictionary<string, string> Prompt => new Dictionary<string, string>
+        {
+            { "English", "en" },
+            { "Arabic", "ar" },
+            { "Catalan", "ca" },
+            { "Chinese", "zh" },
+            { "Finnish", "fi" },
+            { "French", "fr" },
+            { "German", "de" },
+            { "Greek", "el" },
+            { "Italian", "it" },
+            { "Japanese", "ja" },
+            { "Kazakh", "kk" },
+            { "Portuguese", "pt" },
+            { "Russian", "ru" },
+            { "Spanish", "es" },
+            { "Turkish", "tr" }
+        };
     }
 }

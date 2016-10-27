@@ -7,6 +7,7 @@
         SesliSozluk,
         Google,
         Bing,
+        Prompt,
         Zargan
     }
 }

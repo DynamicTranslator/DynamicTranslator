@@ -47,7 +47,7 @@ namespace DynamicTranslator.Application.Bing
                 text = translateRequest.CurrentText
             };
 
-            IRestResponse response = await new RestClient(_bingConfiguration.Url)
+            var response = await new RestClient(_bingConfiguration.Url)
                 .ExecutePostTaskAsync(new RestRequest(Method.POST)
                     .AddHeader(ContentTypeName, ContentType)
                     .AddParameter(ContentType,
@@ -58,7 +58,7 @@ namespace DynamicTranslator.Application.Bing
 
             if (response.Ok())
             {
-                IMeanOrganizer meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await meanOrganizer.OrganizeMean(response.Content);
             }
 

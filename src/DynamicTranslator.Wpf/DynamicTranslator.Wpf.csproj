@@ -327,6 +327,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DynamicTranslator.Application.Prompt\DynamicTranslator.Application.Prompt.csproj">
+      <Project>{5A181B97-9B9E-4B26-A48D-DC6C184AB222}</Project>
+      <Name>DynamicTranslator.Application.Prompt</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">
       <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
       <Name>DynamicTranslator.Application</Name>

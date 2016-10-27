@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Applicati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Domain.LiteDb", "DynamicTranslator.Domain.LiteDb\DynamicTranslator.Domain.LiteDb.csproj", "{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Application.Prompt", "DynamicTranslator.Application.Prompt\DynamicTranslator.Application.Prompt.csproj", "{5A181B97-9B9E-4B26-A48D-DC6C184AB222}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,10 @@ Global
 		{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A181B97-9B9E-4B26-A48D-DC6C184AB222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A181B97-9B9E-4B26-A48D-DC6C184AB222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A181B97-9B9E-4B26-A48D-DC6C184AB222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A181B97-9B9E-4B26-A48D-DC6C184AB222}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,5 +121,6 @@ Global
 		{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E} = {2D654F9C-CD45-4348-A0AF-7DD4192F08A3}
 		{90EC92E1-0E3C-40D7-80C8-E79B143B04E8} = {2D654F9C-CD45-4348-A0AF-7DD4192F08A3}
 		{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76} = {AC8515DF-4F4E-4065-8E73-52EAC5984D3C}
+		{5A181B97-9B9E-4B26-A48D-DC6C184AB222} = {2D654F9C-CD45-4348-A0AF-7DD4192F08A3}
 	EndGlobalSection
 EndGlobal

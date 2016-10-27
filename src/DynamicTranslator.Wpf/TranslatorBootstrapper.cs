@@ -48,11 +48,11 @@ namespace DynamicTranslator.Wpf
             ICacheManager cacheManager,
             IClipboardManager clipboardManager)
         {
-            this._mainWindow = mainWindow;
-            this._growlNotifications = growlNotifications;
-            this._applicationConfiguration = applicationConfiguration;
-            this._cacheManager = cacheManager;
-            this._clipboardManager = clipboardManager;
+            _mainWindow = mainWindow;
+            _growlNotifications = growlNotifications;
+            _applicationConfiguration = applicationConfiguration;
+            _cacheManager = cacheManager;
+            _clipboardManager = clipboardManager;
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
@@ -146,21 +146,21 @@ namespace DynamicTranslator.Wpf
             return Task.Run(async () =>
             {
                 await _mainWindow.Dispatcher.InvokeAsync(async () =>
-                {
-                    Win32.SendMessage(_hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
+                                     {
+                                         Win32.SendMessage(_hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
 
-                    if (_clipboardManager.IsContainsText())
-                    {
-                        var currentText = _clipboardManager.GetCurrentText();
+                                         if (_clipboardManager.IsContainsText())
+                                         {
+                                             var currentText = _clipboardManager.GetCurrentText();
 
-                        if (!string.IsNullOrEmpty(currentText))
-                        {
-                            await TriggerTextCaptured(currentText);
-                            _clipboardManager.Clear();
-                        }
-                    }
-                },
-                    DispatcherPriority.Background);
+                                             if (!string.IsNullOrEmpty(currentText))
+                                             {
+                                                 await TriggerTextCaptured(currentText);
+                                                 _clipboardManager.Clear();
+                                             }
+                                         }
+                                     },
+                                     DispatcherPriority.Background);
             });
         }
 
@@ -168,7 +168,9 @@ namespace DynamicTranslator.Wpf
         {
             _isMouseDown = false;
             if (_cancellationTokenSource.Token.IsCancellationRequested)
+            {
                 return;
+            }
 
             await SendCopyCommandAsync();
         }
@@ -176,7 +178,9 @@ namespace DynamicTranslator.Wpf
         private async void MouseDown(object sender, MouseEventArgs e)
         {
             if (_cancellationTokenSource.Token.IsCancellationRequested)
+            {
                 return;
+            }
 
             _mouseFirstPoint = e.Location;
             _isMouseDown = true;
@@ -189,7 +193,9 @@ namespace DynamicTranslator.Wpf
             {
                 _mouseSecondPoint = e.Location;
                 if (_cancellationTokenSource.Token.IsCancellationRequested)
+                {
                     return;
+                }
 
                 await SendCopyCommandAsync();
                 _isMouseDown = false;
@@ -215,7 +221,7 @@ namespace DynamicTranslator.Wpf
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => WhenClipboardContainsTextEventHandler += h,
                     h => WhenClipboardContainsTextEventHandler -= h).
-                 Subscribe(IocManager.Instance.Resolve<Finder>());
+                Subscribe(IocManager.Instance.Resolve<Finder>());
 
             _syncObserver = Observable
                 .Interval(TimeSpan.FromSeconds(7.0), TaskPoolScheduler.Default)
@@ -235,11 +241,13 @@ namespace DynamicTranslator.Wpf
             return Task.Run(async () =>
             {
                 if (_cancellationTokenSource.Token.IsCancellationRequested)
+                {
                     return;
+                }
 
                 await WhenClipboardContainsTextEventHandler.InvokeSafelyAsync(this,
                     new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
-                    );
+                );
             });
         }
 
@@ -256,9 +264,13 @@ namespace DynamicTranslator.Wpf
             {
                 case Win32.WmChangecbchain:
                     if (wParam == _hWndNextViewer)
+                    {
                         _hWndNextViewer = lParam; //clipboard viewer chain changed, need to fix it.
+                    }
                     else if (_hWndNextViewer != IntPtr.Zero)
+                    {
                         Win32.SendMessage(_hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer.
+                    }
                     break;
                 case Win32.WmDrawclipboard:
                     HandleTextCaptured(msg, wParam, lParam).ConfigureAwait(false);

@@ -56,6 +56,8 @@
                           Margin="23,33,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="_checkBoxBing" Content="Microsft Bing Translate" HorizontalAlignment="Left"
                           Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
+                <CheckBox x:Name="_checkBoxPrompt" Content="Prompt Translate" HorizontalAlignment="Left"
+                    Margin="205,56,0,0" VerticalAlignment="Top" IsChecked="True" />
             </Grid>
             <Button x:Name="_newVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,211,0,0"
                     VerticalAlignment="Top" Width="363" Height="27" Click="NewVersionButtonClick" />

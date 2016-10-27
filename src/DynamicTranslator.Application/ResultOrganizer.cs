@@ -8,6 +8,7 @@ using Abp.Dependency;
 
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Result;
+using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application
@@ -21,29 +22,46 @@ namespace DynamicTranslator.Application
             _resultService = resultService;
         }
 
-        public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString)
+        public Task<Maybe<string>> OrganizeResult(ICollection<TranslateResult> findedMeans, string currentString, out Maybe<string> failedResults)
+        {
+            var succeededResults = Organize(findedMeans, currentString, true);
+
+            failedResults = Organize(findedMeans, currentString, false);
+
+            return Task.FromResult(succeededResults);
+        }
+
+        private Maybe<string> Organize(ICollection<TranslateResult> findedMeans, string currentString, bool isSucceeded)
         {
             var mean = new StringBuilder();
-            foreach (TranslateResult result in findedMeans.Where(result => result.IsSuccess))
+            var results = findedMeans.Where(result => result.IsSuccess == isSucceeded);
+
+            foreach (var result in results)
             {
                 mean.AppendLine(result.ResultMessage.DefaultIfEmpty(string.Empty).First());
             }
 
             if (!string.IsNullOrEmpty(mean.ToString()))
             {
-                List<string> means = mean.ToString().Split('\r')
-                                         .Select(x => x.Trim().ToLower())
-                                         .Where(s => (s != string.Empty) && (s != currentString.Trim()) && (s != "Translation"))
-                                         .Distinct()
-                                         .ToList();
+                var means = mean.ToString()
+                                .Split('\r')
+                                .Select(x => x.Trim().ToLower())
+                                .Where(s => (s != string.Empty) && (s != currentString.Trim()) && (s != "Translation"))
+                                .Distinct()
+                                .ToList();
 
                 mean.Clear();
-                means.ForEach(m => mean.AppendLine("* " + m.ToLower()));
-                _resultService.SaveOrUpdateAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
-                return Task.FromResult(new Maybe<string>(mean.ToString()));
+                means.ForEach(m => mean.AppendLine($"{Titles.Asterix} {m.ToLower()}"));
+
+                if (isSucceeded && means.Any())
+                {
+                    _resultService.SaveOrUpdateAsync(new CompositeTranslateResult(currentString, 1, findedMeans, DateTime.Now));
+                }
+
+                return new Maybe<string>(mean.ToString());
             }
 
-            return Task.FromResult(new Maybe<string>());
+            return new Maybe<string>();
         }
     }
 }

@@ -149,6 +149,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             _checkBoxYandexTranslate.IsHitTestVisible = false;
             _checkBoxSesliSozluk.IsHitTestVisible = false;
             _checkBoxBing.IsHitTestVisible = false;
+            _checkBoxPrompt.IsHitTestVisible = false;
         }
 
         private void NewVersionButtonClick(object sender, RoutedEventArgs e)
@@ -184,6 +185,10 @@ namespace DynamicTranslator.Wpf.ViewModel
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
             }
+            if ((_checkBoxPrompt.IsChecked != null) && _checkBoxPrompt.IsChecked.Value)
+            {
+                _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Prompt);
+            }
 
             if (!_configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
             {
@@ -203,6 +208,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             _checkBoxYandexTranslate.IsHitTestVisible = true;
             _checkBoxSesliSozluk.IsHitTestVisible = true;
             _checkBoxBing.IsHitTestVisible = true;
+            _checkBoxPrompt.IsHitTestVisible = true;
         }
     }
 }

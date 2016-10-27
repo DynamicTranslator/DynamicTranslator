@@ -107,15 +107,16 @@ namespace DynamicTranslator.Application
                 .ToString();
         }
 
-        private static void HandleReturnValueForCharacterLimitException(IInvocation invocation)
+        private static void HandleReturnValueForCharacterLimitException(IInvocation invocation, string exeptionMessage = null)
         {
             if (typeof(IMeanFinder).IsAssignableFrom(invocation.TargetType))
             {
-                Type translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
+                var translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
                 if (translateResultType != null)
                 {
-                    Task<TranslateResult> returnObj =
-                        Task.FromResult(Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>());
+                    var result = Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>();
+                    result.ResultMessage = new Maybe<string>(exeptionMessage ?? string.Empty);
+                    var returnObj = Task.FromResult(result);
                     invocation.ReturnValue = returnObj;
                 }
             }
@@ -128,9 +129,9 @@ namespace DynamicTranslator.Application
                 return;
             }
 
-            string exceptionText = ExtractExceptionMessage(invocation, ex);
+            var exceptionText = ExtractExceptionMessage(invocation, ex);
 
-            HandleReturnValueForCharacterLimitException(invocation);
+            HandleReturnValueForCharacterLimitException(invocation, ex.Message);
 
             SendExceptionGoogleAnalytics(exceptionText, false);
         }
@@ -142,9 +143,9 @@ namespace DynamicTranslator.Application
                 return Task.FromResult(0);
             }
 
-            string exceptionText = ExtractExceptionMessage(invocation, ex);
+            var exceptionText = ExtractExceptionMessage(invocation, ex);
 
-            HandleReturnValueForCharacterLimitException(invocation);
+            HandleReturnValueForCharacterLimitException(invocation, ex.Message);
 
             return SendExceptionGoogleAnalyticsAsync(exceptionText, false);
         }

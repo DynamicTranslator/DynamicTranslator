@@ -27,7 +27,8 @@ namespace DynamicTranslator.Application
 
                 if (request.CurrentText.Length > _configuration.SearchableCharacterLimit)
                 {
-                    throw new MaximumCharacterLimitException("You have exceed maximum character limit");
+                    throw new MaximumCharacterLimitException($"You have exceed maximum character limit: {_configuration.SearchableCharacterLimit}," +
+                                                             $" through the configuration file it can be increased.");
                 }
 
                 invocation.Proceed();
