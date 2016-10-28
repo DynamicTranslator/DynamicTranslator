@@ -32,13 +32,14 @@ Bulunduğunuz yerde pencere/pdf/browser vb. mouse ile gezinirken seçtiğiniz te
 
 Seçilen metnin dilini algılar.
 
-###Başvurulan sözlükler
+###Başvurulan sözlükler | Dictionaries
         
 ##### Tureng (http://tureng.com/en/turkish-english)
 ##### Yandex (https://translate.yandex.com)
 ##### Sesli Sozluk (https://www.seslisozluk.net/)
 ##### Google Translate (https://translate.google.com/)
 ##### Microsoft Bing Translate (https://www.bing.com/translator)
+##### Prompt Translate (http://www.online-translator.com/)
         
 
 ### Project Information and The Goal
