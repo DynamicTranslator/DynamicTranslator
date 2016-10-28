@@ -16,7 +16,7 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 | <a href="#" > <img src="https://cdn3.iconfinder.com/data/icons/finalflags/256/France-Flag.png" height="50" width="50"> <img src="http://static.ccm2.net/www.commentcamarche.net/sites/images/jetelecharge.com-4a1e99c1.jpg" height="50" width="50"> </a> | [French post about DynamicTranslator](http://www.jetelecharge.com/Bureautique/8757.php) |
 <a href="#" > <img src="http://img.freeflagicons.com/thumb/square_icon/bulgaria/bulgaria_640.png" height="50" width="50"> <img src="http://www.download.bg/img/logos/dbg.gif" height="50" width="50"> </a> |  [Bulgarian post about DynamicTranslator](http://www.download.bg/index.php?cls=program&mtd=default&id=696239)|
 
-## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.1/v3.4.1.rar)
+## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.2/v3.4.2.rar)
 
 ###Latest News
 
