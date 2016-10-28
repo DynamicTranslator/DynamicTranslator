@@ -20,11 +20,11 @@ namespace DynamicTranslator
 
         public void OnError(Exception error) {}
 
-        public async void OnNext(long value)
+        public void OnNext(long value)
         {
-            await Task.Run(async () =>
+            Task.Run(() =>
             {
-                await _googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
+                _googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                     ApplicationVersion.GetCurrentVersion(),
                     "dynamictranslator",
                     "dynamictranslator",

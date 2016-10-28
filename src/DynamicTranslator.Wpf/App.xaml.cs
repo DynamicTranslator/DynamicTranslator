@@ -71,7 +71,14 @@ namespace DynamicTranslator.Wpf
                                 logger.Object.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
                             }
 
-                            googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                            try
+                            {
+                                googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
+                            }
+                            catch (Exception)
+                            {
+                                //throw;
+                            }
                         }
                     }
                 };
@@ -89,7 +96,14 @@ namespace DynamicTranslator.Wpf
                                         logger.Object.Error($"Unhandled Exception occured: {exception.ToString()}");
                                     }
 
-                                    googleClient.Object.TrackException(exception.ToString(), false);
+                                    try
+                                    {
+                                        googleClient.Object.TrackException(exception.ToString(), false);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        //throw;
+                                    }
                                 }
                             }
                             return true;

@@ -13,6 +13,7 @@ using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.LanguageManagement;
+using DynamicTranslator.Runtime;
 using DynamicTranslator.Wpf.Extensions;
 
 using Octokit;
@@ -123,16 +124,19 @@ namespace DynamicTranslator.Wpf.ViewModel
             {
                 var release = await GetReleaseFromCache(gitHubClient);
 
-                var version = release.TagName;
+                var incomingVersion = release.TagName;
 
-                if (!ApplicationVersion.Is(version))
+                using (var versionChecker = IocManager.Instance.ResolveAsDisposable<IVersionChecker>())
                 {
-                    await this.DispatchingAsync(() =>
+                    if (versionChecker.Object.IsNew(incomingVersion))
                     {
-                        _newVersionButton.Visibility = Visibility.Visible;
-                        _newVersionButton.Content = $"A new version {version} released, update now!";
-                        _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
-                    });
+                        await this.DispatchingAsync(() =>
+                        {
+                            _newVersionButton.Visibility = Visibility.Visible;
+                            _newVersionButton.Content = $"A new version {incomingVersion} released, update now!";
+                            _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
+                        });
+                    }
                 }
             }
         }

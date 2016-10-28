@@ -16,8 +16,6 @@ using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.Notification;
 
-using Nito.AsyncEx.Synchronous;
-
 namespace DynamicTranslator.Wpf.Observers
 {
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, ISingletonDependency
@@ -53,53 +51,64 @@ namespace DynamicTranslator.Wpf.Observers
 
         public void OnError(Exception error) { }
 
-        public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
+        public void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
-            await Task.Run(async () =>
+            Task.Run(async () =>
             {
-                var currentString = value.EventArgs.CurrentString;
-
-                if (_previousString == currentString)
+                try
                 {
-                    return;
+                    var currentString = value.EventArgs.CurrentString;
+
+                    if (_previousString == currentString)
+                    {
+                        return;
+                    }
+
+                    _previousString = currentString;
+                    Maybe<string> failedResults;
+
+                    var fromLanguageExtension = await _languageDetector.DetectLanguage(currentString);
+                    var results = await GetMeansFromCache(currentString, fromLanguageExtension);
+                    var findedMeans = await _resultOrganizer.OrganizeResult(results, currentString, out failedResults).ConfigureAwait(false);
+
+                    await Notify(currentString, findedMeans);
+                    await Notify(currentString, failedResults);
+                    await Trace(currentString, fromLanguageExtension);
                 }
-
-                _previousString = currentString;
-                Maybe<string> failedResults;
-
-                var fromLanguageExtension = await _languageDetector.DetectLanguage(currentString);
-                var results = await GetMeansFromCache(currentString, fromLanguageExtension);
-                var findedMeans = await _resultOrganizer.OrganizeResult(results, currentString, out failedResults).ConfigureAwait(false);
-
-                await Notify(currentString, findedMeans);
-                await Notify(currentString, failedResults);
-                await Trace(currentString, fromLanguageExtension);
+                catch (Exception ex)
+                {
+                    await Notify("Error", new Maybe<string>(ex.Message));
+                }
             });
         }
 
-        private async Task Trace(string currentString, string fromLanguageExtension)
+        private Task Trace(string currentString, string fromLanguageExtension)
         {
-            await _googleAnalytics.TrackEventAsync("DynamicTranslator",
-                                      "Translate",
-                                      $"{currentString} | {fromLanguageExtension} - {_configuration.ApplicationConfiguration.ToLanguage.Extension} | v{ApplicationVersion.GetCurrentVersion()} ",
-                                      null).ConfigureAwait(false);
+            _googleAnalytics.TrackEventAsync("DynamicTranslator",
+                                "Translate",
+                                $"{currentString} | {fromLanguageExtension} - {_configuration.ApplicationConfiguration.ToLanguage.Extension} | v{ApplicationVersion.GetCurrentVersion()} ",
+                                null).ConfigureAwait(false);
 
-            await _googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
-                                      ApplicationVersion.GetCurrentVersion(),
-                                      "dynamictranslator",
-                                      "dynamictranslator",
-                                      "notification").ConfigureAwait(false);
+            _googleAnalytics.TrackAppScreenAsync("DynamicTranslator",
+                                ApplicationVersion.GetCurrentVersion(),
+                                "dynamictranslator",
+                                "dynamictranslator",
+                                "notification").ConfigureAwait(false);
+
+            return Task.FromResult(0);
         }
 
-        private async Task Notify(string currentString, Maybe<string> findedMeans)
+        private Task Notify(string currentString, Maybe<string> findedMeans)
         {
             if (!string.IsNullOrEmpty(findedMeans.DefaultIfEmpty(string.Empty).First()))
             {
-                await _notifier.AddNotificationAsync(currentString,
-                                   ImageUrls.NotificationUrl,
-                                   findedMeans.DefaultIfEmpty(string.Empty).First()
-                               ).ConfigureAwait(false);
+                return _notifier.AddNotificationAsync(currentString,
+                    ImageUrls.NotificationUrl,
+                    findedMeans.DefaultIfEmpty(string.Empty).First()
+                );
             }
+
+            return Task.FromResult(0);
         }
 
         private Task<TranslateResult[]> GetMeansFromCache(string currentString, string fromLanguageExtension)

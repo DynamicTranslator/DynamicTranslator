@@ -139,6 +139,8 @@
     <Compile Include="LanguageManagement\Language.cs" />
     <Compile Include="LanguageManagement\LanguageExtensions.cs" />
     <Compile Include="LanguageManagement\LanguageMapping.cs" />
+    <Compile Include="Runtime\IVersionChecker.cs" />
+    <Compile Include="Runtime\VersionChecker.cs" />
     <Compile Include="Translator.cs" />
     <Compile Include="Constants\CacheNames.cs" />
     <Compile Include="Constants\Headers.cs" />
