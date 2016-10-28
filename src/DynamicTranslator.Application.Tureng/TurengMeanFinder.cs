@@ -20,9 +20,7 @@ namespace DynamicTranslator.Application.Tureng
     public class TurengMeanFinder : IMeanFinder, IOrchestrator, ITransientDependency
     {
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
-
-        private const string UserAgent =
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
         private readonly ITurengTranslatorConfiguration _turengConfiguration;
@@ -35,14 +33,19 @@ namespace DynamicTranslator.Application.Tureng
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_turengConfiguration.CanBeTranslated())
+            if (!_turengConfiguration.CanSupport())
+            {
+                return new TranslateResult(false, new Maybe<string>());
+            }
+
+            if (!_turengConfiguration.IsActive())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }
 
             var uri = new Uri(_turengConfiguration.Url + translateRequest.CurrentText);
 
-            IRestResponse response = await new RestClient(uri)
+            var response = await new RestClient(uri)
             {
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
@@ -55,7 +58,7 @@ namespace DynamicTranslator.Application.Tureng
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
             }
 

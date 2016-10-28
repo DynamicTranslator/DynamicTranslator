@@ -14,7 +14,5 @@ namespace DynamicTranslator.Exceptions
         public MaximumCharacterLimitException(string message) : base(message) {}
 
         public object[] MessageParameters { get; set; }
-
-        public string ResultMessage { get; set; }
     }
 }

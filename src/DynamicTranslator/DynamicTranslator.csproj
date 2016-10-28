@@ -129,6 +129,7 @@
     <Compile Include="Configuration\UniqueIdentifier\IUniqueIdentifierProvider.cs" />
     <Compile Include="DynamicTranslatorModule.cs" />
     <Compile Include="Configuration\IClientConfiguration.cs" />
+    <Compile Include="Exceptions\NotSupportedLanguageException.cs" />
     <Compile Include="Extensions\RestSharpExtensions.cs" />
     <Compile Include="Extensions\UniqueIdProviderExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />

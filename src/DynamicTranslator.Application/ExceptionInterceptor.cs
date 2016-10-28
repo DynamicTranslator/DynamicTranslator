@@ -84,6 +84,17 @@ namespace DynamicTranslator.Application
                     HandleException(invocation, ex);
                 }
             }
+            catch (NotSupportedLanguageException ex)
+            {
+                if (AsyncHelper.IsAsyncMethod(invocation.Method))
+                {
+                    HandleExceptionAsync(invocation, ex);
+                }
+                else
+                {
+                    HandleException(invocation, ex);
+                }
+            }
             catch (Exception ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))

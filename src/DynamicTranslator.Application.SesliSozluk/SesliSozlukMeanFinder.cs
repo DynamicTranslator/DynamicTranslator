@@ -41,14 +41,14 @@ namespace DynamicTranslator.Application.SesliSozluk
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_sesliSozlukConfiguration.CanBeTranslated())
+            if (!_sesliSozlukConfiguration.CanSupport() || !_sesliSozlukConfiguration.IsActive())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }
 
             string parameter = $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={_applicationConfiguration.ToLanguage.Extension}";
 
-            IRestResponse response = await new RestClient(_sesliSozlukConfiguration.Url)
+            var response = await new RestClient(_sesliSozlukConfiguration.Url)
             {
                 Encoding = Encoding.UTF8,
                 CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
@@ -65,7 +65,7 @@ namespace DynamicTranslator.Application.SesliSozluk
 
             if (response.Ok())
             {
-                IMeanOrganizer meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await meanOrganizer.OrganizeMean(response.Content);
             }
 

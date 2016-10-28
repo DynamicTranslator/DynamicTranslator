@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 
+using Abp.Runtime.Caching;
+
 using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
@@ -15,7 +17,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForDetector(IHandler handler)
         {
-            bool isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
+            var isDetector = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ILanguageDetector));
             if (isDetector)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
@@ -24,7 +26,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForMeanFinder(IHandler handler)
         {
-            bool isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanFinder));
+            var isMeanFinder = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanFinder));
             if (isMeanFinder)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
@@ -34,7 +36,7 @@ namespace DynamicTranslator.Application
 
         private static void ApplyForMeanOrganizer(IHandler handler)
         {
-            bool isMeanOrganizer = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanOrganizer));
+            var isMeanOrganizer = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(IMeanOrganizer));
             if (isMeanOrganizer)
             {
                 handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
@@ -46,6 +48,16 @@ namespace DynamicTranslator.Application
             ApplyForMeanFinder(handler);
             ApplyForMeanOrganizer(handler);
             ApplyForDetector(handler);
+            ApplyForCache(handler);
+        }
+
+        private void ApplyForCache(IHandler handler)
+        {
+            var isCache = handler.ComponentModel.Implementation.GetInterfaces().Contains(typeof(ICache));
+            if (isCache)
+            {
+                handler.ComponentModel.Interceptors.AddFirst(new InterceptorReference(typeof(ExceptionInterceptor)));
+            }
         }
     }
 }

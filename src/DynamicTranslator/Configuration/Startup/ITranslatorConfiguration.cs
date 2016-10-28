@@ -6,6 +6,8 @@ namespace DynamicTranslator.Configuration.Startup
     {
         TranslatorType TranslatorType { get; }
 
-        bool CanBeTranslated();
+        bool CanSupport();
+
+        bool IsActive();
     }
 }

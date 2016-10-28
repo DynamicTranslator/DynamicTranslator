@@ -13,16 +13,16 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class GrowlNotifications : IGrowlNotifications
     {
-        public readonly Notifications Notifications;
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly Notifications _buffer = new Notifications();
-        public bool IsDisposed;
+        public readonly Notifications Notifications;
         private int _count;
+        public bool IsDisposed;
 
         public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
-            this._applicationConfiguration = applicationConfiguration;
+            _applicationConfiguration = applicationConfiguration;
             Notifications = notifications;
             _notificationsControl.DataContext = Notifications;
         }
@@ -32,7 +32,9 @@ namespace DynamicTranslator.Wpf.ViewModel
         public void Dispose()
         {
             if (IsDisposed)
+            {
                 return;
+            }
 
             Notifications.Clear();
             _buffer.Clear();
@@ -50,12 +52,18 @@ namespace DynamicTranslator.Wpf.ViewModel
                 {
                     notification.Id = _count++;
                     if (Notifications.Count + 1 > _applicationConfiguration.MaxNotifications)
+                    {
                         _buffer.Add(notification);
+                    }
                     else
+                    {
                         Notifications.Add(notification);
+                    }
 
-                    if (Notifications.Count > 0 && !IsActive)
+                    if ((Notifications.Count > 0) && !IsActive)
+                    {
                         Show();
+                    }
                 },
                 DispatcherPriority.Background);
         }
@@ -71,7 +79,9 @@ namespace DynamicTranslator.Wpf.ViewModel
                 () =>
                 {
                     if (Notifications.Contains(notification))
+                    {
                         Notifications.Remove(notification);
+                    }
 
                     if (_buffer.Count > 0)
                     {
@@ -91,10 +101,12 @@ namespace DynamicTranslator.Wpf.ViewModel
         private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (Math.Abs(e.NewSize.Height) > 0.0)
+            {
                 return;
+            }
 
             var element = sender as Grid;
-            RemoveNotification(Notifications.First(n => element != null && n.Id == int.Parse(element.Tag.ToString())));
+            RemoveNotification(Notifications.First(n => (element != null) && (n.Id == int.Parse(element.Tag.ToString()))));
         }
 
         private async void TextToSpeechButton_OnClick(object sender, RoutedEventArgs e)
@@ -114,7 +126,9 @@ namespace DynamicTranslator.Wpf.ViewModel
                                 synthesizer.Rate = 0;
 
                                 if (notification != null)
+                                {
                                     synthesizer.Speak(notification.Title);
+                                }
                             }
                         });
                 });

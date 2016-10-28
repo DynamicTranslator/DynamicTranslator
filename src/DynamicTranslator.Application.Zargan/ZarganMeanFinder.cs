@@ -18,26 +18,26 @@ namespace DynamicTranslator.Application.Zargan
 {
     public class ZarganMeanFinder : IMeanFinder, IOrchestrator, ITransientDependency
     {
-        private readonly IZarganTranslatorConfiguration _configuration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IZarganTranslatorConfiguration _zarganConfiguration;
 
-        public ZarganMeanFinder(IZarganTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory)
+        public ZarganMeanFinder(IZarganTranslatorConfiguration zarganConfiguration, IMeanOrganizerFactory meanOrganizerFactory)
         {
-            _configuration = configuration;
+            _zarganConfiguration = zarganConfiguration;
             _meanOrganizerFactory = meanOrganizerFactory;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_configuration.CanBeTranslated())
+            if (!_zarganConfiguration.IsActive() || !_zarganConfiguration.CanSupport())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }
 
-            string uri = string.Format(_configuration.Url,
+            var uri = string.Format(_zarganConfiguration.Url,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
-            IRestResponse response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
+            var response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
                 .ExecuteGetTaskAsync(
                     new RestRequest(Method.GET)
                         .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
@@ -49,7 +49,7 @@ namespace DynamicTranslator.Application.Zargan
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
             }
 

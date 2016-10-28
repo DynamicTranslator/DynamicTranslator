@@ -15,13 +15,17 @@ namespace DynamicTranslator.Configuration.Startup
 
         public IApplicationConfiguration ApplicationConfiguration { get; set; }
 
-        public virtual bool CanBeTranslated()
+        public virtual bool CanSupport()
         {
-            return SupportedLanguages.Any(x => x.Extension == ApplicationConfiguration.ToLanguage.Extension)
-                   && ActiveTranslatorConfiguration.ActiveTranslators
-                                                   .Any(x => (x.Type == TranslatorType)
-                                                             && x.IsActive
-                                                             && x.IsEnabled);
+            return SupportedLanguages.Any(x => x.Extension == ApplicationConfiguration.ToLanguage.Extension);
+        }
+
+        public virtual bool IsActive()
+        {
+            return ActiveTranslatorConfiguration.ActiveTranslators
+                                                .Any(x => (x.Type == TranslatorType)
+                                                          && x.IsActive
+                                                          && x.IsEnabled);
         }
 
         public abstract IList<Language> SupportedLanguages { get; set; }

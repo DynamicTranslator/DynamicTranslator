@@ -39,18 +39,18 @@ namespace DynamicTranslator.Application.Google
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_googleConfiguration.CanBeTranslated())
+            if (!_googleConfiguration.CanSupport() || !_googleConfiguration.IsActive())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }
 
-            string uri = string.Format(
+            var uri = string.Format(
                 _googleConfiguration.Url,
                 _applicationConfiguration.ToLanguage.Extension,
                 _applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
-            IRestResponse response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
+            var response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
                 .ExecuteGetTaskAsync(
                     new RestRequest(Method.GET)
                         .AddHeader(Headers.AcceptLanguage, AcceptLanguage)
@@ -62,7 +62,7 @@ namespace DynamicTranslator.Application.Google
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content);
             }
 

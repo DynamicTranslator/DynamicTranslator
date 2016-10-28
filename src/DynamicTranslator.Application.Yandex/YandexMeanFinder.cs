@@ -20,31 +20,31 @@ namespace DynamicTranslator.Application.Yandex
     public class YandexMeanFinder : IMeanFinder, IOrchestrator, ITransientDependency
     {
         private readonly IApplicationConfiguration _applicationConfiguration;
-        private readonly IYandexTranslatorConfiguration _configuration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IYandexTranslatorConfiguration _yandexConfiguration;
 
-        public YandexMeanFinder(IYandexTranslatorConfiguration configuration, IMeanOrganizerFactory meanOrganizerFactory,
+        public YandexMeanFinder(IYandexTranslatorConfiguration yandexConfiguration, IMeanOrganizerFactory meanOrganizerFactory,
             IApplicationConfiguration applicationConfiguration)
         {
-            _configuration = configuration;
+            _yandexConfiguration = yandexConfiguration;
             _meanOrganizerFactory = meanOrganizerFactory;
             _applicationConfiguration = applicationConfiguration;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_configuration.CanBeTranslated())
+            if (!_yandexConfiguration.CanSupport() || !_yandexConfiguration.IsActive())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }
 
             Uri address;
             IRestResponse response;
-            if (_configuration.ShouldBeAnonymous)
+            if (_yandexConfiguration.ShouldBeAnonymous)
             {
-                address = new Uri(string.Format(_configuration.Url +
+                address = new Uri(string.Format(_yandexConfiguration.Url +
                                                 new StringBuilder()
-                                                    .Append($"id={_configuration.SId}")
+                                                    .Append($"id={_yandexConfiguration.SId}")
                                                     .Append(Headers.Ampersand)
                                                     .Append("srv=tr-text")
                                                     .Append(Headers.Ampersand)
@@ -58,9 +58,9 @@ namespace DynamicTranslator.Application.Yandex
             }
             else
             {
-                address = new Uri(string.Format(_configuration.Url +
+                address = new Uri(string.Format(_yandexConfiguration.Url +
                                                 new StringBuilder()
-                                                    .Append($"key={_configuration.ApiKey}")
+                                                    .Append($"key={_yandexConfiguration.ApiKey}")
                                                     .Append(Headers.Ampersand)
                                                     .Append($"lang={translateRequest.FromLanguageExtension}-{_applicationConfiguration.ToLanguage.Extension}")
                                                     .Append(Headers.Ampersand)
@@ -73,7 +73,7 @@ namespace DynamicTranslator.Application.Yandex
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content);
             }
 

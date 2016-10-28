@@ -34,40 +34,43 @@ namespace DynamicTranslator.Application.Prompt
             _meanOrganizerFactory = meanOrganizerFactory;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_promptConfiguration.CanBeTranslated())
+            return Task.Run(async () =>
             {
-                return new TranslateResult(false, new Maybe<string>());
-            }
+                if (!_promptConfiguration.CanSupport() || !_promptConfiguration.IsActive())
+                {
+                    return new TranslateResult(false, new Maybe<string>());
+                }
 
-            var requestObject = new
-            {
-                dirCode = $"{translateRequest.FromLanguageExtension}-{_applicationConfiguration.ToLanguage.Extension}",
-                template = _promptConfiguration.Template,
-                text = translateRequest.CurrentText,
-                lang = translateRequest.FromLanguageExtension,
-                limit = _promptConfiguration.Limit,
-                useAutoDetect = true,
-                key = string.Empty,
-                ts = _promptConfiguration.Ts,
-                tid = string.Empty,
-                IsMobile = false
-            };
+                var requestObject = new
+                {
+                    dirCode = $"{translateRequest.FromLanguageExtension}-{_applicationConfiguration.ToLanguage.Extension}",
+                    template = _promptConfiguration.Template,
+                    text = translateRequest.CurrentText,
+                    lang = translateRequest.FromLanguageExtension,
+                    limit = _promptConfiguration.Limit,
+                    useAutoDetect = true,
+                    key = string.Empty,
+                    ts = _promptConfiguration.Ts,
+                    tid = string.Empty,
+                    IsMobile = false
+                };
 
-            var response = await new RestClient(_promptConfiguration.Url).ExecutePostTaskAsync(new RestRequest(Method.POST)
-                .AddHeader(ContentTypeName, ContentType)
-                .AddParameter(ContentType, requestObject.ToJsonString(false), ParameterType.RequestBody));
+                var response = await new RestClient(_promptConfiguration.Url).ExecutePostTaskAsync(new RestRequest(Method.POST)
+                    .AddHeader(ContentTypeName, ContentType)
+                    .AddParameter(ContentType, requestObject.ToJsonString(false), ParameterType.RequestBody));
 
-            var mean = new Maybe<string>();
+                var mean = new Maybe<string>();
 
-            if (response.Ok())
-            {
-                var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
-                mean = await meanOrganizer.OrganizeMean(response.Content);
-            }
+                if (response.Ok())
+                {
+                    var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                    mean = await meanOrganizer.OrganizeMean(response.Content);
+                }
 
-            return new TranslateResult(true, mean);
+                return new TranslateResult(true, mean);
+            });
         }
 
         public TranslatorType TranslatorType => TranslatorType.Prompt;

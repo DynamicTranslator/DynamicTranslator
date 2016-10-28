@@ -8,9 +8,9 @@ namespace DynamicTranslator.Application.Tureng.Configuration
 {
     public class TurengTranslatorConfiguration : AbstractTranslatorConfiguration, ITurengTranslatorConfiguration
     {
-        public override bool CanBeTranslated()
+        public override bool CanSupport()
         {
-            return base.CanBeTranslated() && ApplicationConfiguration.IsToLanguageTurkish;
+            return base.CanSupport() && ApplicationConfiguration.IsToLanguageTurkish;
         }
 
         public override IList<Language> SupportedLanguages { get; set; }

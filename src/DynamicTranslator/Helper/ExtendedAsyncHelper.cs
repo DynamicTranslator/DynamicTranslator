@@ -71,7 +71,7 @@ namespace DynamicTranslator.Helper
 
             try
             {
-                T result = await actualReturnValue;
+                var result = await actualReturnValue;
                 await postAction();
                 return result;
             }
@@ -129,7 +129,7 @@ namespace DynamicTranslator.Helper
                     await preAction();
                 }
 
-                T result = await actualReturnValue();
+                var result = await actualReturnValue();
 
                 if (postAction != null)
                 {

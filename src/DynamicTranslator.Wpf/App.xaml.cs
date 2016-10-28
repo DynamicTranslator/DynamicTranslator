@@ -58,7 +58,7 @@ namespace DynamicTranslator.Wpf
         {
             using (var applicationConfiguration = _bootstrapper.IocManager.ResolveAsDisposable<IApplicationConfiguration>())
             {
-                bool isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
+                var isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
                 {
@@ -78,18 +78,22 @@ namespace DynamicTranslator.Wpf
 
                 TaskScheduler.UnobservedTaskException += (sender, args) =>
                 {
-                    using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                    {
-                        using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                    args.Exception.Handle(exception =>
                         {
-                            if (isExtraLoggingEnabled)
+                            using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
                             {
-                                logger.Object.Error($"Unhandled Exception occured: {args.Exception.ToString()}");
-                            }
+                                using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
+                                {
+                                    if (isExtraLoggingEnabled)
+                                    {
+                                        logger.Object.Error($"Unhandled Exception occured: {exception.ToString()}");
+                                    }
 
-                            googleClient.Object.TrackException(args.Exception.ToString(), false);
-                        }
-                    }
+                                    googleClient.Object.TrackException(exception.ToString(), false);
+                                }
+                            }
+                            return true;
+                        });
                 };
             }
         }

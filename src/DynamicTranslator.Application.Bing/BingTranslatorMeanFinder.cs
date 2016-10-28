@@ -35,7 +35,7 @@ namespace DynamicTranslator.Application.Bing
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_bingConfiguration.CanBeTranslated())
+            if (!_bingConfiguration.CanSupport() || !_bingConfiguration.IsActive())
             {
                 return new TranslateResult(false, new Maybe<string>());
             }

@@ -16,6 +16,8 @@ using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.Notification;
 
+using Nito.AsyncEx.Synchronous;
+
 namespace DynamicTranslator.Wpf.Observers
 {
     public class Finder : IObserver<EventPattern<WhenClipboardContainsTextEventArgs>>, ISingletonDependency
@@ -47,9 +49,9 @@ namespace DynamicTranslator.Wpf.Observers
             _configuration = configuration;
         }
 
-        public void OnCompleted() {}
+        public void OnCompleted() { }
 
-        public void OnError(Exception error) {}
+        public void OnError(Exception error) { }
 
         public async void OnNext(EventPattern<WhenClipboardContainsTextEventArgs> value)
         {
@@ -102,10 +104,10 @@ namespace DynamicTranslator.Wpf.Observers
 
         private Task<TranslateResult[]> GetMeansFromCache(string currentString, string fromLanguageExtension)
         {
+            var meanTasks = Task.WhenAll(_meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))));
+
             return _cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache)
-                                .GetAsync(currentString,
-                                    async () => await Task.WhenAll(_meanFinderFactory.GetFinders()
-                                                                                     .Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension)))));
+                                .GetAsync(currentString, () => meanTasks);
         }
     }
 }
