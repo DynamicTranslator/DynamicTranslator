@@ -66,7 +66,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             {
                 _btnSwitch.Content = "Stop Translator";
 
-                var selectedLanguageName = ((Language)_comboBoxLanguages.SelectedItem).Name;
+                string selectedLanguageName = ((Language)_comboBoxLanguages.SelectedItem).Name;
                 _configurations.AppConfigManager.SaveOrUpdate("ToLanguage", selectedLanguageName);
                 _configurations.ApplicationConfiguration.ToLanguage = new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
 
@@ -74,12 +74,12 @@ namespace DynamicTranslator.Wpf.ViewModel
                 LockUiElements();
 
                 this.DispatchingAsync(async () =>
-                {
-                    if (!_translator.IsInitialized)
-                    {
-                        await _translator.InitializeAsync();
-                    }
-                });
+                                      {
+                                          if (!_translator.IsInitialized)
+                                          {
+                                              await _translator.InitializeAsync();
+                                          }
+                                      });
 
                 _isRunning = true;
             }
@@ -87,7 +87,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void FillLanguageCombobox()
         {
-            foreach (var language in LanguageMapping.All.ToLanguages())
+            foreach (Language language in LanguageMapping.All.ToLanguages())
             {
                 _comboBoxLanguages.Items.Add(language);
             }
@@ -95,16 +95,17 @@ namespace DynamicTranslator.Wpf.ViewModel
             _comboBoxLanguages.SelectedValue = _configurations.ApplicationConfiguration.ToLanguage.Extension;
         }
 
-        private Task<Release> GetReleaseFromCache(IDisposableDependencyObjectWrapper<GitHubClient> gitHubClient)
+        private Task<Release> GetReleaseFromCache(GitHubClient gitHubClient)
         {
             return _cacheManager.GetCache(CacheNames.ReleaseCache)
                                 .GetAsync(CacheNames.ReleaseCache,
-                                    async () => await gitHubClient.Object
-                                                                  .Repository
-                                                                  .Release
-                                                                  .GetLatest(
-                                                                      _configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
-                                                                      _configurations.ApplicationConfiguration.GitHubRepositoryName));
+                                    async () =>
+                                        await gitHubClient
+                                                .Repository
+                                                .Release
+                                                .GetLatest(
+                                                    _configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
+                                                    _configurations.ApplicationConfiguration.GitHubRepositoryName));
         }
 
         private void GithubButtonClick(object sender, RoutedEventArgs e)
@@ -120,23 +121,20 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private async Task CheckVersion()
         {
-            using (var gitHubClient = IocManager.Instance.ResolveAsDisposable<GitHubClient>())
+            using (IScopedIocResolver scope = IocManager.Instance.CreateScope())
             {
-                var release = await GetReleaseFromCache(gitHubClient);
+                Release release = await GetReleaseFromCache(scope.Resolve<GitHubClient>());
 
-                var incomingVersion = release.TagName;
+                string incomingVersion = release.TagName;
 
-                using (var versionChecker = IocManager.Instance.ResolveAsDisposable<IVersionChecker>())
+                if (scope.Resolve<IVersionChecker>().IsNew(incomingVersion))
                 {
-                    if (versionChecker.Object.IsNew(incomingVersion))
-                    {
-                        await this.DispatchingAsync(() =>
-                        {
-                            _newVersionButton.Visibility = Visibility.Visible;
-                            _newVersionButton.Content = $"A new version {incomingVersion} released, update now!";
-                            _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
-                        });
-                    }
+                    await this.DispatchingAsync(() =>
+                                                {
+                                                    _newVersionButton.Visibility = Visibility.Visible;
+                                                    _newVersionButton.Content = $"A new version {incomingVersion} released, update now!";
+                                                    _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
+                                                });
                 }
             }
         }
@@ -155,7 +153,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void NewVersionButtonClick(object sender, RoutedEventArgs e)
         {
-            var updateLink = _configurations.ApplicationConfiguration.UpdateLink;
+            string updateLink = _configurations.ApplicationConfiguration.UpdateLink;
             if (!string.IsNullOrEmpty(updateLink))
             {
                 Process.Start(updateLink);
@@ -193,7 +191,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
             if (!_configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
             {
-                foreach (var value in Enum.GetValues(typeof(TranslatorType)))
+                foreach (object value in Enum.GetValues(typeof(TranslatorType)))
                 {
                     _configurations.ActiveTranslatorConfiguration.Activate((TranslatorType)value);
                 }

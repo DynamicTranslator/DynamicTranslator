@@ -56,59 +56,53 @@ namespace DynamicTranslator.Wpf
 
         private void HandleExceptionsOrNothing()
         {
-            using (var applicationConfiguration = _bootstrapper.IocManager.ResolveAsDisposable<IApplicationConfiguration>())
+            using (IScopedIocResolver scope = _bootstrapper.IocManager.CreateScope())
             {
-                var isExtraLoggingEnabled = applicationConfiguration.Object.IsExtraLoggingEnabled;
+                bool isExtraLoggingEnabled = scope.Resolve<IApplicationConfiguration>().IsExtraLoggingEnabled;
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                {
-                    using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                    {
-                        using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
-                        {
-                            if (isExtraLoggingEnabled)
-                            {
-                                logger.Object.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
-                            }
+                                                              {
+                                                                  var googleClient = scope.Resolve<IGoogleAnalyticsService>();
+                                                                  var logger = scope.Resolve<ILogger>();
 
-                            try
-                            {
-                                googleClient.Object.TrackException(args.ExceptionObject.ToString(), false);
-                            }
-                            catch (Exception)
-                            {
-                                //throw;
-                            }
-                        }
-                    }
-                };
+                                                                  if (isExtraLoggingEnabled)
+                                                                  {
+                                                                      logger.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
+                                                                  }
+
+                                                                  try
+                                                                  {
+                                                                      googleClient.TrackException(args.ExceptionObject.ToString(), false);
+                                                                  }
+                                                                  catch (Exception)
+                                                                  {
+                                                                      //throw;
+                                                                  }
+                                                              };
 
                 TaskScheduler.UnobservedTaskException += (sender, args) =>
-                {
-                    args.Exception.Handle(exception =>
-                        {
-                            using (var googleClient = _bootstrapper.IocManager.ResolveAsDisposable<IGoogleAnalyticsService>())
-                            {
-                                using (var logger = _bootstrapper.IocManager.ResolveAsDisposable<ILogger>())
-                                {
-                                    if (isExtraLoggingEnabled)
-                                    {
-                                        logger.Object.Error($"Unhandled Exception occured: {exception.ToString()}");
-                                    }
+                                                         {
+                                                             args.Exception.Handle(exception =>
+                                                                                   {
+                                                                                       var googleClient = scope.Resolve<IGoogleAnalyticsService>();
+                                                                                       var logger = scope.Resolve<ILogger>();
 
-                                    try
-                                    {
-                                        googleClient.Object.TrackException(exception.ToString(), false);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        //throw;
-                                    }
-                                }
-                            }
-                            return true;
-                        });
-                };
+                                                                                       if (isExtraLoggingEnabled)
+                                                                                       {
+                                                                                           logger.Error($"Unhandled Exception occured: {exception.ToString()}");
+                                                                                       }
+
+                                                                                       try
+                                                                                       {
+                                                                                           googleClient.TrackException(exception.ToString(), false);
+                                                                                       }
+                                                                                       catch (Exception)
+                                                                                       {
+                                                                                           //throw;
+                                                                                       }
+                                                                                       return true;
+                                                                                   });
+                                                         };
             }
         }
     }

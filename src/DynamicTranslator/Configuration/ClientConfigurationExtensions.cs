@@ -10,18 +10,13 @@ namespace DynamicTranslator.Configuration
     {
         public static void CreateOrConsolidate(this IClientConfiguration clientConfiguration, Action<IClientConfiguration> creator)
         {
-            using (IDisposableDependencyObjectWrapper<IAppConfigManager> appConfigManager = IocManager.Instance.ResolveAsDisposable<IAppConfigManager>())
+            using (IScopedIocResolver scope = IocManager.Instance.CreateScope())
             {
-                using (
-                    IDisposableDependencyObjectWrapper<IApplicationConfiguration> appConfiguration =
-                        IocManager.Instance.ResolveAsDisposable<IApplicationConfiguration>())
-                {
-                    creator(clientConfiguration);
+                creator(clientConfiguration);
 
-                    appConfiguration.Object.ClientConfiguration = clientConfiguration;
+                scope.Resolve<IApplicationConfiguration>().ClientConfiguration = clientConfiguration;
 
-                    appConfigManager.Object.SaveOrUpdate("ClientId", clientConfiguration.Id);
-                }
+                scope.Resolve<IAppConfigManager>().SaveOrUpdate("ClientId", clientConfiguration.Id);
             }
         }
     }
