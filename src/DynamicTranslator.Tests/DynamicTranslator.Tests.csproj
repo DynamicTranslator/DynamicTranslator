@@ -116,7 +116,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationTests\UniqueIdentifierProviderTests.cs" />
+    <Compile Include="Configuration\UniqueIdentifierProviderTests.cs" />
+    <Compile Include="Configuration\AppConfigManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

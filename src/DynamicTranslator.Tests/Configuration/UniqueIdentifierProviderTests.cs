@@ -8,7 +8,7 @@ using Shouldly;
 
 using Xunit;
 
-namespace DynamicTranslator.Tests.ConfigurationTests
+namespace DynamicTranslator.Tests.Configuration
 {
     public class UniqueIdentifierProviderTests : TestBaseWithLocalIocManager
     {
@@ -32,7 +32,7 @@ namespace DynamicTranslator.Tests.ConfigurationTests
             hddBasedUniqueIdenfierProvider.Get().ShouldNotBeNull();
         }
 
-        [Theory, AutoSubstituteData]
+        [Fact]
         public void UniqueIdentifierProvider_Should_ReturnConcatKeyWithBothProvider()
         {
             IUniqueIdentifierProvider cpuBasedProvider = Substitute.For<IUniqueIdentifierProvider, CpuBasedIdentifierProvider>();
