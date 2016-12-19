@@ -23,8 +23,8 @@ namespace DynamicTranslator.TestBase
     public class FinderTestBase<TSut, TConfig, TConfigImplementation, TMeanOrganizer> : TestBaseWithLocalIocManager
         where TConfigImplementation : class
         where TConfig : class, IMustHaveUrl
-        where TMeanOrganizer : class, IMeanOrganizer where
-        TSut : class
+        where TMeanOrganizer : class, IMeanOrganizer
+        where TSut : class
     {
         protected FinderTestBase()
         {
