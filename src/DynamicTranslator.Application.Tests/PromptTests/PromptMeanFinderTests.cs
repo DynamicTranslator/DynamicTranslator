@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Application.Bing.Configuration;
-using DynamicTranslator.Application.Bing.Orchestration;
+using DynamicTranslator.Application.Prompt.Configuration;
+using DynamicTranslator.Application.Prompt.Orchestration;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.TestBase;
@@ -15,9 +15,9 @@ using Shouldly;
 
 using Xunit;
 
-namespace DynamicTranslator.Application.Tests.BingTests
+namespace DynamicTranslator.Application.Tests.PromptTests
 {
-    public class BingTranslatorMeanFinderTests : FinderTestBase<BingTranslatorMeanFinder, IBingTranslatorConfiguration, BingTranslatorConfiguration, BingTranslatorMeanOrganizer>
+    public class PromptMeanFinderTests : FinderTestBase<PromptMeanFinder, IPromptTranslatorConfiguration, PromptTranslatorConfiguration, PromptMeanOrganizer>
     {
         [Fact]
         public async void Finder_Should_Work()
@@ -29,7 +29,7 @@ namespace DynamicTranslator.Application.Tests.BingTests
 
             RestClient.ExecutePostTaskAsync(Arg.Any<RestRequest>()).Returns(Task.FromResult<IRestResponse>(new RestResponse { StatusCode = HttpStatusCode.OK }));
 
-            BingTranslatorMeanFinder sut = ResolveSut();
+            PromptMeanFinder sut = ResolveSut();
 
             var translateRequest = new TranslateRequest("hi", "en");
             TranslateResult response = await sut.Find(translateRequest);
@@ -43,7 +43,7 @@ namespace DynamicTranslator.Application.Tests.BingTests
             TranslatorConfiguration.CanSupport().Returns(false);
             TranslatorConfiguration.IsActive().Returns(false);
 
-            BingTranslatorMeanFinder sut = ResolveSut();
+            PromptMeanFinder sut = ResolveSut();
 
             var translateRequest = new TranslateRequest("hi", "en");
             TranslateResult response = await sut.Find(translateRequest);

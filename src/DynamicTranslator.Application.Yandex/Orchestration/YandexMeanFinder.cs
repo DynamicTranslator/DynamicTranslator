@@ -23,14 +23,19 @@ namespace DynamicTranslator.Application.Yandex.Orchestration
     {
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IRestClient _restClient;
         private readonly IYandexTranslatorConfiguration _yandexConfiguration;
 
-        public YandexMeanFinder(IYandexTranslatorConfiguration yandexConfiguration, IMeanOrganizerFactory meanOrganizerFactory,
-            IApplicationConfiguration applicationConfiguration)
+        public YandexMeanFinder(
+            IYandexTranslatorConfiguration yandexConfiguration,
+            IMeanOrganizerFactory meanOrganizerFactory,
+            IApplicationConfiguration applicationConfiguration,
+            IRestClient restClient)
         {
             _yandexConfiguration = yandexConfiguration;
             _meanOrganizerFactory = meanOrganizerFactory;
             _applicationConfiguration = applicationConfiguration;
+            _restClient = restClient;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
@@ -54,9 +59,9 @@ namespace DynamicTranslator.Application.Yandex.Orchestration
                                                     .Append(Headers.Ampersand)
                                                     .Append($"text={Uri.EscapeUriString(translateRequest.CurrentText)}")));
 
-                response = await new RestClient(address)
-                    .ExecutePostTaskAsync(new RestRequest(Method.POST)
-                        .AddParameter(Headers.ContentTypeDefinition, $"text={translateRequest.CurrentText}"));
+                response = await _restClient.Manipulate(client => { client.BaseUrl = address; })
+                                            .ExecutePostTaskAsync(new RestRequest(Method.POST)
+                                                .AddParameter(Headers.ContentTypeDefinition, $"text={translateRequest.CurrentText}"));
             }
             else
             {
@@ -68,14 +73,14 @@ namespace DynamicTranslator.Application.Yandex.Orchestration
                                                     .Append(Headers.Ampersand)
                                                     .Append($"text={Uri.EscapeUriString(translateRequest.CurrentText)}")));
 
-                response = await new RestClient(address).ExecutePostTaskAsync(new RestRequest(Method.POST));
+                response = await _restClient.Manipulate(client => { client.BaseUrl = address; }).ExecutePostTaskAsync(new RestRequest(Method.POST));
             }
 
             var mean = new Maybe<string>();
 
             if (response.Ok())
             {
-                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content);
             }
 

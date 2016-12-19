@@ -25,12 +25,16 @@ namespace DynamicTranslator.Application.Tureng.Orchestration
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IRestClient _restClient;
         private readonly ITurengTranslatorConfiguration _turengConfiguration;
 
-        public TurengMeanFinder(IMeanOrganizerFactory meanOrganizerFactory, ITurengTranslatorConfiguration turengConfiguration)
+        public TurengMeanFinder(IMeanOrganizerFactory meanOrganizerFactory,
+            ITurengTranslatorConfiguration turengConfiguration,
+            IRestClient restClient)
         {
             _meanOrganizerFactory = meanOrganizerFactory;
             _turengConfiguration = turengConfiguration;
+            _restClient = restClient;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
@@ -47,20 +51,22 @@ namespace DynamicTranslator.Application.Tureng.Orchestration
 
             var uri = new Uri(_turengConfiguration.Url + translateRequest.CurrentText);
 
-            var response = await new RestClient(uri)
-            {
-                Encoding = Encoding.UTF8,
-                CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
-            }.ExecuteGetTaskAsync(
-                new RestRequest(Method.GET)
-                    .AddHeader(Headers.UserAgent, UserAgent)
-                    .AddHeader(Headers.AcceptLanguage, AcceptLanguage));
+            IRestResponse response = await _restClient
+                .Manipulate(client =>
+                {
+                    client.BaseUrl = uri;
+                    client.Encoding = Encoding.UTF8;
+                    client.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
+                }).ExecuteGetTaskAsync(
+                    new RestRequest(Method.GET)
+                        .AddHeader(Headers.UserAgent, UserAgent)
+                        .AddHeader(Headers.AcceptLanguage, AcceptLanguage));
 
             var mean = new Maybe<string>();
 
             if (response.Ok())
             {
-                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
             }
 

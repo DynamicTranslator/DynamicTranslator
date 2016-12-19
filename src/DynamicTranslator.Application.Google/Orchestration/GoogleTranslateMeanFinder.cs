@@ -29,14 +29,17 @@ namespace DynamicTranslator.Application.Google.Orchestration
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IGoogleTranslatorConfiguration _googleConfiguration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IRestClient _restClient;
 
         public GoogleTranslateMeanFinder(IMeanOrganizerFactory meanOrganizerFactory,
             IGoogleTranslatorConfiguration googleConfiguration,
-            IApplicationConfiguration applicationConfiguration)
+            IApplicationConfiguration applicationConfiguration,
+            IRestClient restClient)
         {
             _meanOrganizerFactory = meanOrganizerFactory;
             _googleConfiguration = googleConfiguration;
             _applicationConfiguration = applicationConfiguration;
+            _restClient = restClient;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
@@ -46,25 +49,29 @@ namespace DynamicTranslator.Application.Google.Orchestration
                 return new TranslateResult(false, new Maybe<string>());
             }
 
-            var uri = string.Format(
+            string uri = string.Format(
                 _googleConfiguration.Url,
                 _applicationConfiguration.ToLanguage.Extension,
                 _applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
-            var response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
-                .ExecuteGetTaskAsync(
-                    new RestRequest(Method.GET)
-                        .AddHeader(Headers.AcceptLanguage, AcceptLanguage)
-                        .AddHeader(Headers.AcceptEncoding, AcceptEncoding)
-                        .AddHeader(Headers.UserAgent, UserAgent)
-                        .AddHeader(Headers.Accept, Accept));
+            IRestResponse response = await _restClient.Manipulate(client =>
+                                                      {
+                                                          client.BaseUrl = uri.ToUri();
+                                                          client.Encoding = Encoding.UTF8;
+                                                      })
+                                                      .ExecuteGetTaskAsync(
+                                                          new RestRequest(Method.GET)
+                                                              .AddHeader(Headers.AcceptLanguage, AcceptLanguage)
+                                                              .AddHeader(Headers.AcceptEncoding, AcceptEncoding)
+                                                              .AddHeader(Headers.UserAgent, UserAgent)
+                                                              .AddHeader(Headers.Accept, Accept));
 
             var mean = new Maybe<string>();
 
             if (response.Ok())
             {
-                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await organizer.OrganizeMean(response.Content);
             }
 

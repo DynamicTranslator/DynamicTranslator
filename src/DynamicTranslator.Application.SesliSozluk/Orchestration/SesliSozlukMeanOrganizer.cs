@@ -10,7 +10,7 @@ using DynamicTranslator.Extensions;
 
 using HtmlAgilityPack;
 
-namespace DynamicTranslator.Application.SesliSozluk.Òrchestration
+namespace DynamicTranslator.Application.SesliSozluk.Orchestration
 {
     public class SesliSozlukMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
     {

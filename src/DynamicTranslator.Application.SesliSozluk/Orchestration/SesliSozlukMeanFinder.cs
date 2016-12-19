@@ -18,7 +18,7 @@ using DynamicTranslator.Extensions;
 
 using RestSharp;
 
-namespace DynamicTranslator.Application.SesliSozluk.Òrchestration
+namespace DynamicTranslator.Application.SesliSozluk.Orchestration
 {
     public class SesliSozlukMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
     {
@@ -30,15 +30,18 @@ namespace DynamicTranslator.Application.SesliSozluk.Òrchestration
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IRestClient _restClient;
         private readonly ISesliSozlukTranslatorConfiguration _sesliSozlukConfiguration;
 
         public SesliSozlukMeanFinder(IMeanOrganizerFactory meanOrganizerFactory,
             ISesliSozlukTranslatorConfiguration sesliSozlukConfiguration,
-            IApplicationConfiguration applicationConfiguration)
+            IApplicationConfiguration applicationConfiguration,
+            IRestClient restClient)
         {
             _meanOrganizerFactory = meanOrganizerFactory;
             _sesliSozlukConfiguration = sesliSozlukConfiguration;
             _applicationConfiguration = applicationConfiguration;
+            _restClient = restClient;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
@@ -50,11 +53,12 @@ namespace DynamicTranslator.Application.SesliSozluk.Òrchestration
 
             string parameter = $"sl=auto&text={Uri.EscapeUriString(translateRequest.CurrentText)}&tl={_applicationConfiguration.ToLanguage.Extension}";
 
-            var response = await new RestClient(_sesliSozlukConfiguration.Url)
+            IRestResponse response = await _restClient.Manipulate(client =>
             {
-                Encoding = Encoding.UTF8,
-                CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1))
-            }.ExecutePostTaskAsync(
+                client.BaseUrl = _sesliSozlukConfiguration.Url.ToUri();
+                client.Encoding = Encoding.UTF8;
+                client.CachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, TimeSpan.FromHours(1));
+            }).ExecutePostTaskAsync(
                 new RestRequest(Method.POST)
                     .AddHeader(Headers.AcceptLanguage, AcceptLanguage)
                     .AddHeader(Headers.AcceptEncoding, AcceptEncoding)
@@ -67,7 +71,7 @@ namespace DynamicTranslator.Application.SesliSozluk.Òrchestration
 
             if (response.Ok())
             {
-                var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                IMeanOrganizer meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await meanOrganizer.OrganizeMean(response.Content);
             }
 
