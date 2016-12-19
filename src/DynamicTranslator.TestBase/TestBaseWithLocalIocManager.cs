@@ -31,5 +31,10 @@ namespace DynamicTranslator.TestBase
                 Component.For<T>().Instance(instance).ApplyLifeStyle(lifeStyle)
             );
         }
+
+        protected void Register<TService, TImplementation>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TImplementation : class, TService where TService : class
+        {
+            LocalIocManager.Register<TService, TImplementation>();
+        }
     }
 }

@@ -132,6 +132,7 @@
     <Compile Include="Exceptions\NotSupportedLanguageException.cs" />
     <Compile Include="Extensions\RestSharpExtensions.cs" />
     <Compile Include="Extensions\UniqueIdProviderExtensions.cs" />
+    <Compile Include="Extensions\VersionExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="GoogleAnalyticsTracker.cs" />
     <Compile Include="ITranslator.cs" />

@@ -27,9 +27,9 @@ namespace DynamicTranslator.Tests.Configuration
         {
             LocalIocManager.Register<IUniqueIdentifierProvider, CpuBasedIdentifierProvider>();
 
-            var hddBasedUniqueIdenfierProvider = Resolve<IUniqueIdentifierProvider>();
+            var sut = Resolve<IUniqueIdentifierProvider>();
 
-            hddBasedUniqueIdenfierProvider.Get().ShouldNotBeNull();
+            sut.Get().ShouldNotBeNull();
         }
 
         [Fact]

@@ -92,10 +92,10 @@
     <Compile Include="Configuration\IPromptTranslatorConfiguration.cs" />
     <Compile Include="Configuration\PromptTranslatorConfiguration.cs" />
     <Compile Include="Configuration\PromptTranslatorConfigurationExtensions.cs" />
-    <Compile Include="PromptMeanFinder.cs" />
-    <Compile Include="PromptMeanOrganizer.cs" />
+    <Compile Include="Orchestration\PromptMeanFinder.cs" />
+    <Compile Include="Orchestration\PromptMeanOrganizer.cs" />
     <Compile Include="DynamicTranslatorPromptModule.cs" />
-    <Compile Include="PromptResult.cs" />
+    <Compile Include="Orchestration\PromptResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

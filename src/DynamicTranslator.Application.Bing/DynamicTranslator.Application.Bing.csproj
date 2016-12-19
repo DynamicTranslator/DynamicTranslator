@@ -93,8 +93,8 @@
     <Compile Include="Configuration\BingTranslatorConfigurationExtensions.cs" />
     <Compile Include="Configuration\IBingTranslatorConfiguration.cs" />
     <Compile Include="DynamicTranslatorBingModule.cs" />
-    <Compile Include="BingTranslatorMeanFinder.cs" />
-    <Compile Include="BingTranslatorMeanOrganizer.cs" />
+    <Compile Include="Orchestration\BingTranslatorMeanFinder.cs" />
+    <Compile Include="Orchestration\BingTranslatorMeanOrganizer.cs" />
     <Compile Include="BingTranslatorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WordDetail.cs" />

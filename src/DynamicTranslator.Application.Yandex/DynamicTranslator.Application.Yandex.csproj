@@ -96,10 +96,10 @@
     <Compile Include="Configuration\YandexTranslatorConfigurationExtensions.cs" />
     <Compile Include="DynamicTranslatorYandexModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YandexDetectResponse.cs" />
-    <Compile Include="YandexMeanFinder.cs" />
-    <Compile Include="YandexLanguageDetector.cs" />
-    <Compile Include="YandexMeanOrganizer.cs" />
+    <Compile Include="Orchestration\YandexDetectResponse.cs" />
+    <Compile Include="Orchestration\YandexMeanFinder.cs" />
+    <Compile Include="Orchestration\YandexLanguageDetector.cs" />
+    <Compile Include="Orchestration\YandexMeanOrganizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">

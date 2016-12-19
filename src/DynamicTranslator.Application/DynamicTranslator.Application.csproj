@@ -87,24 +87,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\AbstractMeanOrganizer.cs" />
     <Compile Include="DynamicTranslatorApplicationModule.cs" />
-    <Compile Include="ExceptionInterceptor.cs" />
-    <Compile Include="ILanguageDetector.cs" />
-    <Compile Include="ILanguageDetectorFactory.cs" />
-    <Compile Include="IMeanFinder.cs" />
-    <Compile Include="IMeanFinderFactory.cs" />
-    <Compile Include="IMeanOrganizer.cs" />
-    <Compile Include="IMeanOrganizerFactory.cs" />
-    <Compile Include="InterceptorFacility.cs" />
-    <Compile Include="Orchestrators\IOrchestrator.cs" />
-    <Compile Include="Orchestrators\IResultOrganizer.cs" />
+    <Compile Include="Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Orchestrators\Detectors\ILanguageDetector.cs" />
+    <Compile Include="Orchestrators\Detectors\ILanguageDetectorFactory.cs" />
+    <Compile Include="Orchestrators\Finders\IMeanFinder.cs" />
+    <Compile Include="Orchestrators\Finders\IMeanFinderFactory.cs" />
+    <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
+    <Compile Include="Interceptors\InterceptorFacility.cs" />
+    <Compile Include="Orchestrators\IMustHaveTranslatorType.cs" />
+    <Compile Include="Orchestrators\Organizers\IResultOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultOrganizer.cs" />
+    <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
     <Compile Include="Result\IResultService.cs" />
     <Compile Include="Result\ResultService.cs" />
-    <Compile Include="Model\TranslateRequest.cs" />
-    <Compile Include="TextGuardInterceptor.cs" />
+    <Compile Include="Requests\TranslateRequest.cs" />
+    <Compile Include="Interceptors\TextGuardInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Domain.DbReeze\DynamicTranslator.Domain.DbReeze.csproj">

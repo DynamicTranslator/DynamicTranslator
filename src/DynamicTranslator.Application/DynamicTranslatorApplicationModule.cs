@@ -5,6 +5,10 @@ using Abp.Modules;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
+using DynamicTranslator.Application.Interceptors;
+using DynamicTranslator.Application.Orchestrators.Detectors;
+using DynamicTranslator.Application.Orchestrators.Finders;
+using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Domain.LiteDb;
 
 namespace DynamicTranslator.Application

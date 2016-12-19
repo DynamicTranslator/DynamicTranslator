@@ -98,8 +98,8 @@
     <Compile Include="Configuration\SesliSozlukTranslatorConfiguration.cs" />
     <Compile Include="DynamicTranslatorSesliSozlukModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SesliSozlukMeanFinder.cs" />
-    <Compile Include="SesliSozlukMeanOrganizer.cs" />
+    <Compile Include="Òrchestration\SesliSozlukMeanFinder.cs" />
+    <Compile Include="Òrchestration\SesliSozlukMeanOrganizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">

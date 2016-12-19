@@ -95,9 +95,9 @@
     <Compile Include="Configuration\IGoogleDetectorConfiguration.cs" />
     <Compile Include="Configuration\IGoogleTranslatorConfiguration.cs" />
     <Compile Include="DynamicTranslatorGoogleModule.cs" />
-    <Compile Include="GoogleLanguageDetector.cs" />
-    <Compile Include="GoogleTranslateMeanFinder.cs" />
-    <Compile Include="GoogleTranslateMeanOrganizer.cs" />
+    <Compile Include="Orchestration\GoogleLanguageDetector.cs" />
+    <Compile Include="Orchestration\GoogleTranslateMeanFinder.cs" />
+    <Compile Include="Orchestration\GoogleTranslateMeanOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +117,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -98,8 +98,8 @@
     <Compile Include="Configuration\TurengTranslatorConfigurationExtensions.cs" />
     <Compile Include="DynamicTranslatorTurengModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TurengMeanFinder.cs" />
-    <Compile Include="TurengMeanOrganizer.cs" />
+    <Compile Include="Orchestration\TurengMeanFinder.cs" />
+    <Compile Include="Orchestration\TurengMeanOrganizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">
