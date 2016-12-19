@@ -25,6 +25,11 @@ namespace DynamicTranslator.TestBase
             return LocalIocManager.Resolve(typeToResolve);
         }
 
+        protected void Register<T>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where T : class
+        {
+            LocalIocManager.Register<T>(lifeStyle);
+        }
+
         protected void Register<T>(T instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where T : class
         {
             LocalIocManager.IocContainer.Register(

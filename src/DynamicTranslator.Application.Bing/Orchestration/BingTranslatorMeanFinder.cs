@@ -25,14 +25,17 @@ namespace DynamicTranslator.Application.Bing.Orchestration
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IBingTranslatorConfiguration _bingConfiguration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
+        private readonly IRestClient _restClient;
 
         public BingTranslatorMeanFinder(IBingTranslatorConfiguration bingConfiguration,
             IMeanOrganizerFactory meanOrganizerFactory,
-            IApplicationConfiguration applicationConfiguration)
+            IApplicationConfiguration applicationConfiguration,
+            IRestClient restClient)
         {
             _bingConfiguration = bingConfiguration;
             _meanOrganizerFactory = meanOrganizerFactory;
             _applicationConfiguration = applicationConfiguration;
+            _restClient = restClient;
         }
 
         public async Task<TranslateResult> Find(TranslateRequest translateRequest)
@@ -49,18 +52,18 @@ namespace DynamicTranslator.Application.Bing.Orchestration
                 text = translateRequest.CurrentText
             };
 
-            var response = await new RestClient(_bingConfiguration.Url)
+            IRestResponse response = await _restClient
+                .Manipulate(client => client.BaseUrl = _bingConfiguration.Url.ToUri())
                 .ExecutePostTaskAsync(new RestRequest(Method.POST)
                     .AddHeader(ContentTypeName, ContentType)
-                    .AddParameter(ContentType,
-                        requestObject.ToJsonString(true),
-                        ParameterType.RequestBody));
+                    .AddParameter(ContentType, requestObject.ToJsonString(true), ParameterType.RequestBody)
+                );
 
             var mean = new Maybe<string>();
 
             if (response.Ok())
             {
-                var meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
+                IMeanOrganizer meanOrganizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
                 mean = await meanOrganizer.OrganizeMean(response.Content);
             }
 

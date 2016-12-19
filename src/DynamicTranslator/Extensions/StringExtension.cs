@@ -129,5 +129,12 @@ namespace DynamicTranslator.Extensions
             byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return Encoding.ASCII.GetString(bytes);
         }
+
+        public static Uri ToUri(this string uri)
+        {
+            Uri createdUri;
+            Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out createdUri);
+            return createdUri;
+        }
     }
 }

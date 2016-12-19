@@ -49,5 +49,11 @@ namespace DynamicTranslator.Extensions
         {
             return token.HasValues ? token.First.ForwardToken() : token;
         }
+
+        public static T Manipulate<T>(this T @this, Action<T> setAction)
+        {
+            setAction(@this);
+            return @this;
+        }
     }
 }

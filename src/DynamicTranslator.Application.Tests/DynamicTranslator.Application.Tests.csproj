@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</ProjectGuid>
+    <ProjectGuid>{2298C3FC-A968-4B31-9AC0-FB1A2B0E7B06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DynamicTranslator.Application</RootNamespace>
-    <AssemblyName>DynamicTranslator.Application</AssemblyName>
+    <RootNamespace>DynamicTranslator.Application.Tests</RootNamespace>
+    <AssemblyName>DynamicTranslator.Application.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,8 +62,24 @@
       <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\net45\Nito.AsyncEx.Enlightenment.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.50.2\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture.Xunit2, Version=3.50.2.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.Xunit2.3.50.2\lib\net45\Ploeh.AutoFixture.Xunit2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Shouldly, Version=2.8.2.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
+      <HintPath>..\packages\Shouldly.2.8.2\lib\net451\Shouldly.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -72,7 +87,6 @@
       <HintPath>..\packages\System.Collections.Immutable.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -81,7 +95,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,49 +102,49 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Orchestrators\Organizers\AbstractMeanOrganizer.cs" />
-    <Compile Include="DynamicTranslatorApplicationModule.cs" />
-    <Compile Include="Interceptors\ExceptionInterceptor.cs" />
-    <Compile Include="Orchestrators\Detectors\ILanguageDetector.cs" />
-    <Compile Include="Orchestrators\Detectors\ILanguageDetectorFactory.cs" />
-    <Compile Include="Orchestrators\Finders\IMeanFinder.cs" />
-    <Compile Include="Orchestrators\Finders\IMeanFinderFactory.cs" />
-    <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
-    <Compile Include="Interceptors\InterceptorFacility.cs" />
-    <Compile Include="Orchestrators\IMustHaveTranslatorType.cs" />
-    <Compile Include="Orchestrators\Organizers\IResultOrganizer.cs" />
+    <Compile Include="BingTests\BingTranslatorMeanFinderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
-    <Compile Include="Result\IResultService.cs" />
-    <Compile Include="Result\ResultService.cs" />
-    <Compile Include="Requests\TranslateRequest.cs" />
-    <Compile Include="Interceptors\TextGuardInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator.Domain.DbReeze\DynamicTranslator.Domain.DbReeze.csproj">
-      <Project>{28594610-055B-4849-9426-560344B4C777}</Project>
-      <Name>DynamicTranslator.Domain.DbReeze</Name>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj">
+      <Project>{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}</Project>
+      <Name>DynamicTranslator.Application.Bing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">
+      <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
+      <Name>DynamicTranslator.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
-      <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
+      <Project>{9205050a-26a4-4047-a691-d6524eef8f1c}</Project>
       <Name>DynamicTranslator.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Domain.LiteDb\DynamicTranslator.Domain.LiteDb.csproj">
-      <Project>{FFE2F1DF-3FB0-484D-B2CB-C6093A72EB76}</Project>
-      <Name>DynamicTranslator.Domain.LiteDb</Name>
+    <ProjectReference Include="..\DynamicTranslator.TestBase\DynamicTranslator.TestBase.csproj">
+      <Project>{6BB0DBDA-1521-432C-9C3E-8B06A61B64AA}</Project>
+      <Name>DynamicTranslator.TestBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
-      <Project>{a0d66d6a-2a41-4532-ab6e-6443874946e6}</Project>
+      <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>
       <Name>DynamicTranslator</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
