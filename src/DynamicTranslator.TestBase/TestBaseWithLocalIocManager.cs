@@ -2,6 +2,7 @@
 
 using Abp.Dependency;
 
+using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 
 namespace DynamicTranslator.TestBase
@@ -11,6 +12,7 @@ namespace DynamicTranslator.TestBase
         protected TestBaseWithLocalIocManager()
         {
             LocalIocManager = new IocManager();
+            LocalIocManager.IocContainer.AddFacility<TypedFactoryFacility>();
         }
 
         protected IIocManager LocalIocManager { get; }
