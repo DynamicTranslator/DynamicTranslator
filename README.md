@@ -33,7 +33,7 @@ Bulunduğunuz yerde pencere/pdf/browser vb. mouse ile gezinirken seçtiğiniz te
 
 Seçilen metnin dilini algılar.
 
-###Başvurulan sözlükler | Dictionaries
+### Başvurulan sözlükler | Dictionaries
         
 ##### Tureng (http://tureng.com/en/turkish-english)
 ##### Yandex (https://translate.yandex.com)
