@@ -4,9 +4,6 @@
 Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses GoogleTranslate, Yandex, Bing, Prompt, SesliSozluk, Tureng in the same time as concurrent.
 
 <a href="http://www.ilovefreesoftware.com/08/windows/free-translation-software-translate-text-application.html" title="FREE TRANSLATION SOFTWARE TO TRANSLATE TEXT IN ANY APPLICATION"><img border="0" src="http://cdn.ilovefreesoftware.com/wp-content/uploads/2011/03/ilovefreesoftware_reviewed_5Star.png"/></a>
-
-
-##
  
 | From | News |
 |:---------:|:--------:|
@@ -17,12 +14,12 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 <a href="#" > <img src="http://img.freeflagicons.com/thumb/square_icon/bulgaria/bulgaria_640.png" height="50" width="50"> <img src="http://www.download.bg/img/logos/dbg.gif" height="50" width="50"> </a> |  [Bulgarian post about DynamicTranslator](http://www.download.bg/index.php?cls=program&mtd=default&id=696239)
 |<a href="#" ><img src="http://icons.iconarchive.com/icons/custom-icon-design/flat-europe-flag/512/Turkey-icon.png" height="50" width="50"> <img src="https://image.winudf.com/1227/01908acbdfd0b241/screen-0.jpg" height="50" width="50">    </a>| [Ekşi Sözlük - DynamicTranslator](https://eksisozluk.com/dynamictranslator--5230125) |
 
-##Country Based Usage
+## Country Based Usage
 ![usings](https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/usings.PNG)
 
 ## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.2/v3.4.2.rar)
 
-###Latest News
+### Latest News
 
 #### *Instantly detect text implemented.
 #### *Google Translate added.
