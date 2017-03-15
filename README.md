@@ -51,20 +51,13 @@ This project provides translation words or sentences while reading and working a
 
 C# , WPF
 
-##Powered By
+## Powered By
 
-<p>
+<a href="https://www.jetbrains.com/resharper/" target="_blank"><img src="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" width="300" height="50" alt="ReSharper" data-canonical-src="http://www.jetbrains.com/img/logos/logo_resharper_small.gif" style="max-width:100%;"></a>
 
-</p>
-| Tool | Thanks |
-|:---------:|--------|
-|<a href="https://www.jetbrains.com/resharper/" target="_blank"><img src="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" width="300" height="50" alt="ReSharper" data-canonical-src="http://www.jetbrains.com/img/logos/logo_resharper_small.gif" style="max-width:100%;"></a> |This project would not have been possible without the support of JetBrains. We thank them generously for providing us with the ReSharper licenses necessary to make us productive developers.|
-|<a href="http://www.oz-code.com/"><img src="http://www.oz-code.com//Content/Images/header/ozcode_logo_short.svg" height="50" width="300" ></a> | Thank for support of OzCode team providing to us OzCode licence to make our debugging easily and magical! |
-<p>
+<a href="http://www.oz-code.com/"><img src="http://www.oz-code.com//Content/Images/header/ozcode_logo_short.svg" height="50" width="300"></a>
 
-
-</p>
  
- <p></br>
+ </br>
 #Implemented C# 6.0 and .NET 4.6
 </p>
