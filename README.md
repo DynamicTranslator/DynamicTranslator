@@ -30,7 +30,7 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 #### *Bing Translate added (2016-02-29)
 #### *Text to speech added (2016-03-03)
 
-###In Turkish
+### In Turkish
 Bilindiği gibi bazı sözlükler bize API sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
 Bulunduğunuz yerde pencere/pdf/browser vb. mouse ile gezinirken seçtiğiniz text'i/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSozluk, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
 
