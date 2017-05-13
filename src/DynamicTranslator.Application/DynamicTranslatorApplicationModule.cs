@@ -10,14 +10,13 @@ using DynamicTranslator.Application.Interceptors;
 using DynamicTranslator.Application.Orchestrators.Detectors;
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Application.Orchestrators.Organizers;
-using DynamicTranslator.Domain.LiteDb;
 
 using RestSharp;
 
 namespace DynamicTranslator.Application
 {
     [DependsOn(
-        typeof(DynamicTranslatorLiteDbModule)
+        typeof(DynamicTranslatorCoreModule)
     )]
     public class DynamicTranslatorApplicationModule : DynamicTranslatorModule
     {

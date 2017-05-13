@@ -9,7 +9,7 @@ namespace DynamicTranslator.Domain.Model
     [Serializable]
     public sealed class CompositeTranslateResult : Entity<string>
     {
-        public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate)
+        public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate):this()
         {
             Results = result;
             SearchText = searchText;

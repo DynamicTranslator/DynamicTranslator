@@ -27,6 +27,11 @@ namespace DynamicTranslator.Wpf
             _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _bootstrapper.Dispose();
+        }
+
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
             _bootstrapper.Initialize();
