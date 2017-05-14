@@ -111,7 +111,6 @@
     <Compile Include="Orchestrators\Finders\IMeanFinder.cs" />
     <Compile Include="Orchestrators\Finders\IMeanFinderFactory.cs" />
     <Compile Include="Orchestrators\Organizers\IMeanOrganizer.cs" />
-    <Compile Include="Orchestrators\Organizers\IMeanOrganizerFactory.cs" />
     <Compile Include="Interceptors\InterceptorFacility.cs" />
     <Compile Include="Orchestrators\IMustHaveTranslatorType.cs" />
     <Compile Include="Orchestrators\Organizers\IResultOrganizer.cs" />

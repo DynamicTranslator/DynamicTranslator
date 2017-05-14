@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
-using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Application.Yandex.Configuration;
 using DynamicTranslator.Configuration.Startup;
@@ -18,43 +15,23 @@ using RestSharp;
 
 namespace DynamicTranslator.Application.WordReference.Orchestration
 {
-    public class WordReferenceMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
+    public class WordReferenceMeanFinder : AbstractMeanFinder<IWordReferenceTranslatorConfiguration, WordReferenceMeanOrganizer>
     {
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
         private readonly IApplicationConfiguration _applicationConfiguration;
-        private readonly IWordReferenceTranslatorConfiguration _configuration;
-        private readonly IMeanOrganizerFactory _meanOrganizerFactory;
         private readonly IRestClient _restClient;
 
-        public WordReferenceMeanFinder(
-            IRestClient restClient,
-            IMeanOrganizerFactory meanOrganizerFactory,
-            IWordReferenceTranslatorConfiguration configuration,
-            IApplicationConfiguration applicationConfiguration)
+        public WordReferenceMeanFinder(IRestClient restClient, IApplicationConfiguration applicationConfiguration)
         {
             _restClient = restClient;
-            _meanOrganizerFactory = meanOrganizerFactory;
-            _configuration = configuration;
             _applicationConfiguration = applicationConfiguration;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.WordReference;
-
-        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        protected override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_configuration.CanSupport())
-            {
-                return new TranslateResult(false, new Maybe<string>());
-            }
-
-            if (!_configuration.IsActive())
-            {
-                return new TranslateResult(false, new Maybe<string>());
-            }
-
-            var uri = new Uri(string.Format(_configuration.Url,
+            var uri = new Uri(string.Format(Configuration.Url,
                 translateRequest.CurrentText,
                 translateRequest.FromLanguageExtension + _applicationConfiguration.ToLanguage.Extension)
             );
@@ -74,8 +51,7 @@ namespace DynamicTranslator.Application.WordReference.Orchestration
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
-                mean = await organizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
+                mean = await MeanOrganizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
             }
 
             return new TranslateResult(true, mean);

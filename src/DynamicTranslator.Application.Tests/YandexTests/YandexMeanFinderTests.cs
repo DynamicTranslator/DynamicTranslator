@@ -33,7 +33,7 @@ namespace DynamicTranslator.Application.Tests.YandexTests
             YandexMeanFinder sut = ResolveSut();
 
             var translateRequest = new TranslateRequest("hi", "en");
-            TranslateResult response = await sut.Find(translateRequest);
+            TranslateResult response = await sut.FindMean(translateRequest);
             response.IsSuccess.ShouldBe(true);
             response.ResultMessage.ShouldBe(new Maybe<string>("selam"));
         }
@@ -47,7 +47,7 @@ namespace DynamicTranslator.Application.Tests.YandexTests
             YandexMeanFinder sut = ResolveSut();
 
             var translateRequest = new TranslateRequest("hi", "en");
-            TranslateResult response = await sut.Find(translateRequest);
+            TranslateResult response = await sut.FindMean(translateRequest);
             response.IsSuccess.ShouldBe(false);
             response.ResultMessage.ShouldBe(new Maybe<string>());
         }

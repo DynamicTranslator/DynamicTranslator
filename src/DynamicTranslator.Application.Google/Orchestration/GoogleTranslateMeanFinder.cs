@@ -1,11 +1,8 @@
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Google.Configuration;
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
-using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
@@ -17,7 +14,7 @@ using RestSharp.Extensions.MonoHttp;
 
 namespace DynamicTranslator.Application.Google.Orchestration
 {
-    public class GoogleTranslateMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
+    public class GoogleTranslateMeanFinder : AbstractMeanFinder<IGoogleTranslatorConfiguration, GoogleTranslateMeanOrganizer>
     {
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate, sdch";
@@ -25,32 +22,18 @@ namespace DynamicTranslator.Application.Google.Orchestration
         private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
         private readonly IApplicationConfiguration _applicationConfiguration;
-        private readonly IGoogleTranslatorConfiguration _googleConfiguration;
-        private readonly IMeanOrganizerFactory _meanOrganizerFactory;
         private readonly IRestClient _restClient;
 
-        public GoogleTranslateMeanFinder(IMeanOrganizerFactory meanOrganizerFactory,
-            IGoogleTranslatorConfiguration googleConfiguration,
-            IApplicationConfiguration applicationConfiguration,
-            IRestClient restClient)
+        public GoogleTranslateMeanFinder(IApplicationConfiguration applicationConfiguration, IRestClient restClient)
         {
-            _meanOrganizerFactory = meanOrganizerFactory;
-            _googleConfiguration = googleConfiguration;
             _applicationConfiguration = applicationConfiguration;
             _restClient = restClient;
         }
 
-        public TranslatorType TranslatorType => TranslatorType.Google;
-
-        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        protected override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            if (!_googleConfiguration.CanSupport() || !_googleConfiguration.IsActive())
-            {
-                return new TranslateResult(false, new Maybe<string>());
-            }
-
             string uri = string.Format(
-                _googleConfiguration.Url,
+                Configuration.Url,
                 _applicationConfiguration.ToLanguage.Extension,
                 _applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
@@ -71,8 +54,7 @@ namespace DynamicTranslator.Application.Google.Orchestration
 
             if (response.Ok())
             {
-                IMeanOrganizer organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
-                mean = await organizer.OrganizeMean(response.Content);
+                mean = await MeanOrganizer.OrganizeMean(response.Content);
             }
 
             return new TranslateResult(true, mean);

@@ -7,6 +7,6 @@ namespace DynamicTranslator.Application.Orchestrators.Finders
 {
     public interface IMeanFinder
     {
-        Task<TranslateResult> Find(TranslateRequest translateRequest);
+        Task<TranslateResult> FindMean(TranslateRequest translateRequest);
     }
 }

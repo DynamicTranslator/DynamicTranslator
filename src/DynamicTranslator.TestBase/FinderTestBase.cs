@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-
-using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel.Registration;
-
-using DynamicTranslator.Application.Bing.Configuration;
+﻿using DynamicTranslator.Application.Bing.Configuration;
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Prompt.Configuration;
@@ -21,9 +16,9 @@ using RestSharp;
 namespace DynamicTranslator.TestBase
 {
     public class FinderTestBase<TSut, TConfig, TConfigImplementation, TMeanOrganizer> : TestBaseWithLocalIocManager
-        where TConfigImplementation : class
+        where TConfigImplementation : class, TConfig
         where TConfig : class, IMustHaveUrl
-        where TMeanOrganizer : class, IMeanOrganizer
+        where TMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer
         where TSut : class
     {
         protected FinderTestBase()
@@ -42,12 +37,7 @@ namespace DynamicTranslator.TestBase
 
             MeanOrganizer = Substitute.For<TMeanOrganizer>();
             MeanOrganizer.TranslatorType.Returns(FindTranslatorType());
-
-            var meanOrganizerFactory = Substitute.For<IMeanOrganizerFactory>();
-            meanOrganizerFactory.GetMeanOrganizers().Returns(new List<IMeanOrganizer> { MeanOrganizer });
-            LocalIocManager.IocContainer.Register(
-                Component.For<IMeanOrganizerFactory>().Instance(meanOrganizerFactory).AsFactory()
-            );
+            Register(MeanOrganizer);
 
             Register<TSut>();
         }

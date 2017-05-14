@@ -9,7 +9,6 @@ using Castle.MicroKernel.Registration;
 using DynamicTranslator.Application.Interceptors;
 using DynamicTranslator.Application.Orchestrators.Detectors;
 using DynamicTranslator.Application.Orchestrators.Finders;
-using DynamicTranslator.Application.Orchestrators.Organizers;
 
 using RestSharp;
 
@@ -26,7 +25,6 @@ namespace DynamicTranslator.Application
 
             IocManager.IocContainer.Register(
                 Component.For<IMeanFinderFactory>().AsFactory(),
-                Component.For<IMeanOrganizerFactory>().AsFactory(),
                 Component.For<ILanguageDetectorFactory>().AsFactory()
             );
         }
