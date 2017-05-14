@@ -2,7 +2,6 @@
 using System.Xml;
 
 using Abp.Collections.Extensions;
-using Abp.Dependency;
 
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
@@ -10,7 +9,7 @@ using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Application.Yandex.Orchestration
 {
-    public class YandexMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
+    public class YandexMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Yandex;
 

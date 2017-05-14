@@ -4,8 +4,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
@@ -14,7 +12,7 @@ using HtmlAgilityPack;
 
 namespace DynamicTranslator.Application.Zargan.Orchestration
 {
-    public class ZarganMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
+    public class ZarganMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Zargan;
 

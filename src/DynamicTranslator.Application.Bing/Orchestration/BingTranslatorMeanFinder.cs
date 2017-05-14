@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
 using Abp.Json;
 
 using DynamicTranslator.Application.Bing.Configuration;
@@ -18,7 +17,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Application.Bing.Orchestration
 {
-    public class BingTranslatorMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class BingTranslatorMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
     {
         private const string ContentType = "application/json;Charset=UTF-8";
         private const string ContentTypeName = "Content-Type";
@@ -38,7 +37,9 @@ namespace DynamicTranslator.Application.Bing.Orchestration
             _restClient = restClient;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public TranslatorType TranslatorType => TranslatorType.Bing;
+
+        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!_bingConfiguration.CanSupport() || !_bingConfiguration.IsActive())
             {
@@ -69,7 +70,5 @@ namespace DynamicTranslator.Application.Bing.Orchestration
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Bing;
     }
 }

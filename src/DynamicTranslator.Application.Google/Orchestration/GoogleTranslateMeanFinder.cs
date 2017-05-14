@@ -2,8 +2,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
@@ -19,7 +17,7 @@ using RestSharp.Extensions.MonoHttp;
 
 namespace DynamicTranslator.Application.Google.Orchestration
 {
-    public class GoogleTranslateMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class GoogleTranslateMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
     {
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate, sdch";
@@ -42,7 +40,9 @@ namespace DynamicTranslator.Application.Google.Orchestration
             _restClient = restClient;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public TranslatorType TranslatorType => TranslatorType.Google;
+
+        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!_googleConfiguration.CanSupport() || !_googleConfiguration.IsActive())
             {
@@ -77,7 +77,5 @@ namespace DynamicTranslator.Application.Google.Orchestration
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Google;
     }
 }

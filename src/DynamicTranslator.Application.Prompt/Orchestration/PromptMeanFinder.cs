@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
 using Abp.Json;
 
 using DynamicTranslator.Application.Orchestrators;
@@ -18,7 +17,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Application.Prompt.Orchestration
 {
-    public class PromptMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class PromptMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
     {
         private const string AutomaticLanguageExtension = "au";
         private const string ContentType = "application/json;Charset=UTF-8";
@@ -39,7 +38,9 @@ namespace DynamicTranslator.Application.Prompt.Orchestration
             _restClient = restClient;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public TranslatorType TranslatorType => TranslatorType.Prompt;
+
+        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!_promptConfiguration.CanSupport() || !_promptConfiguration.IsActive())
             {
@@ -61,10 +62,7 @@ namespace DynamicTranslator.Application.Prompt.Orchestration
             };
 
             IRestResponse response = await _restClient
-                .Manipulate(client =>
-                {
-                    client.BaseUrl = _promptConfiguration.Url.ToUri();
-                }).ExecutePostTaskAsync(new RestRequest(Method.POST)
+                .Manipulate(client => { client.BaseUrl = _promptConfiguration.Url.ToUri(); }).ExecutePostTaskAsync(new RestRequest(Method.POST)
                     .AddHeader(ContentTypeName, ContentType)
                     .AddParameter(ContentType, requestObject.ToJsonString(false), ParameterType.RequestBody));
 
@@ -78,7 +76,5 @@ namespace DynamicTranslator.Application.Prompt.Orchestration
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Prompt;
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
@@ -11,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace DynamicTranslator.Application.Google.Orchestration
 {
-    public class GoogleTranslateMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
+    public class GoogleTranslateMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Google;
 

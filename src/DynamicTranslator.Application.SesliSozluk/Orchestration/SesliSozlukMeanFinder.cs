@@ -4,8 +4,6 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Application.Orchestrators.Organizers;
@@ -20,7 +18,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Application.SesliSozluk.Orchestration
 {
-    public class SesliSozlukMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class SesliSozlukMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
     {
         private const string Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
         private const string AcceptEncoding = "gzip, deflate";
@@ -44,7 +42,9 @@ namespace DynamicTranslator.Application.SesliSozluk.Orchestration
             _restClient = restClient;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public TranslatorType TranslatorType => TranslatorType.SesliSozluk;
+
+        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!_sesliSozlukConfiguration.CanSupport() || !_sesliSozlukConfiguration.IsActive())
             {
@@ -77,7 +77,5 @@ namespace DynamicTranslator.Application.SesliSozluk.Orchestration
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.SesliSozluk;
     }
 }

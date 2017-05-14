@@ -3,8 +3,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Application.Orchestrators.Organizers;
@@ -19,7 +17,7 @@ using RestSharp;
 
 namespace DynamicTranslator.Application.Yandex.Orchestration
 {
-    public class YandexMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class YandexMeanFinder : AbstractMeanFinder, IMustHaveTranslatorType
     {
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IMeanOrganizerFactory _meanOrganizerFactory;
@@ -38,7 +36,9 @@ namespace DynamicTranslator.Application.Yandex.Orchestration
             _restClient = restClient;
         }
 
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
+        public TranslatorType TranslatorType => TranslatorType.Yandex;
+
+        public override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
             if (!_yandexConfiguration.CanSupport() || !_yandexConfiguration.IsActive())
             {
@@ -86,7 +86,5 @@ namespace DynamicTranslator.Application.Yandex.Orchestration
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Yandex;
     }
 }

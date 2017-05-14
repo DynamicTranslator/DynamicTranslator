@@ -2,15 +2,13 @@
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Application.Bing.Orchestration
 {
-    public class BingTranslatorMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
+    public class BingTranslatorMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Bing;
 
@@ -19,7 +17,7 @@ namespace DynamicTranslator.Application.Bing.Orchestration
             var means = new StringBuilder();
 
             var response = text.DeserializeAs<BingTranslatorResponse>();
-            if ((response.Translations != null) && response.Translations.Any())
+            if (response.Translations != null && response.Translations.Any())
             {
                 if (response.Translations.ContainsKey("Bing"))
                 {

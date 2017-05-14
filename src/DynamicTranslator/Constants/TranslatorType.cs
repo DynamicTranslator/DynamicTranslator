@@ -8,6 +8,7 @@
         Google,
         Bing,
         Prompt,
-        Zargan
+        Zargan,
+        WordReference
     }
 }

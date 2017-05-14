@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
+using DynamicTranslator.Extensions;
 
 using HtmlAgilityPack;
 
-namespace DynamicTranslator.Application.Tureng.Orchestration
+namespace DynamicTranslator.Application.WordReference.Orchestration
 {
-    public class TurengMeanOrganizer : AbstractMeanOrganizer
+    public class WordReferenceMeanOrganizer : AbstractMeanOrganizer
     {
-        public override TranslatorType TranslatorType => TranslatorType.Tureng;
+        public override TranslatorType TranslatorType => TranslatorType.WordReference;
 
         public override Task<Maybe<string>> OrganizeMean(string text, string fromLanguageExtension)
         {
@@ -37,13 +38,14 @@ namespace DynamicTranslator.Application.Tureng.Orchestration
              from y in x.Descendants().AsParallel()
              where y.Name == "tr"
              from z in y.Descendants().AsParallel()
-             where (z.Name == "th" || z.Name == "td") && z.GetAttributeValue("lang", string.Empty) == (fromLanguageExtension == "tr" ? "en" : "tr")
+             where z.Name == "th" || z.Name == "td"
              from t in z.Descendants().AsParallel()
-             where t.Name == "a"
+             where t.GetAttributeValue("class", "").Contains("ToWrd")
              select t.InnerHtml)
+                .Skip(1)
                 .AsParallel()
                 .ToList()
-                .ForEach(mean => output.AppendLine(mean));
+                .ForEach(mean => output.AppendLine(mean.StripTagsRegexCompiled()));
 
             return Task.FromResult(new Maybe<string>(output.ToString().ToLower().Trim()));
         }

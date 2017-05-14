@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
 
+using Abp.Dependency;
+
 using DynamicTranslator.Constants;
 
 namespace DynamicTranslator.Application.Orchestrators.Organizers
 {
-    public abstract class AbstractMeanOrganizer
+    public abstract class AbstractMeanOrganizer : IMeanOrganizer, ITransientDependency
     {
         public abstract TranslatorType TranslatorType { get; }
 
