@@ -17,7 +17,7 @@ namespace DynamicTranslator.Application.Bing
 
             Configurations.ModuleConfigurations.UseBingTranslate().WithConfigurations(configuration =>
                           {
-                              configuration.Url = "http://dictionary.cambridge.org/translate/ajax";
+                              configuration.Url = "http://dictionary.cambridge.org/translate/";
                               configuration.SupportedLanguages = LanguageMapping.Bing.ToLanguages();
                           });
         }

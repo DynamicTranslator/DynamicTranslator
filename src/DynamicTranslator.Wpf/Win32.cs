@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace DynamicTranslator.Wpf
 {
@@ -22,12 +23,15 @@ namespace DynamicTranslator.Wpf
         internal const int WmDrawclipboard = 0x0308;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [SuppressUnmanagedCodeSecurity]
         internal static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
     }
 }
