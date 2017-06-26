@@ -1,7 +1,0 @@
-language: csharp
-solution: DynamicTranslator.sln
-before_install:
- - chmod +x automation/nuget/nuget.exe
-script:
-  - cd automation/nuget/
-  - nuget restore DynamicTranslator.sln

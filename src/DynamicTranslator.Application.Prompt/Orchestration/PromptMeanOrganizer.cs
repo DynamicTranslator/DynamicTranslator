@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
 
-using Abp.Dependency;
-
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Application.Prompt.Orchestration
 {
-    public class PromptMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer, ITransientDependency
+    public class PromptMeanOrganizer : AbstractMeanOrganizer
     {
         public override TranslatorType TranslatorType => TranslatorType.Prompt;
 

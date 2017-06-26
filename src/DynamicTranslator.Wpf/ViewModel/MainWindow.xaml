@@ -9,7 +9,7 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="/Resources/dynamic-link-library 16.png" Height="325.404" Width="393.014">
+    Icon="/Resources/dynamic-link-library 16.png" Height="346.821" Width="394.396">
     <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,4,1">
         <Grid Height="288">
             <WrapPanel Margin="21,10,25,234" Orientation="Horizontal">
@@ -41,7 +41,7 @@
                 </Button.Background>
             </Button>
             <Button Click="GithubButtonClick" Height="Auto" Width="Auto" Background="Transparent"
-                    Margin="158,243,159,5">
+                    Margin="158,269,159,-21">
                 <Image Source="../Resources/github_100x150.png" />
             </Button>
             <Grid x:Name="_languagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
@@ -58,8 +58,10 @@
                           Margin="23,58,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="_checkBoxPrompt" Content="Prompt Translate" HorizontalAlignment="Left"
                     Margin="205,56,0,0" VerticalAlignment="Top" IsChecked="True" />
+                <CheckBox x:Name="_checkBoxWordReference" Visibility="Hidden" Content="WordReference Translate" HorizontalAlignment="Left"
+                    Margin="23,81,0,-13" IsChecked="True" />
             </Grid>
-            <Button x:Name="_newVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,211,0,0"
+            <Button x:Name="_newVersionButton" Content="Button" HorizontalAlignment="Left" Margin="10,237,0,0"
                     VerticalAlignment="Top" Width="363" Height="27" Click="NewVersionButtonClick" />
 
         </Grid>

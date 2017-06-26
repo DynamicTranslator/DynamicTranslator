@@ -39,9 +39,17 @@ namespace DynamicTranslator.TestBase
             );
         }
 
+
         protected void Register<TService, TImplementation>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TImplementation : class, TService where TService : class
         {
             LocalIocManager.Register<TService, TImplementation>();
+        }
+
+        protected void Register<TService, TImplementation>(TService instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TImplementation : class, TService where TService : class
+        {
+            LocalIocManager.IocContainer.Register(
+                Component.For<TService>().ImplementedBy<TImplementation>().Instance(instance).ApplyLifeStyle(lifeStyle)
+            );
         }
     }
 }

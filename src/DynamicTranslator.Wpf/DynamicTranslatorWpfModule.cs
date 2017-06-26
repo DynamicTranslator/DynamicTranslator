@@ -8,6 +8,7 @@ using DynamicTranslator.Application.Google;
 using DynamicTranslator.Application.Prompt;
 using DynamicTranslator.Application.SesliSozluk;
 using DynamicTranslator.Application.Tureng;
+using DynamicTranslator.Application.WordReference;
 using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Extensions;
 
@@ -16,13 +17,14 @@ using Octokit;
 namespace DynamicTranslator.Wpf
 {
     [DependsOn(
-         typeof(DynamicTranslatorGoogleModule),
-         typeof(DynamicTranslatorYandexModule),
-         typeof(DynamicTranslatorBingModule),
-         typeof(DynamicTranslatorTurengModule),
-         typeof(DynamicTranslatorSesliSozlukModule),
-         typeof(DynamicTranslatorPromptModule)
-     )]
+        typeof(DynamicTranslatorGoogleModule),
+        typeof(DynamicTranslatorYandexModule),
+        typeof(DynamicTranslatorBingModule),
+        typeof(DynamicTranslatorTurengModule),
+        typeof(DynamicTranslatorSesliSozlukModule),
+        typeof(DynamicTranslatorPromptModule),
+        typeof(DynamicTranslatorWordReferenceModule)
+    )]
     public class DynamicTranslatorWpfModule : DynamicTranslatorModule
     {
         public override void Initialize()

@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 
-using Abp.Dependency;
 using Abp.Modules;
 
 using DynamicTranslator.Application.Tureng.Configuration;
@@ -16,10 +15,10 @@ namespace DynamicTranslator.Application.Tureng
             IocManager.RegisterAssemblyByConvention(Assembly.GetExecutingAssembly());
 
             Configurations.ModuleConfigurations.UseSesliSozlukTranslate().WithConfigurations(configuration =>
-                          {
-                              configuration.Url = "http://tureng.com/search/";
-                              configuration.SupportedLanguages = LanguageMapping.Tureng.ToLanguages();
-                          });
+            {
+                configuration.Url = "http://tureng.com/search/";
+                configuration.SupportedLanguages = LanguageMapping.Tureng.ToLanguages();
+            });
         }
     }
 }

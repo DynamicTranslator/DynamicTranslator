@@ -1,15 +1,9 @@
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Abp.Dependency;
-
-using DynamicTranslator.Application.Orchestrators;
 using DynamicTranslator.Application.Orchestrators.Finders;
-using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Application.Zargan.Configuration;
-using DynamicTranslator.Constants;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Extensions;
 
@@ -18,28 +12,14 @@ using RestSharp.Extensions.MonoHttp;
 
 namespace DynamicTranslator.Application.Zargan.Orchestration
 {
-    public class ZarganMeanFinder : IMeanFinder, IMustHaveTranslatorType, ITransientDependency
+    public class ZarganMeanFinder : AbstractMeanFinder<IZarganTranslatorConfiguration, ZarganMeanOrganizer>
     {
-        private readonly IMeanOrganizerFactory _meanOrganizerFactory;
-        private readonly IZarganTranslatorConfiguration _zarganConfiguration;
-
-        public ZarganMeanFinder(IZarganTranslatorConfiguration zarganConfiguration, IMeanOrganizerFactory meanOrganizerFactory)
+        protected override async Task<TranslateResult> Find(TranslateRequest translateRequest)
         {
-            _zarganConfiguration = zarganConfiguration;
-            _meanOrganizerFactory = meanOrganizerFactory;
-        }
-
-        public async Task<TranslateResult> Find(TranslateRequest translateRequest)
-        {
-            if (!_zarganConfiguration.IsActive() || !_zarganConfiguration.CanSupport())
-            {
-                return new TranslateResult(false, new Maybe<string>());
-            }
-
-            var uri = string.Format(_zarganConfiguration.Url,
+            string uri = string.Format(Configuration.Url,
                 HttpUtility.UrlEncode(translateRequest.CurrentText, Encoding.UTF8));
 
-            var response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
+            IRestResponse response = await new RestClient(uri) { Encoding = Encoding.UTF8 }
                 .ExecuteGetTaskAsync(
                     new RestRequest(Method.GET)
                         .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
@@ -51,13 +31,10 @@ namespace DynamicTranslator.Application.Zargan.Orchestration
 
             if (response.Ok())
             {
-                var organizer = _meanOrganizerFactory.GetMeanOrganizers().First(x => x.TranslatorType == TranslatorType);
-                mean = await organizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
+                mean = await MeanOrganizer.OrganizeMean(response.Content, translateRequest.FromLanguageExtension);
             }
 
             return new TranslateResult(true, mean);
         }
-
-        public TranslatorType TranslatorType => TranslatorType.Zargan;
     }
 }

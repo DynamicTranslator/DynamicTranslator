@@ -113,7 +113,7 @@ namespace DynamicTranslator.Wpf.Observers
 
         private Task<TranslateResult[]> GetMeansFromCache(string currentString, string fromLanguageExtension)
         {
-            Task<TranslateResult[]> meanTasks = Task.WhenAll(_meanFinderFactory.GetFinders().Select(t => t.Find(new TranslateRequest(currentString, fromLanguageExtension))));
+            Task<TranslateResult[]> meanTasks = Task.WhenAll(_meanFinderFactory.GetFinders().Select(t => t.FindMean(new TranslateRequest(currentString, fromLanguageExtension))));
 
             return _cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache)
                                 .GetAsync(currentString, () => meanTasks);

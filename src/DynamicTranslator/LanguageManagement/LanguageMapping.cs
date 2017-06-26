@@ -154,6 +154,29 @@ namespace DynamicTranslator.LanguageManagement
             { "Turkish", "tr" }
         };
 
+        public static IDictionary<string, string> WordReference => new Dictionary<string, string>
+        {
+            { "English", "en" },
+            { "Turkish", "tr" },
+            { "German", "de" },
+            { "Arabic", "ar" },
+            { "Danish", "da" },
+            { "French", "fr" },
+            { "Dutch", "nl" },
+            { "Spanish", "es" },
+            { "Swedish", "sv" },
+            { "Italian", "it" },
+            { "Greek", "el" },
+            { "Polish", "pl" },
+            { "Russian", "ru" },
+            { "Korean", "ko" },
+            { "Catalan", "ca" },
+            { "Chinese", "zh" },
+            { "Japanese", "ja" },
+            { "Czech", "cs" },
+            { "Portuguese", "pt" }
+        };
+
         public static IDictionary<string, string> Yandex => new Dictionary<string, string>
         {
             { "Albanian", "sq" },

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
-using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel.Registration;
+using Abp.Dependency;
 
 using DynamicTranslator.Application.Bing.Configuration;
 using DynamicTranslator.Application.Google.Configuration;
@@ -21,9 +20,9 @@ using RestSharp;
 namespace DynamicTranslator.TestBase
 {
     public class FinderTestBase<TSut, TConfig, TConfigImplementation, TMeanOrganizer> : TestBaseWithLocalIocManager
-        where TConfigImplementation : class
+        where TConfigImplementation : class, TConfig
         where TConfig : class, IMustHaveUrl
-        where TMeanOrganizer : class, IMeanOrganizer
+        where TMeanOrganizer : AbstractMeanOrganizer, IMeanOrganizer
         where TSut : class
     {
         protected FinderTestBase()
@@ -40,14 +39,11 @@ namespace DynamicTranslator.TestBase
             TranslatorConfiguration.Url.Returns("http://www.dummycorrecturl.com/");
             Register(TranslatorConfiguration);
 
-            MeanOrganizer = Substitute.For<TMeanOrganizer>();
+            MeanOrganizer = Substitute.For<IMeanOrganizer, TMeanOrganizer>();
             MeanOrganizer.TranslatorType.Returns(FindTranslatorType());
-
-            var meanOrganizerFactory = Substitute.For<IMeanOrganizerFactory>();
-            meanOrganizerFactory.GetMeanOrganizers().Returns(new List<IMeanOrganizer> { MeanOrganizer });
-            LocalIocManager.IocContainer.Register(
-                Component.For<IMeanOrganizerFactory>().Instance(meanOrganizerFactory).AsFactory()
-            );
+            MeanOrganizer.OrganizeMean(Arg.Any<string>()).Returns(Task.FromResult(new Maybe<string>("selam")));
+            MeanOrganizer.OrganizeMean(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(new Maybe<string>("selam")));
+            Register((TMeanOrganizer)MeanOrganizer, DependencyLifeStyle.Transient);
 
             Register<TSut>();
         }

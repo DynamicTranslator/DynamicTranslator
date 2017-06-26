@@ -74,12 +74,12 @@ namespace DynamicTranslator.Wpf.ViewModel
                 LockUiElements();
 
                 this.DispatchingAsync(async () =>
-                                      {
-                                          if (!_translator.IsInitialized)
-                                          {
-                                              await _translator.InitializeAsync();
-                                          }
-                                      });
+                {
+                    if (!_translator.IsInitialized)
+                    {
+                        await _translator.InitializeAsync();
+                    }
+                });
 
                 _isRunning = true;
             }
@@ -101,16 +101,16 @@ namespace DynamicTranslator.Wpf.ViewModel
                                 .GetAsync(CacheNames.ReleaseCache,
                                     async () =>
                                         await gitHubClient
-                                                .Repository
-                                                .Release
-                                                .GetLatest(
-                                                    _configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
-                                                    _configurations.ApplicationConfiguration.GitHubRepositoryName));
+                                            .Repository
+                                            .Release
+                                            .GetLatest(
+                                                _configurations.ApplicationConfiguration.GitHubRepositoryOwnerName,
+                                                _configurations.ApplicationConfiguration.GitHubRepositoryName));
         }
 
         private void GithubButtonClick(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/osoykan/DynamicTranslator");
+            Process.Start("https://github.com/DynamicTranslator/DynamicTranslator");
         }
 
         private async Task InitializeVersionChecker()
@@ -130,11 +130,11 @@ namespace DynamicTranslator.Wpf.ViewModel
                 if (scope.Resolve<IVersionChecker>().IsNew(incomingVersion))
                 {
                     await this.DispatchingAsync(() =>
-                                                {
-                                                    _newVersionButton.Visibility = Visibility.Visible;
-                                                    _newVersionButton.Content = $"A new version {incomingVersion} released, update now!";
-                                                    _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
-                                                });
+                    {
+                        _newVersionButton.Visibility = Visibility.Visible;
+                        _newVersionButton.Content = $"A new version {incomingVersion} released, update now!";
+                        _configurations.ApplicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
+                    });
                 }
             }
         }
@@ -149,6 +149,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             _checkBoxSesliSozluk.IsHitTestVisible = false;
             _checkBoxBing.IsHitTestVisible = false;
             _checkBoxPrompt.IsHitTestVisible = false;
+            _checkBoxWordReference.IsHitTestVisible = false;
         }
 
         private void NewVersionButtonClick(object sender, RoutedEventArgs e)
@@ -164,30 +165,40 @@ namespace DynamicTranslator.Wpf.ViewModel
         {
             _configurations.ActiveTranslatorConfiguration.PassivateAll();
 
-            if ((_checkBoxGoogleTranslate.IsChecked != null) && _checkBoxGoogleTranslate.IsChecked.Value)
+            if (_checkBoxGoogleTranslate.IsChecked != null && _checkBoxGoogleTranslate.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Google);
             }
-            if ((_checkBoxYandexTranslate.IsChecked != null) && _checkBoxYandexTranslate.IsChecked.Value)
+
+            if (_checkBoxYandexTranslate.IsChecked != null && _checkBoxYandexTranslate.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Yandex);
             }
-            if ((_checkBoxTureng.IsChecked != null) && _checkBoxTureng.IsChecked.Value)
+
+            if (_checkBoxTureng.IsChecked != null && _checkBoxTureng.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Tureng);
             }
-            if ((_checkBoxSesliSozluk.IsChecked != null) && _checkBoxSesliSozluk.IsChecked.Value)
+
+            if (_checkBoxSesliSozluk.IsChecked != null && _checkBoxSesliSozluk.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.SesliSozluk);
             }
-            if ((_checkBoxBing.IsChecked != null) && _checkBoxBing.IsChecked.Value)
+
+            if (_checkBoxBing.IsChecked != null && _checkBoxBing.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Bing);
             }
-            if ((_checkBoxPrompt.IsChecked != null) && _checkBoxPrompt.IsChecked.Value)
+
+            if (_checkBoxPrompt.IsChecked != null && _checkBoxPrompt.IsChecked.Value)
             {
                 _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.Prompt);
             }
+
+            //if (_checkBoxWordReference.IsChecked != null && _checkBoxWordReference.IsChecked.Value)
+            //{
+            //    _configurations.ActiveTranslatorConfiguration.Activate(TranslatorType.WordReference);
+            //}
 
             if (!_configurations.ActiveTranslatorConfiguration.ActiveTranslators.Any())
             {
@@ -208,6 +219,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             _checkBoxSesliSozluk.IsHitTestVisible = true;
             _checkBoxBing.IsHitTestVisible = true;
             _checkBoxPrompt.IsHitTestVisible = true;
+            _checkBoxWordReference.IsHitTestVisible = true;
         }
     }
 }
