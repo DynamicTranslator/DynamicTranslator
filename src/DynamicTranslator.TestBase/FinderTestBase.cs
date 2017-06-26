@@ -1,4 +1,8 @@
-﻿using DynamicTranslator.Application.Bing.Configuration;
+﻿using System.Threading.Tasks;
+
+using Abp.Dependency;
+
+using DynamicTranslator.Application.Bing.Configuration;
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Prompt.Configuration;
@@ -35,9 +39,11 @@ namespace DynamicTranslator.TestBase
             TranslatorConfiguration.Url.Returns("http://www.dummycorrecturl.com/");
             Register(TranslatorConfiguration);
 
-            MeanOrganizer = Substitute.For<TMeanOrganizer>();
+            MeanOrganizer = Substitute.For<IMeanOrganizer, TMeanOrganizer>();
             MeanOrganizer.TranslatorType.Returns(FindTranslatorType());
-            Register(MeanOrganizer);
+            MeanOrganizer.OrganizeMean(Arg.Any<string>()).Returns(Task.FromResult(new Maybe<string>("selam")));
+            MeanOrganizer.OrganizeMean(Arg.Any<string>(), Arg.Any<string>()).Returns(Task.FromResult(new Maybe<string>("selam")));
+            Register((TMeanOrganizer)MeanOrganizer, DependencyLifeStyle.Transient);
 
             Register<TSut>();
         }
