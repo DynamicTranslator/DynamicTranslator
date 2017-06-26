@@ -1,4 +1,4 @@
-# DynamicTranslator | An Instant Translation Application For Windows in .NET
+# DynamicTranslator | An Instant Translation Application For Windows in .NET [![Build status](https://ci.appveyor.com/api/projects/status/yae0kngt6hv0ujtk?svg=true)](https://ci.appveyor.com/project/osoykan/dynamictranslator)
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
 Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses GoogleTranslate, Yandex, Bing, Prompt, SesliSozluk, Tureng in the same time as concurrent.
