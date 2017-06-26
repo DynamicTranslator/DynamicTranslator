@@ -51,12 +51,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Applicati
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D8481BF-9897-460E-94F3-1B83F93C657C}"
 	ProjectSection(SolutionItems) = preProject
-		..\.gitattributes = ..\.gitattributes
-		..\.gitignore = ..\.gitignore
-		..\.travis.yml = ..\.travis.yml
-		..\appveyor.yml = ..\appveyor.yml
-		..\LICENSE = ..\LICENSE
-		..\README.md = ..\README.md
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		common.cake = common.cake
+		LICENSE = LICENSE
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{74BBC1F0-BEE2-45E1-9CD2-F03E4C7EDBBE}"
