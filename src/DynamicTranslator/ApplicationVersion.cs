@@ -2,7 +2,7 @@
 {
     public static class ApplicationVersion
     {
-        public const string CurrentVersion = "3.4.2";
+        public const string CurrentVersion = "3.5.0";
 
         public static string GetCurrentVersion()
         {
