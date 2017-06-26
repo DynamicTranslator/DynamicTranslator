@@ -3,12 +3,10 @@
 using Abp.Dependency;
 using Abp.Modules;
 
-using DynamicTranslator.Application.Bing;
 using DynamicTranslator.Application.Google;
 using DynamicTranslator.Application.Prompt;
 using DynamicTranslator.Application.SesliSozluk;
 using DynamicTranslator.Application.Tureng;
-using DynamicTranslator.Application.WordReference;
 using DynamicTranslator.Application.Yandex;
 using DynamicTranslator.Extensions;
 
@@ -19,11 +17,9 @@ namespace DynamicTranslator.Wpf
     [DependsOn(
         typeof(DynamicTranslatorGoogleModule),
         typeof(DynamicTranslatorYandexModule),
-        typeof(DynamicTranslatorBingModule),
         typeof(DynamicTranslatorTurengModule),
         typeof(DynamicTranslatorSesliSozlukModule),
-        typeof(DynamicTranslatorPromptModule),
-        typeof(DynamicTranslatorWordReferenceModule)
+        typeof(DynamicTranslatorPromptModule)
     )]
     public class DynamicTranslatorWpfModule : DynamicTranslatorModule
     {
