@@ -116,8 +116,6 @@
     <Compile Include="Orchestrators\Organizers\IResultOrganizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Orchestrators\Organizers\ResultOrganizer.cs" />
-    <Compile Include="Result\IResultService.cs" />
-    <Compile Include="Result\ResultService.cs" />
     <Compile Include="Requests\TranslateRequest.cs" />
     <Compile Include="Interceptors\TextGuardInterceptor.cs" />
   </ItemGroup>

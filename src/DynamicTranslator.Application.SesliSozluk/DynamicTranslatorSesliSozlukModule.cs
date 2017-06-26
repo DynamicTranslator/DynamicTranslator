@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 
-using Abp.Dependency;
 using Abp.Modules;
 
 using DynamicTranslator.Application.SesliSozluk.Configuration;
