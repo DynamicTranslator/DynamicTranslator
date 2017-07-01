@@ -37,7 +37,7 @@ namespace DynamicTranslator.Wpf
         private IKeyboardMouseEvents _globalMouseHook;
         private IntPtr _hWndNextViewer;
         private HwndSource _hWndSource;
-        private bool _isMouseDown;
+        private volatile bool _isMouseDown;
         private Point _mouseFirstPoint;
         private Point _mouseSecondPoint;
         private IDisposable _syncObserver;
@@ -102,7 +102,7 @@ namespace DynamicTranslator.Wpf
 
         public bool IsInitialized { get; private set; }
 
-        private static Task SendCopyCommandAsync()
+        private Task SendCopyCommandAsync()
         {
             var thread = new Thread(() =>
             {
@@ -143,25 +143,22 @@ namespace DynamicTranslator.Wpf
 
         private Task HandleTextCaptured(int msg, IntPtr wParam, IntPtr lParam)
         {
-            return Task.Run(async () =>
-            {
-                await _mainWindow.Dispatcher.InvokeAsync(async () =>
-                                     {
-                                         Win32.SendMessage(_hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
+            return _mainWindow.Dispatcher.InvokeAsync(async () =>
+                {
+                    Win32.SendMessage(_hWndNextViewer, msg, wParam, lParam); //pass the message to the next viewer //clipboard content changed
 
-                                         if (_clipboardManager.IsContainsText())
-                                         {
-                                             var currentText = _clipboardManager.GetCurrentText();
+                    if (_clipboardManager.IsContainsText())
+                    {
+                        string currentText = _clipboardManager.GetCurrentText();
 
-                                             if (!string.IsNullOrEmpty(currentText))
-                                             {
-                                                 await TriggerTextCaptured(currentText);
-                                                 _clipboardManager.Clear();
-                                             }
-                                         }
-                                     },
-                                     DispatcherPriority.Background);
-            });
+                        if (!string.IsNullOrEmpty(currentText))
+                        {
+                            await TriggerTextCaptured(currentText);
+                            _clipboardManager.Clear();
+                        }
+                    }
+                },
+                DispatcherPriority.Background).Task;
         }
 
         private async void MouseDoubleClicked(object sender, MouseEventArgs e)
@@ -207,7 +204,7 @@ namespace DynamicTranslator.Wpf
             var wih = new WindowInteropHelper(_mainWindow);
             _hWndSource = HwndSource.FromHwnd(wih.Handle);
             _globalMouseHook = Hook.GlobalEvents();
-            var source = _hWndSource;
+            HwndSource source = _hWndSource;
             if (source != null)
             {
                 source.AddHook(WinProc); // start processing window messages
@@ -220,8 +217,7 @@ namespace DynamicTranslator.Wpf
             _finderObservable = Observable
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => WhenClipboardContainsTextEventHandler += h,
-                    h => WhenClipboardContainsTextEventHandler -= h).
-                Subscribe(IocManager.Instance.Resolve<Finder>());
+                    h => WhenClipboardContainsTextEventHandler -= h).Subscribe(IocManager.Instance.Resolve<Finder>());
 
             _syncObserver = Observable
                 .Interval(TimeSpan.FromSeconds(7.0), TaskPoolScheduler.Default)
