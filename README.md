@@ -3,7 +3,7 @@
 # [![Build status](https://ci.appveyor.com/api/projects/status/yae0kngt6hv0ujtk?svg=true)](https://ci.appveyor.com/project/osoykan/dynamictranslator)
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
-Dynamically catches selected texts where any window you on(pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses GoogleTranslate, Yandex, Bing, Prompt, SesliSozluk, Tureng in the same time as concurrent.
+Dynamically catches selected texts where any window you on (pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses GoogleTranslate, Yandex, Bing, Prompt, SesliSözlük, Tureng in the same time as concurrent.
 
 <a href="http://www.ilovefreesoftware.com/08/windows/free-translation-software-translate-text-application.html" title="FREE TRANSLATION SOFTWARE TO TRANSLATE TEXT IN ANY APPLICATION"><img border="0" src="http://cdn.ilovefreesoftware.com/wp-content/uploads/2011/03/ilovefreesoftware_reviewed_5Star.png"/></a>
  
@@ -30,8 +30,8 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 #### *Text to speech added (2016-03-03)
 
 ### In Turkish
-Bilindiği gibi bazı sözlükler bize API sağlamıyor bu yüzden bu proje tamamiyle windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
-Bulunduğunuz yerde pencere/pdf/browser vb. mouse ile gezinirken seçtiğiniz text'i/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSozluk, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size windows notification olarak sunmaktadır.
+Bilindiği gibi bazı sözlükler bize API sağlamıyor bu yüzden bu proje tamamiyle Windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
+Bulunduğunuz yerde pencere/pdf/tarayıcı vb. mouse ile gezinirken seçtiğiniz metni/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSözlük, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size Windows bildirimi olarak sunmaktadır.
 
 Seçilen metnin dilini algılar.
 
@@ -46,7 +46,7 @@ Seçilen metnin dilini algılar.
         
 
 ### Project Information and The Goal
-This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while reading PDF Ebook mostly.Project is small but very useful (at least me :)) I hope this useful for you.
+This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while reading PDF Ebook mostly.Project is small but very useful (at least for me :)) I hope this is useful for you.
 
 C# , WPF
 
