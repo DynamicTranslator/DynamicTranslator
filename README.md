@@ -19,7 +19,7 @@ Dynamically catches selected texts where any window you on(pdf/browser/word etc.
 ## Country Based Usage
 ![usings](https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/usings.PNG)
 
-## [Download lastest version!](https://github.com/osoykan/DynamicTranslator/releases/download/3.4.2/v3.4.2.rar)
+## [Download latest version!](https://github.com/DynamicTranslator/DynamicTranslator/releases/download/3.5.0/v.3.5.0.zip)
 
 ### Latest News
 
