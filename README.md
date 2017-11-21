@@ -30,7 +30,7 @@ Dynamically catches selected texts where any window you on (pdf/browser/word etc
 #### *Text to speech added (2016-03-03)
 
 ### In Turkish
-Bilindiği gibi bazı sözlükler bize API sağlamıyor bu yüzden bu proje tamamıyla Windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
+Bilindiği gibi bazı sözlükler bize API sağlamıyor. Bu sebeple, bu proje tamamıyla Windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
 Bulunduğunuz yerde pencere/pdf/tarayıcı vb. mouse ile gezinirken seçtiğiniz metni/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSözlük, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size Windows bildirimi olarak sunmaktadır.
 
 Seçilen metnin dilini algılar.
@@ -46,7 +46,7 @@ Seçilen metnin dilini algılar.
         
 
 ### Project Information and The Goal
-This project provides translation words or sentences while reading and working and any needed time. So, I'm using this while reading PDF Ebook mostly. The project is small but very useful (at least for me :)) I hope this is useful for you as well.
+This project provides translation words or sentences while reading, working or any time needed. So, I am using this while reading PDF e-books mostly. The project is small but very useful (at least for me :)) I hope this would be useful for you as well.
 
 C# , WPF
 
