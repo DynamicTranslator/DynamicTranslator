@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.AccessControl;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -20,6 +22,10 @@ namespace DynamicTranslator.Wpf
     public partial class App
     {
         private readonly AbpBootstrapper _bootstrapper;
+        private Mutex _mutex;
+        private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
+        private bool _isMutexCreated;
+        private bool _isMutexUnauthorized;
 
         public App()
         {
@@ -42,7 +48,49 @@ namespace DynamicTranslator.Wpf
 
             ConfigureMemoryCache();
 
+            CheckApplicationInstanceExist();
+
             base.OnStartup(eventArgs);
+        }
+
+        private void CheckApplicationInstanceExist()
+        {
+            string user = Environment.UserDomainName + "\\" + Environment.UserName;
+
+            try
+            {
+                Mutex.TryOpenExisting(MutexName, out _mutex);
+
+                if (_mutex == null)
+                {
+                    var mutexSecurity = new MutexSecurity();
+
+                    var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
+
+                    mutexSecurity.AddAccessRule(rule);
+
+                    rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
+
+                    mutexSecurity.AddAccessRule(rule);
+
+                    _mutex = new Mutex(true, MutexName, out _isMutexCreated, mutexSecurity);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _isMutexUnauthorized = true;
+            }
+
+            if (!_isMutexUnauthorized && _isMutexCreated)
+            {
+                _mutex?.WaitOne();
+                GC.KeepAlive(_mutex);
+                return;
+            }
+
+            _mutex?.ReleaseMutex();
+            _mutex?.Dispose();
+            Current.Shutdown();
         }
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -66,48 +114,42 @@ namespace DynamicTranslator.Wpf
                 bool isExtraLoggingEnabled = scope.Resolve<IApplicationConfiguration>().IsExtraLoggingEnabled;
 
                 AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                                                              {
-                                                                  var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                                                                  var logger = scope.Resolve<ILogger>();
+                {
+                    var googleClient = scope.Resolve<IGoogleAnalyticsService>();
+                    var logger = scope.Resolve<ILogger>();
 
-                                                                  if (isExtraLoggingEnabled)
-                                                                  {
-                                                                      logger.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
-                                                                  }
+                    if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
 
-                                                                  try
-                                                                  {
-                                                                      googleClient.TrackException(args.ExceptionObject.ToString(), false);
-                                                                  }
-                                                                  catch (Exception)
-                                                                  {
-                                                                      //throw;
-                                                                  }
-                                                              };
+                    try
+                    {
+                        googleClient.TrackException(args.ExceptionObject.ToString(), false);
+                    }
+                    catch (Exception)
+                    {
+                        //throw;
+                    }
+                };
 
                 TaskScheduler.UnobservedTaskException += (sender, args) =>
-                                                         {
-                                                             args.Exception.Handle(exception =>
-                                                                                   {
-                                                                                       var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                                                                                       var logger = scope.Resolve<ILogger>();
+                {
+                    args.Exception.Handle(exception =>
+                    {
+                        var googleClient = scope.Resolve<IGoogleAnalyticsService>();
+                        var logger = scope.Resolve<ILogger>();
 
-                                                                                       if (isExtraLoggingEnabled)
-                                                                                       {
-                                                                                           logger.Error($"Unhandled Exception occured: {exception.ToString()}");
-                                                                                       }
+                        if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {exception.ToString()}");
 
-                                                                                       try
-                                                                                       {
-                                                                                           googleClient.TrackException(exception.ToString(), false);
-                                                                                       }
-                                                                                       catch (Exception)
-                                                                                       {
-                                                                                           //throw;
-                                                                                       }
-                                                                                       return true;
-                                                                                   });
-                                                         };
+                        try
+                        {
+                            googleClient.TrackException(exception.ToString(), false);
+                        }
+                        catch (Exception)
+                        {
+                            //throw;
+                        }
+                        return true;
+                    });
+                };
             }
         }
     }
