@@ -3,17 +3,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
 using Abp.Extensions;
-
 using Castle.DynamicProxy;
-
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Exceptions;
 using DynamicTranslator.Helper;
 using DynamicTranslator.Service.GoogleAnalytics;
-
 using Newtonsoft.Json;
 
 namespace DynamicTranslator.Application.Interceptors
@@ -34,78 +30,52 @@ namespace DynamicTranslator.Application.Interceptors
                 invocation.Proceed();
 
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     invocation.ReturnValue = ExtendedAsyncHelper.CallAwaitTaskWithFinallyAndGetResult(
                         invocation.Method.ReturnType.GenericTypeArguments[0],
                         invocation.ReturnValue,
                         async exception => await HandleExceptionAsync(invocation, exception));
-                }
             }
             catch (ApiKeyNullException ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
             catch (MaximumCharacterLimitException ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
             catch (WebException ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
             catch (JsonReaderException ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
             catch (NotSupportedLanguageException ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
             catch (Exception ex)
             {
                 if (AsyncHelper.IsAsyncMethod(invocation.Method))
-                {
                     HandleExceptionAsync(invocation, ex);
-                }
                 else
-                {
                     HandleException(invocation, ex);
-                }
             }
         }
 
@@ -119,14 +89,16 @@ namespace DynamicTranslator.Application.Interceptors
                 .ToString();
         }
 
-        private static void HandleReturnValueForCharacterLimitException(IInvocation invocation, string exeptionMessage = null)
+        private static void HandleReturnValueForCharacterLimitException(IInvocation invocation,
+            string exeptionMessage = null)
         {
             if (typeof(IMeanFinder).IsAssignableFrom(invocation.TargetType))
             {
                 var translateResultType = invocation.Method.ReturnType.GetGenericArguments().FirstOrDefault();
                 if (translateResultType != null)
                 {
-                    var result = Activator.CreateInstance(translateResultType, false, new Maybe<string>()).As<TranslateResult>();
+                    var result = Activator.CreateInstance(translateResultType, false, new Maybe<string>())
+                        .As<TranslateResult>();
                     result.ResultMessage = new Maybe<string>(exeptionMessage ?? string.Empty);
                     var returnObj = Task.FromResult(result);
                     invocation.ReturnValue = returnObj;
@@ -136,10 +108,7 @@ namespace DynamicTranslator.Application.Interceptors
 
         private void HandleException(IInvocation invocation, Exception ex)
         {
-            if (ex == null)
-            {
-                return;
-            }
+            if (ex == null) return;
 
             var exceptionText = ExtractExceptionMessage(invocation, ex);
 
@@ -150,10 +119,7 @@ namespace DynamicTranslator.Application.Interceptors
 
         private Task HandleExceptionAsync(IInvocation invocation, Exception ex)
         {
-            if (ex == null)
-            {
-                return Task.FromResult(0);
-            }
+            if (ex == null) return Task.FromResult(0);
 
             var exceptionText = ExtractExceptionMessage(invocation, ex);
 

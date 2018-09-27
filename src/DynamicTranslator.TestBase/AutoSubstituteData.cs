@@ -1,6 +1,6 @@
-﻿using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.AutoNSubstitute;
-using Ploeh.AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.AutoNSubstitute;
+using AutoFixture.Xunit2;
 
 namespace DynamicTranslator.TestBase
 {

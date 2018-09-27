@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-
 using Abp.Dependency;
 using Abp.Runtime.Caching;
-
 using DynamicTranslator.Application.Orchestrators.Detectors;
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Application.Orchestrators.Organizers;
@@ -63,17 +61,15 @@ namespace DynamicTranslator.Wpf.Observers
                 {
                     string currentString = value.EventArgs.CurrentString;
 
-                    if (_previousString == currentString)
-                    {
-                        return;
-                    }
+                    if (_previousString == currentString) return;
 
                     _previousString = currentString;
                     Maybe<string> failedResults;
 
-                    string fromLanguageExtension = await _languageDetector.DetectLanguage(currentString);
-                    TranslateResult[] results = await GetMeansFromCache(currentString, fromLanguageExtension);
-                    Maybe<string> findedMeans = await _resultOrganizer.OrganizeResult(results, currentString, out failedResults).ConfigureAwait(false);
+                    var fromLanguageExtension = await _languageDetector.DetectLanguage(currentString);
+                    var results = await GetMeansFromCache(currentString, fromLanguageExtension);
+                    var findedMeans = await _resultOrganizer.OrganizeResult(results, currentString, out failedResults)
+                        .ConfigureAwait(false);
 
                     await Notify(currentString, findedMeans);
                     await Notify(currentString, failedResults);
@@ -103,20 +99,19 @@ namespace DynamicTranslator.Wpf.Observers
         private async Task Notify(string currentString, Maybe<string> findedMeans)
         {
             if (!string.IsNullOrEmpty(findedMeans.DefaultIfEmpty(string.Empty).First()))
-            {
                 await _notifier.AddNotificationAsync(currentString,
                     ImageUrls.NotificationUrl,
                     findedMeans.DefaultIfEmpty(string.Empty).First()
                 );
-            }
         }
 
         private Task<TranslateResult[]> GetMeansFromCache(string currentString, string fromLanguageExtension)
         {
-            Task<TranslateResult[]> meanTasks = Task.WhenAll(_meanFinderFactory.GetFinders().Select(t => t.FindMean(new TranslateRequest(currentString, fromLanguageExtension))));
+            var meanTasks = Task.WhenAll(_meanFinderFactory.GetFinders()
+                .Select(t => t.FindMean(new TranslateRequest(currentString, fromLanguageExtension))));
 
             return _cacheManager.GetCache<string, TranslateResult[]>(CacheNames.MeanCache)
-                                .GetAsync(currentString, () => meanTasks);
+                .GetAsync(currentString, () => meanTasks);
         }
     }
 }

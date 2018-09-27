@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-
-using Castle.Core.Internal;
-
 using DynamicTranslator.Constants;
+using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Configuration.Startup
 {

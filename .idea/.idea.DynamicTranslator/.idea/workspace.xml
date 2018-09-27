@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="94cc862b-20fe-4e15-8e0d-12fe44d76fd0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/DynamicTranslator.Application.Bing.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/DynamicTranslator.Application.Bing.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/DynamicTranslator.Application.Google.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/DynamicTranslator.Application.Google.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleLanguageDetector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleLanguageDetector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleTranslateMeanFinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleTranslateMeanFinder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/DynamicTranslator.Application.Prompt.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/DynamicTranslator.Application.Prompt.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/DynamicTranslator.Application.SesliSozluk.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/DynamicTranslator.Application.SesliSozluk.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/DynamicTranslator.Application.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/DynamicTranslator.Application.Tests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/DynamicTranslator.Application.Tureng.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/DynamicTranslator.Application.Tureng.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/DynamicTranslator.Application.WordReference.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/DynamicTranslator.Application.WordReference.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/DynamicTranslator.Application.Yandex.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/DynamicTranslator.Application.Yandex.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/DynamicTranslator.Application.Zargan.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/DynamicTranslator.Application.Zargan.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/Orchestration/ZarganMeanFinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/Orchestration/ZarganMeanFinder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslator.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslator.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application/Interceptors/ExceptionInterceptor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application/Interceptors/ExceptionInterceptor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Application/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Application/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Domain/DynamicTranslator.Domain.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Domain/DynamicTranslator.Domain.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Domain/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Domain/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/DynamicTranslator.TestBase.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/DynamicTranslator.TestBase.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.TestBase/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Tests/Configuration/AppConfigManagerTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Tests/DynamicTranslator.Tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Tests/DynamicTranslator.Tests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Tests/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Tests/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/DynamicTranslator.Wpf.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/DynamicTranslator.Wpf.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/Observers/Finder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/Observers/Finder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/TranslatorBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/TranslatorBootstrapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator.Wpf/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ActiveTranslatorConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ActiveTranslatorConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator/DynamicTranslator.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator/DynamicTranslator.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator/Extensions/ObjectExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator/Extensions/ObjectExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator/Helper/AsyncHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator/Helper/AsyncHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DynamicTranslator/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/src/DynamicTranslator/packages.config" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1595334344">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="23" />
+          <entry key="csproj" value="29" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="23" />
+          <entry key="Csproj" value="29" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="203" />
+          <entry key="csproj" value="45" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="203" />
+          <entry key="Csproj" value="45" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages" />
+      <usages-collector id="statistics.js.language.service.starts" />
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="64">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
+              <folding>
+                <marker date="1538061613546" expanded="true" signature="6:79" ph="..." />
+                <marker date="1538061613546" expanded="true" signature="117:313" ph="{...}" />
+                <marker date="1538061613546" expanded="true" signature="175:311" ph="{...}" />
+                <marker date="1538061613546" expanded="true" signature="285:305" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>&lt;TargetFrameworkVersion&gt;v4.6.1&lt;/TargetFrameworkVersion&gt;</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>&lt;TargetFrameworkVersion&gt;v4.6.2&lt;/TargetFrameworkVersion&gt;</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/Orchestrators/Detectors/ILanguageDetector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Wpf/Observers/Finder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ActiveTranslatorConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Domain/Model/TranslateResult.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Helper/AsyncHelper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleLanguageDetector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Wpf/TranslatorBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/Interceptors/ExceptionInterceptor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Configuration/GoogleTranslatorConfigurationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/ObjectExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleTranslateMeanFinder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslatorApplicationModule.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Configuration/GoogleTranslatorConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/Orchestration/ZarganMeanFinder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ITranslatorModuleConfigurations.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/UniqueIdProviderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/IocExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/DynamicTranslator.Wpf.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/DynamicTranslator.Application.Tests.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.TestBase/DynamicTranslator.TestBase.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Tests/DynamicTranslator.Tests.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/DynamicTranslator.Application.Google.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/DynamicTranslator.Application.Prompt.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/DynamicTranslator.Application.SesliSozluk.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/DynamicTranslator.Application.Tureng.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/DynamicTranslator.Application.WordReference.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/DynamicTranslator.Application.Yandex.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/DynamicTranslator.Application.Zargan.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator/DynamicTranslator.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator/Extensions/IocExtensions.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator/Extensions/ObjectExtensions.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ActiveTranslatorConfiguration.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator/Helper/AsyncHelper.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslator.Application.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Domain/DynamicTranslator.Domain.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application/Interceptors/ExceptionInterceptor.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/Orchestration/ZarganMeanFinder.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleLanguageDetector.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleTranslateMeanFinder.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/Observers/Finder.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/TranslatorBootstrapper.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/DynamicTranslator.Application.Bing.csproj" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs" />
+        <option value="$PROJECT_DIR$/src/DynamicTranslator.Tests/Configuration/AppConfigManagerTests.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="229" />
+    <option name="y" value="1" />
+    <option name="width" value="1534" />
+    <option name="height" value="822" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="00-Core" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="03-Presentation" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="03-Presentation" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DynamicTranslator.Wpf" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="src" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="03-Presentation" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DynamicTranslator.Wpf" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Observers" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="test" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="test" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DynamicTranslator.TestBase" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="DynamicTranslator" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="test" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DynamicTranslator.Tests" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="translateresult&#9;null&#9;null&#10;ILanguageDetector&#9;null&#9;null&#10;ITranslatorModuleConfigurations&#9;FILE&#9;file://C:/work/github/DynamicTranslator/src/DynamicTranslator/Configuration/Startup/ITranslatorModuleConfigurations.cs" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected=".NET Project.src\03-Presentation\DynamicTranslator.Wpf">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="None" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="src\03-Presentation\DynamicTranslator.Wpf" type="DotNetProject" factoryName=".NET Project" temporary="true">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/bin/Debug/DynamicTranslator.Wpf.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/bin/Debug" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/src/DynamicTranslator.Wpf/DynamicTranslator.Wpf.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="Console" />
+      <option name="PROJECT_TFM" value=".NETFramework,Version=v4.6.1" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue=".NET Project.Default" />
+      <item itemvalue=".NET Project.src\03-Presentation\DynamicTranslator.Wpf" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue=".NET Project.src\03-Presentation\DynamicTranslator.Wpf" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="94cc862b-20fe-4e15-8e0d-12fe44d76fd0" name="Default Changelist" comment="" />
+      <created>1538059883118</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538059883118</updated>
+      <workItem from="1538059886960" duration="947000" />
+      <workItem from="1538060840334" duration="807000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1754000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.32925472" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="NuGet" order="7" sideWeight="0.49946696" weight="0.6674082" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="11" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32925472" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50053304" side_tool="true" weight="0.6674082" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Errors In Solution" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Unit Tests Coverage" order="5" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Tests/DynamicTranslator.Application.Tests.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.TestBase/DynamicTranslator.TestBase.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Tests/DynamicTranslator.Tests.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.WordReference/DynamicTranslator.Application.WordReference.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslatorApplicationModule.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1537888634722" expanded="false" signature="6:333" ph="..." />
+            <marker date="1537888634722" expanded="true" signature="374:1108" ph="{...}" />
+            <marker date="1537888634722" expanded="true" signature="381:443" ph="[...]" />
+            <marker date="1537888634722" expanded="true" signature="521:1106" ph="{...}" />
+            <marker date="1537888634722" expanded="true" signature="572:861" ph="{...}" />
+            <marker date="1537888634722" expanded="true" signature="904:1100" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Configuration/GoogleTranslatorConfiguration.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1537888634682" expanded="false" signature="6:160" ph="..." />
+            <marker date="1537888634682" expanded="true" signature="222:555" ph="{...}" />
+            <marker date="1537888634682" expanded="true" signature="337:553" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Configuration/GoogleTranslatorConfigurationExtensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="9" column="105" selection-start-line="9" selection-start-column="74" selection-end-line="9" selection-end-column="105" />
+          <folding>
+            <marker date="1537888634683" expanded="false" signature="6:96" ph="..." />
+            <marker date="1537888634683" expanded="true" signature="158:1241" ph="{...}" />
+            <marker date="1537888634683" expanded="true" signature="224:1239" ph="{...}" />
+            <marker date="1537888634683" expanded="true" signature="358:470" ph="{...}" />
+            <marker date="1537888634683" expanded="true" signature="602:833" ph="{...}" />
+            <marker date="1537888634683" expanded="true" signature="979:1035" ph="{...}" />
+            <marker date="1537888634683" expanded="true" signature="1177:1233" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ITranslatorModuleConfigurations.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="5" lean-forward="true" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding>
+            <marker date="1537888634771" expanded="true" signature="49:199" ph="{...}" />
+            <marker date="1537888634771" expanded="true" signature="121:197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/DynamicTranslator.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/IocExtensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/UniqueIdProviderExtensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <marker date="1537888634781" expanded="false" signature="6:119" ph="..." />
+            <marker date="1537888634781" expanded="true" signature="159:493" ph="{...}" />
+            <marker date="1537888634781" expanded="true" signature="212:491" ph="{...}" />
+            <marker date="1537888634781" expanded="true" signature="314:485" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Configuration/Startup/ActiveTranslatorConfiguration.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="34" selection-start-line="25" selection-start-column="34" selection-end-line="25" selection-end-column="34" />
+          <folding>
+            <marker date="1538061183307" expanded="true" signature="6:159" ph="..." />
+            <marker date="1538061183307" expanded="true" signature="210:1046" ph="{...}" />
+            <marker date="1538061183307" expanded="true" signature="292:1044" ph="{...}" />
+            <marker date="1538061183307" expanded="true" signature="345:416" ph="{...}" />
+            <marker date="1538061183307" expanded="true" signature="477:580" ph="{...}" />
+            <marker date="1538061183307" expanded="true" signature="646:754" ph="{...}" />
+            <marker date="1538061183307" expanded="true" signature="790:863" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Helper/AsyncHelper.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding>
+            <marker date="1538061213693" expanded="true" signature="6:54" ph="..." />
+            <marker date="1538061213693" expanded="true" signature="90:559" ph="{...}" />
+            <marker date="1538061213693" expanded="true" signature="128:557" ph="{...}" />
+            <marker date="1538061213693" expanded="true" signature="143:297" ph="///     Checks if given method is an async method. ... " />
+            <marker date="1538061213693" expanded="true" signature="357:551" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/Orchestrators/Detectors/ILanguageDetector.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <marker date="1537888634723" expanded="true" signature="94:199" ph="{...}" />
+            <marker date="1537888634723" expanded="true" signature="135:197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/DynamicTranslator.Application.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Domain/Model/TranslateResult.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding>
+            <marker date="1537888634731" expanded="false" signature="6:49" ph="..." />
+            <marker date="1537888634731" expanded="true" signature="91:547" ph="{...}" />
+            <marker date="1537888634731" expanded="true" signature="145:545" ph="{...}" />
+            <marker date="1537888634731" expanded="true" signature="297:394" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Domain/DynamicTranslator.Domain.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator/Extensions/ObjectExtensions.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
+          <folding>
+            <marker date="1538061173800" expanded="false" signature="6:135" ph="..." />
+            <marker date="1538061173800" expanded="true" signature="175:1874" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="218:1872" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="300:414" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="499:1218" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="545:642" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="688:817" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="908:1171" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="989:1157" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="1292:1365" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="1429:1522" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="1596:1672" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="1752:1866" ph="{...}" />
+            <marker date="1538061173800" expanded="true" signature="1801:1856" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application/Interceptors/ExceptionInterceptor.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="100" column="33" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
+          <folding>
+            <marker date="1538061274444" expanded="false" signature="6:385" ph="..." />
+            <marker date="1538061274444" expanded="true" signature="439:5209" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="494:5207" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="645:713" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="768:2879" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="794:1251" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="1294:1520" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="1574:1800" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="1836:2062" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="2105:2331" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="2384:2610" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="2643:2869" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="2972:3298" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="3438:4126" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="3525:4116" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="3699:4102" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="4202:4479" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="4560:4868" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="4946:5026" ph="{...}" />
+            <marker date="1538061274444" expanded="true" signature="5109:5201" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/Orchestration/ZarganMeanFinder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding>
+            <marker date="1538061292405" expanded="true" signature="6:320" ph="..." />
+            <marker date="1538061292405" expanded="true" signature="382:1674" ph="{...}" />
+            <marker date="1538061292405" expanded="true" signature="492:1672" ph="{...}" />
+            <marker date="1538061292405" expanded="true" signature="593:1666" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleLanguageDetector.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-158">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <marker date="1538061315331" expanded="true" signature="6:322" ph="..." />
+            <marker date="1538061315331" expanded="true" signature="384:2103" ph="{...}" />
+            <marker date="1538061315331" expanded="true" signature="468:2101" ph="{...}" />
+            <marker date="1538061315331" expanded="true" signature="769:899" ph="{...}" />
+            <marker date="1538061315331" expanded="true" signature="962:2095" ph="{...}" />
+            <marker date="1538061315331" expanded="true" signature="1823:2015" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/Orchestration/GoogleTranslateMeanFinder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
+          <folding>
+            <marker date="1538061319084" expanded="true" signature="6:402" ph="..." />
+            <marker date="1538061319084" expanded="true" signature="464:2569" ph="{...}" />
+            <marker date="1538061319084" expanded="true" signature="600:2567" ph="{...}" />
+            <marker date="1538061319084" expanded="true" signature="1278:1402" ph="{...}" />
+            <marker date="1538061319084" expanded="true" signature="1498:2561" ph="{...}" />
+            <marker date="1538061319084" expanded="true" signature="1860:1999" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Wpf/DynamicTranslator.Wpf.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Wpf/Observers/Finder.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="55" column="33" selection-start-line="55" selection-start-column="33" selection-end-line="55" selection-end-column="33" />
+          <folding>
+            <marker date="1538061403195" expanded="true" signature="6:612" ph="..." />
+            <marker date="1538061403195" expanded="true" signature="655:4763" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="765:4761" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="1576:1914" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="1949:1969" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="2015:2035" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="2119:3215" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="2162:3203" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="2196:3042" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="3079:3189" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="3301:3901" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="3985:4297" ph="{...}" />
+            <marker date="1538061403195" expanded="true" signature="4408:4755" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Wpf/TranslatorBootstrapper.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="219" lean-forward="true" selection-start-line="219" selection-end-line="219" />
+          <folding>
+            <marker date="1538061577672" expanded="true" signature="6:631" ph="..." />
+            <marker date="1538061577672" expanded="true" signature="664:9307" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="754:9305" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="1749:2019" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="2160:2739" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="2201:2729" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="2773:2824" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="2863:2948" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="2995:3322" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="3213:3311" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="3424:3744" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="3476:3579" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="3784:4095" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="4153:4463" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="4500:4725" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="4805:5571" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="4881:5507" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="5127:5489" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="5292:5467" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="5651:5828" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="5899:6114" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="6183:6525" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="6270:6515" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="6560:7032" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="6811:7022" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="7071:7628" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="7673:7864" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="7926:8293" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="7976:8281" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="8340:8534" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="8636:9299" ph="{...}" />
+            <marker date="1538061577672" expanded="true" signature="8671:9256" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Bing/DynamicTranslator.Application.Bing.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Google/DynamicTranslator.Application.Google.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Prompt/DynamicTranslator.Application.Prompt.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.SesliSozluk/DynamicTranslator.Application.SesliSozluk.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Tureng/DynamicTranslator.Application.Tureng.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Yandex/DynamicTranslator.Application.Yandex.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Application.Zargan/DynamicTranslator.Application.Zargan.csproj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.Tests/Configuration/AppConfigManagerTests.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="13" column="12" selection-start-line="11" selection-start-column="8" selection-end-line="13" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DynamicTranslator.TestBase/AutoSubstituteData.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <marker date="1538061613546" expanded="true" signature="6:79" ph="..." />
+            <marker date="1538061613546" expanded="true" signature="117:313" ph="{...}" />
+            <marker date="1538061613546" expanded="true" signature="175:311" ph="{...}" />
+            <marker date="1538061613546" expanded="true" signature="285:305" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

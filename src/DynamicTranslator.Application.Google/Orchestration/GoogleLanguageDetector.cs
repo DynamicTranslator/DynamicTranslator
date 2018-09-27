@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Web;
 using Abp.Dependency;
-
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Orchestrators.Detectors;
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Extensions;
-
 using RestSharp;
-using RestSharp.Extensions.MonoHttp;
 
 namespace DynamicTranslator.Application.Google.Orchestration
 {
@@ -27,13 +24,13 @@ namespace DynamicTranslator.Application.Google.Orchestration
 
         public async Task<string> DetectLanguage(string text)
         {
-            string uri = string.Format(
+            var uri = string.Format(
                 _configuration.Url,
                 _applicationConfiguration.ToLanguage.Extension,
                 _applicationConfiguration.ToLanguage.Extension,
                 HttpUtility.UrlEncode(text));
 
-            IRestResponse response = await new RestClient(uri)
+            var response = await new RestClient(uri)
                 .ExecuteGetTaskAsync(new RestRequest(Method.GET)
                     .AddHeader("Accept-Language", "en-US,en;q=0.8,tr;q=0.6")
                     .AddHeader("Accept-Encoding", "gzip, deflate, sdch")
@@ -43,7 +40,7 @@ namespace DynamicTranslator.Application.Google.Orchestration
 
             if (response.Ok())
             {
-                Dictionary<string, object> result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
+                var result = await Task.Run(() => response.Content.DeserializeAs<Dictionary<string, object>>());
                 return result?["src"]?.ToString();
             }
 

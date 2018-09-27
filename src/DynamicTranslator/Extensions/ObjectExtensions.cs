@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -54,6 +55,14 @@ namespace DynamicTranslator.Extensions
         {
             setAction(@this);
             return @this;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> list, Action<T> act)
+        {
+            foreach (var item in list)
+            {
+                act(item);
+            }
         }
     }
 }

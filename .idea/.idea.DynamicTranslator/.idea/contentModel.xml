@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\o.soykan\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\o.soykan\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_DynamicTranslator.-481334467.00" t="ExcludeRecursive" />
+    <e p="C:\work\github\DynamicTranslator" t="IncludeFlat">
+      <e p=".gitattributes" t="Include" />
+      <e p=".gitignore" t="Include" />
+      <e p="appveyor.yml" t="Include" />
+      <e p="build.cake" t="Include" />
+      <e p="build.ps1" t="Include" />
+      <e p="common.cake" t="Include" />
+      <e p="DynamicTranslator.sln" t="IncludeFlat" />
+      <e p="LICENSE" t="Include" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="README.md" t="Include" />
+      <e p="Solution Items" t="Include" />
+      <e p="src" t="Include">
+        <e p="00-Core" t="Include" />
+        <e p="01-Domain" t="Include" />
+        <e p="02-Application" t="Include" />
+        <e p="03-Presentation" t="Include" />
+        <e p="DynamicTranslator" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="ApplicationVersion.cs" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="AppConfigManager.cs" t="Include" />
+            <e p="ClientConfiguration.cs" t="Include" />
+            <e p="ClientConfigurationExtensions.cs" t="Include" />
+            <e p="IAppConfigManager.cs" t="Include" />
+            <e p="IClientConfiguration.cs" t="Include" />
+            <e p="Startup" t="Include">
+              <e p="AbstractTranslatorConfiguration.cs" t="Include" />
+              <e p="ActiveTranslatorConfiguration.cs" t="Include" />
+              <e p="ApplicationConfiguration.cs" t="Include" />
+              <e p="DynamicTranslatorConfiguration.cs" t="Include" />
+              <e p="GoogleAnalyticsConfiguration.cs" t="Include" />
+              <e p="IActiveTranslatorConfiguration.cs" t="Include" />
+              <e p="IApplicationConfiguration.cs" t="Include" />
+              <e p="IConfiguration.cs" t="Include" />
+              <e p="IDynamicTranslatorConfiguration.cs" t="Include" />
+              <e p="IGoogleAnalyticsConfiguration.cs" t="Include" />
+              <e p="ILocalPersistenceConfiguration.cs" t="Include" />
+              <e p="IMustHaveSupportedLanguages.cs" t="Include" />
+              <e p="IMustHaveUrl.cs" t="Include" />
+              <e p="ITranslatorConfiguration.cs" t="Include" />
+              <e p="ITranslatorModuleConfigurations.cs" t="Include" />
+              <e p="LocalPersistenceConfiguration.cs" t="Include" />
+              <e p="TranslatorModuleConfigurations.cs" t="Include" />
+            </e>
+            <e p="UniqueIdentifier" t="Include">
+              <e p="CpuBasedIdentifierProvider.cs" t="Include" />
+              <e p="HddBasedIdentifierProvider.cs" t="Include" />
+              <e p="IUniqueIdentifierProvider.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Constants" t="Include">
+            <e p="CacheNames.cs" t="Include" />
+            <e p="Headers.cs" t="Include" />
+            <e p="ImageUrls.cs" t="Include" />
+            <e p="Titles.cs" t="Include" />
+            <e p="TranslatorType.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorCoreModule.cs" t="Include" />
+          <e p="DynamicTranslatorModule.cs" t="Include" />
+          <e p="Exceptions" t="Include">
+            <e p="ApiKeyNullException.cs" t="Include" />
+            <e p="BusinessException.cs" t="Include" />
+            <e p="MaximumCharacterLimitException.cs" t="Include" />
+            <e p="NotSupportedLanguageException.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="DictionaryExtensions.cs" t="Include" />
+            <e p="EventHandlerExtensions.cs" t="Include" />
+            <e p="IocExtensions.cs" t="Include" />
+            <e p="ObjectExtensions.cs" t="Include" />
+            <e p="RestSharpExtensions.cs" t="Include" />
+            <e p="StringExtension.cs" t="Include" />
+            <e p="UniqueIdProviderExtensions.cs" t="Include" />
+            <e p="VersionExtensions.cs" t="Include" />
+            <e p="XmlExtensions.cs" t="Include" />
+          </e>
+          <e p="GoogleAnalyticsTracker.cs" t="Include" />
+          <e p="Helper" t="Include">
+            <e p="AsyncHelper.cs" t="Include" />
+            <e p="ExtendedAsyncHelper.cs" t="Include" />
+            <e p="ObjectHelper.cs" t="Include" />
+          </e>
+          <e p="ITranslator.cs" t="Include" />
+          <e p="LanguageManagement" t="Include">
+            <e p="Language.cs" t="Include" />
+            <e p="LanguageExtensions.cs" t="Include" />
+            <e p="LanguageMapping.cs" t="Include" />
+          </e>
+          <e p="Maybe.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="ObservableUtil" t="Include">
+            <e p="MultiThreadObservableCollection.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Runtime" t="Include">
+            <e p="IVersionChecker.cs" t="Include" />
+            <e p="VersionChecker.cs" t="Include" />
+          </e>
+          <e p="Service" t="Include">
+            <e p="GoogleAnalytics" t="Include">
+              <e p="GoogleAnalyticsService.cs" t="Include" />
+              <e p="IGoogleAnalyticsService.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Translator.cs" t="Include" />
+        </e>
+        <e p="DynamicTranslator.Application" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="DynamicTranslator.Application.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorApplicationModule.cs" t="Include" />
+          <e p="Interceptors" t="Include">
+            <e p="ExceptionInterceptor.cs" t="Include" />
+            <e p="InterceptorFacility.cs" t="Include" />
+            <e p="TextGuardInterceptor.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestrators" t="Include">
+            <e p="Detectors" t="Include">
+              <e p="ILanguageDetector.cs" t="Include" />
+              <e p="ILanguageDetectorFactory.cs" t="Include" />
+            </e>
+            <e p="Finders" t="Include">
+              <e p="AbstractMeanFinder.cs" t="Include" />
+              <e p="IMeanFinder.cs" t="Include" />
+              <e p="IMeanFinderFactory.cs" t="Include" />
+            </e>
+            <e p="IMustHaveTranslatorType.cs" t="Include" />
+            <e p="Organizers" t="Include">
+              <e p="AbstractMeanOrganizer.cs" t="Include" />
+              <e p="IMeanOrganizer.cs" t="Include" />
+              <e p="IResultOrganizer.cs" t="Include" />
+              <e p="ResultOrganizer.cs" t="Include" />
+            </e>
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Requests" t="Include">
+            <e p="TranslateRequest.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Bing" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="BingTranslatorResponse.cs" t="Include" />
+          <e p="Configuration" t="Include">
+            <e p="BingTranslatorConfiguration.cs" t="Include" />
+            <e p="BingTranslatorConfigurationExtensions.cs" t="Include" />
+            <e p="IBingTranslatorConfiguration.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Bing.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorBingModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="BingTranslatorMeanFinder.cs" t="Include" />
+            <e p="BingTranslatorMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="WordDetail.cs" t="Include" />
+        </e>
+        <e p="DynamicTranslator.Application.Google" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="GoogleDetectorConfiguration.cs" t="Include" />
+            <e p="GoogleTranslatorConfiguration.cs" t="Include" />
+            <e p="GoogleTranslatorConfigurationExtensions.cs" t="Include" />
+            <e p="IGoogleDetectorConfiguration.cs" t="Include" />
+            <e p="IGoogleTranslatorConfiguration.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Google.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorGoogleModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="GoogleLanguageDetector.cs" t="Include" />
+            <e p="GoogleTranslateMeanFinder.cs" t="Include" />
+            <e p="GoogleTranslateMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Prompt" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="IPromptTranslatorConfiguration.cs" t="Include" />
+            <e p="PromptTranslatorConfiguration.cs" t="Include" />
+            <e p="PromptTranslatorConfigurationExtensions.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Prompt.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorPromptModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="PromptMeanFinder.cs" t="Include" />
+            <e p="PromptMeanOrganizer.cs" t="Include" />
+            <e p="PromptResult.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.SesliSozluk" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="ISesliSozlukTranslatorConfiguration.cs" t="Include" />
+            <e p="SesliSozlukConfigurationExtensions.cs" t="Include" />
+            <e p="SesliSozlukTranslatorConfiguration.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.SesliSozluk.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorSesliSozlukModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="SesliSozlukMeanFinder.cs" t="Include" />
+            <e p="SesliSozlukMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Tests" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="BingTests" t="Include">
+            <e p="BingTranslatorMeanFinderTests.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Tests.csproj" t="IncludeRecursive" />
+          <e p="GoogleTests" t="Include">
+            <e p="GoogleTranslateMeanFinderTests.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="PromptTests" t="Include">
+            <e p="PromptMeanFinderTests.cs" t="Include" />
+          </e>
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="SesliSozlukTests" t="Include">
+            <e p="SesliSozulukMeanFinderTests.cs" t="Include" />
+          </e>
+          <e p="TurengTests" t="Include">
+            <e p="TurengMeanFinderTests.cs" t="Include" />
+          </e>
+          <e p="YandexTests" t="Include">
+            <e p="YandexMeanFinderTests.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Tureng" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="ITurengTranslatorConfiguration.cs" t="Include" />
+            <e p="TurengTranslatorConfiguration.cs" t="Include" />
+            <e p="TurengTranslatorConfigurationExtensions.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Tureng.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorTurengModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="TurengMeanFinder.cs" t="Include" />
+            <e p="TurengMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.WordReference" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="IWordReferenceTranslatorConfiguration.cs" t="Include" />
+            <e p="WordReferenceTranslatorConfiguration.cs" t="Include" />
+            <e p="WordReferenceTranslatorConfigurationExtensions.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.WordReference.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorWordReferenceModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="WordReferenceMeanFinder.cs" t="Include" />
+            <e p="WordReferenceMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Yandex" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="IYandexDetectorConfiguration.cs" t="Include" />
+            <e p="IYandexTranslatorConfiguration.cs" t="Include" />
+            <e p="YandexDetectorConfiguration.cs" t="Include" />
+            <e p="YandexTranslatorConfiguration.cs" t="Include" />
+            <e p="YandexTranslatorConfigurationExtensions.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Yandex.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorYandexModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="YandexDetectResponse.cs" t="Include" />
+            <e p="YandexLanguageDetector.cs" t="Include" />
+            <e p="YandexMeanFinder.cs" t="Include" />
+            <e p="YandexMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Application.Zargan" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="IZarganTranslatorConfiguration.cs" t="Include" />
+            <e p="ZarganTranslatorConfiguration.cs" t="Include" />
+            <e p="ZarganTranslatorConfigurationExtensions.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Application.Zargan.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorZarganModule.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Orchestration" t="Include">
+            <e p="ZarganMeanFinder.cs" t="Include" />
+            <e p="ZarganMeanOrganizer.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Domain" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="DynamicTranslator.Domain.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorDomainModule.cs" t="Include" />
+          <e p="Events" t="Include">
+            <e p="IEvents.cs" t="Include" />
+            <e p="WhenClipboardContainsTextEventArgs.cs" t="Include" />
+            <e p="WhenNotificationAddEventArgs.cs" t="Include" />
+          </e>
+          <e p="Model" t="Include">
+            <e p="CompositeTranslateResult.cs" t="Include" />
+            <e p="TranslateResult.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.TestBase" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="AutoSubstituteData.cs" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="DynamicTranslator.TestBase.csproj" t="IncludeRecursive" />
+          <e p="FinderApplicationTestBase.cs" t="Include" />
+          <e p="FinderTestBase.cs" t="Include" />
+          <e p="LifeStyleExtensions.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="TestBaseWithLocalIocManager.cs" t="Include" />
+        </e>
+        <e p="DynamicTranslator.Tests" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Configuration" t="Include">
+            <e p="UniqueIdentifierProviderTests.cs" t="Include" />
+          </e>
+          <e p="DynamicTranslator.Tests.csproj" t="IncludeRecursive" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Runtime" t="Include">
+            <e p="VersionCheckerTests.cs" t="Include" />
+          </e>
+        </e>
+        <e p="DynamicTranslator.Wpf" t="IncludeRecursive">
+          <e p="app.config" t="Include" />
+          <e p="App.xaml" t="Include" />
+          <e p="App.xaml.cs" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="ClipboardManager.cs" t="Include" />
+          <e p="DynamicTranslator.Wpf.csproj" t="IncludeRecursive" />
+          <e p="DynamicTranslatorWpfModule.cs" t="Include" />
+          <e p="Extensions" t="Include">
+            <e p="MultithreadUiExtensions.cs" t="Include" />
+          </e>
+          <e p="IClipboardManager.cs" t="Include" />
+          <e p="ITranslatorBootstrapper.cs" t="Include" />
+          <e p="nlog.config" t="Include" />
+          <e p="Notification" t="Include">
+            <e p="INotifier.cs" t="Include" />
+            <e p="Notifier.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Observers" t="Include">
+            <e p="Finder.cs" t="Include" />
+          </e>
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="Annotations.cs" t="Include" />
+            <e p="app.manifest" t="Include" />
+            <e p="AssemblyInfo.cs" t="Include" />
+            <e p="Resources.Designer.cs" t="Include" />
+            <e p="Resources.resx" t="Include" />
+            <e p="Settings.Designer.cs" t="Include" />
+            <e p="Settings.settings" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="background.png" t="Include" />
+            <e p="ButtonStyle.xaml" t="Include" />
+            <e p="close.png" t="Include" />
+            <e p="donate.png" t="Include" />
+            <e p="dynamic-link-library 16.png" t="Include" />
+            <e p="facebook-button.png" t="Include" />
+            <e p="github_100x150.png" t="Include" />
+            <e p="microsoft-windows-8-logo.png" t="Include" />
+            <e p="notification-icon.png" t="Include" />
+            <e p="Radiation_warning_symbol.png" t="Include" />
+            <e p="texToSpeech.png" t="Include" />
+            <e p="translator.ico" t="Include" />
+          </e>
+          <e p="TranslatorBootstrapper.cs" t="Include" />
+          <e p="ViewModel" t="Include">
+            <e p="DesignTimeNotificationData.xaml" t="Include" />
+            <e p="GrowlNotifications.xaml" t="Include" />
+            <e p="GrowlNotifications.xaml.cs" t="Include" />
+            <e p="IGrowlNotifications.cs" t="Include" />
+            <e p="INotification.cs" t="Include" />
+            <e p="MainWindow.xaml" t="Include" />
+            <e p="MainWindow.xaml.cs" t="Include" />
+            <e p="Notification.cs" t="Include" />
+            <e p="Notifications.cs" t="Include" />
+          </e>
+          <e p="Win32.cs" t="Include" />
+        </e>
+      </e>
+      <e p="test" t="Include" />
+    </e>
+  </component>
+</project>
