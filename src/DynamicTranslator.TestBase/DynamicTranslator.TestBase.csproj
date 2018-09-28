@@ -3,12 +3,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Google\DynamicTranslator.Application.Google.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Prompt\DynamicTranslator.Application.Prompt.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.SesliSozluk\DynamicTranslator.Application.SesliSozluk.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Tureng\DynamicTranslator.Application.Tureng.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Yandex\DynamicTranslator.Application.Yandex.csproj" />
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj" />
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj" />
   </ItemGroup>

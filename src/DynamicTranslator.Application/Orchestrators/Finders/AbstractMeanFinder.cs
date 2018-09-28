@@ -2,10 +2,10 @@
 
 using Abp.Dependency;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Configuration.Startup;
-using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application.Orchestrators.Finders
 {

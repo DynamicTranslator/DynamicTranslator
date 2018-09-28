@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Application.SesliSozluk.Configuration;
 using DynamicTranslator.Application.SesliSozluk.Orchestration;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.TestBase;
 
 using NSubstitute;

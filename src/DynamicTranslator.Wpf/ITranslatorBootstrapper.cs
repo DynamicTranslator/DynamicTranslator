@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Domain.Events;
+using DynamicTranslator.Application.Events;
 
 namespace DynamicTranslator.Wpf
 {

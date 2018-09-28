@@ -2,7 +2,6 @@
 
 using Abp.Dependency;
 
-using DynamicTranslator.Application.Bing.Configuration;
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Prompt.Configuration;
@@ -66,11 +65,6 @@ namespace DynamicTranslator.TestBase
             if (typeof(TConfig) == typeof(IGoogleTranslatorConfiguration))
             {
                 return TranslatorType.Google;
-            }
-
-            if (typeof(TConfig) == typeof(IBingTranslatorConfiguration))
-            {
-                return TranslatorType.Bing;
             }
 
             if (typeof(TConfig) == typeof(IYandexTranslatorConfiguration))

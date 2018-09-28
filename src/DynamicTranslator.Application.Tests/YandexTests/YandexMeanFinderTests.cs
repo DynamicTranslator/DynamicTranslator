@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Application.Yandex.Configuration;
 using DynamicTranslator.Application.Yandex.Orchestration;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.TestBase;
 
 using NSubstitute;

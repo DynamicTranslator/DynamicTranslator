@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 using Abp.Dependency;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application.Orchestrators.Organizers
 {

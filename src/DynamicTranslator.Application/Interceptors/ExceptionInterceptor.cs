@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Extensions;
 using Castle.DynamicProxy;
+
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators.Finders;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Exceptions;
 using DynamicTranslator.Helper;
 using DynamicTranslator.Service.GoogleAnalytics;

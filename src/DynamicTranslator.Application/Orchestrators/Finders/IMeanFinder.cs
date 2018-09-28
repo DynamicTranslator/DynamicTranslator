@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Requests;
-using DynamicTranslator.Domain.Model;
 
 namespace DynamicTranslator.Application.Orchestrators.Finders
 {

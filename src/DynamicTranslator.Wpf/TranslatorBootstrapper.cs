@@ -10,13 +10,15 @@ using Abp.Dependency;
 using Abp.Runtime.Caching;
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Domain.Events;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.Wpf.Observers;
 using DynamicTranslator.Wpf.ViewModel;
 using Gma.System.MouseKeyHook;
 using System.Reactive.Concurrency;
+
+using DynamicTranslator.Application.Events;
+using DynamicTranslator.Application.Model;
+
 using Point = System.Drawing.Point;
 
 namespace DynamicTranslator.Wpf

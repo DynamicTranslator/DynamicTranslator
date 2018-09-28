@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using DynamicTranslator.Domain.Model;
+using DynamicTranslator.Application.Model;
 
 namespace DynamicTranslator.Application.Orchestrators.Organizers
 {

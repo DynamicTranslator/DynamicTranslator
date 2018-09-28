@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 using DynamicTranslator.Application.Google.Configuration;
 using DynamicTranslator.Application.Google.Orchestration;
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Requests;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.TestBase;
 
 using NSubstitute;

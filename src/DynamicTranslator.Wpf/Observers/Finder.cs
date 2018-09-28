@@ -4,14 +4,15 @@ using System.Reactive;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Abp.Runtime.Caching;
+
+using DynamicTranslator.Application.Events;
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Orchestrators.Detectors;
 using DynamicTranslator.Application.Orchestrators.Finders;
 using DynamicTranslator.Application.Orchestrators.Organizers;
 using DynamicTranslator.Application.Requests;
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
-using DynamicTranslator.Domain.Events;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.Notification;
 

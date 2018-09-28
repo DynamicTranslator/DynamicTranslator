@@ -10,14 +10,7 @@
     <PackageReference Include="xunit.extensibility.execution" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Google\DynamicTranslator.Application.Google.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Prompt\DynamicTranslator.Application.Prompt.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.SesliSozluk\DynamicTranslator.Application.SesliSozluk.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Tureng\DynamicTranslator.Application.Tureng.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Application.Yandex\DynamicTranslator.Application.Yandex.csproj" />
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj" />
-    <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj" />
     <ProjectReference Include="..\DynamicTranslator.TestBase\DynamicTranslator.TestBase.csproj" />
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj" />
   </ItemGroup>

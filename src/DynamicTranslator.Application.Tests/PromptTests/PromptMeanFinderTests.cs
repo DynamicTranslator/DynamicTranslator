@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
+using DynamicTranslator.Application.Model;
 using DynamicTranslator.Application.Prompt.Configuration;
 using DynamicTranslator.Application.Prompt.Orchestration;
 using DynamicTranslator.Application.Requests;
-using DynamicTranslator.Domain.Model;
 using DynamicTranslator.TestBase;
 
 using NSubstitute;

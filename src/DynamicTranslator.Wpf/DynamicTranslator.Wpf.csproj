@@ -471,41 +471,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator.Application.Prompt\DynamicTranslator.Application.Prompt.csproj">
-      <Project>{5A181B97-9B9E-4B26-A48D-DC6C184AB222}</Project>
-      <Name>DynamicTranslator.Application.Prompt</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.WordReference\DynamicTranslator.Application.WordReference.csproj">
-      <Project>{0BD218DA-ABEE-4DFA-9FF7-5B0EDB8269B2}</Project>
-      <Name>DynamicTranslator.Application.WordReference</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj">
       <Project>{A0ED5DD8-5E6C-44A7-95A5-D3EF018C71FF}</Project>
       <Name>DynamicTranslator.Application</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj">
-      <Project>{06845B37-474C-4C2C-8EA1-BEE19A9D7A2E}</Project>
-      <Name>DynamicTranslator.Application.Bing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Domain\DynamicTranslator.Domain.csproj">
-      <Project>{9205050A-26A4-4047-A691-D6524EEF8F1C}</Project>
-      <Name>DynamicTranslator.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.Google\DynamicTranslator.Application.Google.csproj">
-      <Project>{8A97DD07-0E11-499C-80EB-481C041CDAB0}</Project>
-      <Name>DynamicTranslator.Application.Google</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.SesliSozluk\DynamicTranslator.Application.SesliSozluk.csproj">
-      <Project>{F0794B80-904C-40EB-93DC-CA7E7EC02459}</Project>
-      <Name>DynamicTranslator.Application.SesliSozluk</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.Tureng\DynamicTranslator.Application.Tureng.csproj">
-      <Project>{084D07AF-B50A-473E-BDD7-D99413834436}</Project>
-      <Name>DynamicTranslator.Application.Tureng</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicTranslator.Application.Yandex\DynamicTranslator.Application.Yandex.csproj">
-      <Project>{63D9C150-E83E-4CB5-AA0A-DD1BC65A79B2}</Project>
-      <Name>DynamicTranslator.Application.Yandex</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj">
       <Project>{A0D66D6A-2A41-4532-AB6E-6443874946E6}</Project>
