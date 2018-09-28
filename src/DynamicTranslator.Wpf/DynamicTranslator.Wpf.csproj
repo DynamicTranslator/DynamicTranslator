@@ -366,6 +366,7 @@
     <Compile Include="Notification\INotifier.cs" />
     <Compile Include="ViewModel\IGrowlNotifications.cs" />
     <Compile Include="ViewModel\INotification.cs" />
+    <Compile Include="ViewModel\MultiThreadObservableCollection.cs" />
     <Compile Include="ViewModel\Notification.cs" />
     <Compile Include="ViewModel\Notifications.cs" />
     <Compile Include="ITranslatorBootstrapper.cs" />

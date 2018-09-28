@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyTitle>DynamicTranslator.TestBase</AssemblyTitle>
-    <Product>DynamicTranslator.TestBase</Product>
-    <Copyright>Copyright ©  2016</Copyright>  
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application.Bing\DynamicTranslator.Application.Bing.csproj" />

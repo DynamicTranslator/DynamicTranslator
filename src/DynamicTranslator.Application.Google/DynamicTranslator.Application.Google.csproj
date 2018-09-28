@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{8A97DD07-0E11-499C-80EB-481C041CDAB0}</ProjectGuid>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyTitle>DynamicTranslator.Application.Google</AssemblyTitle>
-    <Product>DynamicTranslator.Application.Google</Product>
-    <Copyright>Copyright ©  2016</Copyright>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj" />

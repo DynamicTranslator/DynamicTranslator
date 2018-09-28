@@ -1,11 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{0BD218DA-ABEE-4DFA-9FF7-5B0EDB8269B2}</ProjectGuid>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyTitle>DynamicTranslator.Application.WordReference</AssemblyTitle>
-    <Product>DynamicTranslator.Application.WordReference</Product>
-    <Copyright>Copyright ©  2017</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynamicTranslator.Application\DynamicTranslator.Application.csproj" />

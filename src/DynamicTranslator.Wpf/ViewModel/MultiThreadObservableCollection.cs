@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Threading;
 
-namespace DynamicTranslator.ObservableUtil
+namespace DynamicTranslator.Wpf.ViewModel
 {
     public class MultiThreadObservableCollection<T> : ObservableCollection<T>
     {

@@ -1,11 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{2298C3FC-A968-4B31-9AC0-FB1A2B0E7B06}</ProjectGuid>
-    <TargetFramework>net461</TargetFramework>
-    <AssemblyTitle>DynamicTranslator.Application.Tests</AssemblyTitle>
-    <Product>DynamicTranslator.Application.Tests</Product>
-    <Copyright>Copyright ©  2016</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <TargetFramework>netcoreapp2.1</TargetFramework> 
   </PropertyGroup>   
   <ItemGroup>
     <PackageReference Include="Shouldly" Version="3.0.1" />
