@@ -6,7 +6,7 @@ namespace DynamicTranslator.TestBase
 {
     public class AutoSubstituteData : AutoDataAttribute
     {
-        public AutoSubstituteData() : base(new Fixture().Customize(new AutoNSubstituteCustomization()))
+        public AutoSubstituteData() : base(() => new Fixture().Customize(new AutoNSubstituteCustomization()))
         {
         }
     }

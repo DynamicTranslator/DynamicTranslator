@@ -7,7 +7,7 @@ using Abp.Domain.Entities;
 namespace DynamicTranslator.Domain.Model
 {
     [Serializable]
-    public sealed class CompositeTranslateResult : Entity<string>
+    public class CompositeTranslateResult : Entity<string>
     {
         public CompositeTranslateResult(string searchText, int frequency, ICollection<TranslateResult> result, DateTime createDate):this()
         {
