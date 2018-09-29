@@ -12,31 +12,31 @@ namespace DynamicTranslator.Service.GoogleAnalytics
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
         private readonly IApplicationConfiguration _configuration;
-        private readonly string _googleVersion = "1";
+        private const string GoogleVersion = "1";
 
         public GoogleAnalyticsService(IApplicationConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
+        public void ECommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
         {
-            PostData(PrepareEcommerceItem(id, name, price, quantity, code, category, currency));
+            PostData(PrepareECommerceItem(id, name, price, quantity, code, category, currency));
         }
 
-        public Task EcommerceItemAsync(string id, string name, string price, string quantity, string code, string category, string currency)
+        public Task ECommerceItemAsync(string id, string name, string price, string quantity, string code, string category, string currency)
         {
-            return PostDataAsync(PrepareEcommerceItem(id, name, price, quantity, code, category, currency));
+            return PostDataAsync(PrepareECommerceItem(id, name, price, quantity, code, category, currency));
         }
 
-        public void EcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
+        public void ECommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
-            PostData(PrepareEcommerceTransaction(id, affiliation, revenue, shipping, tax, currency));
+            PostData(PrepareECommerceTransaction(id, affiliation, revenue, shipping, tax, currency));
         }
 
-        public Task EcommerceTransactionAsync(string id, string affiliation, string revenue, string shipping, string tax, string currency)
+        public Task ECommerceTransactionAsync(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
-            return PostDataAsync(PrepareEcommerceTransaction(id, affiliation, revenue, shipping, tax, currency));
+            return PostDataAsync(PrepareECommerceTransaction(id, affiliation, revenue, shipping, tax, currency));
         }
 
         public void TrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName)
@@ -93,7 +93,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
         {
             var ht = new Hashtable
             {
-                { "v", _googleVersion },
+                { "v", GoogleVersion },
                 { "tid", TrackingId },
                 { "cid", _configuration.ClientConfiguration.Id }
             };
@@ -146,7 +146,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
             }
         }
 
-        private Hashtable PrepareEcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
+        private Hashtable PrepareECommerceItem(string id, string name, string price, string quantity, string code, string category, string currency)
         {
             var ht = BaseValues();
 
@@ -162,7 +162,7 @@ namespace DynamicTranslator.Service.GoogleAnalytics
             return ht;
         }
 
-        private Hashtable PrepareEcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
+        private Hashtable PrepareECommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency)
         {
             var ht = BaseValues();
 

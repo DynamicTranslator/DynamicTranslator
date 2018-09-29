@@ -6,13 +6,13 @@ namespace DynamicTranslator.Service.GoogleAnalytics
 {
     public interface IGoogleAnalyticsService : ITransientDependency
     {
-        void EcommerceItem(string id, string name, string price, string quantity, string code, string category, string currency);
+        void ECommerceItem(string id, string name, string price, string quantity, string code, string category, string currency);
 
-        Task EcommerceItemAsync(string id, string name, string price, string quantity, string code, string category, string currency);
+        Task ECommerceItemAsync(string id, string name, string price, string quantity, string code, string category, string currency);
 
-        void EcommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency);
+        void ECommerceTransaction(string id, string affiliation, string revenue, string shipping, string tax, string currency);
 
-        Task EcommerceTransactionAsync(string id, string affiliation, string revenue, string shipping, string tax, string currency);
+        Task ECommerceTransactionAsync(string id, string affiliation, string revenue, string shipping, string tax, string currency);
 
         void TrackAppScreen(string appName, string appVersion, string appId, string appInstallerId, string screenName);
 

@@ -1,5 +1,23 @@
 ﻿namespace DynamicTranslator.Constants
 {
+    public class CacheNames
+    {
+        public const string MeanCache = "MeanCache";
+        public const string ReleaseCache = "ReleaseCache";
+    }
+    
+    public enum TranslatorType
+    {
+        Tureng,
+        Yandex,
+        SesliSozluk,
+        Google,
+        Bing,
+        Prompt,
+        Zargan,
+        WordReference
+    }
+    
     public class Headers
     {
         public const string Accept = "Accept";
@@ -17,5 +35,20 @@
 
         public const string UserAgentDefinition =
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+    }
+    
+    public static class ImageUrls
+    {
+        public const string NotificationUrl = "pack://application:,,,/Resources/notification-icon.png";
+    }
+    
+    public static class Titles
+    {
+        public const string Exception = "Exception";
+        public const string MaximumLimit = "Maximum Limit";
+        public const string Message = "Message";
+        public const string StartingMessage = "Starting Message";
+        public const string Warning = "Warning";
+        public const string Asterix = "*";
     }
 }

@@ -5,7 +5,7 @@ using DynamicTranslator.Application.Events;
 
 namespace DynamicTranslator.Wpf
 {
-    public interface ITranslatorBootstrapper : IDisposable, IDynamicTranslatorEvent
+    public interface ITranslatorBootstrapper : IDisposable
     {
         bool IsInitialized { get; }
 
