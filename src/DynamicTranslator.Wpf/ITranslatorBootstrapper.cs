@@ -9,8 +9,6 @@ namespace DynamicTranslator.Wpf
     {
         bool IsInitialized { get; }
 
-        void Initialize();
-
         Task InitializeAsync();
 
         void SubscribeShutdownEvents();

@@ -13,7 +13,6 @@ using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
 using DynamicTranslator.Extensions;
 using DynamicTranslator.LanguageManagement;
-using DynamicTranslator.Runtime;
 using DynamicTranslator.Wpf.Extensions;
 
 using Octokit;
@@ -127,7 +126,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
                 string incomingVersion = release.TagName;
 
-                if (scope.Resolve<IVersionChecker>().IsNew(incomingVersion))
+                if (scope.Resolve<IsNewVersion>()(incomingVersion))
                 {
                     await this.DispatchingAsync(() =>
                     {

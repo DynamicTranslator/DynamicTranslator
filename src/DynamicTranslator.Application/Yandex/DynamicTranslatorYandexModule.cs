@@ -1,15 +1,9 @@
-﻿using System;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Reflection;
 
 using Abp.Modules;
 
 using DynamicTranslator.Application.Yandex.Configuration;
-using DynamicTranslator.Extensions;
 using DynamicTranslator.LanguageManagement;
-
-using RestSharp;
 
 namespace DynamicTranslator.Application.Yandex
 {
@@ -36,29 +30,6 @@ namespace DynamicTranslator.Application.Yandex
                               configuration.ApiKey = AppConfigManager.Get("YandexApiKey");
                               configuration.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
                           });
-        }
-
-        private static string FindSid()
-        {
-            try
-            {
-                var getAdd = new Uri(BaseUrl);
-                IRestResponse res = new RestClient(getAdd).ExecuteGetTaskAsync(new RestRequest(Method.GET)).Result;
-                if (res.Ok())
-                {
-                    return new StringBuilder(res.Content
-                                                .ExtractByRegex(new Regex("SID:.*"))
-                                                .TrimEnd(',')
-                                                .Replace("SID:", string.Empty)
-                                                .Replace("'", string.Empty)).Append("-1").Append("-0").ToString().Trim();
-                }
-
-                return InternalSId;
-            }
-            catch (Exception)
-            {
-                return InternalSId;
-            }
         }
     }
 }

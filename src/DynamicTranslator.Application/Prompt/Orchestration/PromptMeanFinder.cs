@@ -15,7 +15,6 @@ namespace DynamicTranslator.Application.Prompt.Orchestration
 {
     public class PromptMeanFinder : AbstractMeanFinder<IPromptTranslatorConfiguration, PromptMeanOrganizer>
     {
-        private const string AutomaticLanguageExtension = "au";
         private const string ContentType = "application/json;Charset=UTF-8";
         private const string ContentTypeName = "Content-Type";
 

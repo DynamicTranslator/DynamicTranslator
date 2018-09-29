@@ -11,6 +11,7 @@ using Abp.Runtime.Caching.Configuration;
 
 using Castle.Core.Logging;
 using Castle.Facilities.Logging;
+using Castle.Services.Logging.NLogIntegration;
 
 using DynamicTranslator.Configuration.Startup;
 using DynamicTranslator.Constants;
@@ -30,7 +31,7 @@ namespace DynamicTranslator.Wpf
         public App()
         {
             _bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
-            _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.UseNLog());
+            _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.LogUsing<NLogFactory>());
         }
 
         protected override void OnExit(ExitEventArgs e)

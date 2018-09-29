@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using Castle.Core.Internal;
-
 using DynamicTranslator.Configuration.UniqueIdentifier;
 
 namespace DynamicTranslator.Extensions
