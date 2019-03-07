@@ -6,6 +6,6 @@
     <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.8.8" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.9.1" />
   </ItemGroup>
 </Project>

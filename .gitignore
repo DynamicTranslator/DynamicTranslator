@@ -222,3 +222,5 @@ src/.cr/Settings.xml
 # cake stuff
 .dotnet/
 tools/
+
+.vs/
