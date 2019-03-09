@@ -1,157 +1,91 @@
 ﻿using System;
+using System.IO;
 using System.Security.AccessControl;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-
-using Abp;
-using Abp.Dependency;
-using Abp.Runtime.Caching.Configuration;
-
-using Castle.Core.Logging;
-using Castle.Facilities.Logging;
-using Castle.Services.Logging.NLogIntegration;
-
-using DynamicTranslator.Configuration.Startup;
-using DynamicTranslator.Constants;
-using DynamicTranslator.Service.GoogleAnalytics;
 using DynamicTranslator.Wpf.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DynamicTranslator.Wpf
 {
-    public partial class App
-    {
-        private readonly AbpBootstrapper _bootstrapper;
-        private Mutex _mutex;
-        private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
-        private bool _isMutexCreated;
-        private bool _isMutexUnauthorized;
+	public partial class App : Application
+	{
+		private Mutex _mutex;
+		private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
+		private bool _isMutexCreated;
+		private bool _isMutexUnauthorized;
+        private WireUp _wireUp;
 
         public App()
-        {
-            _bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
-            _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.LogUsing<NLogFactory>());
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            _bootstrapper.Dispose();
-        }
+		{
+			GuardAgainstMultipleInstances();
+		}
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            _bootstrapper.Initialize();
-
-            _bootstrapper.IocManager.Register<IGrowlNotifications, GrowlNotifications>();
-
-            HandleExceptionsOrNothing();
-
-            ConfigureMemoryCache();
-
-            CheckApplicationInstanceExist();
-
-            base.OnStartup(eventArgs);
-        }
-
-        private void CheckApplicationInstanceExist()
-        {
-            string user = Environment.UserDomainName + "\\" + Environment.UserName;
-
-            try
+            _wireUp = new WireUp(postConfigureServices: services =>
             {
-                Mutex.TryOpenExisting(MutexName, out _mutex);
+                services.AddSingleton<Notifications>();
+                services.AddTransient<ClipboardManager>();
+                services.AddSingleton<GrowlNotifications>();
+                services.AddTransient<TranslatorBootstrapper>();
+                services.AddTransient<INotifier, GrowlNotifier>();
+                services.AddSingleton<MainWindow>();
+            });
 
-                if (_mutex == null)
-                {
-                    var mutexSecurity = new MutexSecurity();
-
-                    var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
-
-                    mutexSecurity.AddAccessRule(rule);
-
-                    rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
-
-                    mutexSecurity.AddAccessRule(rule);
-
-                    _mutex = new Mutex(true, MutexName, out _isMutexCreated, mutexSecurity);
-                }
-            }
-            catch (UnauthorizedAccessException)
+            var mainWindow = _wireUp.ServiceProvider.GetService<MainWindow>();
+            Current.Exit += (sender, args) =>
             {
-                _isMutexUnauthorized = true;
-            }
-
-            if (!_isMutexUnauthorized && _isMutexCreated)
-            {
-                _mutex?.WaitOne();
-                GC.KeepAlive(_mutex);
-                return;
-            }
-
-            _mutex?.ReleaseMutex();
-            _mutex?.Dispose();
-            Current.Shutdown();
+                _wireUp.Dispose();
+            };
+            mainWindow.InitializeComponent();
+            mainWindow.Show();
         }
 
-        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
-        }
+        private void GuardAgainstMultipleInstances()
+		{
+			string user = Environment.UserDomainName + Path.DirectorySeparatorChar + Environment.UserName;
 
-        private void ConfigureMemoryCache()
-        {
-            var cacheConfiguration = _bootstrapper.IocManager.Resolve<ICachingConfiguration>();
+			try
+			{
+				Mutex.TryOpenExisting(MutexName, out _mutex);
 
-            cacheConfiguration.Configure(CacheNames.MeanCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24); });
+				if (_mutex == null)
+				{
+					var mutexSecurity = new MutexSecurity();
 
-            cacheConfiguration.Configure(CacheNames.ReleaseCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10); });
-        }
+					var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
 
-        private void HandleExceptionsOrNothing()
-        {
-            using (IScopedIocResolver scope = _bootstrapper.IocManager.CreateScope())
-            {
-                bool isExtraLoggingEnabled = scope.Resolve<IApplicationConfiguration>().IsExtraLoggingEnabled;
+					mutexSecurity.AddAccessRule(rule);
 
-                AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                {
-                    var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                    var logger = scope.Resolve<ILogger>();
+					rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
 
-                    if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
+					mutexSecurity.AddAccessRule(rule);
 
-                    try
-                    {
-                        googleClient.TrackException(args.ExceptionObject.ToString(), false);
-                    }
-                    catch (Exception)
-                    {
-                        //throw;
-                    }
-                };
+					_mutex = new Mutex(true, MutexName, out _isMutexCreated);
+				}
+			}
+			catch (UnauthorizedAccessException)
+			{
+				_isMutexUnauthorized = true;
+			}
 
-                TaskScheduler.UnobservedTaskException += (sender, args) =>
-                {
-                    args.Exception.Handle(exception =>
-                    {
-                        var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                        var logger = scope.Resolve<ILogger>();
+			if (!_isMutexUnauthorized && _isMutexCreated)
+			{
+				_mutex?.WaitOne();
+				GC.KeepAlive(_mutex);
+				return;
+			}
 
-                        if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {exception.ToString()}");
+			_mutex?.ReleaseMutex();
+			_mutex?.Dispose();
+			Current.Shutdown();
+		}
 
-                        try
-                        {
-                            googleClient.TrackException(exception.ToString(), false);
-                        }
-                        catch (Exception)
-                        {
-                            //throw;
-                        }
-                        return true;
-                    });
-                };
-            }
-        }
+		private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
+			e.Handled = true;
+		}
     }
 }

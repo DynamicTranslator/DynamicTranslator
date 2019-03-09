@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using DynamicTranslator.Configuration.UniqueIdentifier;
 
 namespace DynamicTranslator.Extensions

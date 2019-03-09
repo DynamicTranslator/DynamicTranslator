@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -13,6 +12,21 @@ namespace DynamicTranslator.Extensions
         public static T DeserializeAs<T>(this string @this) where T : class
         {
             return DeserializeFromStream<T>(new MemoryStream(Encoding.UTF8.GetBytes(@this)));
+        }
+
+        public static string ToJsonString(this object @object, bool intended)
+        {
+            return JsonConvert.SerializeObject(@object, intended ? Formatting.Indented : Formatting.None);
+        }
+
+        public static T As<T>(this object @obj)
+        {
+            return (T) obj;
+        }
+
+        public static string JoinAsString(this IEnumerable<string> items, string separator = ",")
+        {
+            return string.Join(separator, items);
         }
 
         public static T DeserializeFromStream<T>(Stream jsonStream) where T : class
@@ -41,9 +55,9 @@ namespace DynamicTranslator.Extensions
             return deserializedObj;
         }
 
-        public static T GetFirstValueInArrayGraph<T>(this JArray jarray)
+        public static T GetFirstValueInArrayGraph<T>(this JArray jArray)
         {
-            return jarray.ForwardToken().Value<T>();
+            return jArray.ForwardToken().Value<T>();
         }
 
         internal static JToken ForwardToken(this JToken token)
@@ -51,7 +65,7 @@ namespace DynamicTranslator.Extensions
             return token.HasValues ? token.First.ForwardToken() : token;
         }
 
-        public static T Manipulate<T>(this T @this, Action<T> setAction)
+        public static T With<T>(this T @this, Action<T> setAction)
         {
             setAction(@this);
             return @this;

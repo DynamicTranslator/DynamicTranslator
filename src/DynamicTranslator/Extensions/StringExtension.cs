@@ -81,7 +81,8 @@ namespace DynamicTranslator.Extensions
 
         public static string RemoveSpecialCharacters(this string str)
         {
-            return Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(), @"\t|\n|\r", " "); //REmove non-AsCII characters
+            return Regex.Replace(str.TrimEnd(Environment.NewLine.ToCharArray()).Trim(), @"\t|\n|\r",
+                " "); //REmove non-AsCII characters
         }
 
         public static string StripTagsCharArray(this string source)

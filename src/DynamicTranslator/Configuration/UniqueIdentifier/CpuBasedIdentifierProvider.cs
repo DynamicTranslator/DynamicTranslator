@@ -1,6 +1,5 @@
 ﻿using System.Management;
-
-using Abp.Extensions;
+using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Configuration.UniqueIdentifier
 {

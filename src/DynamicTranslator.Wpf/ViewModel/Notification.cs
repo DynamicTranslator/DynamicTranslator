@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel;
-
-using Abp.Dependency;
-
 using DynamicTranslator.Extensions;
 
 namespace DynamicTranslator.Wpf.ViewModel
 {
-    public class Notification : INotifyPropertyChanged, INotification, ITransientDependency
+    public class Notification : INotifyPropertyChanged
     {
         private int _id;
         private string _imageUrl;
@@ -22,7 +19,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         public int Id
         {
-            get { return _id; }
+            get => _id;
 
             set
             {
@@ -36,7 +33,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         public string ImageUrl
         {
-            get { return _imageUrl; }
+            get => _imageUrl;
 
             set
             {
@@ -50,7 +47,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         public string Message
         {
-            get { return _message; }
+            get => _message;
 
             set
             {
@@ -64,7 +61,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         public string Title
         {
-            get { return _title; }
+            get => _title;
 
             set
             {

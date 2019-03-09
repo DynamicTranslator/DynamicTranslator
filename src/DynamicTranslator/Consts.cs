@@ -1,11 +1,11 @@
-﻿namespace DynamicTranslator.Constants
+﻿namespace DynamicTranslator
 {
     public class CacheNames
     {
         public const string MeanCache = "MeanCache";
         public const string ReleaseCache = "ReleaseCache";
     }
-    
+
     public enum TranslatorType
     {
         Tureng,
@@ -17,11 +17,14 @@
         Zargan,
         WordReference
     }
-    
+
     public class Headers
     {
         public const string Accept = "Accept";
-        public const string AcceptDefinition = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+
+        public const string AcceptDefinition =
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+
         public const string AcceptEncoding = "Accept-Encoding";
         public const string AcceptEncodingDefinition = "gzip, deflate, sdch";
         public const string AcceptLanguage = "Accept-Language";
@@ -36,12 +39,12 @@
         public const string UserAgentDefinition =
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
     }
-    
+
     public static class ImageUrls
     {
         public const string NotificationUrl = "pack://application:,,,/Resources/notification-icon.png";
     }
-    
+
     public static class Titles
     {
         public const string Exception = "Exception";
