@@ -49,6 +49,6 @@
         public const string Message = "Message";
         public const string StartingMessage = "Starting Message";
         public const string Warning = "Warning";
-        public const string Asterix = "*";
+        public const string Asterix = "●";
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 using Abp.Dependency;
@@ -53,24 +54,27 @@ namespace DynamicTranslator.Wpf.ViewModel
         {
             if (_isRunning)
             {
+                _btnSwitch.Background = Brushes.ForestGreen;
+
                 _btnSwitch.Content = "Start Translator";
 
                 _isRunning = false;
-
-                UnlockUiElements();
 
                 _translator.Dispose();
             }
             else
             {
+                _btnSwitch.Background = Brushes.OrangeRed;
+
                 _btnSwitch.Content = "Stop Translator";
 
                 string selectedLanguageName = ((Language)_comboBoxLanguages.SelectedItem).Name;
+
                 _configurations.AppConfigManager.SaveOrUpdate("ToLanguage", selectedLanguageName);
+
                 _configurations.ApplicationConfiguration.ToLanguage = new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
 
                 PrepareTranslators();
-                LockUiElements();
 
                 this.DispatchingAsync(async () =>
                 {
@@ -82,6 +86,8 @@ namespace DynamicTranslator.Wpf.ViewModel
 
                 _isRunning = true;
             }
+
+            ToggleUserInterface();
         }
 
         private void FillLanguageCombobox()
@@ -138,15 +144,10 @@ namespace DynamicTranslator.Wpf.ViewModel
             }
         }
 
-        private void LockUiElements()
+        private void ToggleUserInterface()
         {
-            _comboBoxLanguages.Focusable = false;
-            _comboBoxLanguages.IsHitTestVisible = false;
-            _checkBoxGoogleTranslate.IsHitTestVisible = false;
-            _checkBoxTureng.IsHitTestVisible = false;
-            _checkBoxYandexTranslate.IsHitTestVisible = false;
-            _checkBoxSesliSozluk.IsHitTestVisible = false;
-            _checkBoxPrompt.IsHitTestVisible = false;
+            _languageWrapPanel.IsEnabled = !_languageWrapPanel.IsEnabled;
+            _languagesGrid.IsEnabled = !_languagesGrid.IsEnabled;
         }
 
         private void NewVersionButtonClick(object sender, RoutedEventArgs e)
@@ -194,17 +195,6 @@ namespace DynamicTranslator.Wpf.ViewModel
                     _configurations.ActiveTranslatorConfiguration.Activate((TranslatorType)value);
                 }
             }
-        }
-
-        private void UnlockUiElements()
-        {
-            _comboBoxLanguages.Focusable = true;
-            _comboBoxLanguages.IsHitTestVisible = true;
-            _checkBoxGoogleTranslate.IsHitTestVisible = true;
-            _checkBoxTureng.IsHitTestVisible = true;
-            _checkBoxYandexTranslate.IsHitTestVisible = true;
-            _checkBoxSesliSozluk.IsHitTestVisible = true;
-            _checkBoxPrompt.IsHitTestVisible = true;
         }
     }
 }
