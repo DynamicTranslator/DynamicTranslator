@@ -18,7 +18,7 @@
         <DataTemplate x:Key="MessageTemplate" DataType="ViewModel:Notification">
             <Grid x:Name="NotificationWindow" Tag="{Binding Path=Id}" Background="Transparent"
                   SizeChanged="NotificationWindowSizeChanged">
-                <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="10"
+                <Border Name="border" Background="#2a3345" BorderThickness="0" Height="Auto" CornerRadius="5"
                         MaxHeight="Infinity" Margin="5">
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="0" Opacity="0.8" BlurRadius="10" />
@@ -42,9 +42,9 @@
                                 HorizontalAlignment="Left"
                                 Margin="3,2,0,3" Style="{StaticResource TextToSpeechButton}"
                                 Click="TextToSpeechButton_OnClick" />
-                        <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="2" Width="16" Height="Auto"
+                        <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="2" Width="24" Height="22"
                                 HorizontalAlignment="Right"
-                                Margin="0,3,12,3" Style="{StaticResource CloseButton}" />
+                                Margin="0,3,3,3" Style="{StaticResource CloseButton}" />
                         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=Message}"
                                    TextOptions.TextRenderingMode="ClearType" TextOptions.TextFormattingMode="Display"
                                    Foreground="White"
