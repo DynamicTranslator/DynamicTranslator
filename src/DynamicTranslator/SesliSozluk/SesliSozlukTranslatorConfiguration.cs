@@ -14,7 +14,7 @@ namespace DynamicTranslator.SesliSozluk
         public override TranslatorType TranslatorType => TranslatorType.SesliSozluk;
 
         public SesliSozlukTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            ApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
             applicationConfiguration)
         {
         }

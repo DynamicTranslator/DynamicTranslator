@@ -11,13 +11,13 @@ namespace DynamicTranslator.Wpf.ViewModel
 {
     public partial class GrowlNotifications
     {
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly Notifications _buffer = new Notifications();
         public readonly Notifications Notifications;
         private int _count;
         public bool IsDisposed;
 
-        public GrowlNotifications(ApplicationConfiguration applicationConfiguration, Notifications notifications)
+        public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
             _applicationConfiguration = applicationConfiguration;

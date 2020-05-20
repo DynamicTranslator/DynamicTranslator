@@ -7,7 +7,7 @@ namespace DynamicTranslator.Configuration.UniqueIdentifier
     {
         public string Get()
         {
-            string cpuInfo = string.Empty;
+            var cpuInfo = string.Empty;
             var mc = new ManagementClass("win32_processor");
             ManagementObjectCollection moc = mc.GetInstances();
 

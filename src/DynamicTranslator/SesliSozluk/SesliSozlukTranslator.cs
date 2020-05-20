@@ -22,11 +22,11 @@ namespace DynamicTranslator.SesliSozluk
         private const string UserAgent =
             "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly SesliSozlukTranslatorConfiguration _sesliSozlukTranslatorConfiguration;
         private readonly TranslatorClient _translatorClient;
 
-        public SesliSozlukTranslator(ApplicationConfiguration applicationConfiguration,
+        public SesliSozlukTranslator(IApplicationConfiguration applicationConfiguration,
             SesliSozlukTranslatorConfiguration sesliSozlukTranslatorConfiguration, TranslatorClient translatorClient)
         {
             _applicationConfiguration = applicationConfiguration;

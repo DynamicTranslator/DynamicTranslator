@@ -39,10 +39,10 @@ namespace DynamicTranslator.Google
     {
         private const string GoogleAnalyticsUrl = "http://www.google-analytics.com/collect";
         private const string TrackingId = "UA-70082243-2";
-        private readonly ApplicationConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
         private const string GoogleVersion = "1";
 
-        public GoogleAnalyticsService(ApplicationConfiguration configuration)
+        public GoogleAnalyticsService(IApplicationConfiguration configuration)
         {
             _configuration = configuration;
         }

@@ -13,12 +13,12 @@ namespace DynamicTranslator.Configuration
         public static IServiceCollection AddGoogleTranslator(this IServiceCollection services,
             Action<GoogleTranslatorConfiguration> configure)
         {
-            services.AddSingleton<ITranslator, GoogleTranslator>();
+            services.AddTransient<ITranslator, GoogleTranslator>();
             services.AddSingleton(sp =>
             {
                 var conf = new GoogleTranslatorConfiguration(
                     sp.GetService<ActiveTranslatorConfiguration>(),
-                    sp.GetService<ApplicationConfiguration>()
+                    sp.GetService<IApplicationConfiguration>()
                 );
 
                 configure?.Invoke(conf);

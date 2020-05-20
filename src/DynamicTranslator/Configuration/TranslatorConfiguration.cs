@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DynamicTranslator.Model;
 
@@ -8,10 +7,10 @@ namespace DynamicTranslator.Configuration
     public abstract class TranslatorConfiguration
     {
         private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
 
-        public TranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            ApplicationConfiguration applicationConfiguration)
+        protected TranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration)
         {
             _activeTranslatorConfiguration = activeTranslatorConfiguration;
             _applicationConfiguration = applicationConfiguration;

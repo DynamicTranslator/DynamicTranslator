@@ -9,18 +9,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DynamicTranslator.Wpf
 {
-	public partial class App : Application
-	{
-		private Mutex _mutex;
-		private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
-		private bool _isMutexCreated;
-		private bool _isMutexUnauthorized;
+    public partial class App : Application
+    {
+        private Mutex _mutex;
+        private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
+        private bool _isMutexCreated;
+        private bool _isMutexUnauthorized;
         private WireUp _wireUp;
 
         public App()
-		{
-			GuardAgainstMultipleInstances();
-		}
+        {
+            GuardAgainstMultipleInstances();
+        }
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
@@ -35,57 +35,62 @@ namespace DynamicTranslator.Wpf
             });
 
             var mainWindow = _wireUp.ServiceProvider.GetService<MainWindow>();
-            Current.Exit += (sender, args) =>
-            {
-                _wireUp.Dispose();
-            };
+            mainWindow.Closed += (sender, args) =>
+             {
+                 Current.Shutdown(0);
+             };
             mainWindow.InitializeComponent();
             mainWindow.Show();
         }
 
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _wireUp.Dispose();
+        }
+
         private void GuardAgainstMultipleInstances()
-		{
-			string user = Environment.UserDomainName + Path.DirectorySeparatorChar + Environment.UserName;
+        {
+            string user = Environment.UserDomainName + Path.DirectorySeparatorChar + Environment.UserName;
 
-			try
-			{
-				Mutex.TryOpenExisting(MutexName, out _mutex);
+            try
+            {
+                Mutex.TryOpenExisting(MutexName, out _mutex);
 
-				if (_mutex == null)
-				{
-					var mutexSecurity = new MutexSecurity();
+                if (_mutex == null)
+                {
+                    var mutexSecurity = new MutexSecurity();
 
-					var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
+                    var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
 
-					mutexSecurity.AddAccessRule(rule);
+                    mutexSecurity.AddAccessRule(rule);
 
-					rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
+                    rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
 
-					mutexSecurity.AddAccessRule(rule);
+                    mutexSecurity.AddAccessRule(rule);
 
-					_mutex = new Mutex(true, MutexName, out _isMutexCreated);
-				}
-			}
-			catch (UnauthorizedAccessException)
-			{
-				_isMutexUnauthorized = true;
-			}
+                    _mutex = new Mutex(true, MutexName, out _isMutexCreated);
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _isMutexUnauthorized = true;
+            }
 
-			if (!_isMutexUnauthorized && _isMutexCreated)
-			{
-				_mutex?.WaitOne();
-				GC.KeepAlive(_mutex);
-				return;
-			}
+            if (!_isMutexUnauthorized && _isMutexCreated)
+            {
+                _mutex?.WaitOne();
+                GC.KeepAlive(_mutex);
+                return;
+            }
 
-			_mutex?.ReleaseMutex();
-			_mutex?.Dispose();
-			Current.Shutdown();
-		}
+            _mutex?.ReleaseMutex();
+            _mutex?.Dispose();
+            Current.Shutdown();
+        }
 
-		private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-		{
-			e.Handled = true;
-		}
+        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

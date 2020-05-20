@@ -2,7 +2,25 @@
 
 namespace DynamicTranslator.Configuration
 {
-    public class ApplicationConfiguration
+    public interface IApplicationConfiguration
+    {
+        string TrackingId { get; set; }
+        ClientConfiguration ClientConfiguration { get; set; }
+        Language FromLanguage { get; set; }
+        string GitHubRepositoryName { get; }
+        string GitHubRepositoryOwnerName { get; }
+        bool IsExtraLoggingEnabled { get; set; }
+        bool IsLanguageDetectionEnabled { get; set; }
+        bool IsToLanguageTurkish { get; }
+        int LeftOffset { get; set; }
+        byte MaxNotifications { get; set; }
+        int SearchableCharacterLimit { get; set; }
+        Language ToLanguage { get; set; }
+        int TopOffset { get; set; }
+        string UpdateLink { get; set; }
+    }
+
+    internal class ApplicationConfiguration : IApplicationConfiguration
     {
         public string TrackingId { get; set; }
 

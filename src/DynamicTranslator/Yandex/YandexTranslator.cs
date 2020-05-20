@@ -15,13 +15,13 @@ namespace DynamicTranslator.Yandex
         public const string AnonymousUrl = "https://translate.yandex.net/api/v1/tr.json/translate?";
         public const string BaseUrl = "https://translate.yandex.com/";
         public const string InternalSId = "id=93bdaee7.57bb46e3.e787b736-0-0";
-        public const string Url = "https://translate.yandex.net/api/v1.5/tr/translate?";
+        public const string Url = "https://translate.yandex.net/api/v1.5/tr.json/translate?";
 
         private readonly YandexTranslatorConfiguration _yandex;
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public YandexTranslator(YandexTranslatorConfiguration yandex, ApplicationConfiguration applicationConfiguration,
+        public YandexTranslator(YandexTranslatorConfiguration yandex, IApplicationConfiguration applicationConfiguration,
             IHttpClientFactory httpClientFactory)
         {
             _yandex = yandex;
@@ -29,7 +29,7 @@ namespace DynamicTranslator.Yandex
             _httpClientFactory = httpClientFactory;
         }
 
-        public TranslatorType Type => TranslatorType.SesliSozluk;
+        public TranslatorType Type => TranslatorType.Yandex;
 
         public async Task<TranslateResult> Translate(TranslateRequest request, CancellationToken cancellationToken)
         {
@@ -42,9 +42,11 @@ namespace DynamicTranslator.Yandex
                                                     .Append(Headers.Ampersand)
                                                     .Append($"text={Uri.EscapeUriString(request.CurrentText)}")));
 
-            HttpResponseMessage response = await _httpClientFactory.CreateClient("translator")
-                .With(client => { client.BaseAddress = new Uri(BaseUrl); }).PostAsync(address, null, cancellationToken);
-            string mean = await response.Content.ReadAsStringAsync();
+            var response = await _httpClientFactory
+                .CreateClient("translator")
+                .With(client => { client.BaseAddress = new Uri(BaseUrl); })
+                .PostAsync(address, null, cancellationToken);
+            string mean = await response.Content.ReadAsStringAsync(cancellationToken);
             if (response.IsSuccessStatusCode)
             {
                 mean = MakeMeaningful(mean);

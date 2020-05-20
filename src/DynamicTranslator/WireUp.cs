@@ -25,7 +25,8 @@ namespace DynamicTranslator
 
         public IServiceProvider ServiceProvider { get; }
 
-        public WireUp(Action<IConfigurationBuilder> configure = null,
+        public WireUp(
+            Action<IConfigurationBuilder> configure = null,
             Action<IServiceCollection> postConfigureServices = null)
         {
             var cb = new ConfigurationBuilder()
@@ -68,7 +69,7 @@ namespace DynamicTranslator
                 })
                 .AddSingleton(configuration)
                 .AddSingleton<ActiveTranslatorConfiguration>()
-                .AddSingleton(sp =>
+                .AddSingleton<IApplicationConfiguration>(sp =>
                 {
                     var clientConfiguration = new ClientConfiguration
                     {
@@ -99,6 +100,7 @@ namespace DynamicTranslator
                 .AddTransient<IFinder, Finder>()
                 .AddSingleton<ResultOrganizer>()
                 .AddHttpClient<TranslatorClient>(TranslatorClient.Name)
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .ConfigurePrimaryHttpMessageHandler(sp => MessageHandler);
 
             postConfigureServices?.Invoke(services);

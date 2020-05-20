@@ -16,12 +16,12 @@ namespace DynamicTranslator.Google
 
     public class GoogleLanguageDetector : IGoogleLanguageDetector
     {
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly GoogleTranslatorConfiguration _google;
         private readonly IHttpClientFactory _httpClientFactory;
 
         public GoogleLanguageDetector(GoogleTranslatorConfiguration google,
-            ApplicationConfiguration applicationConfiguration,
+            IApplicationConfiguration applicationConfiguration,
             IHttpClientFactory httpClientFactory)
         {
             _google = google;
@@ -38,13 +38,11 @@ namespace DynamicTranslator.Google
                 HttpUtility.UrlEncode(text));
 
             var httpClient = _httpClientFactory.CreateClient("translator");
-            var request = new HttpRequestMessage {Method = HttpMethod.Get};
+            var request = new HttpRequestMessage { Method = HttpMethod.Get };
             request.Headers.Add(Headers.AcceptLanguage, "en-US,en;q=0.8,tr;q=0.6");
             request.Headers.Add(Headers.AcceptEncoding, "gzip, deflate, sdch");
-            request.Headers.Add(Headers.UserAgent,
-                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
-            request.Headers.Add(Headers.Accept,
-                "application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            request.Headers.Add(Headers.UserAgent, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
+            request.Headers.Add(Headers.Accept, "application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
             request.RequestUri = uri.ToUri();
             var response = await httpClient.SendAsync(request, token);
 

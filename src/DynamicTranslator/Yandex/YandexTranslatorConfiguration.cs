@@ -20,7 +20,7 @@ namespace DynamicTranslator.Yandex
         public string SId { get; set; }
 
         public YandexTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            ApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
             applicationConfiguration)
         {
         }

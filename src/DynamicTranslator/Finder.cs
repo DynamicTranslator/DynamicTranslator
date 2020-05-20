@@ -19,7 +19,7 @@ namespace DynamicTranslator
         private readonly IGoogleAnalyticsService _googleAnalytics;
         private readonly IGoogleLanguageDetector _languageDetector;
         private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly INotifier _notifier;
         private string _previousString;
         private readonly IEnumerable<ITranslator> _translators;
@@ -30,7 +30,7 @@ namespace DynamicTranslator
             IGoogleAnalyticsService googleAnalytics,
             ActiveTranslatorConfiguration activeTranslatorConfiguration,
             IEnumerable<ITranslator> translators,
-            ApplicationConfiguration applicationConfiguration, 
+            IApplicationConfiguration applicationConfiguration, 
             ResultOrganizer resultOrganizer)
         {
             _notifier = notifier;
@@ -46,9 +46,13 @@ namespace DynamicTranslator
         {
             try
             {
-                if (_previousString == currentString) return;
+                //TODO: Find a better way to handle duplicate requests
+                //if (_previousString == currentString)
+                //{
+                //    return;
+                //}
 
-                _previousString = currentString;
+                //_previousString = currentString;
 
                 var fromLanguageExtension = await _languageDetector.DetectLanguage(currentString, cancellationToken);
 

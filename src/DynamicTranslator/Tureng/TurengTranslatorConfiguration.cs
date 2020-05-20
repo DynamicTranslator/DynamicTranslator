@@ -7,7 +7,7 @@ namespace DynamicTranslator.Tureng
 {
     public class TurengTranslatorConfiguration : TranslatorConfiguration
     {
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
 
         public override bool CanSupport()
         {
@@ -21,7 +21,7 @@ namespace DynamicTranslator.Tureng
         public override TranslatorType TranslatorType => TranslatorType.Tureng;
 
         public TurengTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            ApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
             applicationConfiguration)
         {
             _applicationConfiguration = applicationConfiguration;

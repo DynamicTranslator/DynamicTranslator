@@ -4,7 +4,7 @@ using System.Windows.Threading;
 
 namespace DynamicTranslator.Wpf.Extensions
 {
-    public static class MultithreadUiExtensions
+    public static class MultiThreadUiExtensions
     {
         public static DispatcherOperation DispatchingAsync(this Window obj, Action action)
         {

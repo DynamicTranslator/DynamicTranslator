@@ -14,7 +14,7 @@ namespace DynamicTranslator.Google
         public override TranslatorType TranslatorType => TranslatorType.Google;
 
         public GoogleTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            ApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
             applicationConfiguration)
         {
         }

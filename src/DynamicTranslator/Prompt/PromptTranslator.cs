@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DynamicTranslator.Configuration;
 using DynamicTranslator.Extensions;
-using DynamicTranslator.Google;
 using DynamicTranslator.Model;
 
 namespace DynamicTranslator.Prompt
@@ -17,11 +16,11 @@ namespace DynamicTranslator.Prompt
         public const string Ts = "MainSite";
         public const string Url = "http://www.online-translator.com/services/TranslationService.asmx/GetTranslateNew";
 
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly PromptTranslatorConfiguration _promptTranslatorConfiguration;
         private readonly TranslatorClient _translatorClient;
 
-        public PromptTranslator(ApplicationConfiguration applicationConfiguration,
+        public PromptTranslator(IApplicationConfiguration applicationConfiguration,
             PromptTranslatorConfiguration promptTranslatorConfiguration, TranslatorClient translatorClient)
         {
             _applicationConfiguration = applicationConfiguration;

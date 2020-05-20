@@ -14,13 +14,13 @@ namespace DynamicTranslator.Wpf.ViewModel
     public partial class MainWindow : Window
     {
         private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
-        private readonly ApplicationConfiguration _applicationConfiguration;
+        private readonly IApplicationConfiguration _applicationConfiguration;
         private GitHubClient _gitHubClient;
         private Func<string, bool> _isNewVersion;
         private bool _isRunning;
         private readonly TranslatorBootstrapper _translator;
 
-        public MainWindow(ActiveTranslatorConfiguration activeTranslatorConfiguration, ApplicationConfiguration applicationConfiguration, TranslatorBootstrapper translator)
+        public MainWindow(ActiveTranslatorConfiguration activeTranslatorConfiguration, IApplicationConfiguration applicationConfiguration, TranslatorBootstrapper translator)
         {
             _activeTranslatorConfiguration = activeTranslatorConfiguration;
             _applicationConfiguration = applicationConfiguration;
@@ -31,7 +31,7 @@ namespace DynamicTranslator.Wpf.ViewModel
         {
             InitializeComponent();
             base.OnInitialized(e);
-            
+
             _gitHubClient = new GitHubClient(new ProductHeaderValue("DynamicTranslator"));
             _isNewVersion = version =>
             {
@@ -59,20 +59,17 @@ namespace DynamicTranslator.Wpf.ViewModel
             {
                 BtnSwitch.Content = "Stop Translator";
 
-                var selectedLanguageName = ((Language) ComboBoxLanguages.SelectedItem).Name;
+                var selectedLanguageName = ((Language)ComboBoxLanguages.SelectedItem).Name;
                 _applicationConfiguration.ToLanguage =
                     new Language(selectedLanguageName, LanguageMapping.All[selectedLanguageName]);
 
                 PrepareTranslators();
                 LockUiElements();
 
-                this.DispatchingAsync(() =>
+                if (!_translator.IsInitialized)
                 {
-                    if (!_translator.IsInitialized)
-                    {
-                        _translator.Initialize();
-                    }
-                });
+                    _translator.Initialize();
+                }
 
                 _isRunning = true;
             }
