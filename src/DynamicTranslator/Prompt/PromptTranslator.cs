@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using DynamicTranslator.Configuration;
@@ -14,18 +15,20 @@ namespace DynamicTranslator.Prompt
         public const int CharacterLimit = 3000;
         public const string Template = "auto";
         public const string Ts = "MainSite";
-        public const string Url = "http://www.online-translator.com/services/TranslationService.asmx/GetTranslateNew";
+        public const string Url = "https://www.online-translator.com/services/soap.asmx/GetTranslation";
 
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly PromptTranslatorConfiguration _promptTranslatorConfiguration;
-        private readonly TranslatorClient _translatorClient;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public PromptTranslator(IApplicationConfiguration applicationConfiguration,
-            PromptTranslatorConfiguration promptTranslatorConfiguration, TranslatorClient translatorClient)
+        public PromptTranslator(
+            IApplicationConfiguration applicationConfiguration,
+            PromptTranslatorConfiguration promptTranslatorConfiguration,
+            IHttpClientFactory clientFactory)
         {
             _applicationConfiguration = applicationConfiguration;
             _promptTranslatorConfiguration = promptTranslatorConfiguration;
-            _translatorClient = translatorClient;
+            _clientFactory = clientFactory;
         }
 
         public TranslatorType Type => TranslatorType.Prompt;
@@ -47,19 +50,21 @@ namespace DynamicTranslator.Prompt
                 IsMobile = false
             };
 
-            var httpClient = _translatorClient.HttpClient.With(client =>
+            var httpClient = _clientFactory.CreateClient(TranslatorClient.Name).With(client =>
             {
                 client.BaseAddress = _promptTranslatorConfiguration.Url.ToUri();
             });
 
-
             var request = new HttpRequestMessage {Method = HttpMethod.Post};
-            request.Headers.Add(Headers.ContentType, ContentType);
-            request.Content = new FormUrlEncodedContent(new[]
-                {new KeyValuePair<string, string>(Headers.ContentType, requestObject.ToJsonString(false))});
-            HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken);
+            request.Content = new FormUrlEncodedContent(new[] {new KeyValuePair<string, string>(ContentType, requestObject.ToJsonString(false))});
+            //HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken);
             string mean = string.Empty;
-            if (response.IsSuccessStatusCode) mean = OrganizeMean(await response.Content.ReadAsStringAsync());
+
+            var response = await httpClient.PostAsJsonAsync("", requestObject, cancellationToken: cancellationToken);
+            if (response.IsSuccessStatusCode)
+            {
+                mean = OrganizeMean(await response.Content.ReadAsStringAsync(cancellationToken));
+            }
 
             return new TranslateResult(true, mean);
         }

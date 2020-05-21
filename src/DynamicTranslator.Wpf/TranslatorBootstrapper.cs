@@ -52,18 +52,21 @@ namespace DynamicTranslator.Wpf
 
         public void Dispose()
         {
-            if (IsInitialized)
+            if (!IsInitialized)
             {
-                if (_cancellationTokenSource.Token.CanBeCanceled) _cancellationTokenSource.Cancel(false);
-
-                DisposeHooks();
-                SendKeys.Flush();
-                UnsubscribeLocalEvents();
-                _growlNotifications.Dispose();
-                _finderObservable.Dispose();
-                _syncObserver.Dispose();
-                IsInitialized = false;
+                return;
             }
+
+            if (_cancellationTokenSource.Token.CanBeCanceled)
+            {
+                _cancellationTokenSource.Cancel(false);
+            }
+
+            UnsubscribeLocalEvents();
+            _growlNotifications.Dispose();
+            _finderObservable.Dispose();
+            _syncObserver.Dispose();
+            IsInitialized = false;
         }
 
         public void Initialize()

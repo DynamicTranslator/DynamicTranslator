@@ -60,12 +60,12 @@ namespace DynamicTranslator
                 .AddSesliSozlukTranslator(sesliSozluk =>
                 {
                     sesliSozluk.SupportedLanguages = LanguageMapping.SesliSozluk.ToLanguages();
-                    sesliSozluk.Url = "http://www.seslisozluk.net/c%C3%BCmle-%C3%A7eviri/";
+                    sesliSozluk.Url = "https://www.seslisozluk.net/c%C3%BCmle-%C3%A7eviri/";
                 })
                 .AddTurengTranslator(tureng =>
                 {
                     tureng.SupportedLanguages = LanguageMapping.Tureng.ToLanguages();
-                    tureng.Url = "http://tureng.com/search/";
+                    tureng.Url = "https://tureng.com/en/turkish-english/";
                 })
                 .AddSingleton(configuration)
                 .AddSingleton<ActiveTranslatorConfiguration>()

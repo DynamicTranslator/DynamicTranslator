@@ -18,9 +18,7 @@ namespace DynamicTranslator.SesliSozluk
         private const string AcceptEncoding = "gzip, deflate";
         private const string AcceptLanguage = "en-US,en;q=0.8,tr;q=0.6";
         private const string ContentType = "application/x-www-form-urlencoded";
-
-        private const string UserAgent =
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
+        private const string UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36";
 
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly SesliSozlukTranslatorConfiguration _sesliSozlukTranslatorConfiguration;
@@ -38,8 +36,9 @@ namespace DynamicTranslator.SesliSozluk
 
         public async Task<TranslateResult> Translate(TranslateRequest request, CancellationToken cancellationToken)
         {
-            var parameter =
-                $"sl=auto&text={Uri.EscapeUriString(request.CurrentText)}&tl={_applicationConfiguration.ToLanguage.Extension}";
+
+            //TODO: Change URL, it's not working anymore.
+            var parameter = $"sl=auto&text={Uri.EscapeUriString(request.CurrentText)}&tl={_applicationConfiguration.ToLanguage.Extension}";
 
             var httpClient = _translatorClient.HttpClient.With(client =>
             {
@@ -47,11 +46,11 @@ namespace DynamicTranslator.SesliSozluk
             });
 
             var req = new HttpRequestMessage {Method = HttpMethod.Post};
-            req.Headers.Add(Headers.AcceptLanguage, AcceptLanguage);
-            req.Headers.Add(Headers.AcceptEncoding, AcceptEncoding);
-            req.Headers.Add(Headers.ContentType, ContentType);
-            req.Headers.Add(Headers.UserAgent, UserAgent);
-            req.Headers.Add(Headers.Accept, Accept);
+            //req.Headers.Add(Headers.AcceptLanguage, AcceptLanguage);
+            //req.Headers.Add(Headers.AcceptEncoding, AcceptEncoding);
+            //req.Headers.Add(Headers.ContentType, ContentType);
+            //req.Headers.Add(Headers.UserAgent, UserAgent);
+            //req.Headers.Add(Headers.Accept, Accept);
             req.Content = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>(ContentType, parameter)
@@ -60,7 +59,7 @@ namespace DynamicTranslator.SesliSozluk
             var response = await httpClient.SendAsync(req, cancellationToken);
 
             var mean = string.Empty;
-            if (response.IsSuccessStatusCode) mean = OrganizeMean(await response.Content.ReadAsStringAsync());
+            if (response.IsSuccessStatusCode) mean = OrganizeMean(await response.Content.ReadAsStringAsync(cancellationToken));
 
             return new TranslateResult(true, mean);
         }
