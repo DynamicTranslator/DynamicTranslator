@@ -6,17 +6,17 @@
   </PropertyGroup>
   <ItemGroup>  
     <PackageReference Include="INIFileParserDotNetCore" Version="2.5.2" />  
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />  
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.4" />  
-    <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="3.1.4" />  
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />  
-    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.4" />  
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />  
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />  
+    <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="5.0.0" />  
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />  
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />  
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />  
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />   
-    <PackageReference Include="System.Management" Version="4.7.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.23" />
-    <PackageReference Include="Octokit" Version="0.47.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />   
+    <PackageReference Include="System.Management" Version="5.0.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.27" />
+    <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="Octokit.Reactive" Version="0.47.0" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 </Project>
