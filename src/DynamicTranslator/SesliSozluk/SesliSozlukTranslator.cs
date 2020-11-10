@@ -5,12 +5,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Model;
 using HtmlAgilityPack;
 
-namespace DynamicTranslator.SesliSozluk
+namespace DynamicTranslator.Core.SesliSozluk
 {
     public class SesliSozlukTranslator : ITranslator
     {

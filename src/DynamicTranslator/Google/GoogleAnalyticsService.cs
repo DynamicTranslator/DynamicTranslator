@@ -2,9 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
-using DynamicTranslator.Configuration;
+using DynamicTranslator.Core.Configuration;
 
-namespace DynamicTranslator.Google
+namespace DynamicTranslator.Core.Google
 {
     public interface IGoogleAnalyticsService
     {

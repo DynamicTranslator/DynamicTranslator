@@ -1,6 +1,7 @@
-﻿using DynamicTranslator.Wpf.ViewModel;
+﻿using DynamicTranslator.Core;
+using DynamicTranslator.ViewModel;
 
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
     public class GrowlNotifier : INotifier
     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Google;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Google;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public interface IFinder
     {
@@ -21,7 +21,6 @@ namespace DynamicTranslator
         private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly INotifier _notifier;
-        private string _previousString;
         private readonly IEnumerable<ITranslator> _translators;
         private readonly ResultOrganizer _resultOrganizer;
 
@@ -46,14 +45,6 @@ namespace DynamicTranslator
         {
             try
             {
-                //TODO: Find a better way to handle duplicate requests
-                //if (_previousString == currentString)
-                //{
-                //    return;
-                //}
-
-                //_previousString = currentString;
-
                 var fromLanguageExtension = await _languageDetector.DetectLanguage(currentString, cancellationToken);
 
                 var results = await FindMeans(currentString, fromLanguageExtension, cancellationToken);

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Wpf.ViewModel
+namespace DynamicTranslator.ViewModel
 {
     public class Notification : INotifyPropertyChanged
     {

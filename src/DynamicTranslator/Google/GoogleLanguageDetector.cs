@@ -4,10 +4,10 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Google
+namespace DynamicTranslator.Core.Google
 {
     public interface IGoogleLanguageDetector
     {

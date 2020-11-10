@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DynamicTranslator.Extensions
+namespace DynamicTranslator.Core.Extensions
 {
     public static class StringExtension
     {

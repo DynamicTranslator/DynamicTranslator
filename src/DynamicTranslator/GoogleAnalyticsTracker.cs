@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using DynamicTranslator.Google;
+using DynamicTranslator.Core.Google;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public interface IGoogleAnalyticsTracker
     {

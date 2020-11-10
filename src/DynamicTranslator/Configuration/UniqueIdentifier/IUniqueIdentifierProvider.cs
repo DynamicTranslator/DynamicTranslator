@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Configuration.UniqueIdentifier
+﻿namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
 {
     public interface IUniqueIdentifierProvider
     {

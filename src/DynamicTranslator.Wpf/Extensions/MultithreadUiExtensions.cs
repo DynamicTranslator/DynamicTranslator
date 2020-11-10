@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Threading;
 
-namespace DynamicTranslator.Wpf.Extensions
+namespace DynamicTranslator.Extensions
 {
     public static class MultiThreadUiExtensions
     {

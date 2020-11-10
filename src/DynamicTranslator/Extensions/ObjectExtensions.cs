@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace DynamicTranslator.Extensions
+namespace DynamicTranslator.Core.Extensions
 {
     public static class ObjectExtensions
     {

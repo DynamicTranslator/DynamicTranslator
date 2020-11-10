@@ -1,51 +1,90 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using DynamicTranslator.Wpf.ViewModel;
+using DynamicTranslator.Core;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.ViewModel;
 using Gma.System.MouseKeyHook;
-using System.Reactive.Concurrency;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Point = System.Drawing.Point;
+using Stateless;
 
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
+    enum State
+    {
+        Waiting,
+        MouseDown,
+        TextCaptured,
+        DragStarted,
+        DragFinished,
+        MouseUp
+    }
+
+    enum Trigger
+    {
+        Click,
+        DoubleClick,
+        ReleaseMouse,
+        StartDrag,
+        FinishDrag
+    }
+
     //TODO: Check the lifetime of dependencies
     public class TranslatorBootstrapper : IDisposable
     {
-        private readonly ClipboardManager _clipboardManager;
+        private readonly IClipboardManager _clipboardManager;
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly GrowlNotifications _growlNotifications;
         private CancellationTokenSource _cancellationTokenSource;
         private IDisposable _finderObservable;
         private readonly IKeyboardMouseEvents _globalMouseHook;
-        private Point _mouseFirstPoint;
-        private Point _mouseSecondPoint;
         private IDisposable _syncObserver;
-        private readonly InterlockedBoolean _isMouseDown = new InterlockedBoolean();
-        private readonly IFinder _finder;
         private readonly IGoogleAnalyticsTracker _googleAnalyticsTracker;
         private readonly IServiceProvider _serviceProvider;
+        private StateMachine<State, Trigger> _stateMachine;
 
         public TranslatorBootstrapper(GrowlNotifications growlNotifications,
-            ClipboardManager clipboardManager,
+            IClipboardManager clipboardManager,
             IApplicationConfiguration applicationConfiguration,
-            IFinder finder,
-            IGoogleAnalyticsTracker googleAnalyticsTracker, 
+            IGoogleAnalyticsTracker googleAnalyticsTracker,
             IServiceProvider serviceProvider)
         {
             _growlNotifications = growlNotifications;
             _clipboardManager = clipboardManager;
             _applicationConfiguration = applicationConfiguration;
-            _finder = finder;
             _googleAnalyticsTracker = googleAnalyticsTracker;
             _serviceProvider = serviceProvider;
             _globalMouseHook = Hook.GlobalEvents();
+
+            ConfigureStateMachine();
             ConfigureNotificationMeasurements();
+        }
+
+        void ConfigureStateMachine()
+        {
+            _stateMachine = new StateMachine<State, Trigger>(State.Waiting);
+
+            _stateMachine.Configure(State.Waiting)
+                .Permit(Trigger.DoubleClick, State.TextCaptured)
+                .Permit(Trigger.StartDrag, State.DragStarted)
+                .PermitReentry(Trigger.ReleaseMouse)
+                ;
+
+            _stateMachine.Configure(State.DragStarted)
+                .Permit(Trigger.FinishDrag, State.TextCaptured)
+                .Permit(Trigger.ReleaseMouse, State.Waiting)
+                ;
+
+            _stateMachine.Configure(State.TextCaptured)
+                .Permit(Trigger.ReleaseMouse, State.Waiting)
+                .Ignore(Trigger.DoubleClick)
+                .Ignore(Trigger.StartDrag)
+                .Ignore(Trigger.FinishDrag)
+                .OnEntry(SendCopyCommand)
+                ;
         }
 
         public event EventHandler<WhenClipboardContainsTextEventArgs> WhenClipboardContainsTextEventHandler;
@@ -66,6 +105,7 @@ namespace DynamicTranslator.Wpf
             _growlNotifications.Dispose();
             _finderObservable.Dispose();
             _syncObserver.Dispose();
+            _globalMouseHook.Dispose();
             IsInitialized = false;
         }
 
@@ -73,31 +113,26 @@ namespace DynamicTranslator.Wpf
         {
             _cancellationTokenSource = new CancellationTokenSource();
             SubscribeLocalEvents();
-            Task.Run(SendKeys.Flush);
+            SendKeys.Flush();
             StartObservers();
             IsInitialized = true;
         }
 
         public bool IsInitialized { get; private set; }
 
-        private void ConfigureNotificationMeasurements()
+        void ConfigureNotificationMeasurements()
         {
             _growlNotifications.Top = SystemParameters.WorkArea.Top + _applicationConfiguration.TopOffset;
             _growlNotifications.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - _applicationConfiguration.LeftOffset;
         }
 
-        private void DisposeHooks()
-        {
-            _globalMouseHook.Dispose();
-        }
-
-        private void StartObservers()
+        void StartObservers()
         {
             _finderObservable = Observable
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => WhenClipboardContainsTextEventHandler += h,
                     h => WhenClipboardContainsTextEventHandler -= h)
-                .Select(pattern => Observable.FromAsync(token => _serviceProvider.GetService<IFinder>().Find(pattern.EventArgs.CurrentString, token)))
+                .Select(pattern => Observable.FromAsync(token => _serviceProvider.GetRequiredService<IFinder>().Find(pattern.EventArgs.CurrentString, token)))
                 .Concat()
                 .Subscribe();
 
@@ -108,43 +143,69 @@ namespace DynamicTranslator.Wpf
                 .Subscribe();
         }
 
-        private void SubscribeLocalEvents()
+        void SubscribeLocalEvents()
         {
             _globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
             _globalMouseHook.MouseDragStarted += MouseDragStarted;
             _globalMouseHook.MouseDragFinished += MouseDragFinished;
         }
-        private void MouseDoubleClicked(object sender, MouseEventArgs e)
-        {
-            _isMouseDown.Set(false);
 
-            if (_cancellationTokenSource.Token.IsCancellationRequested)
+        void UnsubscribeLocalEvents()
+        {
+            _globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
+            _globalMouseHook.MouseDragStarted -= MouseDragStarted;
+            _globalMouseHook.MouseDragFinished -= MouseDragFinished;
+        }
+
+        void MouseDoubleClicked(object sender, MouseEventArgs e)
+        {
+            lock (_stateMachine)
             {
-                return;
+                if (!_stateMachine.IsInState(State.Waiting))
+                {
+                    _stateMachine.Fire(Trigger.ReleaseMouse);
+                    return;
+                }
+
+                _stateMachine.Fire(Trigger.DoubleClick);
             }
-
-            SendCopyCommand();
+            
         }
 
-        private void MouseDragStarted(object sender, MouseEventArgs e)
+        void MouseDragStarted(object sender, MouseEventArgs e)
         {
-            _isMouseDown.Set(true);
+            lock (_stateMachine)
+            {
+                if (!_stateMachine.IsInState(State.Waiting))
+                {
+                    _stateMachine.Fire(Trigger.ReleaseMouse);
+                    return;
+                }
+
+                _stateMachine.Fire(Trigger.StartDrag);
+            }
         }
 
-        private void MouseDragFinished(object sender, MouseEventArgs e)
+        void MouseDragFinished(object sender, MouseEventArgs e)
         {
-            if (_cancellationTokenSource.Token.IsCancellationRequested) return;
-            _isMouseDown.Set(false);
-            SendCopyCommand();
+            lock (_stateMachine)
+            {
+                if (!_stateMachine.IsInState(State.DragStarted))
+                {
+                    _stateMachine.Fire(Trigger.ReleaseMouse);
+                    return;
+                }
+
+                _stateMachine.Fire(Trigger.FinishDrag);
+            }
         }
 
-        private void SendCopyCommand()
+        void SendCopyCommand()
         {
             SendKeys.SendWait("^c");
-            SendKeys.Flush();
 
             if (!_clipboardManager.ContainsText()) return;
-
+            
             var currentText = _clipboardManager.GetCurrentText();
 
             if (!string.IsNullOrEmpty(currentText))
@@ -152,48 +213,20 @@ namespace DynamicTranslator.Wpf
                 TextCaptured(currentText);
                 _clipboardManager.Clear();
             }
+
+            lock (_stateMachine)
+            {
+                _stateMachine.Fire(Trigger.ReleaseMouse);
+            }
         }
 
-        private void TextCaptured(string currentText)
+        void TextCaptured(string currentText)
         {
             if (_cancellationTokenSource.Token.IsCancellationRequested) return;
 
             WhenClipboardContainsTextEventHandler?.Invoke(this,
                new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
            );
-        }
-
-        private void UnsubscribeLocalEvents()
-        {
-            _globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
-            _globalMouseHook.MouseDownExt -= MouseDown;
-            _globalMouseHook.MouseUp -= MouseUp;
-        }
-
-        private void MouseDown(object sender, MouseEventArgs e)
-        {
-            if (_cancellationTokenSource.Token.IsCancellationRequested) return;
-
-            if ((e.Button & MouseButtons.Left) != 0)
-            {
-                _isMouseDown.Set(true);
-                _mouseFirstPoint = e.Location;
-            }
-        }
-
-        private void MouseUp(object sender, MouseEventArgs e)
-        {
-            if ((e.Button & MouseButtons.Left) != 0)
-            {
-                if (_isMouseDown.Value && !(_mouseFirstPoint.X == _mouseSecondPoint.X && _mouseFirstPoint.Y == _mouseSecondPoint.Y))
-                {
-                    _isMouseDown.Set(false);
-                    _mouseSecondPoint = e.Location;
-                    if (_cancellationTokenSource.Token.IsCancellationRequested) return;
-
-                    SendCopyCommand();
-                }
-            }
         }
     }
 }

@@ -4,12 +4,13 @@ using System.Security.AccessControl;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using DynamicTranslator.Wpf.ViewModel;
+using DynamicTranslator.Core;
+using DynamicTranslator.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
-    public partial class App : Application
+    public partial class App
     {
         private Mutex _mutex;
         private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
@@ -27,14 +28,14 @@ namespace DynamicTranslator.Wpf
             _wireUp = new WireUp(postConfigureServices: services =>
             {
                 services.AddSingleton<Notifications>();
-                services.AddTransient<ClipboardManager>();
+                services.AddTransient<IClipboardManager, ClipboardManager>();
                 services.AddSingleton<GrowlNotifications>();
                 services.AddTransient<TranslatorBootstrapper>();
                 services.AddTransient<INotifier, GrowlNotifier>();
                 services.AddSingleton<MainWindow>();
             });
 
-            var mainWindow = _wireUp.ServiceProvider.GetService<MainWindow>();
+            var mainWindow = _wireUp.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Closed += (sender, args) =>
              {
                  Current.Shutdown(0);

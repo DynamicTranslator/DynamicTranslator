@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Configuration
+namespace DynamicTranslator.Core.Configuration
 {
     public class ActiveTranslatorConfiguration
     {

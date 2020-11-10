@@ -1,7 +1,7 @@
 ﻿using System.Management;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Configuration.UniqueIdentifier
+namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
 {
     public class CpuBasedIdentifierProvider : IUniqueIdentifierProvider
     {

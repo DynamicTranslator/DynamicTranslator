@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public interface ITranslator
     {

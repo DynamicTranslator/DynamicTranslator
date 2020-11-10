@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
-    public class ClipboardManager
+    public class ClipboardManager : IClipboardManager
     {
         public void Clear()
         {
@@ -12,7 +13,7 @@ namespace DynamicTranslator.Wpf
         }
 
         public string GetCurrentText()
-        {
+        {   
             return Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();
         }
 

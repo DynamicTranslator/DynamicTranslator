@@ -3,56 +3,68 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:D="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:Mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Mc:Ignorable="D"
-    x:Class="DynamicTranslator.Wpf.ViewModel.MainWindow"
+    x:Class="DynamicTranslator.ViewModel.MainWindow"
     Title="DynamicTranslator || Oğuzhan Soykan"
     ResizeMode="CanMinimize"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Icon="/Resources/dynamic-link-library 16.png" Height="346.821" Width="394.396">
-    <StackPanel RenderTransformOrigin="0.487,0.468" Margin="0,0,4,1">
-        <Grid Height="288">
-            <WrapPanel Margin="21,10,25,234" Orientation="Horizontal">
+    Icon="/Resources/dynamic-link-library 16.png" Height="251" Width="308">
+    <StackPanel Margin="5,0,5,0">
+        <Grid Height="400" Width="400">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="53*"/>
+                <RowDefinition Height="147*"/>
+            </Grid.RowDefinitions>
+            <WrapPanel
+                Margin="10,10,23,50"
+                Orientation="Vertical">
                 <Grid Height="41" Width="100">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label x:Name="LabelCurrentLanguage" Content="To Language:" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90" Margin="0,11,0,0" Grid.RowSpan="2" />
+                    <Label x:Name="LabelCurrentLanguage"
+                           Content="To Language:"
+                           Height="Auto"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center" 
+                           Width="Auto" Grid.RowSpan="2" />
                 </Grid>
                 <ComboBox x:Name="ComboBoxLanguages"
                           Style="{DynamicResource ResourceKey={x:Type ComboBox}}"
                           DisplayMemberPath="Name"
                           SelectedValuePath="Extension"
-                          VerticalAlignment="Center" Width="188" Height="32" />
+                          Width="154" Height="32" />
             </WrapPanel>
-            <Button x:Name="BtnSwitch" Height="Auto" Content="Start Translator" Padding="2"
-                    Click="BtnSwitchClick" RenderTransformOrigin="1.753,4.04"
-                    BorderBrush="#FF040404" Foreground="White" FontFamily="Showcard Gothic" FontSize="16"
-                    FontWeight="Bold"
-                    Opacity="0.9" Margin="0,72,0,164">
-                <Button.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox"
-                                         StartPoint="0.5,0">
-                        <GradientStop Color="Black" Offset="1" />
-                        <GradientStop Color="#FF8D4242" />
-                        <GradientStop Color="#FF8A4040" Offset="0.142" />
-                    </LinearGradientBrush>
-                </Button.Background>
+            <Button
+                Grid.Row="0"
+                x:Name="BtnSwitch"
+                Content="Start Translator"
+                Click="BtnSwitchClick"
+                FontWeight="Bold"
+                Margin="0,60,0,0" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="284" Height="40" >
             </Button>
-            <Grid x:Name="LanguagesGrid" Margin="0,134,0,0" RenderTransformOrigin="0.509,0.576" Height="86"
-                  VerticalAlignment="Top">
+            <Grid x:Name="LanguagesGrid" Margin="-4,10" 
+                  Height="72"
+                  VerticalAlignment="Top" Grid.Row="1">
                 <CheckBox x:Name="CheckBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
-                          Margin="23,10,0,0" VerticalAlignment="Top" IsChecked="True" />
-                <CheckBox x:Name="CheckBoxYandexTranslate" Content="Yandex Translate" HorizontalAlignment="Left"
-                          Margin="205,10,0,0" VerticalAlignment="Top" IsChecked="True" />
+                          Margin="18,5,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxSesliSozluk" Content="Sesli Sozluk Translate" HorizontalAlignment="Left"
-                          Margin="205,33,0,0" VerticalAlignment="Top" IsChecked="True" />
+                          Margin="143,0,0,0" VerticalAlignment="Center" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
-                          Margin="23,33,0,0" VerticalAlignment="Top" IsChecked="True" />
+                          Margin="143,8,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxPrompt" Content="Prompt Translate" HorizontalAlignment="Left"
-                    Margin="205,56,0,0" VerticalAlignment="Top" IsChecked="True" />
+                    Margin="17,0,0,0" VerticalAlignment="Center" IsChecked="True" />
             </Grid>
+            <Button x:Name="BtnNewVersion" Content="Update" 
+                    HorizontalAlignment="Left"
+                    Margin="8,68,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="284" Grid.Row="1" Click="BtnNewVersion_Click"/>
         </Grid>
 
     </StackPanel>

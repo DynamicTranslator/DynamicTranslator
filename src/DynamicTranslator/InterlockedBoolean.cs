@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     /// <summary>
     /// Interlocked support for boolean values
@@ -12,10 +12,7 @@ namespace DynamicTranslator
         /// <summary>
         /// Current value
         /// </summary>
-        public bool Value
-        {
-            get { return _value == 1; }
-        }
+        public bool Value => _value == 1;
 
         /// <summary>
         /// Initializes a new instance of <see cref="T:InterlockedBoolean"/>

@@ -1,6 +1,6 @@
-﻿using DynamicTranslator.Model;
+﻿using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator.Configuration
+namespace DynamicTranslator.Core.Configuration
 {
     public interface IApplicationConfiguration
     {

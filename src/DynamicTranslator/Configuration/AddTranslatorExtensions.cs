@@ -1,12 +1,11 @@
 ﻿using System;
-using DynamicTranslator.Google;
-using DynamicTranslator.Prompt;
-using DynamicTranslator.SesliSozluk;
-using DynamicTranslator.Tureng;
-using DynamicTranslator.Yandex;
+using DynamicTranslator.Core.Google;
+using DynamicTranslator.Core.Prompt;
+using DynamicTranslator.Core.SesliSozluk;
+using DynamicTranslator.Core.Tureng;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DynamicTranslator.Configuration
+namespace DynamicTranslator.Core.Configuration
 {
     public static class AddTranslatorExtensions
     {
@@ -19,23 +18,6 @@ namespace DynamicTranslator.Configuration
                 var conf = new GoogleTranslatorConfiguration(
                     sp.GetService<ActiveTranslatorConfiguration>(),
                     sp.GetService<IApplicationConfiguration>()
-                );
-
-                configure?.Invoke(conf);
-                return conf;
-            });
-            return services;
-        }
-
-        public static IServiceCollection AddYandexTranslator(this IServiceCollection services,
-            Action<YandexTranslatorConfiguration> configure)
-        {
-            services.AddTransient<ITranslator, YandexTranslator>();
-            services.AddSingleton(sp =>
-            {
-                var conf = new YandexTranslatorConfiguration(
-                    sp.GetService<ActiveTranslatorConfiguration>(),
-                    sp.GetService<ApplicationConfiguration>()
                 );
 
                 configure?.Invoke(conf);

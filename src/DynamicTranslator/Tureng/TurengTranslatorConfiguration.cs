@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Model;
+﻿using System.Collections.Generic;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator.Tureng
+namespace DynamicTranslator.Core.Tureng
 {
     public class TurengTranslatorConfiguration : TranslatorConfiguration
     {

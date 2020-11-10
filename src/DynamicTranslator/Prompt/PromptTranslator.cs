@@ -3,11 +3,11 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator.Prompt
+namespace DynamicTranslator.Core.Prompt
 {
     public class PromptTranslator : ITranslator
     {
@@ -39,15 +39,11 @@ namespace DynamicTranslator.Prompt
             var requestObject = new
             {
                 dirCode = $"{translateRequest.FromLanguageExtension}-{_applicationConfiguration.ToLanguage.Extension}",
-                template = _promptTranslatorConfiguration.Template,
                 text = translateRequest.CurrentText,
                 lang = translateRequest.FromLanguageExtension,
-                limit = _promptTranslatorConfiguration.Limit,
+                eventName= "TranslatorClickTranslateActionUser",
                 useAutoDetect = true,
-                key = string.Empty,
-                ts = _promptTranslatorConfiguration.Ts,
-                tid = string.Empty,
-                IsMobile = false
+                topic= "General"
             };
 
             var httpClient = _clientFactory.CreateClient(TranslatorClient.Name).With(client =>

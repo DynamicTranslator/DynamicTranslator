@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace DynamicTranslator.Model
+namespace DynamicTranslator.Core.Model
 {
     public class ResultOrganizer
     {

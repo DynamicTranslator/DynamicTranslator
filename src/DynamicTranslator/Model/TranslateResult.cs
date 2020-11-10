@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Model
+﻿namespace DynamicTranslator.Core.Model
 {
     public class TranslateResult
     {

@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Configuration.UniqueIdentifier;
-using DynamicTranslator.Extensions;
-using DynamicTranslator.Google;
-using DynamicTranslator.Model;
-using DynamicTranslator.Prompt;
-using DynamicTranslator.Yandex;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Configuration.UniqueIdentifier;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Google;
+using DynamicTranslator.Core.Model;
+using DynamicTranslator.Core.Prompt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public class WireUp : IDisposable
     {
@@ -40,14 +39,6 @@ namespace DynamicTranslator
                 {
                     google.SupportedLanguages = LanguageMapping.All.ToLanguages();
                     google.Url = GoogleTranslator.Url;
-                })
-                .AddYandexTranslator(yandex =>
-                {
-                    yandex.SupportedLanguages = LanguageMapping.Yandex.ToLanguages();
-                    yandex.BaseUrl = YandexTranslator.BaseUrl;
-                    yandex.SId = YandexTranslator.InternalSId;
-                    yandex.Url = YandexTranslator.Url;
-                    yandex.ApiKey = configuration["YandexApiKey"];
                 })
                 .AddPromptTranslator(prompt =>
                 {

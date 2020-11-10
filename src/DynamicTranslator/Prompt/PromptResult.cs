@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Prompt
+﻿namespace DynamicTranslator.Core.Prompt
 {
     internal class AdviseParams
     {

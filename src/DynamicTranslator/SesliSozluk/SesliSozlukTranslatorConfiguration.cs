@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Model;
+﻿using System.Collections.Generic;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator.SesliSozluk
+namespace DynamicTranslator.Core.SesliSozluk
 {
     public class SesliSozlukTranslatorConfiguration : TranslatorConfiguration
     {

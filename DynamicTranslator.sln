@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Wpf", "src\DynamicTranslator.Wpf\DynamicTranslator.Wpf.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicTranslator", "src\DynamicTranslator.Wpf\DynamicTranslator.csproj", "{6995ABFD-720F-41E7-BE8B-38F23BA4BB57}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicTranslator", "src\DynamicTranslator\DynamicTranslator.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicTranslator.Core", "src\DynamicTranslator\DynamicTranslator.Core.csproj", "{A0D66D6A-2A41-4532-AB6E-6443874946E6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D8481BF-9897-460E-94F3-1B83F93C657C}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{74BBC1F0-BEE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{492F1AF1-370D-4B2A-8A85-8FDB3493036D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicTranslator.Tests", "test\DynamicTranslator.Tests\DynamicTranslator.Tests.csproj", "{D2B783C8-CEEC-4899-A6C3-9D5EE76174B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicTranslator.Tests", "test\DynamicTranslator.Tests\DynamicTranslator.Tests.csproj", "{D2B783C8-CEEC-4899-A6C3-9D5EE76174B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,15 +3,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Model;
-using DynamicTranslator.Wpf.Extensions;
+using DynamicTranslator.Core;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Model;
+using DynamicTranslator.Extensions;
 using Octokit;
-using Language = DynamicTranslator.Model.Language;
+using Language = DynamicTranslator.Core.Model.Language;
 
-namespace DynamicTranslator.Wpf.ViewModel
+namespace DynamicTranslator.ViewModel
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
         private readonly IApplicationConfiguration _applicationConfiguration;
@@ -42,7 +43,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             };
 
             FillLanguageCombobox();
-            //InitializeVersionChecker();
+            InitializeVersionChecker();
         }
 
         private void BtnSwitchClick(object sender, RoutedEventArgs e)
@@ -89,7 +90,7 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         private void InitializeVersionChecker()
         {
-            //NewVersionButton.Visibility = Visibility.Hidden;
+            BtnNewVersion.Visibility = Visibility.Hidden;
             CheckVersion();
         }
 
@@ -102,8 +103,8 @@ namespace DynamicTranslator.Wpf.ViewModel
             if (_isNewVersion(incomingVersion))
                 this.DispatchingAsync(() =>
                 {
-                    //NewVersionButton.Visibility = Visibility.Visible;
-                    //NewVersionButton.Content = $"A new version {incomingVersion} released, update now!";
+                    BtnNewVersion.Visibility = Visibility.Visible;
+                    BtnNewVersion.Content = $"Update to {incomingVersion}.";
                     _applicationConfiguration.UpdateLink = release.Assets.FirstOrDefault()?.BrowserDownloadUrl;
                 });
         }
@@ -116,16 +117,9 @@ namespace DynamicTranslator.Wpf.ViewModel
                 ComboBoxLanguages.IsHitTestVisible = false;
                 CheckBoxGoogleTranslate.IsHitTestVisible = false;
                 CheckBoxTureng.IsHitTestVisible = false;
-                CheckBoxYandexTranslate.IsHitTestVisible = false;
                 CheckBoxSesliSozluk.IsHitTestVisible = false;
                 CheckBoxPrompt.IsHitTestVisible = false;
             });
-        }
-
-        private void NewVersionButtonClick(object sender, RoutedEventArgs e)
-        {
-            var updateLink = _applicationConfiguration.UpdateLink;
-            if (!string.IsNullOrEmpty(updateLink)) Process.Start(updateLink);
         }
 
         private void PrepareTranslators()
@@ -135,11 +129,6 @@ namespace DynamicTranslator.Wpf.ViewModel
             if (CheckBoxGoogleTranslate.IsChecked != null && CheckBoxGoogleTranslate.IsChecked.Value)
             {
                 _activeTranslatorConfiguration.AddTranslator(TranslatorType.Google);
-            }
-
-            if (CheckBoxYandexTranslate.IsChecked != null && CheckBoxYandexTranslate.IsChecked.Value)
-            {
-                _activeTranslatorConfiguration.AddTranslator(TranslatorType.Yandex);
             }
 
             if (CheckBoxTureng.IsChecked != null && CheckBoxTureng.IsChecked.Value)
@@ -173,9 +162,14 @@ namespace DynamicTranslator.Wpf.ViewModel
             ComboBoxLanguages.IsHitTestVisible = true;
             CheckBoxGoogleTranslate.IsHitTestVisible = true;
             CheckBoxTureng.IsHitTestVisible = true;
-            CheckBoxYandexTranslate.IsHitTestVisible = true;
             CheckBoxSesliSozluk.IsHitTestVisible = true;
             CheckBoxPrompt.IsHitTestVisible = true;
+        }
+
+        private void BtnNewVersion_Click(object sender, RoutedEventArgs e)
+        {
+            var updateLink = _applicationConfiguration.UpdateLink;
+            if (!string.IsNullOrEmpty(updateLink)) Process.Start(updateLink);
         }
     }
 }

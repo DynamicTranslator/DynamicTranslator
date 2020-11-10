@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Model;
 
-namespace DynamicTranslator.Configuration
+namespace DynamicTranslator.Core.Configuration
 {
     public abstract class TranslatorConfiguration
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DynamicTranslator.Model
+namespace DynamicTranslator.Core.Model
 {
     public static class LanguageMapping
     {

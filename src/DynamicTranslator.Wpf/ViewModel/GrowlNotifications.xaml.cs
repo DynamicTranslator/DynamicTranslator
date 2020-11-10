@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
 
-namespace DynamicTranslator.Wpf.ViewModel
+namespace DynamicTranslator.ViewModel
 {
     public partial class GrowlNotifications
     {

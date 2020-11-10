@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Google
+﻿namespace DynamicTranslator.Core.Google
 {
     public class GoogleAnalyticsConfiguration
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-namespace DynamicTranslator.Extensions
+namespace DynamicTranslator.Core.Extensions
 {
     public static class EventHandlerExtensions
     {

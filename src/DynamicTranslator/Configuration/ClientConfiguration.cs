@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
     public class ClientConfiguration
     {

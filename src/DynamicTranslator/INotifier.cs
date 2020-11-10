@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator
+﻿namespace DynamicTranslator.Core
 {
     public interface INotifier
     {

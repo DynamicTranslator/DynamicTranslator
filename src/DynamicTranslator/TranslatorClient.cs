@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public class TranslatorClient
     {

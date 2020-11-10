@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DynamicTranslator\DynamicTranslator.csproj" />
+    <ProjectReference Include="..\..\src\DynamicTranslator\DynamicTranslator.Core.csproj" />
   </ItemGroup>
 
 </Project>

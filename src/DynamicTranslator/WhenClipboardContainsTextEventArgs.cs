@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DynamicTranslator
+namespace DynamicTranslator.Core
 {
     public class WhenClipboardContainsTextEventArgs : EventArgs
     {

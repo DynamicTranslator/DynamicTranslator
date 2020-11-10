@@ -4,12 +4,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using DynamicTranslator.Configuration;
-using DynamicTranslator.Extensions;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Model;
 using Newtonsoft.Json.Linq;
 
-namespace DynamicTranslator.Google
+namespace DynamicTranslator.Core.Google
 {
     public class GoogleTranslator : ITranslator
     {

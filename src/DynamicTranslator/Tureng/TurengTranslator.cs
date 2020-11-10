@@ -5,11 +5,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using DynamicTranslator.Extensions;
-using DynamicTranslator.Model;
+using DynamicTranslator.Core.Extensions;
+using DynamicTranslator.Core.Model;
 using HtmlAgilityPack;
 
-namespace DynamicTranslator.Tureng
+namespace DynamicTranslator.Core.Tureng
 {
     public class TurengTranslator : ITranslator
     {

@@ -1,4 +1,4 @@
-﻿namespace DynamicTranslator.Wpf.ViewModel
+﻿namespace DynamicTranslator.ViewModel
 {
     public class Notifications : MultiThreadObservableCollection<Notification> {}
 }
