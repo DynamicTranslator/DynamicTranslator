@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Threading;
 
-namespace DynamicTranslator.Wpf.ViewModel
+namespace DynamicTranslator.ViewModel
 {
     public class MultiThreadObservableCollection<T> : ObservableCollection<T>
     {
@@ -11,25 +11,23 @@ namespace DynamicTranslator.Wpf.ViewModel
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            NotifyCollectionChangedEventHandler collectionChanged = CollectionChanged;
-            if (collectionChanged != null)
-            {
-                foreach (Delegate @delegate in collectionChanged.GetInvocationList())
-                {
-                    var nh = (NotifyCollectionChangedEventHandler)@delegate;
-                    var dispObj = nh.Target as DispatcherObject;
-                    Dispatcher dispatcher = dispObj?.Dispatcher;
-                    if ((dispatcher != null) && !dispatcher.CheckAccess())
-                    {
-                        dispatcher.BeginInvoke(
-                            (Action)(() => nh.Invoke(this,
-                                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))),
-                            DispatcherPriority.DataBind);
-                        continue;
-                    }
+            var collectionChanged = CollectionChanged;
+            if (collectionChanged == null) return;
 
-                    nh.Invoke(this, e);
+            foreach (Delegate @delegate in collectionChanged.GetInvocationList())
+            {
+                var nh = (NotifyCollectionChangedEventHandler)@delegate;
+                var dispatcherObject = nh.Target as DispatcherObject;
+                Dispatcher dispatcher = dispatcherObject?.Dispatcher;
+                if (dispatcher != null && !dispatcher.CheckAccess())
+                {
+                    dispatcher.BeginInvoke(priority:DispatcherPriority.DataBind,
+                        (Action)(() => nh.Invoke(this,
+                            new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset))));
+                    continue;
                 }
+
+                nh.Invoke(this, e);
             }
         }
     }

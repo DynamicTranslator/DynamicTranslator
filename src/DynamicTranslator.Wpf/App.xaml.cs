@@ -1,62 +1,57 @@
 ﻿using System;
+using System.IO;
 using System.Security.AccessControl;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using DynamicTranslator.Core;
+using DynamicTranslator.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
 
-using Abp;
-using Abp.Dependency;
-using Abp.Runtime.Caching.Configuration;
-
-using Castle.Core.Logging;
-using Castle.Facilities.Logging;
-using Castle.Services.Logging.NLogIntegration;
-
-using DynamicTranslator.Configuration.Startup;
-using DynamicTranslator.Constants;
-using DynamicTranslator.Service.GoogleAnalytics;
-using DynamicTranslator.Wpf.ViewModel;
-
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
     public partial class App
     {
-        private readonly AbpBootstrapper _bootstrapper;
         private Mutex _mutex;
         private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
         private bool _isMutexCreated;
         private bool _isMutexUnauthorized;
+        private WireUp _wireUp;
 
         public App()
         {
-            _bootstrapper = AbpBootstrapper.Create<DynamicTranslatorWpfModule>();
-            _bootstrapper.IocManager.IocContainer.AddFacility<LoggingFacility>(f => f.LogUsing<NLogFactory>());
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            _bootstrapper.Dispose();
+            GuardAgainstMultipleInstances();
         }
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            _bootstrapper.Initialize();
+            _wireUp = new WireUp(postConfigureServices: services =>
+            {
+                services.AddSingleton<Notifications>();
+                services.AddTransient<IClipboardManager, ClipboardManager>();
+                services.AddSingleton<GrowlNotifications>();
+                services.AddTransient<TranslatorBootstrapper>();
+                services.AddTransient<INotifier, GrowlNotifier>();
+                services.AddSingleton<MainWindow>();
+            });
 
-            _bootstrapper.IocManager.Register<IGrowlNotifications, GrowlNotifications>();
-
-            HandleExceptionsOrNothing();
-
-            ConfigureMemoryCache();
-
-            CheckApplicationInstanceExist();
-
-            base.OnStartup(eventArgs);
+            var mainWindow = _wireUp.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Closed += (sender, args) =>
+             {
+                 Current.Shutdown(0);
+             };
+            mainWindow.InitializeComponent();
+            mainWindow.Show();
         }
 
-        private void CheckApplicationInstanceExist()
+        protected override void OnExit(ExitEventArgs e)
         {
-            string user = Environment.UserDomainName + "\\" + Environment.UserName;
+            _wireUp.Dispose();
+        }
+
+        private void GuardAgainstMultipleInstances()
+        {
+            string user = Environment.UserDomainName + Path.DirectorySeparatorChar + Environment.UserName;
 
             try
             {
@@ -74,7 +69,7 @@ namespace DynamicTranslator.Wpf
 
                     mutexSecurity.AddAccessRule(rule);
 
-                    _mutex = new Mutex(true, MutexName, out _isMutexCreated, mutexSecurity);
+                    _mutex = new Mutex(true, MutexName, out _isMutexCreated);
                 }
             }
             catch (UnauthorizedAccessException)
@@ -97,61 +92,6 @@ namespace DynamicTranslator.Wpf
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-        }
-
-        private void ConfigureMemoryCache()
-        {
-            var cacheConfiguration = _bootstrapper.IocManager.Resolve<ICachingConfiguration>();
-
-            cacheConfiguration.Configure(CacheNames.MeanCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromHours(24); });
-
-            cacheConfiguration.Configure(CacheNames.ReleaseCache, cache => { cache.DefaultSlidingExpireTime = TimeSpan.FromMinutes(10); });
-        }
-
-        private void HandleExceptionsOrNothing()
-        {
-            using (IScopedIocResolver scope = _bootstrapper.IocManager.CreateScope())
-            {
-                bool isExtraLoggingEnabled = scope.Resolve<IApplicationConfiguration>().IsExtraLoggingEnabled;
-
-                AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
-                {
-                    var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                    var logger = scope.Resolve<ILogger>();
-
-                    if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {args.ExceptionObject.ToString()}");
-
-                    try
-                    {
-                        googleClient.TrackException(args.ExceptionObject.ToString(), false);
-                    }
-                    catch (Exception)
-                    {
-                        //throw;
-                    }
-                };
-
-                TaskScheduler.UnobservedTaskException += (sender, args) =>
-                {
-                    args.Exception.Handle(exception =>
-                    {
-                        var googleClient = scope.Resolve<IGoogleAnalyticsService>();
-                        var logger = scope.Resolve<ILogger>();
-
-                        if (isExtraLoggingEnabled) logger.Error($"Unhandled Exception occured: {exception.ToString()}");
-
-                        try
-                        {
-                            googleClient.TrackException(exception.ToString(), false);
-                        }
-                        catch (Exception)
-                        {
-                            //throw;
-                        }
-                        return true;
-                    });
-                };
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Management;
 
-namespace DynamicTranslator.Configuration.UniqueIdentifier
+namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
 {
     [SuppressMessage("ReSharper", "ComplexConditionExpression")]
     public class HddBasedIdentifierProvider : IUniqueIdentifierProvider

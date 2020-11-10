@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace DynamicTranslator.Extensions
+namespace DynamicTranslator.Core.Extensions
 {
     public static class XmlExtensions
     {

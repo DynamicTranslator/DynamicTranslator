@@ -1,9 +1,8 @@
-﻿<Window x:Class="DynamicTranslator.Wpf.ViewModel.GrowlNotifications"
+﻿<Window x:Class="DynamicTranslator.ViewModel.GrowlNotifications"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:D="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModel="clr-namespace:DynamicTranslator.Wpf.ViewModel"
         Mc:Ignorable="D"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="Transparent"
@@ -38,10 +37,6 @@
                                    Foreground="White"
                                    FontFamily="Arial" FontSize="14" FontWeight="UltraBold" VerticalAlignment="Center"
                                    Margin="2,4,4,2" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Height="20" />
-                        <Button x:Name="TextToSpeechButton" Grid.Row="0" Grid.Column="1" Width="20" Height="Auto"
-                                HorizontalAlignment="Left"
-                                Margin="3,2,0,3" Style="{StaticResource TextToSpeechButton}"
-                                Click="TextToSpeechButton_OnClick" />
                         <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="2" Width="16" Height="Auto"
                                 HorizontalAlignment="Right"
                                 Margin="0,3,12,3" Style="{StaticResource CloseButton}" />
@@ -92,7 +87,7 @@
             </DataTemplate.Triggers>
         </DataTemplate>
     </Window.Resources>
-    <ItemsControl x:Name="_notificationsControl" FocusVisualStyle="{x:Null}"
+    <ItemsControl x:Name="NotificationsControl" FocusVisualStyle="{x:Null}"
                   D:DataContext="{D:DesignData Source=DesignTimeNotificationData.xaml}" ItemsSource="{Binding .}"
                   ItemTemplate="{StaticResource MessageTemplate}" />
 </Window>

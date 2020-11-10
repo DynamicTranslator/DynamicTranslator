@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <OutputType>winExe</OutputType>
+    <RootNamespace>DynamicTranslator</RootNamespace>
+    <AssemblyName>DynamicTranslator</AssemblyName>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PackageId>DynamicTranslator</PackageId>
+    <Authors>Oguzhan Soykan</Authors>
+    <Product>DynamicTranslator</Product>
+    <Description>Instant translation application</Description>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
+    <Version>5.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <PackageReference Include="MaterialDesignColors" Version="1.2.7" />
+    <PackageReference Include="MouseKeyHook" Version="5.6.0" />
+    <PackageReference Include="Stateless" Version="5.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+    <Compile Update="Properties\Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+    <Resource Include="Resources\*.png" />
+  </ItemGroup>
+
+ <ItemGroup>
+    <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DynamicTranslator.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

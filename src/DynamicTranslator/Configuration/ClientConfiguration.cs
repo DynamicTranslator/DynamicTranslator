@@ -1,17 +1,10 @@
-﻿using DynamicTranslator.Configuration.Startup;
-
-namespace DynamicTranslator.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
-    public class ClientConfiguration : IClientConfiguration
+    public class ClientConfiguration
     {
-        public ClientConfiguration(IDynamicTranslatorConfiguration configurations)
-        {
-            Configurations = configurations;
-        }
-
         public string AppVersion { get; set; }
 
-        public IDynamicTranslatorConfiguration Configurations { get; }
+        public WireUp Serviceses { get; }
 
         public string Id { get; set; }
 

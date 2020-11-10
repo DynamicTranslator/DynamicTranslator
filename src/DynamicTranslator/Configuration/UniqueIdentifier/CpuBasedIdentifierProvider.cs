@@ -1,14 +1,13 @@
 ﻿using System.Management;
+using DynamicTranslator.Core.Extensions;
 
-using Abp.Extensions;
-
-namespace DynamicTranslator.Configuration.UniqueIdentifier
+namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
 {
     public class CpuBasedIdentifierProvider : IUniqueIdentifierProvider
     {
         public string Get()
         {
-            string cpuInfo = string.Empty;
+            var cpuInfo = string.Empty;
             var mc = new ManagementClass("win32_processor");
             ManagementObjectCollection moc = mc.GetInstances();
 

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Speech.Synthesis;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using DynamicTranslator.Core.Configuration;
+using DynamicTranslator.Core.Extensions;
 
-using DynamicTranslator.Configuration.Startup;
-using DynamicTranslator.Extensions;
-
-namespace DynamicTranslator.Wpf.ViewModel
+namespace DynamicTranslator.ViewModel
 {
-    public partial class GrowlNotifications : IGrowlNotifications
+    public partial class GrowlNotifications
     {
         private readonly IApplicationConfiguration _applicationConfiguration;
         private readonly Notifications _buffer = new Notifications();
@@ -24,7 +21,7 @@ namespace DynamicTranslator.Wpf.ViewModel
             InitializeComponent();
             _applicationConfiguration = applicationConfiguration;
             Notifications = notifications;
-            _notificationsControl.DataContext = Notifications;
+            NotificationsControl.DataContext = Notifications;
         }
 
         public event EventHandler OnDispose;
@@ -68,11 +65,6 @@ namespace DynamicTranslator.Wpf.ViewModel
                 DispatcherPriority.Background);
         }
 
-        public async Task AddNotificationAsync(Notification notification)
-        {
-            await Task.Run(() => AddNotification(notification));
-        }
-
         public void RemoveNotification(Notification notification)
         {
             Dispatcher.InvokeAsync(
@@ -107,31 +99,6 @@ namespace DynamicTranslator.Wpf.ViewModel
 
             var element = sender as Grid;
             RemoveNotification(Notifications.First(n => (element != null) && (n.Id == int.Parse(element.Tag.ToString()))));
-        }
-
-        private async void TextToSpeechButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            await Task.Run(async
-                () =>
-                {
-                    await Dispatcher.InvokeAsync(
-                        () =>
-                        {
-                            var notification = ((FrameworkElement)sender).DataContext as Notification;
-                            using (var synthesizer = new SpeechSynthesizer())
-                            {
-                                synthesizer.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
-                                synthesizer.SetOutputToDefaultAudioDevice();
-                                synthesizer.Volume = 100;
-                                synthesizer.Rate = 0;
-
-                                if (notification != null)
-                                {
-                                    synthesizer.Speak(notification.Title);
-                                }
-                            }
-                        });
-                });
         }
     }
 }

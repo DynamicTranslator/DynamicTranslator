@@ -1,12 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using DynamicTranslator.Core;
+using DynamicTranslator.Core.Extensions;
 
-using Abp.Dependency;
-
-using DynamicTranslator.Extensions;
-
-namespace DynamicTranslator.Wpf
+namespace DynamicTranslator
 {
-    public class ClipboardManager : IClipboardManager, ISingletonDependency
+    public class ClipboardManager : IClipboardManager
     {
         public void Clear()
         {
@@ -14,13 +13,21 @@ namespace DynamicTranslator.Wpf
         }
 
         public string GetCurrentText()
-        {
+        {   
             return Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();
         }
 
-        public bool IsContainsText()
+        public bool ContainsText()
         {
-            return Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim());
+            try
+            {
+                return Clipboard.ContainsText() && !string.IsNullOrEmpty(Clipboard.GetText().Trim());
+            }
+            catch (Exception)
+            {
+                return ContainsText();
+            }
+           
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
+using DynamicTranslator.Core.Configuration.UniqueIdentifier;
 
-using DynamicTranslator.Configuration.UniqueIdentifier;
-
-namespace DynamicTranslator.Extensions
+namespace DynamicTranslator.Core.Extensions
 {
     public static class UniqueIdProviderExtensions
     {
