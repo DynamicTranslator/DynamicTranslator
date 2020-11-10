@@ -28,7 +28,7 @@
   </ItemGroup>
 
  <ItemGroup>
-    <ProjectReference Include="..\DynamicTranslator\DynamicTranslator.Core.csproj" />
+    <ProjectReference Include="..\DynamicTranslator.Core\DynamicTranslator.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
