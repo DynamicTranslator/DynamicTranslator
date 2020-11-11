@@ -22,7 +22,8 @@
         bool isRunning;
 
         public MainWindow(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            IApplicationConfiguration applicationConfiguration, TranslatorBootstrapper translator)
+            IApplicationConfiguration applicationConfiguration,
+            TranslatorBootstrapper translator)
         {
             this.activeTranslatorConfiguration = activeTranslatorConfiguration;
             this.applicationConfiguration = applicationConfiguration;
@@ -56,6 +57,8 @@
                 this.isRunning = false;
 
                 UnlockUiElements();
+
+                this.translator.Stop();
             }
             else
             {
@@ -68,7 +71,8 @@
                 PrepareTranslators();
                 LockUiElements();
 
-                if (!this.translator.IsInitialized) this.translator.Initialize();
+                if (!this.translator.IsInitialized)
+                    this.translator.Initialize();
 
                 this.isRunning = true;
             }
@@ -76,7 +80,8 @@
 
         void FillLanguageCombobox()
         {
-            foreach (Language language in LanguageMapping.All.ToLanguages()) this.ComboBoxLanguages.Items.Add(language);
+            foreach (Language language in LanguageMapping.All.ToLanguages())
+                this.ComboBoxLanguages.Items.Add(language);
 
             this.ComboBoxLanguages.SelectedValue = this.applicationConfiguration.ToLanguage.Extension;
         }

@@ -35,13 +35,7 @@
                 services.AddSingleton<MainWindow>();
             });
 
-            DispatcherUnhandledException += (sender, args) =>
-            {
-                args.Handled = true;
-                this.wireUp.ServiceProvider.GetRequiredService<GrowlNotifications>().AddNotification(
-                    new Notification {Title = "Error", Message = "An unhandled exception occurred!"});
-            };
-
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
             var mainWindow = this.wireUp.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Closed += (sender, args) => { Current.Shutdown(0); };
             mainWindow.InitializeComponent();
@@ -51,6 +45,14 @@
         protected override void OnExit(ExitEventArgs e)
         {
             this.wireUp.Dispose();
+        }
+
+        void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            this.wireUp.ServiceProvider
+                .GetRequiredService<GrowlNotifications>()
+                .AddNotification(new Notification {Title = "Error", Message = "An unhandled exception occurred!"});
         }
 
         void GuardAgainstMultipleInstances()
@@ -90,11 +92,6 @@
             this.mutex?.ReleaseMutex();
             this.mutex?.Dispose();
             Current.Shutdown();
-        }
-
-        void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
         }
     }
 }

@@ -1,19 +1,21 @@
 ﻿namespace DynamicTranslator
 {
     using System;
+    using System.Reactive;
     using System.Reactive.Concurrency;
     using System.Reactive.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
+    using System.Windows.Threading;
     using Core;
     using Core.Configuration;
     using Gma.System.MouseKeyHook;
     using Microsoft.Extensions.DependencyInjection;
     using ViewModel;
+    using Notification = ViewModel.Notification;
 
-    //TODO: Check the lifetime of dependencies
     public class TranslatorBootstrapper : IDisposable
     {
         readonly IApplicationConfiguration applicationConfiguration;
@@ -44,7 +46,10 @@
             this.globalMouseHook = Hook.GlobalEvents();
             this.tipsyMouse = new TipsyMouse(() =>
             {
-                SendCopyCommand();
+                this.serviceProvider
+                    .GetRequiredService<MainWindow>()
+                    .Dispatcher
+                    .InvokeAsync(SendCopyCommand, DispatcherPriority.Input, this.cancellationTokenSource.Token);
                 this.tipsyMouse.Release();
             });
             ConfigureNotificationMeasurements();
@@ -54,11 +59,9 @@
 
         public void Dispose()
         {
-            if (!IsInitialized) return;
+            this.cancellationTokenSource.Cancel(false);
 
-            if (this.cancellationTokenSource.Token.CanBeCanceled) this.cancellationTokenSource.Cancel(false);
-
-            UnsubscribeLocalEvents();
+            UnsubscribeMouseHook();
             this.growlNotifications.Dispose();
             this.finderObservable.Dispose();
             this.syncObserver.Dispose();
@@ -71,15 +74,25 @@
         public void Initialize()
         {
             this.cancellationTokenSource = new CancellationTokenSource();
-            SubscribeLocalEvents();
+            SubscribeMouseHook();
             SendKeys.Flush();
             StartObservers();
             InitializeCookies();
             IsInitialized = true;
         }
 
-        void InitializeCookies() { }
+        public void Stop()
+        {
+            IsInitialized = false;
+            UnsubscribeMouseHook();
+            this.finderObservable.Dispose();
+            this.syncObserver.Dispose();
+            this.cancellationTokenSource.Cancel();
+        }
 
+        void InitializeCookies()
+        {
+        }
 
         void ConfigureNotificationMeasurements()
         {
@@ -94,21 +107,7 @@
                 .FromEventPattern<WhenClipboardContainsTextEventArgs>(
                     h => WhenClipboardContainsTextEventHandler += h,
                     h => WhenClipboardContainsTextEventHandler -= h)
-                .Select(pattern => Observable.FromAsync(token =>
-                {
-                    try
-                    {
-                        return this.serviceProvider.GetRequiredService<IFinder>()
-                            .Find(pattern.EventArgs.CurrentString, token);
-                    }
-                    catch (Exception)
-                    {
-                        this.serviceProvider.GetRequiredService<GrowlNotifications>().AddNotification(
-                            new Notification {Title = "Error", Message = "An unhandled exception occurred!"});
-                    }
-
-                    return Task.CompletedTask;
-                }))
+                .Select(pattern => Observable.FromAsync(token => ObserveWithHandlingException(pattern, token)))
                 .Concat()
                 .Subscribe();
 
@@ -119,14 +118,33 @@
                 .Subscribe();
         }
 
-        void SubscribeLocalEvents()
+        Task ObserveWithHandlingException(EventPattern<WhenClipboardContainsTextEventArgs> pattern,
+            CancellationToken token)
+        {
+            try
+            {
+                return this.serviceProvider
+                    .GetRequiredService<IFinder>()
+                    .Find(pattern.EventArgs.CurrentString, token);
+            }
+            catch (Exception)
+            {
+                this.serviceProvider
+                    .GetRequiredService<GrowlNotifications>()
+                    .AddNotification(new Notification { Title = "Error", Message = "An unhandled exception occurred!" });
+            }
+
+            return Task.CompletedTask;
+        }
+
+        void SubscribeMouseHook()
         {
             this.globalMouseHook.MouseDoubleClick += MouseDoubleClicked;
             this.globalMouseHook.MouseDragStarted += MouseDragStarted;
             this.globalMouseHook.MouseDragFinished += MouseDragFinished;
         }
 
-        void UnsubscribeLocalEvents()
+        void UnsubscribeMouseHook()
         {
             this.globalMouseHook.MouseDoubleClick -= MouseDoubleClicked;
             this.globalMouseHook.MouseDragStarted -= MouseDragStarted;
@@ -152,8 +170,6 @@
         {
             SendKeys.SendWait("^c");
 
-            if (!this.clipboardManager.ContainsText()) return;
-
             string currentText = this.clipboardManager.GetCurrentText();
 
             if (!string.IsNullOrEmpty(currentText))
@@ -168,7 +184,7 @@
             if (this.cancellationTokenSource.Token.IsCancellationRequested) return;
 
             WhenClipboardContainsTextEventHandler?.Invoke(this,
-                new WhenClipboardContainsTextEventArgs {CurrentString = currentText}
+                new WhenClipboardContainsTextEventArgs { CurrentString = currentText }
             );
         }
     }

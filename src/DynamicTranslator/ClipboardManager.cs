@@ -14,10 +14,16 @@
 
         public string GetCurrentText()
         {
-            return Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant();
+            try
+            {
+                return ContainsText()
+                    ? Clipboard.GetText().RemoveSpecialCharacters().ToLowerInvariant()
+                    : string.Empty;
+            }
+            catch (Exception) { return string.Empty; }
         }
 
-        public bool ContainsText()
+        static bool ContainsText()
         {
             static bool Retry(int times = 1)
             {

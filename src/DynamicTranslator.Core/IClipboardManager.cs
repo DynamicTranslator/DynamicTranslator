@@ -3,7 +3,7 @@
     public interface IClipboardManager
     {
         void Clear();
+
         string GetCurrentText();
-        bool ContainsText();
     }
 }
