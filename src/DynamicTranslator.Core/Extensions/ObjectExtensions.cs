@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
     public static class ObjectExtensions
     {
         public static T DeserializeAs<T>(this string @this) where T : class
@@ -19,7 +19,7 @@ namespace DynamicTranslator.Core.Extensions
             return JsonConvert.SerializeObject(@object, intended ? Formatting.Indented : Formatting.None);
         }
 
-        public static T As<T>(this object @obj)
+        public static T As<T>(this object obj)
         {
             return (T) obj;
         }
@@ -31,15 +31,10 @@ namespace DynamicTranslator.Core.Extensions
 
         public static T DeserializeFromStream<T>(Stream jsonStream) where T : class
         {
-            if (jsonStream == null)
-            {
-                throw new ArgumentNullException(nameof(jsonStream));
-            }
+            if (jsonStream == null) throw new ArgumentNullException(nameof(jsonStream));
 
             if (jsonStream.CanRead == false)
-            {
                 throw new ArgumentException("Json stream must support reading", nameof(jsonStream));
-            }
 
             T deserializedObj;
 
@@ -73,10 +68,7 @@ namespace DynamicTranslator.Core.Extensions
 
         public static void ForEach<T>(this IEnumerable<T> list, Action<T> act)
         {
-            foreach (var item in list)
-            {
-                act(item);
-            }
+            foreach (T item in list) act(item);
         }
     }
 }

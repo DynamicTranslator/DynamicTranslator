@@ -1,44 +1,41 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
-using DynamicTranslator.Core.Configuration;
-using DynamicTranslator.Core.Extensions;
-
-namespace DynamicTranslator.ViewModel
+﻿namespace DynamicTranslator.ViewModel
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Threading;
+    using Core.Configuration;
+    using Core.Extensions;
+
     public partial class GrowlNotifications
     {
-        private readonly IApplicationConfiguration _applicationConfiguration;
-        private readonly Notifications _buffer = new Notifications();
+        readonly IApplicationConfiguration applicationConfiguration;
+        readonly Notifications buffer = new Notifications();
         public readonly Notifications Notifications;
-        private int _count;
+        int count;
         public bool IsDisposed;
 
         public GrowlNotifications(IApplicationConfiguration applicationConfiguration, Notifications notifications)
         {
             InitializeComponent();
-            _applicationConfiguration = applicationConfiguration;
-            Notifications = notifications;
-            NotificationsControl.DataContext = Notifications;
+            this.applicationConfiguration = applicationConfiguration;
+            this.Notifications = notifications;
+            this.NotificationsControl.DataContext = this.Notifications;
         }
 
         public event EventHandler OnDispose;
 
         public void Dispose()
         {
-            if (IsDisposed)
-            {
-                return;
-            }
+            if (this.IsDisposed) return;
 
-            Notifications.Clear();
-            _buffer.Clear();
+            this.Notifications.Clear();
+            this.buffer.Clear();
 
             OnDispose.InvokeSafely(this, new EventArgs());
 
-            IsDisposed = true;
+            this.IsDisposed = true;
             GC.SuppressFinalize(this);
         }
 
@@ -47,20 +44,13 @@ namespace DynamicTranslator.ViewModel
             Dispatcher.InvokeAsync(
                 () =>
                 {
-                    notification.Id = _count++;
-                    if (Notifications.Count + 1 > _applicationConfiguration.MaxNotifications)
-                    {
-                        _buffer.Add(notification);
-                    }
+                    notification.Id = this.count++;
+                    if (this.Notifications.Count + 1 > this.applicationConfiguration.MaxNotifications)
+                        this.buffer.Add(notification);
                     else
-                    {
-                        Notifications.Add(notification);
-                    }
+                        this.Notifications.Add(notification);
 
-                    if ((Notifications.Count > 0) && !IsActive)
-                    {
-                        Show();
-                    }
+                    if (this.Notifications.Count > 0 && !IsActive) Show();
                 },
                 DispatcherPriority.Background);
         }
@@ -70,18 +60,15 @@ namespace DynamicTranslator.ViewModel
             Dispatcher.InvokeAsync(
                 () =>
                 {
-                    if (Notifications.Contains(notification))
+                    if (this.Notifications.Contains(notification)) this.Notifications.Remove(notification);
+
+                    if (this.buffer.Count > 0)
                     {
-                        Notifications.Remove(notification);
+                        this.Notifications.Add(this.buffer[0]);
+                        this.buffer.RemoveAt(0);
                     }
 
-                    if (_buffer.Count > 0)
-                    {
-                        Notifications.Add(_buffer[0]);
-                        _buffer.RemoveAt(0);
-                    }
-
-                    if (Notifications.Count < 1)
+                    if (this.Notifications.Count < 1)
                     {
                         Hide();
                         OnDispose.InvokeSafely(this, new EventArgs());
@@ -90,15 +77,13 @@ namespace DynamicTranslator.ViewModel
                 DispatcherPriority.Background);
         }
 
-        private void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        void NotificationWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (Math.Abs(e.NewSize.Height) > 0.0)
-            {
-                return;
-            }
+            if (Math.Abs(e.NewSize.Height) > 0.0) return;
 
             var element = sender as Grid;
-            RemoveNotification(Notifications.First(n => (element != null) && (n.Id == int.Parse(element.Tag.ToString()))));
+            RemoveNotification(this.Notifications.First(n =>
+                element != null && n.Id == int.Parse(element.Tag.ToString())));
         }
     }
 }

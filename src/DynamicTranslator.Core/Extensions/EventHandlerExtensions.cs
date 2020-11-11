@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System;
+    using System.ComponentModel;
+    using System.Threading.Tasks;
+
     public static class EventHandlerExtensions
     {
         public static void InvokeSafely(this PropertyChangedEventHandler eventHandler, object sender,

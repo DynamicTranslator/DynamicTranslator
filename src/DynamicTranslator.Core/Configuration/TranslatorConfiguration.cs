@@ -1,32 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DynamicTranslator.Core.Model;
-
-namespace DynamicTranslator.Core.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Model;
+
     public abstract class TranslatorConfiguration
     {
-        private readonly ActiveTranslatorConfiguration _activeTranslatorConfiguration;
-        private readonly IApplicationConfiguration _applicationConfiguration;
+        readonly ActiveTranslatorConfiguration activeTranslatorConfiguration;
+        readonly IApplicationConfiguration applicationConfiguration;
 
         protected TranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
             IApplicationConfiguration applicationConfiguration)
         {
-            _activeTranslatorConfiguration = activeTranslatorConfiguration;
-            _applicationConfiguration = applicationConfiguration;
-        }
-
-        public virtual bool CanSupport()
-        {
-            return SupportedLanguages.Any(x => x.Extension == _applicationConfiguration.ToLanguage.Extension);
-        }
-
-        public virtual bool IsActive()
-        {
-            return _activeTranslatorConfiguration.ActiveTranslators
-                .Any(x => (x.Name == TranslatorType.ToString())
-                          && x.IsActive
-                          && x.IsEnabled);
+            this.activeTranslatorConfiguration = activeTranslatorConfiguration;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public abstract IList<Language> SupportedLanguages { get; set; }
@@ -34,5 +21,18 @@ namespace DynamicTranslator.Core.Configuration
         public abstract TranslatorType TranslatorType { get; }
 
         public abstract string Url { get; set; }
+
+        public virtual bool CanSupport()
+        {
+            return SupportedLanguages.Any(x => x.Extension == this.applicationConfiguration.ToLanguage.Extension);
+        }
+
+        public virtual bool IsActive()
+        {
+            return this.activeTranslatorConfiguration.ActiveTranslators
+                .Any(x => x.Name == TranslatorType.ToString()
+                          && x.IsActive
+                          && x.IsEnabled);
+        }
     }
 }

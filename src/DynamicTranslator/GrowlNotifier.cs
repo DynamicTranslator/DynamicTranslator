@@ -1,20 +1,23 @@
-﻿using DynamicTranslator.Core;
-using DynamicTranslator.ViewModel;
-
-namespace DynamicTranslator
+﻿namespace DynamicTranslator
 {
+    using Core;
+    using ViewModel;
+
     public class GrowlNotifier : INotifier
     {
-        private readonly GrowlNotifications _growlNotifications;
+        readonly GrowlNotifications growlNotifications;
 
         public GrowlNotifier(GrowlNotifications growlNotifications)
         {
-            _growlNotifications = growlNotifications;
+            this.growlNotifications = growlNotifications;
         }
 
         public void AddNotification(string title, string imageUrl, string text)
         {
-            _growlNotifications.AddNotification(new Notification { ImageUrl = imageUrl, Message = text, Title = title });
+            this.growlNotifications.AddNotification(new Notification
+            {
+                ImageUrl = imageUrl, Message = text, Title = title
+            });
         }
     }
 }

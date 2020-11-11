@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using DynamicTranslator.Core.Configuration.UniqueIdentifier;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System.Collections.Generic;
+    using Configuration.UniqueIdentifier;
+
     public static class UniqueIdProviderExtensions
     {
         public static string BuildForAll(this IEnumerable<IUniqueIdentifierProvider> providers)
         {
-            string uniqueId = string.Empty;
+            var uniqueId = string.Empty;
 
             providers.ForEach(provider => { uniqueId += provider.Get(); });
 

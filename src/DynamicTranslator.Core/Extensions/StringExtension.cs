@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     public static class StringExtension
     {
-        private static readonly Regex htmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
+        static readonly Regex HtmlRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
         public static string ExtractByRegex(this string @this, Regex pattern)
         {
@@ -122,10 +122,10 @@ namespace DynamicTranslator.Core.Extensions
 
         public static string StripTagsRegexCompiled(this string source)
         {
-            return htmlRegex.Replace(source, string.Empty);
+            return HtmlRegex.Replace(source, string.Empty);
         }
 
-        private static string RemoveAccent(this string txt)
+        static string RemoveAccent(this string txt)
         {
             byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return Encoding.ASCII.GetString(bytes);

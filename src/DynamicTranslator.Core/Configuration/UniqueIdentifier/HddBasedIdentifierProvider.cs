@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Management;
-
-namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
+﻿namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
 {
-    [SuppressMessage("ReSharper", "ComplexConditionExpression")]
+    using System.Management;
+
+#pragma warning disable CA1416 // Validate platform compatibility
     public class HddBasedIdentifierProvider : IUniqueIdentifierProvider
     {
         public string Get()
@@ -11,9 +10,10 @@ namespace DynamicTranslator.Core.Configuration.UniqueIdentifier
             const string drive = "C";
             var dsk = new ManagementObject(@"win32_logicaldisk.deviceid=""" + drive + @":""");
             dsk.Get();
-            string volumeSerial = dsk["VolumeSerialNumber"].ToString();
+            var volumeSerial = dsk["VolumeSerialNumber"].ToString();
 
             return volumeSerial;
         }
     }
 }
+#pragma warning restore CA1416 // Validate platform compatibility

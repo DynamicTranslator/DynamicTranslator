@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System;
+
     public static class VersionExtensions
     {
         public static Version IncrementMinor(this Version @this)

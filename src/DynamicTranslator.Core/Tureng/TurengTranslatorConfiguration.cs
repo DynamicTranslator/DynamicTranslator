@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using DynamicTranslator.Core.Configuration;
-using DynamicTranslator.Core.Model;
-
-namespace DynamicTranslator.Core.Tureng
+﻿namespace DynamicTranslator.Core.Tureng
 {
+    using System.Collections.Generic;
+    using Configuration;
+    using Model;
+
     public class TurengTranslatorConfiguration : TranslatorConfiguration
     {
-        private readonly IApplicationConfiguration _applicationConfiguration;
+        readonly IApplicationConfiguration applicationConfiguration;
 
-        public override bool CanSupport()
+        public TurengTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            applicationConfiguration)
         {
-            return base.CanSupport() && _applicationConfiguration.IsToLanguageTurkish;
+            this.applicationConfiguration = applicationConfiguration;
         }
 
         public override IList<Language> SupportedLanguages { get; set; }
@@ -19,11 +21,9 @@ namespace DynamicTranslator.Core.Tureng
 
         public override TranslatorType TranslatorType => TranslatorType.Tureng;
 
-        public TurengTranslatorConfiguration(ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
-            applicationConfiguration)
+        public override bool CanSupport()
         {
-            _applicationConfiguration = applicationConfiguration;
+            return base.CanSupport() && this.applicationConfiguration.IsToLanguageTurkish;
         }
     }
 }

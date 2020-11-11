@@ -1,37 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using DynamicTranslator.Core.Configuration;
-using DynamicTranslator.Core.Configuration.UniqueIdentifier;
-using DynamicTranslator.Core.Extensions;
-using DynamicTranslator.Core.Google;
-using DynamicTranslator.Core.Model;
-using DynamicTranslator.Core.Prompt;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace DynamicTranslator.Core
+﻿namespace DynamicTranslator.Core
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Http;
+    using Configuration;
+    using Configuration.UniqueIdentifier;
+    using Extensions;
+    using Google;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Model;
+    using Prompt;
+
     public class WireUp : IDisposable
     {
-        public HttpMessageHandler MessageHandler { get; set; } = new HttpClientHandler
-        {
-            AllowAutoRedirect = false,
-            UseCookies = false,
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-        };
-
-        public IServiceProvider ServiceProvider { get; }
-
         public WireUp(
             Action<IConfigurationBuilder> configure = null,
             Action<IServiceCollection> postConfigureServices = null)
         {
-            var cb = new ConfigurationBuilder()
+            IConfigurationBuilder cb = new ConfigurationBuilder()
                 .AddIniFile("DynamicTranslator.ini", configure != null, false);
             configure?.Invoke(cb);
-            var configuration = cb.Build();
+            IConfigurationRoot configuration = cb.Build();
 
             var services = new ServiceCollection();
             services
@@ -68,10 +59,10 @@ namespace DynamicTranslator.Core
                         Id = string.IsNullOrEmpty(configuration["ClientId"])
                             ? GenerateUniqueClientId()
                             : configuration["ClientId"],
-                        MachineName = Environment.MachineName.Normalize(),
+                        MachineName = Environment.MachineName.Normalize()
                     };
-                    var existingToLanguage = configuration["ToLanguage"];
-                    var existingFromLanguage = configuration["FromLanguage"];
+                    string existingToLanguage = configuration["ToLanguage"];
+                    string existingFromLanguage = configuration["FromLanguage"];
                     return new ApplicationConfiguration
                     {
                         IsLanguageDetectionEnabled = true,
@@ -81,7 +72,8 @@ namespace DynamicTranslator.Core
                         SearchableCharacterLimit = int.Parse(configuration["CharacterLimit"] ?? "300"),
                         MaxNotifications = 4,
                         ToLanguage = new Language(existingToLanguage, LanguageMapping.All[existingToLanguage]),
-                        FromLanguage = new Language(existingFromLanguage, LanguageMapping.All[existingFromLanguage]),
+                        FromLanguage =
+                            new Language(existingFromLanguage, LanguageMapping.All[existingFromLanguage]),
                         ClientConfiguration = clientConfiguration
                     };
                 })
@@ -89,6 +81,7 @@ namespace DynamicTranslator.Core
                 .AddTransient<IGoogleLanguageDetector, GoogleLanguageDetector>()
                 .AddTransient<IGoogleAnalyticsService, GoogleAnalyticsService>()
                 .AddTransient<IFinder, Finder>()
+                .AddSingleton(new CookieContainer())
                 .AddSingleton<ResultOrganizer>()
                 .AddHttpClient<TranslatorClient>(TranslatorClient.Name)
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
@@ -99,30 +92,35 @@ namespace DynamicTranslator.Core
             ServiceProvider = services.BuildServiceProvider();
         }
 
-        private static string GenerateUniqueClientId()
+        public HttpMessageHandler MessageHandler { get; set; } = new HttpClientHandler
         {
-            string uniqueId;
-            try
-            {
-                var uniqueIdProviders = new List<IUniqueIdentifierProvider>()
-                {
-                    new CpuBasedIdentifierProvider(),
-                    new HddBasedIdentifierProvider()
-                };
+            AllowAutoRedirect = false,
+            UseCookies = false,
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        };
 
-                uniqueId = uniqueIdProviders.BuildForAll();
-            }
-            catch (Exception)
-            {
-                uniqueId = Guid.NewGuid().ToString();
-            }
-
-            return uniqueId;
-        }
+        public IServiceProvider ServiceProvider { get; }
 
         public void Dispose()
         {
             MessageHandler?.Dispose();
+        }
+
+        static string GenerateUniqueClientId()
+        {
+            string uniqueId;
+            try
+            {
+                var uniqueIdProviders = new List<IUniqueIdentifierProvider>
+                {
+                    new CpuBasedIdentifierProvider(), new HddBasedIdentifierProvider()
+                };
+
+                uniqueId = uniqueIdProviders.BuildForAll();
+            }
+            catch (Exception) { uniqueId = Guid.NewGuid().ToString(); }
+
+            return uniqueId;
         }
     }
 }

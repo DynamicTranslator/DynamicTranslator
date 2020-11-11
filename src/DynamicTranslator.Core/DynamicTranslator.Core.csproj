@@ -20,5 +20,6 @@
     <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="Octokit.Reactive" Version="0.47.0" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
+    <PackageReference Include="Stateless" Version="5.1.4" />
   </ItemGroup>
 </Project>

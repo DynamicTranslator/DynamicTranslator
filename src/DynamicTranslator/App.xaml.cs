@@ -1,22 +1,22 @@
-﻿using System;
-using System.IO;
-using System.Security.AccessControl;
-using System.Threading;
-using System.Windows;
-using System.Windows.Threading;
-using DynamicTranslator.Core;
-using DynamicTranslator.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace DynamicTranslator
+﻿namespace DynamicTranslator
 {
+    using System;
+    using System.IO;
+    using System.Security.AccessControl;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Threading;
+    using Core;
+    using Microsoft.Extensions.DependencyInjection;
+    using ViewModel;
+
     public partial class App
     {
-        private Mutex _mutex;
-        private const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
-        private bool _isMutexCreated;
-        private bool _isMutexUnauthorized;
-        private WireUp _wireUp;
+        const string MutexName = @"Global\1109F104-B4B4-4ED1-920C-F4D8EFE9E834}";
+        bool isMutexCreated;
+        bool isMutexUnauthorized;
+        Mutex mutex;
+        WireUp wireUp;
 
         public App()
         {
@@ -25,7 +25,7 @@ namespace DynamicTranslator
 
         protected override void OnStartup(StartupEventArgs eventArgs)
         {
-            _wireUp = new WireUp(postConfigureServices: services =>
+            this.wireUp = new WireUp(postConfigureServices: services =>
             {
                 services.AddSingleton<Notifications>();
                 services.AddTransient<IClipboardManager, ClipboardManager>();
@@ -35,61 +35,64 @@ namespace DynamicTranslator
                 services.AddSingleton<MainWindow>();
             });
 
-            var mainWindow = _wireUp.ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Closed += (sender, args) =>
-             {
-                 Current.Shutdown(0);
-             };
+            DispatcherUnhandledException += (sender, args) =>
+            {
+                args.Handled = true;
+                this.wireUp.ServiceProvider.GetRequiredService<GrowlNotifications>().AddNotification(
+                    new Notification {Title = "Error", Message = "An unhandled exception occurred!"});
+            };
+
+            var mainWindow = this.wireUp.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Closed += (sender, args) => { Current.Shutdown(0); };
             mainWindow.InitializeComponent();
             mainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _wireUp.Dispose();
+            this.wireUp.Dispose();
         }
 
-        private void GuardAgainstMultipleInstances()
+        void GuardAgainstMultipleInstances()
         {
             string user = Environment.UserDomainName + Path.DirectorySeparatorChar + Environment.UserName;
 
             try
             {
-                Mutex.TryOpenExisting(MutexName, out _mutex);
+                Mutex.TryOpenExisting(MutexName, out this.mutex);
 
-                if (_mutex == null)
+                if (this.mutex == null)
                 {
                     var mutexSecurity = new MutexSecurity();
 
-                    var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify, AccessControlType.Deny);
+                    var rule = new MutexAccessRule(user, MutexRights.Synchronize | MutexRights.Modify,
+                        AccessControlType.Deny);
 
                     mutexSecurity.AddAccessRule(rule);
 
-                    rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions, AccessControlType.Allow);
+                    rule = new MutexAccessRule(user, MutexRights.ReadPermissions | MutexRights.ChangePermissions,
+                        AccessControlType.Allow);
 
                     mutexSecurity.AddAccessRule(rule);
 
-                    _mutex = new Mutex(true, MutexName, out _isMutexCreated);
+                    this.mutex = new Mutex(true, MutexName, out this.isMutexCreated);
                 }
             }
-            catch (UnauthorizedAccessException)
-            {
-                _isMutexUnauthorized = true;
-            }
+            catch (UnauthorizedAccessException) { this.isMutexUnauthorized = true; }
 
-            if (!_isMutexUnauthorized && _isMutexCreated)
+            if (!this.isMutexUnauthorized && this.isMutexCreated)
             {
-                _mutex?.WaitOne();
-                GC.KeepAlive(_mutex);
+                this.mutex?.WaitOne();
+                GC.KeepAlive(this.mutex);
                 return;
             }
 
-            _mutex?.ReleaseMutex();
-            _mutex?.Dispose();
+            this.mutex?.ReleaseMutex();
+            this.mutex?.Dispose();
             Current.Shutdown();
         }
 
-        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             e.Handled = true;
         }

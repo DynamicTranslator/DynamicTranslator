@@ -13,22 +13,22 @@
     <StackPanel Margin="5,0,5,0">
         <Grid Height="400" Width="400">
             <Grid.RowDefinitions>
-                <RowDefinition Height="53*"/>
-                <RowDefinition Height="147*"/>
+                <RowDefinition Height="53*" />
+                <RowDefinition Height="147*" />
             </Grid.RowDefinitions>
             <WrapPanel
                 Margin="10,10,23,50"
                 Orientation="Vertical">
                 <Grid Height="41" Width="100">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0*"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="0*" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Label x:Name="LabelCurrentLanguage"
                            Content="To Language:"
                            Height="Auto"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Center" 
+                           HorizontalAlignment="Center"
                            Width="Auto" Grid.RowSpan="2" />
                 </Grid>
                 <ComboBox x:Name="ComboBoxLanguages"
@@ -43,12 +43,11 @@
                 Content="Start Translator"
                 Click="BtnSwitchClick"
                 FontWeight="Bold"
-                Margin="0,60,0,0" 
+                Margin="0,60,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Width="284" Height="40" >
-            </Button>
-            <Grid x:Name="LanguagesGrid" Margin="-4,10" 
+                Width="284" Height="40" />
+            <Grid x:Name="LanguagesGrid" Margin="-4,10"
                   Height="72"
                   VerticalAlignment="Top" Grid.Row="1">
                 <CheckBox x:Name="CheckBoxGoogleTranslate" Content="Google Translate" HorizontalAlignment="Left"
@@ -58,13 +57,13 @@
                 <CheckBox x:Name="CheckBoxTureng" Content="Tureng Translate" HorizontalAlignment="Left"
                           Margin="143,8,0,0" VerticalAlignment="Top" IsChecked="True" />
                 <CheckBox x:Name="CheckBoxPrompt" Content="Prompt Translate" HorizontalAlignment="Left"
-                    Margin="17,0,0,0" VerticalAlignment="Center" IsChecked="True" />
+                          Margin="17,0,0,0" VerticalAlignment="Center" IsChecked="True" />
             </Grid>
-            <Button x:Name="BtnNewVersion" Content="Update" 
+            <Button x:Name="BtnNewVersion" Content="Update"
                     HorizontalAlignment="Left"
-                    Margin="8,68,0,0" 
-                    VerticalAlignment="Top" 
-                    Width="284" Grid.Row="1" Click="BtnNewVersion_Click"/>
+                    Margin="8,68,0,0"
+                    VerticalAlignment="Top"
+                    Width="284" Grid.Row="1" Click="BtnNewVersion_Click" />
         </Grid>
 
     </StackPanel>

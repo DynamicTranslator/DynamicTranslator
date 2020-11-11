@@ -1,7 +1,7 @@
-﻿using DynamicTranslator.Core.Model;
-
-namespace DynamicTranslator.Core.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
+    using Model;
+
     public interface IApplicationConfiguration
     {
         string TrackingId { get; set; }

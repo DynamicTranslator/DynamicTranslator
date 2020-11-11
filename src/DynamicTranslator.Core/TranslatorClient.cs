@@ -1,7 +1,7 @@
-﻿using System.Net.Http;
-
-namespace DynamicTranslator.Core
+﻿namespace DynamicTranslator.Core
 {
+    using System.Net.Http;
+
     public class TranslatorClient
     {
         public const string Name = "translator";

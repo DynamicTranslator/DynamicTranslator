@@ -1,12 +1,12 @@
-﻿using System;
-using DynamicTranslator.Core.Google;
-using DynamicTranslator.Core.Prompt;
-using DynamicTranslator.Core.SesliSozluk;
-using DynamicTranslator.Core.Tureng;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace DynamicTranslator.Core.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
+    using System;
+    using Google;
+    using Microsoft.Extensions.DependencyInjection;
+    using Prompt;
+    using SesliSozluk;
+    using Tureng;
+
     public static class AddTranslatorExtensions
     {
         public static IServiceCollection AddGoogleTranslator(this IServiceCollection services,

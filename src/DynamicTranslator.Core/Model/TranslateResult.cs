@@ -2,9 +2,7 @@
 {
     public class TranslateResult
     {
-        public TranslateResult() : this(true, string.Empty)
-        {
-        }
+        public TranslateResult() : this(true, string.Empty) { }
 
         public TranslateResult(bool isSuccess, string result)
         {

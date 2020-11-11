@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace DynamicTranslator.Core.Model
+﻿namespace DynamicTranslator.Core.Model
 {
+    using System.Collections.Generic;
+
     public static class LanguageMapping
     {
         public static IDictionary<string, string> All => new Dictionary<string, string>
@@ -150,8 +150,7 @@ namespace DynamicTranslator.Core.Model
 
         public static IDictionary<string, string> Tureng => new Dictionary<string, string>
         {
-            {"English", "en"},
-            {"Turkish", "tr"}
+            {"English", "en"}, {"Turkish", "tr"}
         };
 
         public static IDictionary<string, string> WordReference => new Dictionary<string, string>

@@ -8,10 +8,16 @@ namespace DynamicTranslator.Core
             Name = name;
         }
 
-        public Translator(string name) : this(name,  true)
+        public Translator(string name) : this(name, true)
         {
             Name = name;
         }
+
+        public bool IsActive { get; private set; }
+
+        public bool IsEnabled { get; }
+
+        public string Name { get; }
 
         public Translator Activate()
         {
@@ -24,11 +30,5 @@ namespace DynamicTranslator.Core
             IsActive = false;
             return this;
         }
-
-        public bool IsActive { get; private set; }
-
-        public bool IsEnabled { get; private set; }
-
-        public string Name { get; private set; }
     }
 }

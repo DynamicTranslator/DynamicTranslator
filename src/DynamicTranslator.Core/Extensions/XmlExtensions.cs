@@ -1,8 +1,8 @@
-﻿using System;
-using System.Xml.Linq;
-
-namespace DynamicTranslator.Core.Extensions
+﻿namespace DynamicTranslator.Core.Extensions
 {
+    using System;
+    using System.Xml.Linq;
+
     public static class XmlExtensions
     {
         public static bool IsXml(this string @this)
@@ -12,10 +12,7 @@ namespace DynamicTranslator.Core.Extensions
                 XElement.Parse(@this);
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            catch (Exception) { return false; }
         }
     }
 }

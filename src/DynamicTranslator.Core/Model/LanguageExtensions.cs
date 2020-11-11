@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DynamicTranslator.Core.Model
+﻿namespace DynamicTranslator.Core.Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LanguageExtensions
     {
         public static IList<Language> ToLanguages(this IDictionary<string, string> languageDictionary)

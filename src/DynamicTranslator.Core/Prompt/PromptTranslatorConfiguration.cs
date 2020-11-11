@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-using DynamicTranslator.Core.Configuration;
-using DynamicTranslator.Core.Model;
-
-namespace DynamicTranslator.Core.Prompt
+﻿namespace DynamicTranslator.Core.Prompt
 {
+    using System.Collections.Generic;
+    using Configuration;
+    using Model;
+
     public class PromptTranslatorConfiguration : TranslatorConfiguration
     {
+        public PromptTranslatorConfiguration(
+            ActiveTranslatorConfiguration activeTranslatorConfiguration,
+            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
+            applicationConfiguration) { }
+
         public override IList<Language> SupportedLanguages { get; set; }
 
         public override string Url { get; set; }
@@ -17,12 +22,5 @@ namespace DynamicTranslator.Core.Prompt
         public int Limit { get; set; }
 
         public string Ts { get; set; }
-
-        public PromptTranslatorConfiguration(
-            ActiveTranslatorConfiguration activeTranslatorConfiguration,
-            IApplicationConfiguration applicationConfiguration) : base(activeTranslatorConfiguration,
-            applicationConfiguration)
-        {
-        }
     }
 }

@@ -2,56 +2,56 @@
 {
     internal class AdviseParams
     {
-        public bool showIntime { get; set; }
+        public bool ShowIntime { get; set; }
 
-        public object adviseText { get; set; }
+        public object AdviseText { get; set; }
     }
 
     internal class D
     {
-        public string __type { get; set; }
+        public string Type { get; set; }
 
-        public string formSeek { get; set; }
+        public string FormSeek { get; set; }
 
-        public string ptsTopic { get; set; }
+        public string PtsTopic { get; set; }
 
-        public string provider { get; set; }
+        public string Provider { get; set; }
 
-        public bool isURL { get; set; }
+        public bool IsUrl { get; set; }
 
-        public bool isWord { get; set; }
+        public bool IsWord { get; set; }
 
-        public string ptsDirCode { get; set; }
+        public string PtsDirCode { get; set; }
 
-        public string advise { get; set; }
+        public string Advise { get; set; }
 
-        public int autoCode { get; set; }
+        public int AutoCode { get; set; }
 
-        public string result { get; set; }
+        public string Result { get; set; }
 
-        public string resultNoTags { get; set; }
+        public string ResultNoTags { get; set; }
 
-        public string dirNames { get; set; }
+        public string DirNames { get; set; }
 
-        public AdviseParams adviseParams { get; set; }
+        public AdviseParams AdviseParams { get; set; }
 
-        public string key4saveEdits { get; set; }
+        public string Key4SaveEdits { get; set; }
 
-        public string trId { get; set; }
+        public string TrId { get; set; }
 
-        public string canonForm { get; set; }
+        public string CanonForm { get; set; }
 
-        public string fdLink { get; set; }
+        public string FdLink { get; set; }
 
-        public int errCodeInt { get; set; }
+        public int ErrCodeInt { get; set; }
 
-        public int errCode { get; set; }
+        public int ErrCode { get; set; }
 
-        public object errMessage { get; set; }
+        public object ErrMessage { get; set; }
     }
 
     internal class PromptResult
     {
-        public D d { get; set; }
+        public D D { get; set; }
     }
 }

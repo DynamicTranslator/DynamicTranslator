@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DynamicTranslator.Core.Model
+﻿namespace DynamicTranslator.Core.Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class ResultOrganizer
     {
         public string OrganizeResult(ICollection<TranslateResult> foundMeans, string currentString,
@@ -16,15 +16,12 @@ namespace DynamicTranslator.Core.Model
             return succeededResults;
         }
 
-        private string Organize(ICollection<TranslateResult> foundedMeans, string currentString, bool isSucceeded)
+        string Organize(ICollection<TranslateResult> foundedMeans, string currentString, bool isSucceeded)
         {
             var mean = new StringBuilder();
             IEnumerable<TranslateResult> results = foundedMeans.Where(result => result.IsSuccess == isSucceeded);
 
-            foreach (TranslateResult result in results)
-            {
-                mean.AppendLine(result.ResultMessage);
-            }
+            foreach (TranslateResult result in results) mean.AppendLine(result.ResultMessage);
 
             if (!string.IsNullOrEmpty(mean.ToString()))
             {
@@ -38,7 +35,7 @@ namespace DynamicTranslator.Core.Model
                 mean.Clear();
                 means.ForEach(m => mean.AppendLine($"{Titles.Asterix} {m.ToLower()}"));
 
-                return (mean.ToString());
+                return mean.ToString();
             }
 
             return string.Empty;

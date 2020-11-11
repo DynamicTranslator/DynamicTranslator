@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DynamicTranslator.Core.Extensions;
-
-namespace DynamicTranslator.Core.Configuration
+﻿namespace DynamicTranslator.Core.Configuration
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Extensions;
+
     public class ActiveTranslatorConfiguration
     {
         public ActiveTranslatorConfiguration()
@@ -11,7 +11,11 @@ namespace DynamicTranslator.Core.Configuration
             Translators = new List<Translator>();
         }
 
-        public void Activate(TranslatorType type) 
+        public IReadOnlyList<Translator> ActiveTranslators => Translators.Where(x => x.IsActive).ToList();
+
+        public IList<Translator> Translators { get; }
+
+        public void Activate(TranslatorType type)
         {
             Translators.FirstOrDefault(t => t.Name == type.ToString())?.Activate();
         }
@@ -26,9 +30,5 @@ namespace DynamicTranslator.Core.Configuration
         {
             Translators.ForEach(t => t.DeActivate());
         }
-
-        public IReadOnlyList<Translator> ActiveTranslators => Translators.Where(x => x.IsActive).ToList();
-
-        public IList<Translator> Translators { get; }
     }
 }

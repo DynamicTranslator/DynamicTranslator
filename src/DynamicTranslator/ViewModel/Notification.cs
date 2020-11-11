@@ -1,79 +1,79 @@
-﻿using System.ComponentModel;
-using DynamicTranslator.Core.Extensions;
-
-namespace DynamicTranslator.ViewModel
+﻿namespace DynamicTranslator.ViewModel
 {
+    using System.ComponentModel;
+    using Core.Extensions;
+
     public class Notification : INotifyPropertyChanged
     {
-        private int _id;
-        private string _imageUrl;
-        private string _message;
-        private string _title;
+        int id;
+        string imageUrl;
+        string message;
+        string title;
 
         public Notification()
         {
             PropertyChanged += (sender, args) => OnPropertyChanged(sender, args.PropertyName);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public int Id
         {
-            get => _id;
+            get => this.id;
 
             set
             {
-                if (_id == value)
+                if (this.id == value)
                     return;
 
-                _id = value;
+                this.id = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Id)));
             }
         }
 
         public string ImageUrl
         {
-            get => _imageUrl;
+            get => this.imageUrl;
 
             set
             {
-                if (_imageUrl == value)
+                if (this.imageUrl == value)
                     return;
 
-                _imageUrl = value;
+                this.imageUrl = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(ImageUrl)));
             }
         }
 
         public string Message
         {
-            get => _message;
+            get => this.message;
 
             set
             {
-                if (_message == value)
+                if (this.message == value)
                     return;
 
-                _message = value;
+                this.message = value;
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Message)));
             }
         }
 
         public string Title
         {
-            get => _title;
+            get => this.title;
 
             set
             {
-                if (_title == value)
+                if (this.title == value)
                     return;
 
-                _title = value;
+                this.title = value;
 
                 PropertyChanged.InvokeSafely(this, new PropertyChangedEventArgs(nameof(Title)));
             }
         }
 
-        protected virtual void OnPropertyChanged(object sender, string propertyName) {}
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(object sender, string propertyName) { }
     }
 }

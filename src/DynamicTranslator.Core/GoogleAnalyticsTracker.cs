@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using DynamicTranslator.Core.Google;
-
-namespace DynamicTranslator.Core
+﻿namespace DynamicTranslator.Core
 {
+    using System.Threading.Tasks;
+    using Google;
+
     public interface IGoogleAnalyticsTracker
     {
         Task Track();
@@ -10,16 +10,16 @@ namespace DynamicTranslator.Core
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {
-        private readonly IGoogleAnalyticsService _googleAnalyticsService;
+        readonly IGoogleAnalyticsService googleAnalyticsService;
 
         public GoogleAnalyticsTracker(IGoogleAnalyticsService googleAnalyticsService)
         {
-            _googleAnalyticsService = googleAnalyticsService;
+            this.googleAnalyticsService = googleAnalyticsService;
         }
 
         public Task Track()
         {
-            return _googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
+            return this.googleAnalyticsService.TrackAppScreenAsync("DynamicTranslator",
                 ApplicationVersion.GetCurrentVersion(),
                 "dynamictranslator",
                 "dynamictranslator",
