@@ -7,6 +7,3 @@ pull_requests:
   
 build_script:
 - ps: dotnet build
-
-test: 
-- ps: dotnet test
