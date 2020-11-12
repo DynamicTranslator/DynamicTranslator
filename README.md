@@ -1,9 +1,9 @@
 # DynamicTranslator
 ## _An Instant Translation Application For Windows in .NET_ 
-# [![Build status](https://ci.appveyor.com/api/projects/status/yae0kngt6hv0ujtk?svg=true)](https://ci.appveyor.com/project/osoykan/dynamictranslator)
+
 [![Dynamic Translator - How to use ?](http://cdn.makeagif.com/media/3-03-2016/pG9psp.gif)](https://www.youtube.com/watch?v=9rqX0aVCTKw)
 
-Dynamically catches selected texts where any window you on (pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses Google Translate, Yandex, Bing, Prompt, SesliSözlük, Tureng in the same time as concurrent.
+Dynamically catches selected texts where any window you on (pdf/browser/word etc.) and translates including words. Dynamic multilanguage dictionary that uses [Google Translate](https://translate.google.com/),  Prompt *(N/A)*, SesliSözlük *(N/A)*, [Tureng](https://tureng.com/en/turkish-english) in the same time as concurrent.
 
 <a href="http://www.ilovefreesoftware.com/08/windows/free-translation-software-translate-text-application.html" title="FREE TRANSLATION SOFTWARE TO TRANSLATE TEXT IN ANY APPLICATION"><img border="0" src="http://cdn.ilovefreesoftware.com/wp-content/uploads/2011/03/ilovefreesoftware_reviewed_5Star.png"/></a>
  
@@ -16,42 +16,4 @@ Dynamically catches selected texts where any window you on (pdf/browser/word etc
 <a href="#" > <img src="http://img.freeflagicons.com/thumb/square_icon/bulgaria/bulgaria_640.png" height="50" width="50"> <img src="http://www.download.bg/img/logos/dbg.gif" height="50" width="50"> </a> |  [Bulgarian post about DynamicTranslator](http://www.download.bg/index.php?cls=program&mtd=default&id=696239)
 |<a href="#" ><img src="http://icons.iconarchive.com/icons/custom-icon-design/flat-europe-flag/512/Turkey-icon.png" height="50" width="50"> <img src="https://avatars3.githubusercontent.com/u/23709737?v=3&s=280" height="50" width="50">    </a>| [Ekşi Sözlük - DynamicTranslator](https://eksisozluk.com/dynamictranslator--5230125) |
 
-## Country Based Usage
-![usings](https://raw.githubusercontent.com/osoykan/DynamicTranslator/master/usings.PNG)
-
-## [Download latest version!](https://github.com/DynamicTranslator/DynamicTranslator/releases/download/3.5.0/v.3.5.0.zip)
-
-### Latest News
-
-#### *Instantly detect text implemented.
-#### *Google Translate added.
-#### *Language Detection implemented
-#### *Bing Translate added (2016-02-29)
-#### *Text to speech added (2016-03-03)
-
-### In Turkish
-Bilindiği gibi bazı sözlükler bize API sağlamıyor. Bu sebeple, bu proje tamamıyla Windows ortamında sağlıklı ve en hızlı şekilde anlık çeviriyi pop-up yaklaşımıyla çözmeye yönelik bir amaçla yazılmıştır.
-Bulunduğunuz yerde pencere/pdf/tarayıcı vb. mouse ile gezinirken seçtiğiniz metni/yazıyı algılayıp, Google Translate, Tureng, Yandex, SesliSözlük, Microsoft Bing gibi çeviri servislerine giderek bulduğu anlamları bir araya getirip size Windows bildirimi olarak sunmaktadır.
-
-Seçilen metnin dilini algılar.
-
-### Başvurulan sözlükler | Dictionaries
-        
-##### Tureng (http://tureng.com/en/turkish-english)
-##### Yandex (https://translate.yandex.com)
-##### Sesli Sozluk (https://www.seslisozluk.net/)
-##### Google Translate (https://translate.google.com/)
-##### Microsoft Bing Translate (https://www.bing.com/translator)
-##### Prompt Translate (http://www.online-translator.com/)
-        
-
-### Project Information and The Goal
-This project provides translation words or sentences while reading, working or any time needed. So, I am using this while reading PDF e-books mostly. The project is small but very useful (at least for me :)) I hope this would be useful for you as well.
-
-C# , WPF
-
-## Powered By
-
-<a href="https://www.jetbrains.com/resharper/" target="_blank"><img src="https://camo.githubusercontent.com/d94f160ac291837e52a5a9f0a56d0f087281460c/687474703a2f2f7777772e6a6574627261696e732e636f6d2f696d672f6c6f676f732f6c6f676f5f7265736861727065725f736d616c6c2e676966" width="300" height="50" alt="ReSharper" data-canonical-src="http://www.jetbrains.com/img/logos/logo_resharper_small.gif" style="max-width:100%;"></a>
-
-<a href="http://www.oz-code.com/"><img src="http://www.oz-code.com//Content/Images/header/ozcode_logo_short.svg" height="50" width="300"></a>
+## [Download latest version!](https://github.com/DynamicTranslator/DynamicTranslator/releases/download/5.0.0-pre1/5.0.0-pre1.zip)
