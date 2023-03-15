@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="7.0.0" />  
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />  
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />  
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />  
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />  
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />   
     <PackageReference Include="System.Management" Version="7.0.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
