@@ -15,7 +15,7 @@
     <Version>5.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.2" />
     <PackageReference Include="MouseKeyHook" Version="5.6.0" />
   </ItemGroup>
