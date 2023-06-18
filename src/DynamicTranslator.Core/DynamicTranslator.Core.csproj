@@ -17,8 +17,8 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />   
     <PackageReference Include="System.Management" Version="7.0.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Octokit" Version="5.0.2" />
-    <PackageReference Include="Octokit.Reactive" Version="5.0.0" />
+    <PackageReference Include="Octokit" Version="5.1.0" />
+    <PackageReference Include="Octokit.Reactive" Version="5.1.0" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
     <PackageReference Include="Stateless" Version="5.13.0" />
   </ItemGroup>
